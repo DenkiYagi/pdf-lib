@@ -1,11 +1,13 @@
+import type { PDFContext } from 'src/core/PDFContext';
 import { PDFCrossRefSection } from 'src/core/document/PDFCrossRefSection';
-import { PDFHeader } from 'src/core/document/PDFHeader';
+import type { PDFHeader } from 'src/core/document/PDFHeader';
 import { PDFTrailer } from 'src/core/document/PDFTrailer';
 import { PDFTrailerDict } from 'src/core/document/PDFTrailerDict';
 import type { PDFDict } from 'src/core/objects/PDFDict';
 import type { PDFObject } from 'src/core/objects/PDFObject';
 import type { PDFRef } from 'src/core/objects/PDFRef';
-import type { PDFContext } from 'src/core/PDFContext';
+import { PDFStream } from 'src/core/objects/PDFStream';
+import type { PDFSecurity, EncryptFn } from 'src/core/security/PDFSecurity';
 import { PDFObjectStream } from 'src/core/structures/PDFObjectStream';
 import { CharCodes } from 'src/core/syntax/CharCodes';
 import { copyStringIntoBuffer, waitForTick } from 'src/utils';
@@ -113,18 +115,28 @@ export class PDFWriter {
   }
 
   protected async computeBufferSize(): Promise<SerializationInfo> {
-    const header = PDFHeader.forVersion(1, 7);
+    const header = this.context.header;
 
     let size = header.sizeInBytes() + 2;
 
     const xref = PDFCrossRefSection.create();
 
+    const pdfSecurity = this.context.getSecurity();
+
     const indirectObjects = this.context.enumerateIndirectObjects();
 
     for (let idx = 0, len = indirectObjects.length; idx < len; idx++) {
       const indirectObject = indirectObjects[idx];
-      const [ref] = indirectObject;
+      const [ref, object] = indirectObject;
       xref.addEntry(ref, size);
+
+      // Only encrypt item that is under PDFStream
+      // Run the content through EncryptFn and update the content
+      // before compute of object size to ensure correct buffer size
+      if (pdfSecurity && object instanceof PDFStream) {
+        this.encrypt(ref, object, pdfSecurity);
+      }
+
       size += this.computeIndirectObjectSize(indirectObject);
       if (this.shouldWaitForTick(1)) await waitForTick();
     }
@@ -145,4 +157,18 @@ export class PDFWriter {
     this.parsedObjects += n;
     return this.parsedObjects % this.objectsPerTick === 0;
   };
+
+  protected encrypt(ref: PDFRef, object: PDFStream, pdfSecurity: PDFSecurity) {
+    const encryptFn: EncryptFn = pdfSecurity.getEncryptFn(
+      ref.objectNumber,
+      ref.generationNumber,
+    );
+
+    let toBeEncrypt = object.getContents();
+    if (encryptFn) {
+      toBeEncrypt = new Uint8Array(encryptFn(toBeEncrypt));
+
+      object.updateContent(toBeEncrypt);
+    }
+  }
 }
