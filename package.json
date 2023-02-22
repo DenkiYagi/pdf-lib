@@ -86,7 +86,7 @@
     "crypto-js": "^4.1.1",
     "fontkit": "^2.0.2",
     "pako": "^2.1.0",
-    "saslprep": "^1.0.3",
+    "saslprep": "https://github.com/reklatsmasters/saslprep.git#8d7278490abef3bc695cc2adeae92d4faf050987",
     "tslib": "^2.4.1"
   },
   "devDependencies": {

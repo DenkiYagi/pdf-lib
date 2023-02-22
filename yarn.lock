@@ -3407,10 +3407,9 @@ sane@^4.0.3:
     minimist "^1.1.1"
     walker "~1.0.5"
 
-saslprep@^1.0.3:
+"saslprep@https://github.com/reklatsmasters/saslprep.git#8d7278490abef3bc695cc2adeae92d4faf050987":
   version "1.0.3"
-  resolved "https://registry.yarnpkg.com/saslprep/-/saslprep-1.0.3.tgz#4c02f946b56cf54297e347ba1093e7acac4cf226"
-  integrity sha512-/MY/PEMbk2SuY5sScONwhUDsV2p77Znkb/q3nSVstq/yQzYJOH/Azh29p9oJLsl3LnQwSvZDKagDGBsBwSooag==
+  resolved "https://github.com/reklatsmasters/saslprep.git#8d7278490abef3bc695cc2adeae92d4faf050987"
   dependencies:
     sparse-bitfield "^3.0.3"
 
