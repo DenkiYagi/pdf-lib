@@ -35,9 +35,9 @@ interface CF {
   StdCF: StdCF;
 }
 
-type EncDictV = 1 | 2 | 4 | 5;
-type EncDictR = 2 | 3 | 4 | 5;
-type EncKeyBits = 40 | 128 | 256;
+type EncDictV = 4 | 5;
+type EncDictR = 4 | 5;
+type EncKeyBits = 128 | 256;
 
 interface EncDict extends LiteralObject {
   R: EncDictR;
@@ -48,7 +48,7 @@ interface EncDict extends LiteralObject {
   Filter: 'Standard';
 }
 
-export interface EncDictV1V2V4 extends EncDict {
+export interface EncDictV4 extends EncDict {
   // Only when V > 2
   Length?: number;
   // Only when V === 4
@@ -75,7 +75,7 @@ in compliance to the PDF Specification
 export class PDFSecurity {
   document: PDFDocument;
   version!: EncDictV;
-  dictionary!: EncDictV5 | EncDictV1V2V4;
+  dictionary!: EncDictV5 | EncDictV4;
   keyBits!: EncKeyBits;
   encryptionKey!: WordArray;
   id!: Uint8Array;
@@ -122,27 +122,17 @@ export class PDFSecurity {
   */
   _setupEncryption(options: SecurityOption) {
     switch (options.pdfVersion) {
-      case '1.4':
-      case '1.5':
-        this.version = 2;
-        break;
-      case '1.6':
-      case '1.7':
-        this.version = 4;
-        break;
       case '1.7ext3':
         this.version = 5;
         break;
       default:
-        this.version = 1;
+        this.version = 4;
         break;
     }
 
     switch (this.version) {
-      case 1:
-      case 2:
       case 4:
-        this.dictionary = this._setupEncryptionV1V2V4(this.version, options);
+        this.dictionary = this._setupEncryptionV4(this.version, options);
         break;
       case 5:
         this.dictionary = this._setupEncryptionV5(options);
@@ -150,91 +140,59 @@ export class PDFSecurity {
     }
   }
 
-  _setupEncryptionV1V2V4(v: EncDictV, options: SecurityOption): EncDictV1V2V4 {
+  _setupEncryptionV4(v: EncDictV, options: SecurityOption): EncDictV4 {
     const encDict = {
       Filter: 'Standard',
-    } as EncDictV1V2V4;
+    } as EncDictV4;
 
-    let r: EncDictR;
-    let permissions: number;
+    this.keyBits = 128;
 
-    switch (v) {
-      case 1:
-        r = 2;
-        this.keyBits = 40;
-        permissions = fullPermissionsR2;
-        break;
-      case 2:
-        r = 3;
-        this.keyBits = 128;
-        permissions = fullPermissionsR3;
-        break;
-      case 4:
-        r = 4;
-        this.keyBits = 128;
-        permissions = fullPermissionsR3;
-        break;
-      default:
-        throw new Error('Unknown v value');
-    }
-
-    const paddedOwnerPassword: WordArray = processPasswordR2R3R4(options.ownerPassword);
+    const paddedOwnerPassword: WordArray = processPasswordR4(options.ownerPassword);
     const paddedUserPassword = paddedOwnerPassword.clone();
 
-    const ownerPasswordEntry: WordArray = getOwnerPasswordR2R3R4(
-      r,
+    const ownerPasswordEntry: WordArray = getOwnerPasswordR4(
       this.keyBits,
       paddedUserPassword,
       paddedOwnerPassword,
     );
-    this.encryptionKey = getEncryptionKeyR2R3R4(
-      r,
+    this.encryptionKey = getEncryptionKeyR4(
       this.keyBits,
       this.document._id,
       paddedUserPassword,
       ownerPasswordEntry,
-      permissions,
+      fullPermissions,
     );
-    let userPasswordEntry;
-    if (r === 2) {
-      userPasswordEntry = getUserPasswordR2(this.encryptionKey);
-    } else {
-      userPasswordEntry = getUserPasswordR3R4(
-        this.document._id,
-        this.encryptionKey,
-      );
-    }
+    const userPasswordEntry = getUserPasswordR4(
+      this.document._id,
+      this.encryptionKey,
+    );
 
     encDict.V = v;
-    if (v >= 2) {
-      encDict.Length = this.keyBits;
-    }
-    if (v === 4) {
-      encDict.CF = {
-        StdCF: {
-          AuthEvent: 'DocOpen',
-          CFM: 'AESV2',
-          Length: this.keyBits / 8,
-        },
-      };
-      encDict.StmF = 'StdCF';
-      encDict.StrF = 'StdCF';
-    }
+    encDict.Length = this.keyBits;
+    encDict.CF = {
+      StdCF: {
+        AuthEvent: 'DocOpen',
+        CFM: 'AESV2',
+        Length: this.keyBits / 8,
+      },
+    };
+    encDict.StmF = 'StdCF';
+    encDict.StrF = 'StdCF';
 
-    encDict.R = r;
+    encDict.R = 4;
     encDict.O = wordArrayToBuffer(ownerPasswordEntry);
     encDict.U = wordArrayToBuffer(userPasswordEntry);
-    encDict.P = permissions;
+    encDict.P = fullPermissions;
     return encDict;
   }
 
+  // TODO: 関数分離？
   _setupEncryptionV5(options: SecurityOption): EncDictV5 {
     const encDict = {
       Filter: 'Standard',
     } as EncDictV5;
 
     this.keyBits = 256;
-    const permissions = fullPermissionsR3;
 
     const processedOwnerPassword = processPasswordR5(options.ownerPassword);
     const processedUserPassword = processedOwnerPassword.clone();
@@ -271,7 +229,7 @@ export class PDFSecurity {
       this.encryptionKey,
     );
     const permsEntry = getEncryptedPermissionsR5(
-      permissions,
+      fullPermissions,
       this.encryptionKey,
       PDFSecurity.generateRandomWordArray,
     );
@@ -292,16 +250,15 @@ export class PDFSecurity {
     encDict.OE = wordArrayToBuffer(ownerEncryptionKeyEntry);
     encDict.U = wordArrayToBuffer(userPasswordEntry);
     encDict.UE = wordArrayToBuffer(userEncryptionKeyEntry);
-    encDict.P = permissions;
+    encDict.P = fullPermissions;
     encDict.Perms = wordArrayToBuffer(permsEntry);
     return encDict;
   }
 
   getEncryptFn(obj: number, gen: number) {
-    let digest: WordArray;
     let key: WordArray;
-    if (this.version < 5) {
-      digest = this.encryptionKey
+    if (this.version === 4) {
+      const digest = this.encryptionKey
         .clone()
         .concat(
           CryptoJS.lib.WordArray.create(
@@ -315,24 +272,9 @@ export class PDFSecurity {
             5,
           ),
         );
-
-      if (this.version === 1 || this.version === 2) {
-        key = CryptoJS.MD5(digest);
-        key.sigBytes = Math.min(16, this.keyBits / 8 + 5);
-        return (buffer: Uint8Array) =>
-          wordArrayToBuffer(
-            CryptoJS.RC4.encrypt(
-              CryptoJS.lib.WordArray.create((buffer as unknown) as number[]),
-              key,
-            ).ciphertext,
-          );
-      }
-
-      if (this.version === 4) {
-        key = CryptoJS.MD5(
-          digest.concat(CryptoJS.lib.WordArray.create([0x73416c54], 4)),
-        );
-      }
+      key = CryptoJS.MD5(
+        digest.concat(CryptoJS.lib.WordArray.create([0x73416c54], 4)),
+      );
     } else if (this.version === 5) {
       key = this.encryptionKey;
     } else {
@@ -363,26 +305,17 @@ export class PDFSecurity {
 
 /**
  * Permission Flag for use Encryption Dictionary (Key: P)
- * For Security Handler revision 2
+ * For Security Handler revision 3 or higher
  */
-const fullPermissionsR2 = 0xffffffc0 >> 0;
+const fullPermissions = 0xfffff0c0 >> 0;
 
-/**
- * Permission Flag for use Encryption Dictionary (Key: P)
- * For Security Handler revision 3
- */
-const fullPermissionsR3 = 0xfffff0c0 >> 0;
-
-const getUserPasswordR2 = (encryptionKey: CryptoJS.lib.WordArray) =>
-  CryptoJS.RC4.encrypt(processPasswordR2R3R4(), encryptionKey).ciphertext;
-
-const getUserPasswordR3R4 = (
+const getUserPasswordR4 = (
   documentId: Uint8Array,
   encryptionKey: WordArray,
 ) => {
   const key = encryptionKey.clone();
   let cipher = CryptoJS.MD5(
-    processPasswordR2R3R4().concat(
+    processPasswordR4().concat(
       CryptoJS.lib.WordArray.create((documentId as unknown) as number[]),
     ),
   );
@@ -399,14 +332,13 @@ const getUserPasswordR3R4 = (
   );
 };
 
-const getOwnerPasswordR2R3R4 = (
-  r: EncDictR,
+const getOwnerPasswordR4 = (
   keyBits: EncKeyBits,
   paddedUserPassword: WordArray,
   paddedOwnerPassword: WordArray,
 ): CryptoJS.lib.WordArray => {
   let digest = paddedOwnerPassword;
-  let round = r >= 3 ? 51 : 1;
+  let round = 51;
   for (let i = 0; i < round; i++) {
     digest = CryptoJS.MD5(digest);
   }
@@ -414,7 +346,7 @@ const getOwnerPasswordR2R3R4 = (
   const key = digest.clone();
   key.sigBytes = keyBits / 8;
   let cipher = paddedUserPassword;
-  round = r >= 3 ? 20 : 1;
+  round = 20;
   for (let i = 0; i < round; i++) {
     const xorRound = Math.ceil(key.sigBytes / 4);
     for (let j = 0; j < xorRound; j++) {
@@ -425,8 +357,7 @@ const getOwnerPasswordR2R3R4 = (
   return cipher;
 };
 
-const getEncryptionKeyR2R3R4 = (
-  r: EncDictR,
+const getEncryptionKeyR4 = (
   keyBits: EncKeyBits,
   documentId: Uint8Array,
   paddedUserPassword: WordArray,
@@ -438,7 +369,7 @@ const getEncryptionKeyR2R3R4 = (
     .concat(ownerPasswordEntry)
     .concat(CryptoJS.lib.WordArray.create([lsbFirstWord(permissions)], 4))
     .concat(CryptoJS.lib.WordArray.create((documentId as unknown) as number[]));
-  const round = r >= 3 ? 51 : 1;
+  const round = 51;
   for (let i = 0; i < round; i++) {
     key = CryptoJS.MD5(key);
     key.sigBytes = keyBits / 8;
@@ -530,7 +461,7 @@ const getEncryptedPermissionsR5 = (
   return CryptoJS.AES.encrypt(cipher, encryptionKey, options).ciphertext;
 };
 
-const processPasswordR2R3R4 = (password = '') => {
+const processPasswordR4 = (password = '') => {
   const out = Buffer.alloc(32);
   const length = password.length;
   let index = 0;
