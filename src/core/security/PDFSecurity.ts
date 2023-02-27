@@ -7,42 +7,6 @@ import type { PDFDict } from 'src/core/objects/PDFDict';
 type WordArray = CryptoJS.lib.WordArray;
 type generateRandomWordArrayFn = (bytes: number) => WordArray;
 
-/**
- * Interface representing type of user permission
- * @interface UserPermission
- */
-interface UserPermission {
-  /**
-   * Printing Permission
-   * For Security handlers of revision <= 2 : Boolean
-   * For Security handlers of revision >= 3 : 'lowResolution' or 'highResolution'
-   */
-  printing?: boolean | 'lowResolution' | 'highResolution';
-  /**
-   * Modify Content Permission (Other than 'annotating', 'fillingForms' and 'documentAssembly')
-   */
-  modifying?: boolean;
-  /** Copy or otherwise extract text and graphics from document */
-  copying?: boolean;
-  /** Permission to add or modify text annotations */
-  annotating?: boolean;
-  /**
-   * Security handlers of revision >= 3
-   * Fill in existing interactive form fields (including signature fields)
-   */
-  fillingForms?: boolean;
-  /**
-   * Security handlers of revision >= 3
-   * Extract text and graphics (in support of accessibility to users with disabilities or for other purposes)
-   */
-  contentAccessibility?: boolean;
-  /**
-   * Security handlers of revision >= 3
-   * Assemble the document (insert, rotate or delete pages and create bookmarks or thumbnail images)
-   */
-  documentAssembly?: boolean;
-}
-
 export type EncryptFn = (buffer: Uint8Array) => Uint8Array;
 
 /**
@@ -56,11 +20,6 @@ export interface SecurityOption {
    * Opening encrypted document with owner password allow full (owner) access to the document
    */
   ownerPassword: string;
-
-  /** Object representing type of user permission enforced on the document
-   * @link {@link UserPermission}
-   */
-  permissions?: UserPermission;
 
   /** Version of PDF, string of '1.x' */
   pdfVersion?: string;
@@ -203,17 +162,17 @@ export class PDFSecurity {
       case 1:
         r = 2;
         this.keyBits = 40;
-        permissions = getPermissionsR2(options.permissions);
+        permissions = fullPermissionsR2;
         break;
       case 2:
         r = 3;
         this.keyBits = 128;
-        permissions = getPermissionsR3(options.permissions);
+        permissions = fullPermissionsR3;
         break;
       case 4:
         r = 4;
         this.keyBits = 128;
-        permissions = getPermissionsR3(options.permissions);
+        permissions = fullPermissionsR3;
         break;
       default:
         throw new Error('Unknown v value');
@@ -275,7 +234,7 @@ export class PDFSecurity {
     } as EncDictV5;
 
     this.keyBits = 256;
-    const permissions = getPermissionsR3(options.permissions);
+    const permissions = fullPermissionsR3;
 
     const processedOwnerPassword = processPasswordR5(options.ownerPassword);
     const processedUserPassword = processedOwnerPassword.clone();
@@ -403,71 +362,16 @@ export class PDFSecurity {
 }
 
 /**
- * Get Permission Flag for use Encryption Dictionary (Key: P)
+ * Permission Flag for use Encryption Dictionary (Key: P)
  * For Security Handler revision 2
- *
- * Only bit position 3,4,5,6,9,10,11 and 12 is meaningful
- * Refer Table 22 - User access permission
- * @param  {permissionObject} {@link UserPermission}
- * @returns number - Representing unsigned 32-bit integer
  */
-const getPermissionsR2 = (permissionObject: UserPermission = {}) => {
-  let permissions = 0xffffffc0 >> 0;
-  if (permissionObject.printing) {
-    permissions |= 0b000000000100;
-  }
-  if (permissionObject.modifying) {
-    permissions |= 0b000000001000;
-  }
-  if (permissionObject.copying) {
-    permissions |= 0b000000010000;
-  }
-  if (permissionObject.annotating) {
-    permissions |= 0b000000100000;
-  }
-  return permissions;
-};
+const fullPermissionsR2 = 0xffffffc0 >> 0;
 
 /**
- * Get Permission Flag for use Encryption Dictionary (Key: P)
- * For Security Handler revision 2
- *
- * Only bit position 3,4,5,6,9,10,11 and 12 is meaningful
- * Refer Table 22 - User access permission
- * @param  {permissionObject} {@link UserPermission}
- * @returns number - Representing unsigned 32-bit integer
+ * Permission Flag for use Encryption Dictionary (Key: P)
+ * For Security Handler revision 3
  */
-const getPermissionsR3 = (permissionObject: UserPermission = {}) => {
-  let permissions = 0xfffff0c0 >> 0;
-  if (
-    permissionObject.printing === 'lowResolution' ||
-    permissionObject.printing
-  ) {
-    permissions |= 0b000000000100;
-  }
-  if (permissionObject.printing === 'highResolution') {
-    permissions |= 0b100000000100;
-  }
-  if (permissionObject.modifying) {
-    permissions |= 0b000000001000;
-  }
-  if (permissionObject.copying) {
-    permissions |= 0b000000010000;
-  }
-  if (permissionObject.annotating) {
-    permissions |= 0b000000100000;
-  }
-  if (permissionObject.fillingForms) {
-    permissions |= 0b000100000000;
-  }
-  if (permissionObject.contentAccessibility) {
-    permissions |= 0b001000000000;
-  }
-  if (permissionObject.documentAssembly) {
-    permissions |= 0b010000000000;
-  }
-  return permissions;
-};
+const fullPermissionsR3 = 0xfffff0c0 >> 0;
 
 const getUserPasswordR2 = (encryptionKey: CryptoJS.lib.WordArray) =>
   CryptoJS.RC4.encrypt(processPasswordR2R3R4(), encryptionKey).ciphertext;

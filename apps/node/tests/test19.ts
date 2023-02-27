@@ -247,13 +247,11 @@ export default async (assets: Assets) => {
 
   pdfDoc.encrypt({
     ownerPassword,
-    permissions: { modifying: true },
   });
 
   /********************** Print Metadata **********************/
   console.log('PDF Encrypt without using object streams');
   console.log('ownerPassword:', ownerPassword);
-  console.log('permissions:', 'modifying only');
 
   /********************** Export PDF **********************/
   const pdfBytes = await pdfDoc.save({ useObjectStreams: false });

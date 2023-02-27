@@ -247,7 +247,6 @@ export default async (assets: Assets) => {
 
   pdfDoc.encrypt({
     ownerPassword,
-    permissions: { modifying: true },
   });
 
   /********************** Print Metadata **********************/
@@ -255,7 +254,6 @@ export default async (assets: Assets) => {
     'PDF Encrypt using object streams, temporarily doesnt work with adobe acrobat',
   );
   console.log('ownerPassword:', ownerPassword);
-  console.log('permissions:', 'modifying only');
 
   /********************** Export PDF **********************/
   const pdfBytes = await pdfDoc.save();
