@@ -55,13 +55,7 @@ export interface SecurityOption {
    *
    * Opening encrypted document with owner password allow full (owner) access to the document
    */
-  ownerPassword?: string;
-
-  /** Password that restrict reader according to defined permissions
-   *
-   * Opening encrypted document with user password will have limitations in accordance to the permission defined.
-   */
-  userPassword: string;
+  ownerPassword: string;
 
   /** Object representing type of user permission enforced on the document
    * @link {@link UserPermission}
@@ -154,8 +148,8 @@ export class PDFSecurity {
     document: PDFDocument,
     options: SecurityOption = {} as SecurityOption,
   ) {
-    if (!options.ownerPassword && !options.userPassword) {
-      throw new Error('None of owner password and user password is defined.');
+    if (!options.ownerPassword) {
+      throw new Error('No owner password is defined.');
     }
 
     this.document = document;
@@ -225,12 +219,8 @@ export class PDFSecurity {
         throw new Error('Unknown v value');
     }
 
-    const paddedUserPassword: WordArray = processPasswordR2R3R4(
-      options.userPassword,
-    );
-    const paddedOwnerPassword: WordArray = options.ownerPassword
-      ? processPasswordR2R3R4(options.ownerPassword)
-      : paddedUserPassword;
+    const paddedOwnerPassword: WordArray = processPasswordR2R3R4(options.ownerPassword);
+    const paddedUserPassword = paddedOwnerPassword.clone();
 
     const ownerPasswordEntry: WordArray = getOwnerPasswordR2R3R4(
       r,
@@ -287,10 +277,8 @@ export class PDFSecurity {
     this.keyBits = 256;
     const permissions = getPermissionsR3(options.permissions);
 
-    const processedUserPassword = processPasswordR5(options.userPassword);
-    const processedOwnerPassword = options.ownerPassword
-      ? processPasswordR5(options.ownerPassword)
-      : processedUserPassword;
+    const processedOwnerPassword = processPasswordR5(options.ownerPassword);
+    const processedUserPassword = processedOwnerPassword.clone();
 
     this.encryptionKey = getEncryptionKeyR5(
       PDFSecurity.generateRandomWordArray,

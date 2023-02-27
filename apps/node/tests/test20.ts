@@ -243,11 +243,9 @@ export default async (assets: Assets) => {
     const [page1] = await pdfDoc.copyPages(formDoc, [0]);
     pdfDoc.addPage(page1);
   }
-  const userPassword = 'abcd';
   const ownerPassword = '1234';
 
   pdfDoc.encrypt({
-    userPassword,
     ownerPassword,
     permissions: { modifying: true },
   });
@@ -256,7 +254,6 @@ export default async (assets: Assets) => {
   console.log(
     'PDF Encrypt using object streams, temporarily doesnt work with adobe acrobat',
   );
-  console.log('userPassword:', userPassword);
   console.log('ownerPassword:', ownerPassword);
   console.log('permissions:', 'modifying only');
 
