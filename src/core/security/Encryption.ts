@@ -6,7 +6,6 @@ export type EncryptFn = (buffer: Uint8Array) => Uint8Array;
 export interface StdCF {
   AuthEvent: 'DocOpen';
   CFM: 'AESV2' | 'AESV3';
-  Length: number;
 }
 
 export interface CF {
@@ -27,17 +26,15 @@ interface EncDictBase extends LiteralObject {
 }
 
 export interface EncDictV4 extends EncDictBase {
-  Length?: number;
-  CF?: CF;
-  StmF?: string;
-  StrF?: string;
+  CF: CF;
+  StmF: 'StdCF';
+  StrF: 'StdCF';
 }
 
 export interface EncDictV5 extends EncDictBase {
   OE: Uint8Array;
   UE: Uint8Array;
   Perms: Uint8Array;
-  Length?: number;
   CF: CF;
   StmF: 'StdCF';
   StrF: 'StdCF';

@@ -145,12 +145,10 @@ export const setupEncryptionR4 = (
   const userPasswordEntry = getUserPasswordR4(documentId, encryptionKey);
 
   dictionary.V = version;
-  dictionary.Length = keyBits;
   dictionary.CF = {
     StdCF: {
       AuthEvent: 'DocOpen',
       CFM: 'AESV2',
-      Length: keyBits / 8,
     },
   };
   dictionary.StmF = 'StdCF';

@@ -161,12 +161,10 @@ export const setupEncryptionR5 = (options: SecurityOption): Encryption => {
   );
 
   dictionary.V = 5;
-  dictionary.Length = keyBits;
   dictionary.CF = {
     StdCF: {
       AuthEvent: 'DocOpen',
       CFM: 'AESV3',
-      Length: keyBits / 8,
     },
   };
   dictionary.StmF = 'StdCF';
