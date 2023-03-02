@@ -185,6 +185,8 @@ export class PDFDocument {
    * @returns void
    */
   async encrypt(options: SecurityOption) {
+    if (this.isEncrypted()) return;
+
     options.pdfVersion = this.context.header.getVersion();
     this._id = PDFSecurity.generateFileID(this.getInfoDict());
     const newInfo = this.context.obj([this._id, this._id]);
