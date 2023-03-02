@@ -1,6 +1,4 @@
 import CryptoJS from 'crypto-js';
-import type { PDFDocument } from 'src/api/PDFDocument';
-import type { PDFDict } from 'src/core/objects/PDFDict';
 import type {
   EncDict,
   EncDictV,
@@ -38,34 +36,33 @@ export class PDFSecurity {
   dictionary!: EncDict;
   encryptionKey!: WordArray;
 
-  /*   
-  ID file is an array of two byte-string constituing 
-  a file identifier
-
-  Required if Encrypt entry is present in Trailer
-  Doesn't really matter what it is as long as it is 
-  consistently used. 
-  */
-  static generateFileID(info: PDFDict): Uint8Array {
-    return wordArrayToBuffer(CryptoJS.MD5(info.toString()));
+  /*
+   * Generate MD5 hash bytes from any arbitrary string.
+   */
+  static getHashBytesMD5(s: string): Uint8Array {
+    return wordArrayToBuffer(CryptoJS.MD5(s));
   }
 
+  /**
+   * @param firstId The first element of the PDF file identifier.
+   * @param options
+   */
   static create(
-    document: PDFDocument,
+    firstId: Uint8Array,
     options: SecurityOption = {} as SecurityOption,
   ) {
-    return new PDFSecurity(document, options);
+    return new PDFSecurity(firstId, options);
   }
 
   constructor(
-    document: PDFDocument,
+    firstId: Uint8Array,
     options: SecurityOption = {} as SecurityOption,
   ) {
     if (!options.ownerPassword) {
       throw new Error('No owner password is defined.');
     }
 
-    this._setupEncryption(document._id, options);
+    this._setupEncryption(firstId, options);
   }
 
   /* 
@@ -73,7 +70,7 @@ export class PDFSecurity {
   EncryptionDictionary that is required
   to be plugged into Trailer of the PDF 
   */
-  _setupEncryption(documentId:Uint8Array, options: SecurityOption) {
+  _setupEncryption(firstId: Uint8Array, options: SecurityOption) {
     let version: EncDictV;
     switch (options.pdfVersion) {
       case '1.7ext3':
@@ -87,7 +84,7 @@ export class PDFSecurity {
     let encryption: Encryption;
     switch (version) {
       case 4:
-        encryption = setupEncryptionR4(version, documentId, options);
+        encryption = setupEncryptionR4(version, firstId, options);
         break;
       case 5:
         encryption = setupEncryptionR5(options);

@@ -16,13 +16,13 @@ import { wordArrayToBuffer, lsbFirstWord } from 'src/core/security/WordArray';
 const fullPermissions = 0xfffff0c0 >> 0;
 
 const getUserPasswordR4 = (
-  documentId: Uint8Array,
+  firstId: Uint8Array,
   encryptionKey: WordArray,
 ) => {
   const key = encryptionKey.clone();
   let cipher = CryptoJS.MD5(
     processPasswordR4().concat(
-      CryptoJS.lib.WordArray.create(documentId as unknown as number[]),
+      CryptoJS.lib.WordArray.create(firstId as unknown as number[]),
     ),
   );
   for (let i = 0; i < 20; i++) {
@@ -65,7 +65,7 @@ const getOwnerPasswordR4 = (
 
 const getEncryptionKeyR4 = (
   keyBits: EncKeyBits,
-  documentId: Uint8Array,
+  firstId: Uint8Array,
   paddedUserPassword: WordArray,
   ownerPasswordEntry: WordArray,
   permissions: number,
@@ -74,7 +74,7 @@ const getEncryptionKeyR4 = (
     .clone()
     .concat(ownerPasswordEntry)
     .concat(CryptoJS.lib.WordArray.create([lsbFirstWord(permissions)], 4))
-    .concat(CryptoJS.lib.WordArray.create(documentId as unknown as number[]));
+    .concat(CryptoJS.lib.WordArray.create(firstId as unknown as number[]));
   const round = 51;
   for (let i = 0; i < round; i++) {
     key = CryptoJS.MD5(key);
@@ -116,7 +116,7 @@ const PASSWORD_PADDING = [
 
 export const setupEncryptionR4 = (
   version: EncDictV,
-  documentId: Uint8Array,
+  firstId: Uint8Array,
   options: SecurityOption,
 ): Encryption => {
   const dictionary = {
@@ -137,12 +137,12 @@ export const setupEncryptionR4 = (
   );
   const encryptionKey = getEncryptionKeyR4(
     keyBits,
-    documentId,
+    firstId,
     paddedUserPassword,
     ownerPasswordEntry,
     fullPermissions,
   );
-  const userPasswordEntry = getUserPasswordR4(documentId, encryptionKey);
+  const userPasswordEntry = getUserPasswordR4(firstId, encryptionKey);
 
   dictionary.V = version;
   dictionary.CF = {

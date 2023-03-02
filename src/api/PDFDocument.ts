@@ -17,6 +17,7 @@ import {
   JpegEmbedder,
   PageBoundingBox,
   PageEmbeddingMismatchedContextError,
+  PDFArray,
   PDFCatalog,
   PDFContext,
   PDFDict,
@@ -70,7 +71,6 @@ import { PDFSecurity, SecurityOption } from 'src/core/security/PDFSecurity';
  * Represents a PDF document.
  */
 export class PDFDocument {
-  _id!: Uint8Array;
   _security!: PDFSecurity | null;
   /**
    * Load an existing [[PDFDocument]]. The input data can be provided in
@@ -188,15 +188,40 @@ export class PDFDocument {
     if (this.isEncrypted()) return;
 
     options.pdfVersion = this.context.header.getVersion();
-    this._id = PDFSecurity.generateFileID(this.getInfoDict());
-    const newInfo = this.context.obj([this._id, this._id]);
-    this.context.trailerInfo.ID = newInfo;
 
-    this._security = PDFSecurity.create(this, options);
+    const [firstId,] = this.updateId();
+
+    this._security = PDFSecurity.create(firstId, options);
     this.context.setSecurity(this._security);
 
     const newSecurity = this.context.obj(this._security.dictionary);
     this.context.trailerInfo.Encrypt = this.context.register(newSecurity);
+  }
+
+  /**
+   * Update (or create if absent) the `ID` entry in the trailer dictionary.
+   *
+   * @returns The updated ID as an array of byte-strings.
+   */
+  updateId(): [Uint8Array, Uint8Array] {
+    const trailer = this.context.trailerInfo;
+    const currentId = trailer.ID;
+
+    // TODO: Generate hash based on the contents
+    const currentHash = PDFSecurity.getHashBytesMD5(this.getInfoDict().toString());
+
+    let originalHash: Uint8Array = currentHash;
+    if (currentId instanceof PDFArray) {
+      const firstId = currentId.get(0);
+      if (firstId instanceof PDFHexString) {
+        originalHash = firstId.asBytes();
+      }
+    }
+
+    const newIds: [Uint8Array, Uint8Array] = [originalHash, currentHash];
+    trailer.ID = this.context.obj(newIds);
+
+    return newIds;
   }
 
   /** The low-level context of this document. */
