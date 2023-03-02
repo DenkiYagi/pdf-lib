@@ -4,7 +4,6 @@ import type { PDFDict } from 'src/core/objects/PDFDict';
 import type {
   EncDict,
   EncDictV,
-  EncKeyBits,
   Encryption,
 } from 'src/core/security/Encryption';
 import {
@@ -36,12 +35,8 @@ Output from `_setupEncryption` is the Encryption Dictionary
 in compliance to the PDF Specification 
 */
 export class PDFSecurity {
-  document: PDFDocument;
-  version!: EncDictV;
   dictionary!: EncDict;
-  keyBits!: EncKeyBits;
   encryptionKey!: WordArray;
-  id!: Uint8Array;
 
   /*   
   ID file is an array of two byte-string constituing 
@@ -70,8 +65,7 @@ export class PDFSecurity {
       throw new Error('No owner password is defined.');
     }
 
-    this.document = document;
-    this._setupEncryption(options);
+    this._setupEncryption(document._id, options);
   }
 
   /* 
@@ -79,37 +73,33 @@ export class PDFSecurity {
   EncryptionDictionary that is required
   to be plugged into Trailer of the PDF 
   */
-  _setupEncryption(options: SecurityOption) {
+  _setupEncryption(documentId:Uint8Array, options: SecurityOption) {
+    let version: EncDictV;
     switch (options.pdfVersion) {
       case '1.7ext3':
-        this.version = 5;
+        version = 5;
         break;
       default:
-        this.version = 4;
+        version = 4;
         break;
     }
 
     let encryption: Encryption;
-    switch (this.version) {
+    switch (version) {
       case 4:
-        encryption = setupEncryptionR4(
-          this.version,
-          this.document._id,
-          options,
-        );
+        encryption = setupEncryptionR4(version, documentId, options);
         break;
       case 5:
         encryption = setupEncryptionR5(options);
         break;
     }
-    this.keyBits = encryption.keyBits;
     this.encryptionKey = encryption.key;
     this.dictionary = encryption.dictionary;
   }
 
   getEncryptFn(obj: number, gen: number) {
     let key: WordArray;
-    if (this.version === 4) {
+    if (this.dictionary.V === 4) {
       const digest = this.encryptionKey
         .clone()
         .concat(
@@ -127,7 +117,7 @@ export class PDFSecurity {
       key = CryptoJS.MD5(
         digest.concat(CryptoJS.lib.WordArray.create([0x73416c54], 4)),
       );
-    } else if (this.version === 5) {
+    } else if (this.dictionary.V === 5) {
       key = this.encryptionKey;
     } else {
       throw new Error('Unknown V value');
