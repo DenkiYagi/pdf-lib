@@ -1,15 +1,13 @@
 import CryptoJS from 'crypto-js';
 import type {
-  EncDict,
-  EncDictV,
+  EncryptionDict,
+  EncryptionAlgorithmVersion,
   Encryption,
-} from 'src/core/security/Encryption';
-import {
-  setupEncryptionR4,
-  setupEncryptionR5,
 } from 'src/core/security/Encryption';
 import type { WordArray } from 'src/core/security/WordArray';
 import { wordArrayToBuffer } from 'src/core/security/WordArray';
+import { setupEncryptionV4 } from 'src/core/security/EncryptionV4';
+import { setupEncryptionV5 } from 'src/core/security/EncryptionV5';
 
 export interface SecurityOptions {
   /**
@@ -29,8 +27,8 @@ export interface SecurityOptions {
  * Generated when encrypting any unencrypted PDF Document.
  */
 export class PDFSecurity {
-  dictionary: EncDict;
   encryptionKey: WordArray;
+  encryptionDict: EncryptionDict;
 
   /*
    * Generate MD5 hash bytes from any arbitrary string.
@@ -58,7 +56,7 @@ export class PDFSecurity {
       throw new Error('No owner password is defined.');
     }
 
-    let version: EncDictV;
+    let version: EncryptionAlgorithmVersion;
     switch (options.pdfVersion) {
       case '1.7ext3':
         version = 5;
@@ -71,19 +69,19 @@ export class PDFSecurity {
     let encryption: Encryption;
     switch (version) {
       case 4:
-        encryption = setupEncryptionR4(version, firstId, options);
+        encryption = setupEncryptionV4(firstId, options);
         break;
       case 5:
-        encryption = setupEncryptionR5(options);
+        encryption = setupEncryptionV5(options);
         break;
     }
     this.encryptionKey = encryption.key;
-    this.dictionary = encryption.dictionary;
+    this.encryptionDict = encryption.dictionary;
   }
 
   getEncryptFn(obj: number, gen: number) {
     let key: WordArray;
-    if (this.dictionary.V === 4) {
+    if (this.encryptionDict.V === 4) {
       const digest = this.encryptionKey
         .clone()
         .concat(
@@ -101,10 +99,10 @@ export class PDFSecurity {
       key = CryptoJS.MD5(
         digest.concat(CryptoJS.lib.WordArray.create([0x73416c54], 4)),
       );
-    } else if (this.dictionary.V === 5) {
+    } else if (this.encryptionDict.V === 5) {
       key = this.encryptionKey;
     } else {
-      throw new Error('Unknown V value');
+      throw new Error(`Unknown V value: ${this.encryptionDict.V}`);
     }
 
     const iv = CryptoJS.lib.WordArray.random(16);

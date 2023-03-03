@@ -1,17 +1,29 @@
 import saslprep from 'saslprep';
 
-import type {
-  EncDictV5,
-  EncKeyBits,
-  Encryption,
-} from 'src/core/security/Encryption';
-import type { SecurityOptions } from 'src/core/security/PDFSecurity';
 import type { WordArray } from 'src/core/security/WordArray';
 import {
   GenerateRandomWordArrayFn,
   wordArrayToBuffer,
   lsbFirstWord,
 } from 'src/core/security/WordArray';
+import type { StdSecurityHandlerDictBase } from './StdSecurityHandler';
+
+export interface StdSecurityHandlerDictR5 extends StdSecurityHandlerDictBase {
+  /**
+   * Owner encryption key.
+   */
+  OE: Uint8Array;
+
+  /**
+   * User encryption key.
+   */
+  UE: Uint8Array;
+
+  /**
+   * Permissions.
+   */
+  Perms: Uint8Array;
+}
 
 /**
  * Permission Flag for use Encryption Dictionary (Key: P)
@@ -115,14 +127,13 @@ const processPasswordR5 = (password = '') => {
   return CryptoJS.lib.WordArray.create(out as unknown as number[]);
 };
 
-export const setupEncryptionR5 = (options: SecurityOptions): Encryption => {
-  const dictionary = {
-    Filter: 'Standard',
-  } as EncDictV5;
-
-  const keyBits: EncKeyBits = 256;
-
-  const processedOwnerPassword = processPasswordR5(options.ownerPassword);
+export const setupStdSecurityHandlerR5 = (
+  ownerPassword: string,
+): {
+  key: WordArray;
+  dict: StdSecurityHandlerDictR5;
+} => {
+  const processedOwnerPassword = processPasswordR5(ownerPassword);
   const processedUserPassword = processedOwnerPassword.clone();
 
   const encryptionKey = getEncryptionKeyR5(CryptoJS.lib.WordArray.random);
@@ -160,26 +171,16 @@ export const setupEncryptionR5 = (options: SecurityOptions): Encryption => {
     CryptoJS.lib.WordArray.random,
   );
 
-  dictionary.V = 5;
-  dictionary.CF = {
-    StdCF: {
-      AuthEvent: 'DocOpen',
-      CFM: 'AESV3',
-    },
-  };
-  dictionary.StmF = 'StdCF';
-  dictionary.StrF = 'StdCF';
-  dictionary.R = 5;
-  dictionary.O = wordArrayToBuffer(ownerPasswordEntry);
-  dictionary.OE = wordArrayToBuffer(ownerEncryptionKeyEntry);
-  dictionary.U = wordArrayToBuffer(userPasswordEntry);
-  dictionary.UE = wordArrayToBuffer(userEncryptionKeyEntry);
-  dictionary.P = fullPermissions;
-  dictionary.Perms = wordArrayToBuffer(permsEntry);
-
   return {
-    keyBits,
     key: encryptionKey,
-    dictionary,
+    dict: {
+      R: 5,
+      O: wordArrayToBuffer(ownerPasswordEntry),
+      OE: wordArrayToBuffer(ownerEncryptionKeyEntry),
+      U: wordArrayToBuffer(userPasswordEntry),
+      UE: wordArrayToBuffer(userEncryptionKeyEntry),
+      P: fullPermissions,
+      Perms: wordArrayToBuffer(permsEntry),
+    },
   };
 };

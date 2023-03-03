@@ -1219,7 +1219,7 @@ export class PDFDocument {
     const security = PDFSecurity.create(firstId, options);
     this.context.security = security;
 
-    const encryption = this.context.obj(security.dictionary);
+    const encryption = this.context.obj(security.encryptionDict);
     this.context.trailerInfo.Encrypt = this.context.register(encryption);
   }
 

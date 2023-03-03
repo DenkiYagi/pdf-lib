@@ -1,24 +1,22 @@
 import CryptoJS from 'crypto-js';
-import type {
-  EncDictV,
-  EncDictV4,
-  EncKeyBits,
-  Encryption,
-} from 'src/core/security/Encryption';
-import type { SecurityOptions } from 'src/core/security/PDFSecurity';
 import type { WordArray } from 'src/core/security/WordArray';
 import { wordArrayToBuffer, lsbFirstWord } from 'src/core/security/WordArray';
+import type { StdSecurityHandlerDictBase } from './StdSecurityHandler';
+
+export interface StdSecurityHandlerDictR4 extends StdSecurityHandlerDictBase {}
 
 /**
  * Permission Flag for use Encryption Dictionary (Key: P)
- * For Security Handler revision 3 or higher
+ * For Standard Security Handler revision 3 or higher
  */
 const fullPermissions = 0xfffff0c0 >> 0;
 
-const getUserPasswordR4 = (
-  firstId: Uint8Array,
-  encryptionKey: WordArray,
-) => {
+/**
+ * Bit length of encryption key.
+ */
+const keyBits = 128;
+
+const getUserPasswordR4 = (firstId: Uint8Array, encryptionKey: WordArray) => {
   const key = encryptionKey.clone();
   let cipher = CryptoJS.MD5(
     processPasswordR4().concat(
@@ -39,7 +37,6 @@ const getUserPasswordR4 = (
 };
 
 const getOwnerPasswordR4 = (
-  keyBits: EncKeyBits,
   paddedUserPassword: WordArray,
   paddedOwnerPassword: WordArray,
 ): CryptoJS.lib.WordArray => {
@@ -64,7 +61,6 @@ const getOwnerPasswordR4 = (
 };
 
 const getEncryptionKeyR4 = (
-  keyBits: EncKeyBits,
   firstId: Uint8Array,
   paddedUserPassword: WordArray,
   ownerPasswordEntry: WordArray,
@@ -114,29 +110,21 @@ const PASSWORD_PADDING = [
   0xa9, 0xfe, 0x64, 0x53, 0x69, 0x7a,
 ];
 
-export const setupEncryptionR4 = (
-  version: EncDictV,
+export const setupStdSecurityHandlerR4 = (
   firstId: Uint8Array,
-  options: SecurityOptions,
-): Encryption => {
-  const dictionary = {
-    Filter: 'Standard',
-  } as EncDictV4;
-
-  const keyBits: EncKeyBits = 128;
-
-  const paddedOwnerPassword: WordArray = processPasswordR4(
-    options.ownerPassword,
-  );
+  ownerPassword: string,
+): {
+  key: WordArray;
+  dict: StdSecurityHandlerDictR4;
+} => {
+  const paddedOwnerPassword: WordArray = processPasswordR4(ownerPassword);
   const paddedUserPassword = paddedOwnerPassword.clone();
 
   const ownerPasswordEntry: WordArray = getOwnerPasswordR4(
-    keyBits,
     paddedUserPassword,
     paddedOwnerPassword,
   );
   const encryptionKey = getEncryptionKeyR4(
-    keyBits,
     firstId,
     paddedUserPassword,
     ownerPasswordEntry,
@@ -144,24 +132,13 @@ export const setupEncryptionR4 = (
   );
   const userPasswordEntry = getUserPasswordR4(firstId, encryptionKey);
 
-  dictionary.V = version;
-  dictionary.CF = {
-    StdCF: {
-      AuthEvent: 'DocOpen',
-      CFM: 'AESV2',
-    },
-  };
-  dictionary.StmF = 'StdCF';
-  dictionary.StrF = 'StdCF';
-
-  dictionary.R = 4;
-  dictionary.O = wordArrayToBuffer(ownerPasswordEntry);
-  dictionary.U = wordArrayToBuffer(userPasswordEntry);
-  dictionary.P = fullPermissions;
-
   return {
-    keyBits,
     key: encryptionKey,
-    dictionary,
+    dict: {
+      R: 4,
+      O: wordArrayToBuffer(ownerPasswordEntry),
+      U: wordArrayToBuffer(userPasswordEntry),
+      P: fullPermissions,
+    },
   };
 };
