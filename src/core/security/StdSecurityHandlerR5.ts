@@ -1,7 +1,7 @@
 import saslprep from 'saslprep';
 
-import type { WordArray } from 'src/core/security/WordArray';
 import {
+  WordArray,
   GenerateRandomWordArrayFn,
   wordArrayToBuffer,
   lsbFirstWord,

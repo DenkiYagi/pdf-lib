@@ -1,6 +1,5 @@
 import CryptoJS from 'crypto-js';
-import type { WordArray } from 'src/core/security/WordArray';
-import { wordArrayToBuffer, lsbFirstWord } from 'src/core/security/WordArray';
+import { WordArray, wordArrayToBuffer, lsbFirstWord } from 'src/core/security/WordArray';
 import type { StdSecurityHandlerDictBase } from './StdSecurityHandler';
 
 export interface StdSecurityHandlerDictR4 extends StdSecurityHandlerDictBase {}
