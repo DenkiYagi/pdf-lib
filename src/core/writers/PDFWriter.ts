@@ -122,7 +122,7 @@ export class PDFWriter {
 
     const xref = PDFCrossRefSection.create();
 
-    const pdfSecurity = this.context.getSecurity();
+    const pdfSecurity = this.context.security;
 
     const indirectObjects = this.context.enumerateIndirectObjects();
 

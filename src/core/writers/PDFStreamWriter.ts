@@ -56,7 +56,7 @@ export class PDFStreamWriter extends PDFWriter {
     const compressedObjects: [PDFRef, PDFObject][][] = [];
     const objectStreamRefs: PDFRef[] = [];
 
-    const pdfSecurity = this.context.getSecurity();
+    const pdfSecurity = this.context.security;
 
     const indirectObjects = this.context.enumerateIndirectObjects();
     for (let idx = 0, len = indirectObjects.length; idx < len; idx++) {

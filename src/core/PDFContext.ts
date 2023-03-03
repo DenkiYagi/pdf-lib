@@ -18,7 +18,7 @@ import { PDFOperator } from 'src/core/operators/PDFOperator';
 import { PDFOperatorNames as Ops } from 'src/core/operators/PDFOperatorNames';
 import type { PDFSecurity } from 'src/core/security/PDFSecurity';
 import { PDFContentStream } from 'src/core/structures/PDFContentStream';
-import { assertSecurity, typedArrayFor, Uint8ArrToHex } from 'src/utils';
+import { typedArrayFor, Uint8ArrToHex } from 'src/utils';
 import { SimpleRNG } from 'src/utils/rng';
 
 type LookupKey = PDFRef | PDFObject | undefined;
@@ -50,6 +50,7 @@ export class PDFContext {
 
   largestObjectNumber: number;
   header: PDFHeader;
+  security: PDFSecurity | null = null;
   trailerInfo: {
     Root?: PDFObject;
     Encrypt?: PDFObject;
@@ -62,7 +63,6 @@ export class PDFContext {
 
   private pushGraphicsStateContentStreamRef?: PDFRef;
   private popGraphicsStateContentStreamRef?: PDFRef;
-  private _security!: PDFSecurity | null;
 
   private constructor() {
     this.largestObjectNumber = 0;
@@ -71,15 +71,6 @@ export class PDFContext {
 
     this.indirectObjects = new Map();
     this.rng = SimpleRNG.withSeed(1);
-  }
-
-  getSecurity(): PDFSecurity | null {
-    return this._security;
-  }
-
-  setSecurity(pdfSecurity: PDFSecurity): void {
-    assertSecurity(pdfSecurity, 'PDFSecurity Instance');
-    this._security = pdfSecurity;
   }
 
   assign(ref: PDFRef, object: PDFObject): void {

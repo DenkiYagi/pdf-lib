@@ -5,7 +5,7 @@ import type {
   EncKeyBits,
   Encryption,
 } from 'src/core/security/Encryption';
-import type { SecurityOption } from 'src/core/security/PDFSecurity';
+import type { SecurityOptions } from 'src/core/security/PDFSecurity';
 import type { WordArray } from 'src/core/security/WordArray';
 import {
   GenerateRandomWordArrayFn,
@@ -115,7 +115,7 @@ const processPasswordR5 = (password = '') => {
   return CryptoJS.lib.WordArray.create(out as unknown as number[]);
 };
 
-export const setupEncryptionR5 = (options: SecurityOption): Encryption => {
+export const setupEncryptionR5 = (options: SecurityOptions): Encryption => {
   const dictionary = {
     Filter: 'Standard',
   } as EncDictV5;

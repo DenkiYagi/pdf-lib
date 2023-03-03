@@ -11,30 +11,26 @@ import {
 import type { WordArray } from 'src/core/security/WordArray';
 import { wordArrayToBuffer } from 'src/core/security/WordArray';
 
-/**
- * Interface option for security
- * @interface SecurityOption
- */
-export interface SecurityOption {
+export interface SecurityOptions {
   /**
-   * Password that provide unlimited access to the encrypted document.
+   * Password that provides unlimited access to the encrypted document.
    *
-   * Opening encrypted document with owner password allow full (owner) access to the document
+   * Opening encrypted document with owner password allow full (owner) access to the document.
    */
   ownerPassword: string;
 
-  /** Version of PDF, string of '1.x' */
+  /**
+   * Version of PDF, string of '1.x'
+   */
   pdfVersion?: string;
 }
 
-/* 
-Represent the entire security class for the PDF Document
-Output from `_setupEncryption` is the Encryption Dictionary
-in compliance to the PDF Specification 
-*/
+/*
+ * Generated when encrypting any unencrypted PDF Document.
+ */
 export class PDFSecurity {
-  dictionary!: EncDict;
-  encryptionKey!: WordArray;
+  dictionary: EncDict;
+  encryptionKey: WordArray;
 
   /*
    * Generate MD5 hash bytes from any arbitrary string.
@@ -49,28 +45,19 @@ export class PDFSecurity {
    */
   static create(
     firstId: Uint8Array,
-    options: SecurityOption = {} as SecurityOption,
+    options: SecurityOptions = {} as SecurityOptions,
   ) {
     return new PDFSecurity(firstId, options);
   }
 
   constructor(
     firstId: Uint8Array,
-    options: SecurityOption = {} as SecurityOption,
+    options: SecurityOptions = {} as SecurityOptions,
   ) {
     if (!options.ownerPassword) {
       throw new Error('No owner password is defined.');
     }
 
-    this._setupEncryption(firstId, options);
-  }
-
-  /* 
-  Handle all encryption process and give back 
-  EncryptionDictionary that is required
-  to be plugged into Trailer of the PDF 
-  */
-  _setupEncryption(firstId: Uint8Array, options: SecurityOption) {
     let version: EncDictV;
     switch (options.pdfVersion) {
       case '1.7ext3':

@@ -5,7 +5,7 @@ import type {
   EncKeyBits,
   Encryption,
 } from 'src/core/security/Encryption';
-import type { SecurityOption } from 'src/core/security/PDFSecurity';
+import type { SecurityOptions } from 'src/core/security/PDFSecurity';
 import type { WordArray } from 'src/core/security/WordArray';
 import { wordArrayToBuffer, lsbFirstWord } from 'src/core/security/WordArray';
 
@@ -117,7 +117,7 @@ const PASSWORD_PADDING = [
 export const setupEncryptionR4 = (
   version: EncDictV,
   firstId: Uint8Array,
-  options: SecurityOption,
+  options: SecurityOptions,
 ): Encryption => {
   const dictionary = {
     Filter: 'Standard',

@@ -65,13 +65,12 @@ import { FileEmbedder, AFRelationship } from 'src/core/embedders/FileEmbedder';
 import { PDFEmbeddedFile } from 'src/api/PDFEmbeddedFile';
 import { PDFJavaScript } from 'src/api/PDFJavaScript';
 import { JavaScriptEmbedder } from 'src/core/embedders/JavaScriptEmbedder';
-import { PDFSecurity, SecurityOption } from 'src/core/security/PDFSecurity';
+import { PDFSecurity, SecurityOptions } from 'src/core/security/PDFSecurity';
 
 /**
  * Represents a PDF document.
  */
 export class PDFDocument {
-  _security!: PDFSecurity | null;
   /**
    * Load an existing [[PDFDocument]]. The input data can be provided in
    * multiple formats:
@@ -1210,18 +1209,18 @@ export class PDFDocument {
    * Register the `Encrypt` entry in the trailer dictionary.
    * No effect if already encrypted.
    */
-  encrypt(options: SecurityOption): void {
+  encrypt(options: SecurityOptions): void {
     if (this.isEncrypted()) return;
 
     options.pdfVersion = this.context.header.getVersion();
 
     const [firstId] = this.updateId();
 
-    this._security = PDFSecurity.create(firstId, options);
-    this.context.setSecurity(this._security);
+    const security = PDFSecurity.create(firstId, options);
+    this.context.security = security;
 
-    const newSecurity = this.context.obj(this._security.dictionary);
-    this.context.trailerInfo.Encrypt = this.context.register(newSecurity);
+    const encryption = this.context.obj(security.dictionary);
+    this.context.trailerInfo.Encrypt = this.context.register(encryption);
   }
 
   /**
