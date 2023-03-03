@@ -7,7 +7,7 @@ import type {
 import type { WordArray } from 'src/core/security/WordArray';
 import { wordArrayToBuffer } from 'src/core/security/WordArray';
 import { setupEncryptionV4 } from 'src/core/security/EncryptionV4';
-import { setupEncryptionV5 } from 'src/core/security/EncryptionV5';
+// import { setupEncryptionV5 } from 'src/core/security/EncryptionV5';
 
 export interface SecurityOptions {
   /**
@@ -16,11 +16,6 @@ export interface SecurityOptions {
    * Opening encrypted document with owner password allow full (owner) access to the document.
    */
   ownerPassword: string;
-
-  /**
-   * Version of PDF, string of '1.x'
-   */
-  pdfVersion?: string;
 }
 
 /*
@@ -56,24 +51,16 @@ export class PDFSecurity {
       throw new Error('No owner password is defined.');
     }
 
-    let version: EncryptionAlgorithmVersion;
-    switch (options.pdfVersion) {
-      case '1.7ext3':
-        version = 5;
-        break;
-      default:
-        version = 4;
-        break;
-    }
+    const version: EncryptionAlgorithmVersion = 4; // TODO: consider supporting V5
 
     let encryption: Encryption;
     switch (version) {
       case 4:
         encryption = setupEncryptionV4(firstId, options);
         break;
-      case 5:
-        encryption = setupEncryptionV5(options);
-        break;
+      // case 5:
+      //   encryption = setupEncryptionV5(options);
+      //   break;
     }
     this.encryptionKey = encryption.key;
     this.encryptionDict = encryption.dictionary;

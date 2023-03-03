@@ -1212,8 +1212,6 @@ export class PDFDocument {
   encrypt(options: SecurityOptions): void {
     if (this.isEncrypted()) return;
 
-    options.pdfVersion = this.context.header.getVersion();
-
     const [firstId] = this.updateId();
 
     const security = PDFSecurity.create(firstId, options);

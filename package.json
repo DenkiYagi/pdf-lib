@@ -86,7 +86,6 @@
     "crypto-js": "^4.1.1",
     "fontkit": "^2.0.2",
     "pako": "^2.1.0",
-    "saslprep": "https://github.com/reklatsmasters/saslprep.git#8d7278490abef3bc695cc2adeae92d4faf050987",
     "tslib": "^2.4.1"
   },
   "devDependencies": {
@@ -98,7 +97,6 @@
     "@types/jest": "^26.0.0",
     "@types/node-fetch": "^2.5.7",
     "@types/pako": "^2.0.0",
-    "@types/saslprep": "^1.0.1",
     "downlevel-dts": "^0.5.0",
     "flamebearer": "^1.1.3",
     "http-server": "^0.12.3",

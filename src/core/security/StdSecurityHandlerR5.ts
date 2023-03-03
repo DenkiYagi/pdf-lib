@@ -1,3 +1,6 @@
+// @ts-nocheck
+// This file is for future implementations.
+
 import saslprep from 'saslprep';
 
 import {

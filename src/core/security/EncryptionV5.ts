@@ -1,3 +1,6 @@
+// @ts-nocheck
+// This file is for future implementations.
+
 import type { EncryptionDict, Encryption } from 'src/core/security/Encryption';
 import type { SecurityOptions } from 'src/core/security/PDFSecurity';
 import {
