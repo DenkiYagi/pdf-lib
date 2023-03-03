@@ -80,7 +80,7 @@ const getEncryptionKeyR4 = (
 };
 
 const processPasswordR4 = (password = '') => {
-  const out = Buffer.alloc(32);
+  const out = new Uint8Array(32);
   const length = password.length;
   let index = 0;
   while (index < length && index < 32) {
