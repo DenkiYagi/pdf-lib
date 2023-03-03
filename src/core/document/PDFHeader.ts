@@ -13,10 +13,6 @@ export class PDFHeader {
     this.minor = String(minor);
   }
 
-  getVersion(): string {
-    return `${this.major}.${this.minor}`;
-  }
-
   toString(): string {
     const bc = charFromCode(129);
     return `%PDF-${this.major}.${this.minor}\n%${bc}${bc}${bc}${bc}`;

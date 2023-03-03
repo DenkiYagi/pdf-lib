@@ -163,9 +163,7 @@ export class PDFDocument {
     const catalog = PDFCatalog.withContextAndPages(context, pageTreeRef);
     context.trailerInfo.Root = context.register(catalog);
 
-    const pdfDoc = new PDFDocument(context, false, updateMetadata);
-
-    return pdfDoc;
+    return new PDFDocument(context, false, updateMetadata);
   }
 
   /** The low-level context of this document. */
