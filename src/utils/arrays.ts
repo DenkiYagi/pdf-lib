@@ -127,3 +127,14 @@ export const toUint8Array = (input: string | ArrayBuffer | Uint8Array) => {
     );
   }
 };
+
+const byteToHex: string[] = [];
+for (let n = 0; n <= 0xff; ++n) byteToHex.push(n.toString(16).padStart(2, '0'));
+
+export const uint8ArrayToHex = (bytes: Uint8Array): string => {
+  const len = bytes.length;
+  const hexArray: string[] = new Array(len);
+  for (let i = 0; i < len; ++i) hexArray[i] = byteToHex[bytes[i]];
+
+  return hexArray.join('');
+};
