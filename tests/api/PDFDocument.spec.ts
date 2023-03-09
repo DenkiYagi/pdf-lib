@@ -62,7 +62,7 @@ describe(`PDFDocument`, () => {
         parseSpeed: ParseSpeeds.Fastest,
       });
       expect(pdfDoc).toBeInstanceOf(PDFDocument);
-      expect(pdfDoc.isEncrypted).toBe(false);
+      expect(pdfDoc.isEncrypted()).toBe(false);
     });
 
     it(`throws an error for old encrypted PDFs (1)`, async () => {
@@ -95,7 +95,7 @@ describe(`PDFDocument`, () => {
         parseSpeed: ParseSpeeds.Fastest,
       });
       expect(pdfDoc).toBeInstanceOf(PDFDocument);
-      expect(pdfDoc.isEncrypted).toBe(true);
+      expect(pdfDoc.isEncrypted()).toBe(true);
     });
 
     // it(`does not throw an error for old encrypted PDFs when ignoreEncryption=true (2)`, async () => {
@@ -104,7 +104,7 @@ describe(`PDFDocument`, () => {
     //     parseSpeed: ParseSpeeds.Fastest,
     //   });
     //   expect(pdfDoc).toBeInstanceOf(PDFDocument);
-    //   expect(pdfDoc.isEncrypted).toBe(true);
+    //   expect(pdfDoc.isEncrypted()).toBe(true);
     // });
 
     it(`does not throw an error for new encrypted PDFs when ignoreEncryption=true`, async () => {
@@ -113,7 +113,7 @@ describe(`PDFDocument`, () => {
         parseSpeed: ParseSpeeds.Fastest,
       });
       expect(pdfDoc).toBeInstanceOf(PDFDocument);
-      expect(pdfDoc.isEncrypted).toBe(true);
+      expect(pdfDoc.isEncrypted()).toBe(true);
     });
 
     it(`does not throw an error for invalid PDFs when throwOnInvalidObject=false`, async () => {

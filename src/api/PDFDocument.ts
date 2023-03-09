@@ -170,9 +170,6 @@ export class PDFDocument {
   /** The catalog of this document. */
   readonly catalog: PDFCatalog;
 
-  /** Whether or not this document is encrypted. */
-  readonly isEncrypted: boolean;
-
   /** The default word breaks used in PDFPage.drawText */
   defaultWordBreaks: string[] = [' '];
 
@@ -196,7 +193,6 @@ export class PDFDocument {
 
     this.context = context;
     this.catalog = context.lookup(context.trailerInfo.Root) as PDFCatalog;
-    this.isEncrypted = !!context.lookup(context.trailerInfo.Encrypt);
 
     this.pageCache = Cache.populatedBy(this.computePages);
     this.pageMap = new Map();
@@ -207,7 +203,7 @@ export class PDFDocument {
     this.embeddedFiles = [];
     this.javaScripts = [];
 
-    if (!ignoreEncryption && this.isEncrypted) throw new EncryptedPDFError();
+    if (!ignoreEncryption && this.isEncrypted()) throw new EncryptedPDFError();
 
     if (updateMetadata) this.updateInfoDict();
   }
@@ -1196,6 +1192,13 @@ export class PDFDocument {
     this.embeddedPages.push(...embeddedPages);
 
     return embeddedPages;
+  }
+
+  /**
+   * @returns Whether or not this document is encrypted.
+   */
+  isEncrypted(): boolean {
+    return !!this.context.lookup(this.context.trailerInfo.Encrypt);
   }
 
   /**
