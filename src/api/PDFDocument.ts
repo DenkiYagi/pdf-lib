@@ -17,7 +17,6 @@ import {
   JpegEmbedder,
   PageBoundingBox,
   PageEmbeddingMismatchedContextError,
-  PDFArray,
   PDFCatalog,
   PDFContext,
   PDFDict,
@@ -65,7 +64,6 @@ import { FileEmbedder, AFRelationship } from 'src/core/embedders/FileEmbedder';
 import { PDFEmbeddedFile } from 'src/api/PDFEmbeddedFile';
 import { PDFJavaScript } from 'src/api/PDFJavaScript';
 import { JavaScriptEmbedder } from 'src/core/embedders/JavaScriptEmbedder';
-import { PDFSecurity, SecurityOptions } from 'src/core/security/PDFSecurity';
 
 /**
  * Represents a PDF document.
@@ -172,6 +170,9 @@ export class PDFDocument {
   /** The catalog of this document. */
   readonly catalog: PDFCatalog;
 
+  /** Whether or not this document is encrypted. */
+  readonly isEncrypted: boolean;
+
   /** The default word breaks used in PDFPage.drawText */
   defaultWordBreaks: string[] = [' '];
 
@@ -195,6 +196,7 @@ export class PDFDocument {
 
     this.context = context;
     this.catalog = context.lookup(context.trailerInfo.Root) as PDFCatalog;
+    this.isEncrypted = !!context.lookup(context.trailerInfo.Encrypt);
 
     this.pageCache = Cache.populatedBy(this.computePages);
     this.pageMap = new Map();
@@ -205,7 +207,7 @@ export class PDFDocument {
     this.embeddedFiles = [];
     this.javaScripts = [];
 
-    if (!ignoreEncryption && this.isEncrypted()) throw new EncryptedPDFError();
+    if (!ignoreEncryption && this.isEncrypted) throw new EncryptedPDFError();
 
     if (updateMetadata) this.updateInfoDict();
   }
@@ -1194,57 +1196,6 @@ export class PDFDocument {
     this.embeddedPages.push(...embeddedPages);
 
     return embeddedPages;
-  }
-
-  /**
-   * @returns Whether or not this document is encrypted.
-   */
-  isEncrypted(): boolean {
-    return !!this.context.lookup(this.context.trailerInfo.Encrypt);
-  }
-
-  /**
-   * Register the `Encrypt` entry in the trailer dictionary.
-   * No effect if already encrypted.
-   */
-  encrypt(options: SecurityOptions): void {
-    if (this.isEncrypted()) return;
-
-    const [firstId] = this.updateId();
-
-    const security = PDFSecurity.create(firstId, options);
-    this.context.security = security;
-
-    const encryption = this.context.obj(security.encryptionDict);
-    this.context.trailerInfo.Encrypt = this.context.register(encryption);
-  }
-
-  /**
-   * Update (or create if absent) the `ID` entry in the trailer dictionary.
-   *
-   * @returns The updated ID as an array of byte-strings.
-   */
-  updateId(): [Uint8Array, Uint8Array] {
-    const trailer = this.context.trailerInfo;
-    const currentId = trailer.ID;
-
-    // TODO: Generate hash based on the contents
-    const currentHash = PDFSecurity.getHashBytesMD5(
-      this.getInfoDict().toString(),
-    );
-
-    let originalHash: Uint8Array = currentHash;
-    if (currentId instanceof PDFArray) {
-      const firstId = currentId.get(0);
-      if (firstId instanceof PDFHexString) {
-        originalHash = firstId.asBytes();
-      }
-    }
-
-    const newIds: [Uint8Array, Uint8Array] = [originalHash, currentHash];
-    trailer.ID = this.context.obj(newIds);
-
-    return newIds;
   }
 
   /**

@@ -5,7 +5,7 @@ import { UnexpectedObjectTypeError } from 'src/core/errors';
 import { PDFArray } from 'src/core/objects/PDFArray';
 import { PDFBool } from 'src/core/objects/PDFBool';
 import { PDFDict } from 'src/core/objects/PDFDict';
-import { PDFHexString } from 'src/core/objects/PDFHexString';
+import type { PDFHexString } from 'src/core/objects/PDFHexString';
 import { PDFName } from 'src/core/objects/PDFName';
 import { PDFNull } from 'src/core/objects/PDFNull';
 import { PDFNumber } from 'src/core/objects/PDFNumber';
@@ -16,15 +16,14 @@ import type { PDFStream } from 'src/core/objects/PDFStream';
 import type { PDFString } from 'src/core/objects/PDFString';
 import { PDFOperator } from 'src/core/operators/PDFOperator';
 import { PDFOperatorNames as Ops } from 'src/core/operators/PDFOperatorNames';
-import type { PDFSecurity } from 'src/core/security/PDFSecurity';
 import { PDFContentStream } from 'src/core/structures/PDFContentStream';
-import { typedArrayFor, Uint8ArrToHex } from 'src/utils';
+import { typedArrayFor } from 'src/utils';
 import { SimpleRNG } from 'src/utils/rng';
 
 type LookupKey = PDFRef | PDFObject | undefined;
 
-export interface LiteralObject {
-  [name: string]: Literal | PDFObject | object;
+interface LiteralObject {
+  [name: string]: Literal | PDFObject;
 }
 
 interface LiteralArray {
@@ -50,7 +49,6 @@ export class PDFContext {
 
   largestObjectNumber: number;
   header: PDFHeader;
-  security: PDFSecurity | null = null;
   trailerInfo: {
     Root?: PDFObject;
     Encrypt?: PDFObject;
@@ -204,9 +202,6 @@ export class PDFContext {
       return PDFNumber.of(literal);
     } else if (typeof literal === 'boolean') {
       return literal ? PDFBool.True : PDFBool.False;
-    } else if (literal instanceof Uint8Array) {
-      // Convert ID/U/O field of Security to Hex String
-      return PDFHexString.of(Uint8ArrToHex(literal));
     } else if (Array.isArray(literal)) {
       const array = PDFArray.withContext(this);
       for (let idx = 0, len = literal.length; idx < len; idx++) {

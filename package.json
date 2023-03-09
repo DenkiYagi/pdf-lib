@@ -1,6 +1,6 @@
 {
   "name": "@denkiyagi/pdf-lib",
-  "version": "1.17.1-mod.2023.2",
+  "version": "1.17.1-mod.2023.1",
   "description": "A modified version of pdf-lib. Create and modify PDF files with JavaScript",
   "author": "DenkiYagi Inc. (modified version author), Andrew Dillon <andrew.dillon.j@gmail.com> (orignal version author)",
   "contributors": [
@@ -29,8 +29,7 @@
     "Bj Tecu (https://github.com/btecu)",
     "Brent McSharry (https://github.com/mcshaz)",
     "Tim Knapp (https://github.com/duffyd)",
-    "Ching Chang (https://github.com/ChingChang9)",
-    "Phakorn Kiong (https://github.com/PhakornKiong)"
+    "Ching Chang (https://github.com/ChingChang9)"
   ],
   "scripts": {
     "prepare": "ts-patch install -s",
@@ -83,7 +82,6 @@
   "dependencies": {
     "@pdf-lib/standard-fonts": "^1.0.0",
     "@pdf-lib/upng": "^1.0.1",
-    "crypto-js": "^4.1.1",
     "fontkit": "^2.0.2",
     "pako": "^2.1.0",
     "tslib": "^2.4.1"
@@ -93,7 +91,6 @@
     "@rollup/plugin-json": "^6.0.0",
     "@rollup/plugin-node-resolve": "^15.0.1",
     "@rollup/plugin-terser": "^0.3.0",
-    "@types/crypto-js": "^4.0.2",
     "@types/jest": "^26.0.0",
     "@types/node-fetch": "^2.5.7",
     "@types/pako": "^2.0.0",
