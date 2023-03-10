@@ -22,7 +22,7 @@ import { SimpleRNG } from 'src/utils/rng';
 
 type LookupKey = PDFRef | PDFObject | undefined;
 
-interface LiteralObject {
+export interface LiteralObject {
   [name: string]: Literal | PDFObject;
 }
 
