@@ -1,4 +1,4 @@
-import type CryptoJS from 'crypto-js';
+import CryptoJS from 'crypto-js';
 
 /**
  * An array of 32-bit words.
@@ -6,9 +6,19 @@ import type CryptoJS from 'crypto-js';
 export type WordArray = CryptoJS.lib.WordArray;
 
 /**
+ * Convert `Uint8Array` to `WordArray`.
+ */
+export function wordArrayFromBytes(bytes: Uint8Array): WordArray {
+  return CryptoJS.lib.WordArray.create(
+    bytes as unknown as number[],
+    bytes.length,
+  );
+}
+
+/**
  * Convert `WordArray` to `Uint8Array`.
  */
-export const wordsToBytes = (wordArray: WordArray): Uint8Array => {
+export function wordArrayToBytes(wordArray: WordArray): Uint8Array {
   const bytes: Array<number> = [];
   const { sigBytes, words } = wordArray;
 
@@ -19,4 +29,11 @@ export const wordsToBytes = (wordArray: WordArray): Uint8Array => {
   }
 
   return Uint8Array.from(bytes);
-};
+}
+
+/**
+ * Create a new `WordArray` with N random bytes.
+ */
+export function wordArrayRandom(byteLength: number): WordArray {
+  return CryptoJS.lib.WordArray.random(byteLength);
+}
