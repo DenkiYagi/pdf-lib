@@ -6,12 +6,22 @@ import CryptoJS from 'crypto-js';
 export type WordArray = CryptoJS.lib.WordArray;
 
 /**
+ * Creates a new `WordArray`.
+ */
+export function wordArray(words: number[], byteLength?: number): WordArray {
+  return CryptoJS.lib.WordArray.create(words, byteLength);
+}
+
+/**
  * Convert `Uint8Array` to `WordArray`.
  */
-export function wordArrayFromBytes(bytes: Uint8Array): WordArray {
+export function wordArrayFromBytes(
+  bytes: Uint8Array,
+  byteLength?: number,
+): WordArray {
   return CryptoJS.lib.WordArray.create(
     bytes as unknown as number[],
-    bytes.length,
+    byteLength ?? bytes.length,
   );
 }
 
