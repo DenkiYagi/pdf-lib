@@ -82,6 +82,7 @@ export class StdSecurityHandlerR4 extends StdSecurityHandler<StdSecurityHandlerD
     if (this.cache.encryptionKey != null) return this.cache.encryptionKey;
 
     let key = this.userPassword
+      .clone()
       .concat(this.computeOwnerPassword())
       .concat(wordArray([this.permissionFlags], 4))
       .concat(this.documentFirstId);
@@ -154,7 +155,7 @@ export class StdSecurityHandlerR4 extends StdSecurityHandler<StdSecurityHandlerD
     const rc4KeyCurrent = rc4KeyOriginal.clone();
 
     const padding32 = wordArrayFromBytes(standardPaddingBytes);
-    let rc4Out = CryptoJS.MD5(padding32.concat(this.documentFirstId));
+    let rc4Out = CryptoJS.MD5(padding32.clone().concat(this.documentFirstId));
     for (let i = 0; i < 20; ++i) {
       const xorMask = i | (i << 8) | (i << 16) | (i << 24);
       for (let wi = 0; wi < rc4KeyWordCount; ++wi)
