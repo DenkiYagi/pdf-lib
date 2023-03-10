@@ -1,0 +1,45 @@
+import type { WordArray } from './WordArray';
+
+/**
+ * Represents a standard security handler and provides
+ * functions for computing several data for encryption.
+ */
+export abstract class StdSecurityHandler<Dict extends StdSecurityHandlerDict> {
+  /**
+   * Bit length of the encryption key to be computed.
+   */
+  public readonly keyBitLength: number;
+
+  constructor(keyBitLength: number) {
+    this.keyBitLength = keyBitLength;
+  }
+
+  abstract computeEncryptionKey(): WordArray;
+  abstract createEncryptionDictEntries(): Dict;
+}
+
+/**
+ * Additional entries for encryption dictionaries that
+ * should be assigned when using standard security handler.
+ */
+export interface StdSecurityHandlerDict {
+  /**
+   * Revision of the Standard Security Handler.
+   */
+  R: number;
+
+  /**
+   * Owner key.
+   */
+  O: Uint8Array;
+
+  /**
+   * User key.
+   */
+  U: Uint8Array;
+
+  /**
+   * Permission flags.
+   */
+  P: number;
+}
