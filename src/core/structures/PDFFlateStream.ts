@@ -1,12 +1,11 @@
 import pako from 'pako';
 
-import { MethodNotImplementedError } from 'src/core/errors';
 import type { PDFDict } from 'src/core/objects/PDFDict';
 import { PDFName } from 'src/core/objects/PDFName';
 import { PDFStream } from 'src/core/objects/PDFStream';
 import { Cache } from 'src/utils';
 
-export class PDFFlateStream extends PDFStream {
+export abstract class PDFFlateStream extends PDFStream {
   protected readonly contentsCache: Cache<Uint8Array>;
   protected readonly encode: boolean;
 
@@ -19,11 +18,6 @@ export class PDFFlateStream extends PDFStream {
     this.contentsCache = Cache.populatedBy(this.computeContents);
   }
 
-  computeContents = (): Uint8Array => {
-    const unencodedContents = this.getUnencodedContents();
-    return this.encode ? pako.deflate(unencodedContents) : unencodedContents;
-  };
-
   getContents(): Uint8Array {
     return this.contentsCache.access();
   }
@@ -31,11 +25,11 @@ export class PDFFlateStream extends PDFStream {
   getContentsSize(): number {
     return this.contentsCache.access().length;
   }
+  
+  computeContents = (): Uint8Array => {
+    const unencodedContents = this.getUnencodedContents();
+    return this.encode ? pako.deflate(unencodedContents) : unencodedContents;
+  };
 
-  getUnencodedContents(): Uint8Array {
-    throw new MethodNotImplementedError(
-      this.constructor.name,
-      'getUnencodedContents',
-    );
-  }
+  abstract getUnencodedContents(): Uint8Array;
 }

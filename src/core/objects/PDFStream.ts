@@ -1,4 +1,3 @@
-import { MethodNotImplementedError } from 'src/core/errors';
 import type { PDFDict } from 'src/core/objects/PDFDict';
 import { PDFName } from 'src/core/objects/PDFName';
 import { PDFNumber } from 'src/core/objects/PDFNumber';
@@ -6,7 +5,7 @@ import { PDFObject } from 'src/core/objects/PDFObject';
 import type { PDFContext } from 'src/core/PDFContext';
 import { CharCodes } from 'src/core/syntax/CharCodes';
 
-export class PDFStream extends PDFObject {
+export abstract class PDFStream extends PDFObject {
   readonly dict: PDFDict;
 
   constructor(dict: PDFDict) {
@@ -14,27 +13,13 @@ export class PDFStream extends PDFObject {
     this.dict = dict;
   }
 
-  clone(_context?: PDFContext): PDFStream {
-    throw new MethodNotImplementedError(this.constructor.name, 'clone');
-  }
+  abstract clone(context?: PDFContext): PDFStream;
 
-  getContentsString(): string {
-    throw new MethodNotImplementedError(
-      this.constructor.name,
-      'getContentsString',
-    );
-  }
+  abstract getContentsString(): string;
 
-  getContents(): Uint8Array {
-    throw new MethodNotImplementedError(this.constructor.name, 'getContents');
-  }
+  abstract getContents(): Uint8Array;
 
-  getContentsSize(): number {
-    throw new MethodNotImplementedError(
-      this.constructor.name,
-      'getContentsSize',
-    );
-  }
+  abstract getContentsSize(): number;
 
   updateDict(): void {
     const contentsSize = this.getContentsSize();
