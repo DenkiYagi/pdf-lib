@@ -64,6 +64,7 @@ export class PDFStreamWriter extends PDFWriter {
 
       const shouldNotCompress =
         ref === this.context.trailerInfo.Encrypt ||
+        ref === this.context.trailerInfo.Root ||
         object instanceof PDFStream ||
         object instanceof PDFInvalidObject ||
         ref.generationNumber !== 0;
