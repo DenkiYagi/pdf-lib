@@ -64,6 +64,20 @@ export class PDFStreamWriter extends PDFWriter {
       const indirectObject = indirectObjects[idx];
       const [ref, object] = indirectObject;
 
+      /**
+       * `true` if the object shall not be stored in an object stream
+       * (see ISO 32000-1 > 7.5.7. Object streams).
+       * 
+       * Additional remarks:
+       * - According to the implementation of PDFBox, the `Root` shall also not be stored
+       *   in an object stream (especially if you're going to encrypt the PDF document;
+       *   otherwise you won't be able to open the encrypted PDF with Adobe Acrobat Reader).
+       * - The value of `Length` entry in an object stream shall not be stored in another
+       *   object stream. However in our implementation the `Length` entry of a stream is
+       *   always a direct object, so it will never appear here.
+       * - In linearized files, some other objects shall also not be stored in an object stream.
+       *   However we don't support linearization for now.
+       */
       const shouldNotCompress =
         ref === this.context.trailerInfo.Encrypt ||
         ref === this.context.trailerInfo.Root ||
