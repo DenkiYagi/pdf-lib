@@ -2,6 +2,7 @@ import { PDFName } from 'src/core/objects/PDFName';
 import { PDFNumber } from 'src/core/objects/PDFNumber';
 import type { PDFObject } from 'src/core/objects/PDFObject';
 import type { PDFRef } from 'src/core/objects/PDFRef';
+import type { Encrypter } from 'src/core/objects/EncryptableObject';
 import type { PDFContext } from 'src/core/PDFContext';
 import { PDFFlateStream } from 'src/core/structures/PDFFlateStream';
 import { CharCodes } from 'src/core/syntax/CharCodes';
@@ -14,8 +15,9 @@ export class PDFObjectStream extends PDFFlateStream {
     context: PDFContext,
     objects: IndirectObject[],
     encode = true,
-  ) => new PDFObjectStream(context, objects, encode);
+  ) => new PDFObjectStream(context, objects, encode, null);
 
+  private readonly context: PDFContext;
   private readonly objects: IndirectObject[];
   private readonly offsets: [number, number][];
   private readonly offsetsString: string;
@@ -23,10 +25,12 @@ export class PDFObjectStream extends PDFFlateStream {
   private constructor(
     context: PDFContext,
     objects: IndirectObject[],
-    encode = true,
+    encode: boolean,
+    encrypter: Encrypter | null,
   ) {
-    super(context.obj({}), encode);
+    super(context.obj({}), encode, encrypter);
 
+    this.context = context;
     this.objects = objects;
     this.offsets = this.computeObjectOffsets();
     this.offsetsString = this.computeOffsetsString();
@@ -95,5 +99,14 @@ export class PDFObjectStream extends PDFFlateStream {
       offset += object.sizeInBytes() + 1; // '\n'
     }
     return offsets;
+  }
+
+  encryptWith(encrypter: Encrypter): PDFObject {
+    return new PDFObjectStream(
+      this.context,
+      this.objects.slice(),
+      this.encode,
+      encrypter,
+    );
   }
 }

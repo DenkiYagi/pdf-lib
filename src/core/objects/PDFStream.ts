@@ -2,10 +2,14 @@ import type { PDFDict } from 'src/core/objects/PDFDict';
 import { PDFName } from 'src/core/objects/PDFName';
 import { PDFNumber } from 'src/core/objects/PDFNumber';
 import { PDFObject } from 'src/core/objects/PDFObject';
+import type {
+  EncryptableObject,
+  Encrypter,
+} from 'src/core/objects/EncryptableObject';
 import type { PDFContext } from 'src/core/PDFContext';
 import { CharCodes } from 'src/core/syntax/CharCodes';
 
-export abstract class PDFStream extends PDFObject {
+export abstract class PDFStream extends PDFObject implements EncryptableObject {
   readonly dict: PDFDict;
 
   constructor(dict: PDFDict) {
@@ -20,6 +24,8 @@ export abstract class PDFStream extends PDFObject {
   abstract getContents(): Uint8Array;
 
   abstract getContentsSize(): number;
+
+  abstract encryptWith(encrypter: Encrypter): PDFObject;
 
   updateDict(): void {
     const contentsSize = this.getContentsSize();

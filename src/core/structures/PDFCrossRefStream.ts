@@ -1,6 +1,8 @@
+import type { PDFObject } from 'src/core/objects/PDFObject';
 import type { PDFDict } from 'src/core/objects/PDFDict';
 import { PDFName } from 'src/core/objects/PDFName';
 import { PDFRef } from 'src/core/objects/PDFRef';
+import type { Encrypter } from 'src/core/objects/EncryptableObject';
 import type { PDFContext } from 'src/core/PDFContext';
 import { PDFFlateStream } from 'src/core/structures/PDFFlateStream';
 import { bytesFor, Cache, reverseArray, sizeInBytes, sum } from 'src/utils';
@@ -41,21 +43,26 @@ export type EntryTuple = [number, number, number];
  */
 export class PDFCrossRefStream extends PDFFlateStream {
   static create = (dict: PDFDict, encode = true) => {
-    const stream = new PDFCrossRefStream(dict, [], encode);
+    const stream = new PDFCrossRefStream(dict, [], encode, null);
     stream.addDeletedEntry(PDFRef.of(0, 65535), 0);
     return stream;
   };
 
   static of = (dict: PDFDict, entries: Entry[], encode = true) =>
-    new PDFCrossRefStream(dict, entries, encode);
+    new PDFCrossRefStream(dict, entries, encode, null);
 
   private readonly entries: Entry[];
   private readonly entryTuplesCache: Cache<EntryTuple[]>;
   private readonly maxByteWidthsCache: Cache<[number, number, number]>;
   private readonly indexCache: Cache<number[]>;
 
-  private constructor(dict: PDFDict, entries?: Entry[], encode = true) {
-    super(dict, encode);
+  private constructor(
+    dict: PDFDict,
+    entries: Entry[],
+    encode: boolean,
+    encrypter: Encrypter | null,
+  ) {
+    super(dict, encode, encrypter);
 
     this.entries = entries || [];
     this.entryTuplesCache = Cache.populatedBy(this.computeEntryTuples);
@@ -241,4 +248,13 @@ export class PDFCrossRefStream extends PDFFlateStream {
 
     return widths;
   };
+
+  encryptWith(encrypter: Encrypter): PDFObject {
+    return new PDFCrossRefStream(
+      this.dict.clone(this.dict.context),
+      this.entries.slice(),
+      this.encode,
+      encrypter,
+    );
+  }
 }

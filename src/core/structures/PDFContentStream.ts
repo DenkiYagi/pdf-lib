@@ -1,4 +1,6 @@
+import type { PDFObject } from 'src/core/objects/PDFObject';
 import type { PDFDict } from 'src/core/objects/PDFDict';
+import type { Encrypter } from 'src/core/objects/EncryptableObject';
 import type { PDFOperator } from 'src/core/operators/PDFOperator';
 import type { PDFContext } from 'src/core/PDFContext';
 import { PDFFlateStream } from 'src/core/structures/PDFFlateStream';
@@ -6,12 +8,17 @@ import { CharCodes } from 'src/core/syntax/CharCodes';
 
 export class PDFContentStream extends PDFFlateStream {
   static of = (dict: PDFDict, operators: PDFOperator[], encode = true) =>
-    new PDFContentStream(dict, operators, encode);
+    new PDFContentStream(dict, operators, encode, null);
 
   private readonly operators: PDFOperator[];
 
-  private constructor(dict: PDFDict, operators: PDFOperator[], encode = true) {
-    super(dict, encode);
+  private constructor(
+    dict: PDFDict,
+    operators: PDFOperator[],
+    encode: boolean,
+    encrypter: Encrypter | null,
+  ) {
+    super(dict, encode, encrypter);
     this.operators = operators;
   }
 
@@ -52,5 +59,14 @@ export class PDFContentStream extends PDFFlateStream {
       size += this.operators[idx].sizeInBytes() + 1;
     }
     return size;
+  }
+
+  encryptWith(encrypter: Encrypter): PDFObject {
+    return new PDFContentStream(
+      this.dict.clone(this.dict.context),
+      this.operators.map((e) => e.clone()),
+      this.encode,
+      encrypter,
+    );
   }
 }
