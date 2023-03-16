@@ -17,6 +17,7 @@ import {
   JpegEmbedder,
   PageBoundingBox,
   PageEmbeddingMismatchedContextError,
+  PDFArray,
   PDFCatalog,
   PDFContext,
   PDFDict,
@@ -64,6 +65,13 @@ import { FileEmbedder, AFRelationship } from 'src/core/embedders/FileEmbedder';
 import { PDFEmbeddedFile } from 'src/api/PDFEmbeddedFile';
 import { PDFJavaScript } from 'src/api/PDFJavaScript';
 import { JavaScriptEmbedder } from 'src/core/embedders/JavaScriptEmbedder';
+import { PDFSecurity, SecurityOptions } from 'src/core/security/PDFSecurity';
+import {
+  MD5,
+  wordArray,
+  wordArrayFromBytes,
+  wordArrayToBytes,
+} from 'src/utils/crypt';
 
 /**
  * Represents a PDF document.
@@ -1199,6 +1207,75 @@ export class PDFDocument {
    */
   isEncrypted(): boolean {
     return !!this.context.lookup(this.context.trailerInfo.Encrypt);
+  }
+
+  /**
+   * Prepare the document to be encrypted by doing the followings:
+   * - Update the `ID` entry in the trailer dictionary.
+   * - Assign a security instance to the context, which will be used in `PDFWriter`.
+   * - Assign an `Encrypt` entry to be written to the PDF file trailer.
+   *
+   * No effect if already encrypted.
+   */
+  encrypt(options: SecurityOptions): void {
+    if (this.isEncrypted()) return;
+
+    const [firstId] = this.updateId();
+
+    const { security, encryptionDictionary } = PDFSecurity.create(
+      firstId,
+      options,
+    );
+
+    this.context.security = security;
+
+    const encryptionDict = this.context.obj(encryptionDictionary);
+    this.context.trailerInfo.Encrypt = this.context.register(encryptionDict);
+  }
+
+  /**
+   * Update (or create if absent) the `ID` entry in the trailer dictionary.
+   *
+   * @returns The updated ID as an array of byte-strings.
+   * @see ISO 32000-1 > 14.4 File Identifiers
+   */
+  updateId(): [Uint8Array, Uint8Array] {
+    const trailer = this.context.trailerInfo;
+    const currentId = trailer.ID;
+
+    const infoValues = this.getInfoDict().values();
+    const infoSize = infoValues
+      .map((obj) => obj.sizeInBytes())
+      .reduce((a, b) => a + b, 0);
+    const infoBytes = new Uint8Array(infoSize);
+    for (let i = 0, offset = 0; i < infoValues.length; ++i) {
+      offset += infoValues[i].copyBytesInto(infoBytes, offset);
+    }
+
+    /**
+     * Hash from time + ID values, which will be used for the second element of the ID.
+     */
+    const currentHash = wordArrayToBytes(
+      MD5(wordArray([Date.now()]).concat(wordArrayFromBytes(infoBytes))),
+    );
+
+    /**
+     * Hash for the first element of the ID.
+     * If the ID already exists, the first element shall be permanent.
+     * Otherwise it can be the same as the second.
+     */
+    let originalHash: Uint8Array = currentHash;
+    if (currentId instanceof PDFArray && currentId.size() == 2) {
+      const firstId = currentId.get(0);
+      if (firstId instanceof PDFHexString) {
+        originalHash = firstId.asBytes();
+      }
+    }
+
+    const newIds: [Uint8Array, Uint8Array] = [originalHash, currentHash];
+    trailer.ID = this.context.obj(newIds);
+
+    return newIds;
   }
 
   /**
