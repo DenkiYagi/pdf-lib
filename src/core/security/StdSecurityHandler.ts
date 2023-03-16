@@ -4,7 +4,7 @@ import type { WordArray } from './WordArray';
  * Represents a standard security handler and provides
  * functions for computing several data for encryption.
  */
-export abstract class StdSecurityHandler<Dict extends StdSecurityHandlerDict> {
+export abstract class StdSecurityHandler {
   /**
    * Bit length of the encryption key to be computed.
    */
@@ -15,7 +15,7 @@ export abstract class StdSecurityHandler<Dict extends StdSecurityHandlerDict> {
   }
 
   abstract computeEncryptionKey(): WordArray;
-  abstract createEncryptionDictEntries(): Dict;
+  abstract createEncryptionDictEntries(): StdSecurityHandlerDict;
 }
 
 /**

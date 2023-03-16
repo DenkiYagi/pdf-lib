@@ -13,7 +13,7 @@ import {
 /**
  * Standard security handler, revision 4.
  */
-export class StdSecurityHandlerR4 extends StdSecurityHandler<StdSecurityHandlerDictR4> {
+export class StdSecurityHandlerR4 extends StdSecurityHandler {
   /**
    * The first element of the `ID` array in the PDF file trailer.
    */
@@ -101,7 +101,7 @@ export class StdSecurityHandlerR4 extends StdSecurityHandler<StdSecurityHandlerD
   /**
    * Create entries to be assigned to the encryption dictionary.
    */
-  createEncryptionDictEntries(): StdSecurityHandlerDictR4 {
+  createEncryptionDictEntries(): StdSecurityHandlerDict {
     return {
       R: 4,
       O: wordArrayToBytes(this.computeOwnerPassword()),
@@ -169,13 +169,6 @@ export class StdSecurityHandlerR4 extends StdSecurityHandler<StdSecurityHandlerD
 
     return (this.cache.userPasswordComputed = result);
   }
-}
-
-/**
- * Values of encryption dictionary to be assigned when using standard security handler revision 4.
- */
-export interface StdSecurityHandlerDictR4 extends StdSecurityHandlerDict {
-  R: 4;
 }
 
 /**

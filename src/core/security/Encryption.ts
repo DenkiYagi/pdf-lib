@@ -1,4 +1,8 @@
 import type { LiteralObject } from 'src/core/PDFContext';
+import { PDFStream } from 'src/core/objects/PDFStream';
+import type { PDFObject } from 'src/core/objects/PDFObject';
+import type { PDFRef } from 'src/core/objects/PDFRef';
+import type { Encrypter } from 'src/core/objects/EncryptableObject';
 import type { WordArray } from 'src/core/security/WordArray';
 import type { StdSecurityHandlerDict } from './StdSecurityHandler';
 
@@ -22,10 +26,15 @@ export interface EncryptionGeneric<
   dictionary: Dict;
 }
 
+type IndirectObject = [PDFRef, PDFObject];
+
 /**
  * Object that holds an encryption key and provides an encrypting function.
  */
 export abstract class EncryptionKey {
+  /**
+   * Actual bytes that constitute the encryption key.
+   */
   protected data: WordArray;
 
   constructor(key: WordArray) {
@@ -33,13 +42,19 @@ export abstract class EncryptionKey {
   }
 
   /**
-   * Encrypts the given data.
+   * Encrypt a given indirect object if possible.
    */
-  abstract encryptData(
-    objectNumber: number,
-    generationNumber: number,
-    data: Uint8Array,
-  ): Uint8Array;
+  encryptIfPossible(indirectObject: IndirectObject): void {
+    const [ref, obj] = indirectObject;
+    if (obj instanceof PDFStream) {
+      indirectObject[1] = obj.encryptWith(this.createEncrypter(ref));
+    }
+  }
+
+  /**
+   * @returns An instance that can encrypt arbitrary bytes.
+   */
+  protected abstract createEncrypter(ref: PDFRef): Encrypter;
 }
 
 /**

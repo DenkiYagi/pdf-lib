@@ -1,14 +1,13 @@
 import CryptoJS from 'crypto-js';
+import type { PDFRef } from 'src/core/objects/PDFRef';
+import type { Encrypter } from 'src/core/objects/EncryptableObject';
 import {
-  EncryptionGeneric,
-  EncryptionDictStd,
+  Encryption,
   EncryptionKey,
+  EncryptionDictStd,
 } from 'src/core/security/Encryption';
 import type { SecurityOptions } from 'src/core/security/PDFSecurity';
-import {
-  StdSecurityHandlerDictR4,
-  StdSecurityHandlerR4,
-} from 'src/core/security/StdSecurityHandlerR4';
+import { StdSecurityHandlerR4 } from 'src/core/security/StdSecurityHandlerR4';
 import {
   wordArray,
   wordArrayFromBytes,
@@ -18,18 +17,7 @@ import {
 } from 'src/core/security/WordArray';
 
 /**
- * Subtype of `Encryption` to be used when using
- * standard security handler and encryption algorithm version 4.
- */
-export type EncryptionStdV4 = EncryptionGeneric<
-  EncryptionKeyV4,
-  EncryptionDictStdV4
->;
-
-/**
  * Subtype of `EncryptionKey` to be used when using encryption algorithm version 4.
- *
-
  */
 export class EncryptionKeyV4 extends EncryptionKey {
   /**
@@ -40,10 +28,10 @@ export class EncryptionKeyV4 extends EncryptionKey {
    */
   private static createAesKey(
     encryptionKey: WordArray,
-    objectNumber: number,
-    generationNumber: number,
+    ref: PDFRef,
   ): WordArray {
     const key = encryptionKey.clone();
+    const { objectNumber, generationNumber } = ref;
 
     // Append 5 bytes, reversing the byte order
     const exByte0 = (objectNumber & 0xff) << 24;
@@ -65,49 +53,51 @@ export class EncryptionKeyV4 extends EncryptionKey {
   }
 
   /**
-   * Encrypts the given data.
-   *
+   * @returns A function that encrypts arbitrary bytes.
    * @see ISO 32000-1 > 7.6.2 General Encryption Algorithm > Algorithm 1:
    *   Encryption of data using the RC4 or AES algorithms
    */
-  encryptData(
-    objectNumber: number,
-    generationNumber: number,
-    data: Uint8Array,
-  ): Uint8Array {
-    const aesKey = EncryptionKeyV4.createAesKey(
-      this.data,
-      objectNumber,
-      generationNumber,
-    );
+  protected createEncrypter(ref: PDFRef): Encrypter {
+    const aesKey = EncryptionKeyV4.createAesKey(this.data, ref);
     const initializationVector = wordArrayRandom(16);
-    const options: Parameters<typeof CryptoJS.AES.encrypt>[2] = {
-      mode: CryptoJS.mode.CBC,
-      padding: CryptoJS.pad.Pkcs7,
-      iv: initializationVector,
-    };
 
-    const encryptedContent = CryptoJS.AES.encrypt(
-      wordArrayFromBytes(data),
-      aesKey,
-      options,
-    ).ciphertext;
-
-    // Initialization vector should be stored as the first 16 bytes of the encrypted data.
-    const encryptedResult = initializationVector.clone().concat(encryptedContent);
-
-    return wordArrayToBytes(encryptedResult);
+    return new EncrypterV4(aesKey, initializationVector);
   }
 }
 
 /**
- * Subtype of `EncryptionDict` to be used when using
- * standard security handler and encryption algorithm version 4.
+ * Implementation of `Encrypter` to be used when using encryption algorithm version 4.
  */
-export type EncryptionDictStdV4 = EncryptionDictStd &
-  StdSecurityHandlerDictR4 & {
-    V: 4;
-  };
+class EncrypterV4 implements Encrypter {
+  aesKey: WordArray;
+  aesOptions: Parameters<typeof CryptoJS.AES.encrypt>[2];
+  initializationVector: WordArray;
+
+  constructor(aesKey: WordArray, initializationVector: WordArray) {
+    this.aesKey = aesKey;
+    this.aesOptions = {
+      mode: CryptoJS.mode.CBC,
+      padding: CryptoJS.pad.Pkcs7,
+      iv: initializationVector,
+    };
+    this.initializationVector = initializationVector;
+  }
+
+  encryptData(data: Uint8Array): Uint8Array {
+    const encryptedContent = CryptoJS.AES.encrypt(
+      wordArrayFromBytes(data),
+      this.aesKey,
+      this.aesOptions,
+    ).ciphertext;
+
+    // Initialization vector should be stored as the first 16 bytes of the encrypted data.
+    const encryptedResult = this.initializationVector
+      .clone()
+      .concat(encryptedContent);
+
+    return wordArrayToBytes(encryptedResult);
+  }
+}
 
 /**
  * Prepare for encryption using standard security handler and encryption algorithm version 4.
@@ -116,7 +106,7 @@ export function prepareEncryptionStdV4(
   documentFirstId: Uint8Array,
   keyBitLength: number,
   options: SecurityOptions,
-): EncryptionStdV4 {
+): Encryption {
   const securityHandler = new StdSecurityHandlerR4({
     documentFirstId,
     keyBitLength,
@@ -125,7 +115,7 @@ export function prepareEncryptionStdV4(
   const key = securityHandler.computeEncryptionKey();
   const shDict = securityHandler.createEncryptionDictEntries();
 
-  const dictionary: EncryptionDictStdV4 = {
+  const dictionary: EncryptionDictStd = {
     Filter: 'Standard',
     V: 4,
     CF: {
