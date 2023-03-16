@@ -1,4 +1,4 @@
-import type { WordArray } from './WordArray';
+import type { WordArray } from 'src/utils/crypt';
 
 /**
  * Represents a standard security handler and provides

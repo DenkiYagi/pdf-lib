@@ -1,5 +1,27 @@
 import CryptoJS from 'crypto-js';
 
+type Message = string | WordArray;
+
+export function MD5(message: Message): WordArray {
+  return CryptoJS.MD5(message);
+}
+
+export function encryptRC4(message: Message, key: Message): WordArray {
+  return CryptoJS.RC4.encrypt(message, key).ciphertext;
+}
+
+export function encryptAES(
+  message: Message,
+  key: Message,
+  initializationVector: WordArray,
+): WordArray {
+  return CryptoJS.AES.encrypt(message, key, {
+    mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7,
+    iv: initializationVector,
+  }).ciphertext;
+}
+
 /**
  * An array of 32-bit words.
  */

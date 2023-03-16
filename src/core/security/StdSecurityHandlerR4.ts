@@ -1,14 +1,15 @@
-import CryptoJS from 'crypto-js';
 import {
   StdSecurityHandler,
   StdSecurityHandlerDict,
 } from 'src/core/security/StdSecurityHandler';
 import {
+  MD5,
+  encryptRC4,
   wordArray,
   WordArray,
   wordArrayFromBytes,
   wordArrayToBytes,
-} from 'src/core/security/WordArray';
+} from 'src/utils/crypt';
 
 /**
  * Standard security handler, revision 4.
@@ -59,7 +60,7 @@ export class StdSecurityHandlerR4 extends StdSecurityHandler {
   }) {
     super(params.keyBitLength);
 
-    this.documentFirstId = CryptoJS.lib.WordArray.create(
+    this.documentFirstId = wordArray(
       params.documentFirstId as unknown as number[],
     );
 
@@ -91,7 +92,7 @@ export class StdSecurityHandlerR4 extends StdSecurityHandler {
 
     const keyByteLength = this.keyBitLength / 8;
     for (let i = 0; i < 51; ++i) {
-      key = CryptoJS.MD5(key);
+      key = MD5(key);
       key.sigBytes = keyByteLength;
     }
 
@@ -116,12 +117,12 @@ export class StdSecurityHandlerR4 extends StdSecurityHandler {
    * @see ISO 32000-1 > 7.6.3.3 Encryption Key Algorithm > Algorithm 3:
    *   Computing the encryption dictionary’s O (owner password) value
    */
-  protected computeOwnerPassword(): CryptoJS.lib.WordArray {
+  protected computeOwnerPassword(): WordArray {
     if (this.cache.ownerPasswordComputed != null)
       return this.cache.ownerPasswordComputed;
 
     let md = this.ownerPassword;
-    for (let i = 0; i < 51; ++i) md = CryptoJS.MD5(md);
+    for (let i = 0; i < 51; ++i) md = MD5(md);
 
     const rc4KeyOriginal = md;
     rc4KeyOriginal.sigBytes = this.keyBitLength / 8;
@@ -133,7 +134,7 @@ export class StdSecurityHandlerR4 extends StdSecurityHandler {
       const xorMask = i | (i << 8) | (i << 16) | (i << 24);
       for (let wi = 0; wi < rc4KeyWordCount; ++wi)
         rc4KeyCurrent.words[wi] = rc4KeyOriginal.words[wi] ^ xorMask;
-      rc4Out = CryptoJS.RC4.encrypt(rc4Out, rc4KeyCurrent).ciphertext;
+      rc4Out = encryptRC4(rc4Out, rc4KeyCurrent);
     }
 
     return (this.cache.ownerPasswordComputed = rc4Out);
@@ -155,12 +156,12 @@ export class StdSecurityHandlerR4 extends StdSecurityHandler {
     const rc4KeyCurrent = rc4KeyOriginal.clone();
 
     const padding32 = wordArrayFromBytes(standardPaddingBytes);
-    let rc4Out = CryptoJS.MD5(padding32.clone().concat(this.documentFirstId));
+    let rc4Out = MD5(padding32.clone().concat(this.documentFirstId));
     for (let i = 0; i < 20; ++i) {
       const xorMask = i | (i << 8) | (i << 16) | (i << 24);
       for (let wi = 0; wi < rc4KeyWordCount; ++wi)
         rc4KeyCurrent.words[wi] = rc4KeyOriginal.words[wi] ^ xorMask;
-      rc4Out = CryptoJS.RC4.encrypt(rc4Out, rc4KeyCurrent).ciphertext;
+      rc4Out = encryptRC4(rc4Out, rc4KeyCurrent);
     }
     rc4Out.sigBytes = 16;
 

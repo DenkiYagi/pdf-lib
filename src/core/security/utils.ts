@@ -1,9 +1,8 @@
-import CryptoJS from 'crypto-js';
-import { wordArrayToBytes } from './WordArray';
+import { MD5, wordArrayToBytes } from 'src/utils/crypt';
 
 /*
  * Generate MD5 hash bytes from any arbitrary string.
  */
 export function getHashBytesMD5(s: string): Uint8Array {
-  return wordArrayToBytes(CryptoJS.MD5(s));
+  return wordArrayToBytes(MD5(s));
 }

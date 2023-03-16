@@ -1,4 +1,3 @@
-import CryptoJS from 'crypto-js';
 import type { PDFRef } from 'src/core/objects/PDFRef';
 import type { Encrypter } from 'src/core/objects/EncryptableObject';
 import {
@@ -9,12 +8,14 @@ import {
 import type { SecurityOptions } from 'src/core/security/PDFSecurity';
 import { StdSecurityHandlerR4 } from 'src/core/security/StdSecurityHandlerR4';
 import {
+  MD5,
+  encryptAES,
   wordArray,
   wordArrayFromBytes,
   wordArrayToBytes,
   wordArrayRandom,
   WordArray,
-} from 'src/core/security/WordArray';
+} from 'src/utils/crypt';
 
 /**
  * Subtype of `EncryptionKey` to be used when using encryption algorithm version 4.
@@ -46,7 +47,7 @@ export class EncryptionKeyV4 extends EncryptionKey {
     key.concat(wordArray([0x73416c54], 4));
 
     // Use the first (n + 5) bytes
-    const digestedKey = CryptoJS.MD5(key);
+    const digestedKey = MD5(key);
     digestedKey.sigBytes = Math.min(encryptionKey.sigBytes + 5, 16);
 
     return digestedKey;
@@ -70,25 +71,19 @@ export class EncryptionKeyV4 extends EncryptionKey {
  */
 class EncrypterV4 implements Encrypter {
   aesKey: WordArray;
-  aesOptions: Parameters<typeof CryptoJS.AES.encrypt>[2];
   initializationVector: WordArray;
 
   constructor(aesKey: WordArray, initializationVector: WordArray) {
     this.aesKey = aesKey;
-    this.aesOptions = {
-      mode: CryptoJS.mode.CBC,
-      padding: CryptoJS.pad.Pkcs7,
-      iv: initializationVector,
-    };
     this.initializationVector = initializationVector;
   }
 
   encryptData(data: Uint8Array): Uint8Array {
-    const encryptedContent = CryptoJS.AES.encrypt(
+    const encryptedContent = encryptAES(
       wordArrayFromBytes(data),
       this.aesKey,
-      this.aesOptions,
-    ).ciphertext;
+      this.initializationVector,
+    );
 
     // Initialization vector should be stored as the first 16 bytes of the encrypted data.
     const encryptedResult = this.initializationVector

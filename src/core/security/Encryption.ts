@@ -3,8 +3,8 @@ import { PDFStream } from 'src/core/objects/PDFStream';
 import type { PDFObject } from 'src/core/objects/PDFObject';
 import type { PDFRef } from 'src/core/objects/PDFRef';
 import type { Encrypter } from 'src/core/objects/EncryptableObject';
-import type { WordArray } from 'src/core/security/WordArray';
-import type { StdSecurityHandlerDict } from './StdSecurityHandler';
+import type { StdSecurityHandlerDict } from 'src/core/security/StdSecurityHandler';
+import type { WordArray } from 'src/utils/crypt';
 
 /**
  * Set of values that will be generated when preparing a PDF document for encryption.
