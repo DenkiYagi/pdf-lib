@@ -7,5 +7,5 @@ export abstract class PDFObject {
 
   abstract sizeInBytes(): number;
 
-  abstract copyBytesInto(_buffer: Uint8Array, _offset: number): number;
+  abstract copyBytesInto(buffer: Uint8Array, offset: number): number;
 }
