@@ -1,11 +1,11 @@
+import type { PDFContext } from 'src/core/PDFContext';
 import { PDFCrossRefSection } from 'src/core/document/PDFCrossRefSection';
-import { PDFHeader } from 'src/core/document/PDFHeader';
+import type { PDFHeader } from 'src/core/document/PDFHeader';
 import { PDFTrailer } from 'src/core/document/PDFTrailer';
 import { PDFTrailerDict } from 'src/core/document/PDFTrailerDict';
-import type { PDFDict } from 'src/core/objects/PDFDict';
 import type { PDFObject } from 'src/core/objects/PDFObject';
+import type { PDFDict } from 'src/core/objects/PDFDict';
 import type { PDFRef } from 'src/core/objects/PDFRef';
-import type { PDFContext } from 'src/core/PDFContext';
 import { PDFObjectStream } from 'src/core/structures/PDFObjectStream';
 import { CharCodes } from 'src/core/syntax/CharCodes';
 import { copyStringIntoBuffer, waitForTick } from 'src/utils';
@@ -113,18 +113,23 @@ export class PDFWriter {
   }
 
   protected async computeBufferSize(): Promise<SerializationInfo> {
-    const header = PDFHeader.forVersion(1, 7);
+    const header = this.context.header;
 
     let size = header.sizeInBytes() + 2;
 
     const xref = PDFCrossRefSection.create();
 
     const indirectObjects = this.context.enumerateIndirectObjects();
+    const encryptionKey = this.context.security?.encryptionKey;
 
     for (let idx = 0, len = indirectObjects.length; idx < len; idx++) {
       const indirectObject = indirectObjects[idx];
       const [ref] = indirectObject;
       xref.addEntry(ref, size);
+
+      if (encryptionKey != null)
+        encryptionKey.encryptIfPossible(indirectObject);
+
       size += this.computeIndirectObjectSize(indirectObject);
       if (this.shouldWaitForTick(1)) await waitForTick();
     }

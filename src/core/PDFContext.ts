@@ -16,6 +16,7 @@ import type { PDFStream } from 'src/core/objects/PDFStream';
 import type { PDFString } from 'src/core/objects/PDFString';
 import { PDFOperator } from 'src/core/operators/PDFOperator';
 import { PDFOperatorNames as Ops } from 'src/core/operators/PDFOperatorNames';
+import type { PDFSecurity } from 'src/core/security/PDFSecurity';
 import { PDFContentStream } from 'src/core/structures/PDFContentStream';
 import { typedArrayFor, uint8ArrayToHex } from 'src/utils';
 import { SimpleRNG } from 'src/utils/rng';
@@ -49,6 +50,7 @@ export class PDFContext {
 
   largestObjectNumber: number;
   header: PDFHeader;
+  security: PDFSecurity | null = null;
   trailerInfo: {
     Root?: PDFObject;
     Encrypt?: PDFObject;

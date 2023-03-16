@@ -58,6 +58,8 @@ export class PDFStreamWriter extends PDFWriter {
     const objectStreamRefs: PDFRef[] = [];
 
     const indirectObjects = this.context.enumerateIndirectObjects();
+    const encryptionKey = this.context.security?.encryptionKey;
+
     for (let idx = 0, len = indirectObjects.length; idx < len; idx++) {
       const indirectObject = indirectObjects[idx];
       const [ref, object] = indirectObject;
@@ -70,6 +72,9 @@ export class PDFStreamWriter extends PDFWriter {
         ref.generationNumber !== 0;
 
       if (shouldNotCompress) {
+        if (encryptionKey != null)
+          encryptionKey.encryptIfPossible(indirectObject);
+
         uncompressedObjects.push(indirectObject);
         xrefStream.addUncompressedEntry(ref, size);
         size += this.computeIndirectObjectSize(indirectObject);
@@ -97,11 +102,14 @@ export class PDFStreamWriter extends PDFWriter {
         chunk,
         this.encodeStreams,
       );
+      const indirectObject: [PDFRef, PDFObject] = [ref, objectStream];
+      if (encryptionKey != null)
+        encryptionKey.encryptIfPossible(indirectObject);
 
       xrefStream.addUncompressedEntry(ref, size);
-      size += this.computeIndirectObjectSize([ref, objectStream]);
+      size += this.computeIndirectObjectSize(indirectObject);
 
-      uncompressedObjects.push([ref, objectStream]);
+      uncompressedObjects.push(indirectObject);
 
       if (this.shouldWaitForTick(chunk.length)) await waitForTick();
     }
