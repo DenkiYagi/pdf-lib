@@ -32,6 +32,7 @@ interface LiteralArray {
 }
 
 type Literal =
+  | PDFObject
   | LiteralObject
   | LiteralArray
   | string
@@ -190,8 +191,10 @@ export class PDFContext {
   obj(literal: string): PDFName;
   obj(literal: number): PDFNumber;
   obj(literal: boolean): PDFBool;
+  obj(literal: Uint8Array): PDFHexString;
   obj(literal: LiteralObject): PDFDict;
   obj(literal: LiteralArray): PDFArray;
+  obj(literal: PDFObject): PDFObject;
 
   obj(literal: Literal) {
     if (literal instanceof PDFObject) {
