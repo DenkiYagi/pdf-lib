@@ -1,4 +1,5 @@
 import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter';
+import { PDFHexString } from 'src/core/objects/PDFHexString';
 import { PDFObject } from 'src/core/objects/PDFObject';
 import type { PDFRef } from 'src/core/objects/PDFRef';
 import { CharCodes } from 'src/core/syntax/CharCodes';
@@ -10,6 +11,7 @@ import {
   toCharCode,
   parseDate,
   hasUtf16BOM,
+  uint8ArrayToHex,
 } from 'src/utils';
 import { InvalidPDFDateStringError } from 'src/core/errors';
 
@@ -120,17 +122,18 @@ export class PDFString extends PDFObject {
     return this.value.length + 2;
   }
 
-  encryptWith(encrypter: ObjectEncrypter, reference: PDFRef): PDFString | null {
+  encryptWith(
+    encrypter: ObjectEncrypter,
+    reference: PDFRef,
+  ): PDFHexString | null {
     if (this.preventEncryption) return null;
 
-    // This impl may not be correct.
-    // TODO: improve & support non-ascii
-    const bytes = new Uint8Array(this.value.length);
-    for (let i = 0; i < this.value.length; ++i)
-      bytes[i] = this.value.charCodeAt(i);
-    const encrypted = encrypter.encryptObject(bytes, reference);
-    let s = String.fromCodePoint(...encrypted);
+    const buffer = new Uint8Array(this.value.length);
+    for (let i = 0; i < this.value.length; ++i) {
+      buffer[i] = this.value.charCodeAt(i);
+    }
+    const encryptedBytes = encrypter.encryptObject(buffer, reference);
 
-    return new PDFString(s);
+    return new PDFHexString(uint8ArrayToHex(encryptedBytes));
   }
 }
