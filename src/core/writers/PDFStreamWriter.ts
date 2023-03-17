@@ -1,11 +1,9 @@
 import { PDFHeader } from 'src/core/document/PDFHeader';
 import { PDFTrailer } from 'src/core/document/PDFTrailer';
-import { PDFInvalidObject } from 'src/core/objects/PDFInvalidObject';
 import { PDFName } from 'src/core/objects/PDFName';
 import { PDFNumber } from 'src/core/objects/PDFNumber';
 import type { PDFObject } from 'src/core/objects/PDFObject';
 import { PDFRef } from 'src/core/objects/PDFRef';
-import { PDFStream } from 'src/core/objects/PDFStream';
 import type { PDFContext } from 'src/core/PDFContext';
 import { PDFCrossRefStream } from 'src/core/structures/PDFCrossRefStream';
 import { PDFObjectStream } from 'src/core/structures/PDFObjectStream';
@@ -62,30 +60,9 @@ export class PDFStreamWriter extends PDFWriter {
 
     for (let idx = 0, len = indirectObjects.length; idx < len; idx++) {
       const indirectObject = indirectObjects[idx];
-      const [ref, object] = indirectObject;
+      const [ref] = indirectObject;
 
-      /**
-       * `true` if the object shall not be stored in an object stream
-       * (see ISO 32000-1 > 7.5.7. Object streams).
-       * 
-       * Additional remarks:
-       * - According to the implementation of PDFBox, the `Root` shall also not be stored
-       *   in an object stream (especially if you're going to encrypt the PDF document;
-       *   otherwise you won't be able to open the encrypted PDF with Adobe Acrobat Reader).
-       * - The value of `Length` entry in an object stream shall not be stored in another
-       *   object stream. However in our implementation the `Length` entry of a stream is
-       *   always a direct object, so it will never appear here.
-       * - In linearized files, some other objects shall also not be stored in an object stream.
-       *   However we don't support linearization for now.
-       */
-      const shouldNotCompress =
-        ref === this.context.trailerInfo.Encrypt ||
-        ref === this.context.trailerInfo.Root ||
-        object instanceof PDFStream ||
-        object instanceof PDFInvalidObject ||
-        ref.generationNumber !== 0;
-
-      if (shouldNotCompress) {
+      if (PDFObjectStream.shallNotStore(indirectObject, this.context)) {
         if (encryptionKey != null)
           encryptionKey.encryptIfPossible(indirectObject);
 

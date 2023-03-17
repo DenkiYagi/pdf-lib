@@ -1,7 +1,9 @@
+import { PDFInvalidObject } from 'src/core/objects/PDFInvalidObject';
 import { PDFName } from 'src/core/objects/PDFName';
 import { PDFNumber } from 'src/core/objects/PDFNumber';
 import type { PDFObject } from 'src/core/objects/PDFObject';
 import type { PDFRef } from 'src/core/objects/PDFRef';
+import { PDFStream } from 'src/core/objects/PDFStream';
 import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter';
 import type { PDFContext } from 'src/core/PDFContext';
 import {
@@ -14,6 +16,35 @@ import { copyStringIntoBuffer, last } from 'src/utils';
 export type IndirectObject = [PDFRef, PDFObject];
 
 export class PDFObjectStream extends PDFFlateStream {
+  /**
+   * Returns `true` if `indirectObject` shall not be stored in an object stream
+   * (see ISO 32000-1 > 7.5.7. Object streams).
+   *
+   * Additional remarks:
+   * - According to the implementation of PDFBox, the `Root` shall also not be stored
+   *   in an object stream (especially if you're going to encrypt the PDF document;
+   *   otherwise you won't be able to open the encrypted PDF with Adobe Acrobat Reader).
+   * - The value of `Length` entry in an object stream shall not be stored in another
+   *   object stream. However in our implementation the `Length` entry of a stream is
+   *   always a direct object, so it will never appear here.
+   * - In linearized files, some other objects shall also not be stored in an object stream.
+   *   However we don't support linearization for now.
+   */
+  static shallNotStore = (
+    indirectObject: IndirectObject,
+    context: PDFContext,
+  ): boolean => {
+    const [ref, obj] = indirectObject;
+
+    return (
+      ref === context.trailerInfo.Encrypt ||
+      ref === context.trailerInfo.Root ||
+      obj instanceof PDFStream ||
+      obj instanceof PDFInvalidObject ||
+      ref.generationNumber !== 0
+    );
+  };
+
   static withContextAndObjects = (
     context: PDFContext,
     objects: IndirectObject[],
