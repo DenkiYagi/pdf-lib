@@ -120,15 +120,17 @@ export class PDFWriter {
     const xref = PDFCrossRefSection.create();
 
     const indirectObjects = this.context.enumerateIndirectObjects();
-    const encryptionKey = this.context.security?.encryptionKey;
+
+    // Encrypt the objects before computing size.
+    if (this.context.security != null) {
+      for (const indirectObject of indirectObjects)
+        this.context.security.encryptionKey.encryptIfPossible(indirectObject);
+    }
 
     for (let idx = 0, len = indirectObjects.length; idx < len; idx++) {
       const indirectObject = indirectObjects[idx];
       const [ref] = indirectObject;
       xref.addEntry(ref, size);
-
-      if (encryptionKey != null)
-        encryptionKey.encryptIfPossible(indirectObject);
 
       size += this.computeIndirectObjectSize(indirectObject);
       if (this.shouldWaitForTick(1)) await waitForTick();
