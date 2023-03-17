@@ -131,7 +131,7 @@ export class PDFString extends PDFObject {
     for (let i = 0; i < this.value.length; ++i) {
       buffer[i] = this.value.charCodeAt(i);
     }
-    const encryptedBytes = encrypter.encryptObject(buffer, reference);
+    const encryptedBytes = encrypter.encryptObjectContent(buffer, reference);
 
     return PDFHexString.fromUint8Array(encryptedBytes);
   }

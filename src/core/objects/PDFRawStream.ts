@@ -40,7 +40,7 @@ export class PDFRawStream extends PDFStream {
   encryptWith(encrypter: ObjectEncrypter, reference: PDFRef): PDFObject {
     return new PDFRawStream(
       this.dict.clone(),
-      encrypter.encryptObject(this.contents, reference),
+      encrypter.encryptObjectContent(this.contents, reference),
     );
   }
 }

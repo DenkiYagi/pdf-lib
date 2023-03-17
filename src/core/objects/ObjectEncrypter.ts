@@ -11,5 +11,5 @@ export interface ObjectEncrypter {
    *   If the object in question is a direct object, pass a reference to an
    *   indirect object that contains the object to be encrypted.
    */
-  encryptObject(data: Uint8Array, reference: PDFRef): Uint8Array;
+  encryptObjectContent(data: Uint8Array, reference: PDFRef): Uint8Array;
 }

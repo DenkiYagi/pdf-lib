@@ -1210,7 +1210,7 @@ export class PDFDocument {
   }
 
   /**
-   * Prepare the document to be encrypted by doing the followings:
+   * Prepare the document to be encrypted by doing the following:
    * - Update the `ID` entry in the trailer dictionary.
    * - Assign a security instance to the context, which will be used in `PDFWriter`.
    * - Assign an `Encrypt` entry to be written to the PDF file trailer.

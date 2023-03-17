@@ -51,7 +51,7 @@ export abstract class PDFFlateStream extends PDFStream {
     if (encryption == null) {
       return encodedContents;
     } else {
-      return encryption.encrypter.encryptObject(
+      return encryption.encrypter.encryptObjectContent(
         encodedContents,
         encryption.reference,
       );

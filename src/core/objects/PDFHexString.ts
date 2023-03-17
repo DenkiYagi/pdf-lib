@@ -107,8 +107,8 @@ export class PDFHexString extends PDFObject {
   ): PDFObject | null {
     if (this.preventEncryption) return null;
 
-    const bytes = this.asBytes();
-    const encrypted = encrypter.encryptObject(bytes, reference);
+    const buffer = this.asBytes();
+    const encrypted = encrypter.encryptObjectContent(buffer, reference);
 
     return PDFHexString.fromUint8Array(encrypted);
   }

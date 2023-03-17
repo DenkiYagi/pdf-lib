@@ -23,7 +23,7 @@ import {
 export class EncryptionKeyV4 extends EncryptionKey implements ObjectEncrypter {
   protected readonly encrypterCacheMap = new Map<string, DataEncrypterV4>();
 
-  encryptObject(data: Uint8Array, reference: PDFRef): Uint8Array {
+  encryptObjectContent(data: Uint8Array, reference: PDFRef): Uint8Array {
     return this.getEncrypter(reference).encryptData(data);
   }
 
