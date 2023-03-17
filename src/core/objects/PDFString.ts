@@ -1,4 +1,8 @@
 import { PDFObject } from 'src/core/objects/PDFObject';
+import type {
+  EncryptableObject,
+  Encrypter,
+} from 'src/core/objects/EncryptableObject';
 import { CharCodes } from 'src/core/syntax/CharCodes';
 import {
   copyStringIntoBuffer,
@@ -11,7 +15,7 @@ import {
 } from 'src/utils';
 import { InvalidPDFDateStringError } from 'src/core/errors';
 
-export class PDFString extends PDFObject {
+export class PDFString extends PDFObject implements EncryptableObject {
   // The PDF spec allows newlines and parens to appear directly within a literal
   // string. These character _may_ be escaped. But they do not _have_ to be. So
   // for simplicity, we will not bother escaping them.
@@ -112,5 +116,17 @@ export class PDFString extends PDFObject {
     offset += copyStringIntoBuffer(this.value, buffer, offset);
     buffer[offset++] = CharCodes.RightParen;
     return this.value.length + 2;
+  }
+
+  encryptWith(encrypter: Encrypter): PDFString {
+    // This impl may not be correct.
+    // TODO: improve & support non-ascii
+    const bytes = new Uint8Array(this.value.length);
+    for (let i = 0; i < this.value.length; ++i)
+      bytes[i] = this.value.charCodeAt(i);
+    const encrypted = encrypter.encryptData(bytes);
+    let s = String.fromCodePoint(...encrypted);
+
+    return new PDFString(s);
   }
 }

@@ -127,7 +127,8 @@ export class PDFWriter {
       const [ref] = indirectObject;
       xref.addEntry(ref, size);
 
-      if (encryptionKey != null)
+      // TODO: avoid encrypting ID value
+      if (encryptionKey != null && ref !== this.context.trailerInfo.Encrypt)
         encryptionKey.encryptIfPossible(indirectObject);
 
       size += this.computeIndirectObjectSize(indirectObject);

@@ -1,4 +1,5 @@
 import { PDFObject } from 'src/core/objects/PDFObject';
+import type { EncryptableObject, Encrypter } from 'src/core/objects/EncryptableObject';
 import { CharCodes } from 'src/core/syntax/CharCodes';
 import {
   copyStringIntoBuffer,
@@ -8,10 +9,11 @@ import {
   pdfDocEncodingDecode,
   parseDate,
   hasUtf16BOM,
+  uint8ArrayToHex,
 } from 'src/utils';
 import { InvalidPDFDateStringError } from 'src/core/errors';
 
-export class PDFHexString extends PDFObject {
+export class PDFHexString extends PDFObject implements EncryptableObject {
   static of = (value: string) => new PDFHexString(value);
 
   static fromText = (value: string) => {
@@ -88,5 +90,12 @@ export class PDFHexString extends PDFObject {
     offset += copyStringIntoBuffer(this.value, buffer, offset);
     buffer[offset++] = CharCodes.GreaterThan;
     return this.value.length + 2;
+  }
+
+  encryptWith(encrypter: Encrypter): PDFHexString {
+    const bytes = this.asBytes();
+    const encrypted = encrypter.encryptData(bytes);
+
+    return new PDFHexString(uint8ArrayToHex(encrypted));
   }
 }

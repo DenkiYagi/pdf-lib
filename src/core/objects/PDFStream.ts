@@ -25,7 +25,7 @@ export abstract class PDFStream extends PDFObject implements EncryptableObject {
 
   abstract getContentsSize(): number;
 
-  abstract encryptWith(encrypter: Encrypter): PDFObject;
+  abstract encryptWith(encrypter: Encrypter): PDFStream;
 
   updateDict(): void {
     const contentsSize = this.getContentsSize();

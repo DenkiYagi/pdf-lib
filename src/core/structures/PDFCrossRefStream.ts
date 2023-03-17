@@ -1,4 +1,3 @@
-import type { PDFObject } from 'src/core/objects/PDFObject';
 import type { PDFDict } from 'src/core/objects/PDFDict';
 import { PDFName } from 'src/core/objects/PDFName';
 import { PDFRef } from 'src/core/objects/PDFRef';
@@ -249,7 +248,7 @@ export class PDFCrossRefStream extends PDFFlateStream {
     return widths;
   };
 
-  encryptWith(encrypter: Encrypter): PDFObject {
+  encryptWith(encrypter: Encrypter): PDFCrossRefStream {
     return new PDFCrossRefStream(
       this.dict.clone(this.dict.context),
       this.entries.slice(),

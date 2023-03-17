@@ -101,7 +101,7 @@ export class PDFObjectStream extends PDFFlateStream {
     return offsets;
   }
 
-  encryptWith(encrypter: Encrypter): PDFObject {
+  encryptWith(encrypter: Encrypter): PDFObjectStream {
     return new PDFObjectStream(
       this.context,
       this.objects.slice(),

@@ -1,8 +1,12 @@
 import type { LiteralObject } from 'src/core/PDFContext';
-import { PDFStream } from 'src/core/objects/PDFStream';
+import type { Encrypter } from 'src/core/objects/EncryptableObject';
+import { PDFArray } from 'src/core/objects/PDFArray';
+import { PDFDict } from 'src/core/objects/PDFDict';
+import { PDFHexString } from 'src/core/objects/PDFHexString';
 import type { PDFObject } from 'src/core/objects/PDFObject';
 import type { PDFRef } from 'src/core/objects/PDFRef';
-import type { Encrypter } from 'src/core/objects/EncryptableObject';
+import { PDFStream } from 'src/core/objects/PDFStream';
+import { PDFString } from 'src/core/objects/PDFString';
 import type { StdSecurityHandlerDict } from 'src/core/security/StdSecurityHandler';
 import type { WordArray } from 'src/utils/crypt';
 
@@ -46,7 +50,13 @@ export abstract class EncryptionKey {
    */
   encryptIfPossible(indirectObject: IndirectObject): void {
     const [ref, obj] = indirectObject;
-    if (obj instanceof PDFStream) {
+    if (
+      obj instanceof PDFStream ||
+      obj instanceof PDFHexString ||
+      obj instanceof PDFString ||
+      obj instanceof PDFDict ||
+      obj instanceof PDFArray
+    ) {
       indirectObject[1] = obj.encryptWith(this.createEncrypter(ref));
     }
   }
