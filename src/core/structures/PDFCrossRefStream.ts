@@ -1,5 +1,6 @@
 import type { PDFDict } from 'src/core/objects/PDFDict';
 import { PDFName } from 'src/core/objects/PDFName';
+import type { PDFObject } from 'src/core/objects/PDFObject';
 import { PDFRef } from 'src/core/objects/PDFRef';
 import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter';
 import type { PDFContext } from 'src/core/PDFContext';
@@ -251,7 +252,7 @@ export class PDFCrossRefStream extends PDFFlateStream {
     return widths;
   };
 
-  encryptWith(encrypter: ObjectEncrypter, reference: PDFRef): PDFCrossRefStream {
+  encryptWith(encrypter: ObjectEncrypter, reference: PDFRef): PDFObject {
     return new PDFCrossRefStream(
       this.dict.clone(this.dict.context),
       this.entries.slice(),

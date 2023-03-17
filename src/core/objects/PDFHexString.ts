@@ -104,7 +104,7 @@ export class PDFHexString extends PDFObject {
   encryptWith(
     encrypter: ObjectEncrypter,
     reference: PDFRef,
-  ): PDFHexString | null {
+  ): PDFObject | null {
     if (this.preventEncryption) return null;
 
     const bytes = this.asBytes();

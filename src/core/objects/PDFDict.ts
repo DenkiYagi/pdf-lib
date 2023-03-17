@@ -223,7 +223,7 @@ export class PDFDict extends PDFObject {
     return offset - initialOffset;
   }
 
-  encryptWith(encrypter: ObjectEncrypter, reference: PDFRef): PDFDict | null {
+  encryptWith(encrypter: ObjectEncrypter, reference: PDFRef): PDFObject | null {
     const clone = PDFDict.withContext(this.context);
     let isEncrypted = false;
     for (const [name, value] of this.dict.entries()) {

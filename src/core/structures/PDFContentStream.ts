@@ -1,5 +1,6 @@
 import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter';
 import type { PDFDict } from 'src/core/objects/PDFDict';
+import type { PDFObject } from 'src/core/objects/PDFObject';
 import type { PDFRef } from 'src/core/objects/PDFRef';
 import type { PDFOperator } from 'src/core/operators/PDFOperator';
 import type { PDFContext } from 'src/core/PDFContext';
@@ -64,7 +65,7 @@ export class PDFContentStream extends PDFFlateStream {
     return size;
   }
 
-  encryptWith(encrypter: ObjectEncrypter, reference: PDFRef): PDFContentStream {
+  encryptWith(encrypter: ObjectEncrypter, reference: PDFRef): PDFObject {
     return new PDFContentStream(
       this.dict.clone(this.dict.context),
       this.operators.map((e) => e.clone()),

@@ -124,7 +124,7 @@ export class PDFString extends PDFObject {
   encryptWith(
     encrypter: ObjectEncrypter,
     reference: PDFRef,
-  ): PDFHexString | null {
+  ): PDFObject | null {
     if (this.preventEncryption) return null;
 
     const buffer = new Uint8Array(this.value.length);
