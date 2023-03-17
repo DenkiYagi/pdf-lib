@@ -110,4 +110,9 @@ describe(`PDFContentStream`, () => {
       ),
     );
   });
+
+  it.todo(`can be encrypted to another PDFObject`);
+  () => {
+    // PDFContentStream.of(dict, operators, false).encryptWith(encrypter, reference);
+  }
 });

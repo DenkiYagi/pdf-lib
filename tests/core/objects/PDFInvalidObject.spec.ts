@@ -29,4 +29,10 @@ describe(`PDFInvalidObject`, () => {
       new Uint8Array([0, 0, 0, 12, 39, 92, 38, 38, 28, 49, 0]),
     );
   });
+
+  it.todo(`can never be encrypted`);
+  () => {
+    // const reference = PDFRef.of(1);
+    // expect(PDFBool.True.encryptWith(encrypter, reference)).toBe(null);
+  }
 });

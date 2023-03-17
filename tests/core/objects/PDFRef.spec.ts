@@ -57,4 +57,10 @@ describe(`PDFRef`, () => {
     expect(PDFRef.of(4678, 9120).copyBytesInto(buffer4, 0)).toBe(11);
     expect(buffer4).toEqual(typedArrayFor('4678 9120 R  '));
   });
+
+  it.todo(`can never be encrypted`);
+  () => {
+    // const reference = PDFRef.of(1);
+    // expect(PDFBool.True.encryptWith(encrypter, reference)).toBe(null);
+  }
 });

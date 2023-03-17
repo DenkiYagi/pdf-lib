@@ -131,4 +131,9 @@ describe(`PDFArray`, () => {
       ),
     );
   });
+
+  it.todo(`can be encrypted to another PDFObject`);
+  () => {
+    // pdfArray.encryptWith(encrypter, reference);
+  }
 });

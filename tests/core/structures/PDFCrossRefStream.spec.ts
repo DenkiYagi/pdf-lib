@@ -137,4 +137,9 @@ describe(`PDFCrossRefStream`, () => {
       ),
     );
   });
+
+  it.todo(`can be encrypted to another PDFObject`);
+  () => {
+    // PDFCrossRefStream.create(dict, true).encryptWith(encrypter, reference);
+  }
 });

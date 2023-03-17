@@ -42,4 +42,9 @@ describe(`PDFRawStream`, () => {
       ),
     );
   });
+
+  it.todo(`can be encrypted to another PDFObject`);
+  () => {
+    // PDFRawStream.of(dict, data).encryptWith(encrypter, reference);
+  }
 });

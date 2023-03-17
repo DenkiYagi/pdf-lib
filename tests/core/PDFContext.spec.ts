@@ -118,6 +118,13 @@ describe(`PDFContext`, () => {
       expect(context.obj(false)).toBe(PDFBool.False);
     });
 
+    it.todo(`converts bytes to PDFHex instances`);
+    () => {
+      // const buffer = new Uint8Array();
+      // expect(context.obj(buffer)).toBeInstanceOf(PDFHexString);
+      // expect(context.obj(buffer).toString).toBe('');
+    }
+
     it(`converts array literals to PDFArray instances`, () => {
       const array = [
         PDFRef.of(21),

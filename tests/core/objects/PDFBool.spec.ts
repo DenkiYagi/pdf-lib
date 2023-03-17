@@ -39,4 +39,10 @@ describe(`PDFBool`, () => {
     expect(PDFBool.False.copyBytesInto(buffer, 1)).toBe(5);
     expect(buffer).toEqual(typedArrayFor(' false   '));
   });
+
+  it.todo(`can never be encrypted`);
+  () => {
+    // const reference = PDFRef.of(1);
+    // expect(PDFBool.True.encryptWith(encrypter, reference)).toBe(null);
+  }
 });

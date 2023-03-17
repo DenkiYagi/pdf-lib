@@ -25,6 +25,10 @@ describe(`PDFObjectStream`, () => {
     [context.nextRef(), PDFString.of('Stuff and thingz')],
   ];
 
+  it(`can tell wheter it can store a specified object or not`, () => {
+    // PDFObjectStream.shallNotStore(indirectObject, context);
+  });
+
   it(`can be constructed from PDFObjectStream.of(...)`, () => {
     expect(
       PDFObjectStream.withContextAndObjects(context, objects, false),
@@ -133,4 +137,9 @@ describe(`PDFObjectStream`, () => {
       ),
     );
   });
+
+  it.todo(`can be encrypted to another PDFObject`);
+  () => {
+    // PDFObjectStream.withContextAndObjects(context, objects, false).encryptWith(encrypter, reference);
+  }
 });

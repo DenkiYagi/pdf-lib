@@ -47,4 +47,10 @@ describe(`PDFNumber`, () => {
       typedArrayFor('-340300000000000000000000000000000000000'),
     );
   });
+
+  it.todo(`can never be encrypted`);
+  () => {
+    // const reference = PDFRef.of(1);
+    // expect(PDFBool.True.encryptWith(encrypter, reference)).toBe(null);
+  }
 });

@@ -234,4 +234,9 @@ describe(`PDFString`, () => {
     expect(PDFString.of(')(b\\a/))z(').copyBytesInto(buffer, 3)).toBe(12);
     expect(buffer).toEqual(typedArrayFor('   ()(b\\a/))z()     '));
   });
+
+  it.todo(`can be encrypted to another PDFObject`);
+  () => {
+    // PDFString.of('foobar').encryptWith(encrypter, reference);
+  }
 });

@@ -18,6 +18,13 @@ describe(`PDFHexString`, () => {
     );
   });
 
+  it.todo(`can be constructed from bytes`);
+  () => {
+    // const buffer = new Uint8Array();
+    // expect(PDFHexString.fromUint8Array(buffer)).toBeInstanceOf(PDFHexString);
+    // expect(String(PDFHexString.fromUint8Array(buffer))).toBe('');
+  }
+
   describe(`converting to bytes`, () => {
     it(`can handle an even number of hex digits`, () => {
       const hex = 'FEFF0045006700670020D83CDF73';
@@ -165,4 +172,9 @@ describe(`PDFHexString`, () => {
     expect(PDFHexString.of('901FA').copyBytesInto(buffer, 3)).toBe(7);
     expect(buffer).toEqual(typedArrayFor('   <901FA> '));
   });
+
+  it.todo(`can be encrypted to another PDFObject`);
+  () => {
+    // PDFHexString.of('901FA').encryptWith(encrypter, reference);
+  }
 });

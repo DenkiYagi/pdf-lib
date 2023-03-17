@@ -192,4 +192,9 @@ describe(`PDFDict`, () => {
     expect(new Set(dict.keys()).size).toBe(4);
     expect(dict.keys()).toEqual([anotherKey, key1, key2, key3]);
   });
+
+  it.todo(`can be encrypted to another PDFObject`);
+  () => {
+    // pdfDict.encryptWith(encrypter, reference);
+  }
 });

@@ -119,4 +119,10 @@ describe(`PDFName`, () => {
     expect(PDFName.of('A#42').copyBytesInto(buffer3, 4)).toBe(3);
     expect(buffer3).toEqual(typedArrayFor('    /AB'));
   });
+
+  it.todo(`can never be encrypted`);
+  () => {
+    // const reference = PDFRef.of(1);
+    // expect(PDFBool.True.encryptWith(encrypter, reference)).toBe(null);
+  }
 });
