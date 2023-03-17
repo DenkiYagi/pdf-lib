@@ -46,7 +46,7 @@ export abstract class EncryptionKey {
   }
 
   /**
-   * Encrypt a given indirect object if possible.
+   * Encrypt a specified indirect object if possible.
    */
   encryptIfPossible(indirectObject: IndirectObject): void {
     const [ref, obj] = indirectObject;
@@ -62,9 +62,11 @@ export abstract class EncryptionKey {
   }
 
   /**
+   * Creates an `Encrypter` instance for a specified indirect object.
+   * @param reference Reference to the indirect object to be encrypted.
    * @returns An instance that can encrypt arbitrary bytes.
    */
-  protected abstract createEncrypter(ref: PDFRef): Encrypter;
+  protected abstract createEncrypter(reference: PDFRef): Encrypter;
 }
 
 /**
