@@ -30,6 +30,10 @@ export class PDFHexString extends PDFObject {
     return new PDFHexString(hex, preventEncryption);
   };
 
+  static fromUint8Array = (data: Uint8Array, preventEncryption?: boolean) => {
+    return new PDFHexString(uint8ArrayToHex(data), preventEncryption);
+  };
+
   private readonly value: string;
   private readonly preventEncryption: boolean;
 
@@ -106,6 +110,6 @@ export class PDFHexString extends PDFObject {
     const bytes = this.asBytes();
     const encrypted = encrypter.encryptObject(bytes, reference);
 
-    return new PDFHexString(uint8ArrayToHex(encrypted));
+    return PDFHexString.fromUint8Array(encrypted);
   }
 }

@@ -18,7 +18,7 @@ import { PDFOperator } from 'src/core/operators/PDFOperator';
 import { PDFOperatorNames as Ops } from 'src/core/operators/PDFOperatorNames';
 import type { PDFSecurity } from 'src/core/security/PDFSecurity';
 import { PDFContentStream } from 'src/core/structures/PDFContentStream';
-import { typedArrayFor, uint8ArrayToHex } from 'src/utils';
+import { typedArrayFor } from 'src/utils';
 import { SimpleRNG } from 'src/utils/rng';
 
 type LookupKey = PDFRef | PDFObject | undefined;
@@ -199,9 +199,9 @@ export class PDFContext {
   obj(literal: string): PDFName;
   obj(literal: number): PDFNumber;
   obj(literal: boolean): PDFBool;
-  obj(literal: Uint8Array, options?:PDFObjectOptions): PDFHexString;
-  obj(literal: LiteralObject, options?:PDFObjectOptions): PDFDict;
-  obj(literal: LiteralArray, options?:PDFObjectOptions): PDFArray;
+  obj(literal: Uint8Array, options?: PDFObjectOptions): PDFHexString;
+  obj(literal: LiteralObject, options?: PDFObjectOptions): PDFDict;
+  obj(literal: LiteralArray, options?: PDFObjectOptions): PDFArray;
   obj(literal: PDFObject): PDFObject;
 
   /**
@@ -210,7 +210,7 @@ export class PDFContext {
    * @param preventEncryption `true` if the object shall not be encrypted,
    *   i.e. the object is a value of the `Encrypt` entry in the trailer.
    */
-  obj(literal: Literal, options?:PDFObjectOptions): PDFObject {
+  obj(literal: Literal, options?: PDFObjectOptions): PDFObject {
     if (literal instanceof PDFObject) {
       return literal;
     } else if (literal === null || literal === undefined) {
@@ -222,7 +222,10 @@ export class PDFContext {
     } else if (typeof literal === 'boolean') {
       return literal ? PDFBool.True : PDFBool.False;
     } else if (literal instanceof Uint8Array) {
-      return PDFHexString.of(uint8ArrayToHex(literal), options?.preventStringEncryption);
+      return PDFHexString.fromUint8Array(
+        literal,
+        options?.preventStringEncryption,
+      );
     } else if (Array.isArray(literal)) {
       const array = PDFArray.withContext(this);
       for (let idx = 0, len = literal.length; idx < len; idx++) {
