@@ -182,12 +182,19 @@ export class PDFArray extends PDFObject {
     }
   }
 
-  encryptWith(encrypter: ObjectEncrypter, reference: PDFRef): PDFArray {
+  encryptWith(encrypter: ObjectEncrypter, reference: PDFRef): PDFArray | null {
     const clone = PDFArray.withContext(this.context);
+    let isEncrypted = false;
     for (const element of this.array) {
-      clone.push(element.encryptWith(encrypter, reference) ?? element);
+      const encryptedElement = element.encryptWith(encrypter, reference);
+      if (encryptedElement == null) {
+        clone.push(element);
+      } else {
+        clone.push(encryptedElement);
+        isEncrypted = true;
+      }
     }
 
-    return clone;
+    return isEncrypted ? clone : null;
   }
 }
