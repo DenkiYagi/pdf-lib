@@ -27,6 +27,14 @@ export interface LiteralObject {
   [name: string]: Literal | PDFObject;
 }
 
+export interface PDFObjectOptions {
+  /**
+   * `true` if all strings in this object shall not be encrypted,
+   * i.e. the object is a value of the `ID` or `Encrypt` entry in the trailer.
+   */
+  preventStringEncryption?: boolean;
+}
+
 interface LiteralArray {
   [index: number]: Literal | PDFObject;
 }
@@ -191,12 +199,18 @@ export class PDFContext {
   obj(literal: string): PDFName;
   obj(literal: number): PDFNumber;
   obj(literal: boolean): PDFBool;
-  obj(literal: Uint8Array): PDFHexString;
-  obj(literal: LiteralObject): PDFDict;
-  obj(literal: LiteralArray): PDFArray;
+  obj(literal: Uint8Array, options?:PDFObjectOptions): PDFHexString;
+  obj(literal: LiteralObject, options?:PDFObjectOptions): PDFDict;
+  obj(literal: LiteralArray, options?:PDFObjectOptions): PDFArray;
   obj(literal: PDFObject): PDFObject;
 
-  obj(literal: Literal) {
+  /**
+   * Converts any literal value to a `PDFObject`.
+   * @param literal Any value to be converted to a `PDFObject`.
+   * @param preventEncryption `true` if the object shall not be encrypted,
+   *   i.e. the object is a value of the `Encrypt` entry in the trailer.
+   */
+  obj(literal: Literal, options?:PDFObjectOptions): PDFObject {
     if (literal instanceof PDFObject) {
       return literal;
     } else if (literal === null || literal === undefined) {
@@ -208,11 +222,11 @@ export class PDFContext {
     } else if (typeof literal === 'boolean') {
       return literal ? PDFBool.True : PDFBool.False;
     } else if (literal instanceof Uint8Array) {
-      return PDFHexString.of(uint8ArrayToHex(literal));
+      return PDFHexString.of(uint8ArrayToHex(literal), options?.preventStringEncryption);
     } else if (Array.isArray(literal)) {
       const array = PDFArray.withContext(this);
       for (let idx = 0, len = literal.length; idx < len; idx++) {
-        array.push(this.obj(literal[idx]));
+        array.push(this.obj(literal[idx], options));
       }
       return array;
     } else {
@@ -221,7 +235,8 @@ export class PDFContext {
       for (let idx = 0, len = keys.length; idx < len; idx++) {
         const key = keys[idx];
         const value = (literal as LiteralObject)[key] as any;
-        if (value !== undefined) dict.set(PDFName.of(key), this.obj(value));
+        if (value !== undefined)
+          dict.set(PDFName.of(key), this.obj(value, options));
       }
       return dict;
     }

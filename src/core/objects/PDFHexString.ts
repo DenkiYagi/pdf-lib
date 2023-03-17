@@ -15,9 +15,11 @@ import {
 import { InvalidPDFDateStringError } from 'src/core/errors';
 
 export class PDFHexString extends PDFObject {
-  static of = (value: string) => new PDFHexString(value);
+  static of = (value: string, preventEncryption?: boolean) => {
+    return new PDFHexString(value, preventEncryption);
+  };
 
-  static fromText = (value: string) => {
+  static fromText = (value: string, preventEncryption?: boolean) => {
     const encoded = utf16Encode(value);
 
     let hex = '';
@@ -25,14 +27,16 @@ export class PDFHexString extends PDFObject {
       hex += toHexStringOfMinLength(encoded[idx], 4);
     }
 
-    return new PDFHexString(hex);
+    return new PDFHexString(hex, preventEncryption);
   };
 
   private readonly value: string;
+  private readonly preventEncryption: boolean;
 
-  constructor(value: string) {
+  constructor(value: string, preventEncryption = false) {
     super();
     this.value = value;
+    this.preventEncryption = preventEncryption;
   }
 
   asBytes(): Uint8Array {
@@ -93,7 +97,12 @@ export class PDFHexString extends PDFObject {
     return this.value.length + 2;
   }
 
-  encryptWith(encrypter: ObjectEncrypter, reference: PDFRef): PDFHexString {
+  encryptWith(
+    encrypter: ObjectEncrypter,
+    reference: PDFRef,
+  ): PDFHexString | null {
+    if (this.preventEncryption) return null;
+
     const bytes = this.asBytes();
     const encrypted = encrypter.encryptObject(bytes, reference);
 

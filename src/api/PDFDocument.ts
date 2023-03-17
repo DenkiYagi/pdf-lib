@@ -1229,7 +1229,9 @@ export class PDFDocument {
 
     this.context.security = security;
 
-    const encryptionDict = this.context.obj(encryptionDictionary);
+    const encryptionDict = this.context.obj(encryptionDictionary, {
+      preventStringEncryption: true,
+    });
     this.context.trailerInfo.Encrypt = this.context.register(encryptionDict);
   }
 
@@ -1273,7 +1275,7 @@ export class PDFDocument {
     }
 
     const newIds: [Uint8Array, Uint8Array] = [originalHash, currentHash];
-    trailer.ID = this.context.obj(newIds);
+    trailer.ID = this.context.obj(newIds, { preventStringEncryption: true });
 
     return newIds;
   }
