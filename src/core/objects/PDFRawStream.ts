@@ -1,6 +1,6 @@
 import type { PDFDict } from 'src/core/objects/PDFDict';
 import { PDFStream } from 'src/core/objects/PDFStream';
-import type { Encrypter } from 'src/core/objects/EncryptableObject';
+import type { Encrypter } from 'src/core/objects/Encrypter';
 import type { PDFContext } from 'src/core/PDFContext';
 import { arrayAsString } from 'src/utils';
 

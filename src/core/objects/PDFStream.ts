@@ -2,14 +2,11 @@ import type { PDFDict } from 'src/core/objects/PDFDict';
 import { PDFName } from 'src/core/objects/PDFName';
 import { PDFNumber } from 'src/core/objects/PDFNumber';
 import { PDFObject } from 'src/core/objects/PDFObject';
-import type {
-  EncryptableObject,
-  Encrypter,
-} from 'src/core/objects/EncryptableObject';
+import type { Encrypter } from 'src/core/objects/Encrypter';
 import type { PDFContext } from 'src/core/PDFContext';
 import { CharCodes } from 'src/core/syntax/CharCodes';
 
-export abstract class PDFStream extends PDFObject implements EncryptableObject {
+export abstract class PDFStream extends PDFObject {
   readonly dict: PDFDict;
 
   constructor(dict: PDFDict) {

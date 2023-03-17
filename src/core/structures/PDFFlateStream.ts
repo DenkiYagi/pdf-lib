@@ -3,7 +3,7 @@ import pako from 'pako';
 import type { PDFDict } from 'src/core/objects/PDFDict';
 import { PDFName } from 'src/core/objects/PDFName';
 import { PDFStream } from 'src/core/objects/PDFStream';
-import type { Encrypter } from 'src/core/objects/EncryptableObject';
+import type { Encrypter } from 'src/core/objects/Encrypter';
 import { Cache } from 'src/utils';
 
 export abstract class PDFFlateStream extends PDFStream {

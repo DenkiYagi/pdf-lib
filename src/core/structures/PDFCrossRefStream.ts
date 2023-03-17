@@ -1,7 +1,7 @@
 import type { PDFDict } from 'src/core/objects/PDFDict';
 import { PDFName } from 'src/core/objects/PDFName';
 import { PDFRef } from 'src/core/objects/PDFRef';
-import type { Encrypter } from 'src/core/objects/EncryptableObject';
+import type { Encrypter } from 'src/core/objects/Encrypter';
 import type { PDFContext } from 'src/core/PDFContext';
 import { PDFFlateStream } from 'src/core/structures/PDFFlateStream';
 import { bytesFor, Cache, reverseArray, sizeInBytes, sum } from 'src/utils';

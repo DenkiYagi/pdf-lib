@@ -1,8 +1,5 @@
 import { PDFObject } from 'src/core/objects/PDFObject';
-import type {
-  EncryptableObject,
-  Encrypter,
-} from 'src/core/objects/EncryptableObject';
+import type { Encrypter } from 'src/core/objects/Encrypter';
 import { CharCodes } from 'src/core/syntax/CharCodes';
 import {
   copyStringIntoBuffer,
@@ -15,7 +12,7 @@ import {
 } from 'src/utils';
 import { InvalidPDFDateStringError } from 'src/core/errors';
 
-export class PDFString extends PDFObject implements EncryptableObject {
+export class PDFString extends PDFObject {
   // The PDF spec allows newlines and parens to appear directly within a literal
   // string. These character _may_ be escaped. But they do not _have_ to be. So
   // for simplicity, we will not bother escaping them.

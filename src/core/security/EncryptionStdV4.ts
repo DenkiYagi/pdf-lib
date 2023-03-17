@@ -1,5 +1,5 @@
 import type { PDFRef } from 'src/core/objects/PDFRef';
-import type { Encrypter } from 'src/core/objects/EncryptableObject';
+import type { Encrypter } from 'src/core/objects/Encrypter';
 import {
   Encryption,
   EncryptionKey,

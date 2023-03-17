@@ -1,23 +1,20 @@
-import type {
-  EncryptableObject,
-  Encrypter,
-} from 'src/core/objects/EncryptableObject';
-import { PDFArray } from 'src/core/objects/PDFArray';
+import type { Encrypter } from 'src/core/objects/Encrypter';
+import type { PDFArray } from 'src/core/objects/PDFArray';
 import type { PDFBool } from 'src/core/objects/PDFBool';
-import { PDFHexString } from 'src/core/objects/PDFHexString';
+import type { PDFHexString } from 'src/core/objects/PDFHexString';
 import { PDFName } from 'src/core/objects/PDFName';
 import { PDFNull } from 'src/core/objects/PDFNull';
 import type { PDFNumber } from 'src/core/objects/PDFNumber';
 import { PDFObject } from 'src/core/objects/PDFObject';
 import type { PDFRef } from 'src/core/objects/PDFRef';
-import { PDFStream } from 'src/core/objects/PDFStream';
-import { PDFString } from 'src/core/objects/PDFString';
+import type { PDFStream } from 'src/core/objects/PDFStream';
+import type { PDFString } from 'src/core/objects/PDFString';
 import type { PDFContext } from 'src/core/PDFContext';
 import { CharCodes } from 'src/core/syntax/CharCodes';
 
 export type DictMap = Map<PDFName, PDFObject>;
 
-export class PDFDict extends PDFObject implements EncryptableObject {
+export class PDFDict extends PDFObject {
   static withContext = (context: PDFContext) => new PDFDict(new Map(), context);
 
   static fromMapWithContext = (map: DictMap, context: PDFContext) =>
@@ -229,17 +226,7 @@ export class PDFDict extends PDFObject implements EncryptableObject {
   encryptWith(encrypter: Encrypter): PDFDict {
     const clone = PDFDict.withContext(this.context);
     for (const [name, value] of this.dict.entries()) {
-      if (
-        value instanceof PDFStream ||
-        value instanceof PDFHexString ||
-        value instanceof PDFString ||
-        value instanceof PDFDict ||
-        value instanceof PDFArray
-      ) {
-        clone.set(name, value.encryptWith(encrypter));
-      } else {
-        clone.set(name, value);
-      }
+      clone.set(name, value.encryptWith(encrypter) ?? value);
     }
 
     return clone;

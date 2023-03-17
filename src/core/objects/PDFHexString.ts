@@ -1,5 +1,5 @@
 import { PDFObject } from 'src/core/objects/PDFObject';
-import type { EncryptableObject, Encrypter } from 'src/core/objects/EncryptableObject';
+import type { Encrypter } from 'src/core/objects/Encrypter';
 import { CharCodes } from 'src/core/syntax/CharCodes';
 import {
   copyStringIntoBuffer,
@@ -13,7 +13,7 @@ import {
 } from 'src/utils';
 import { InvalidPDFDateStringError } from 'src/core/errors';
 
-export class PDFHexString extends PDFObject implements EncryptableObject {
+export class PDFHexString extends PDFObject {
   static of = (value: string) => new PDFHexString(value);
 
   static fromText = (value: string) => {

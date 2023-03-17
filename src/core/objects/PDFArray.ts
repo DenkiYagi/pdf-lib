@@ -1,23 +1,20 @@
-import type {
-  EncryptableObject,
-  Encrypter,
-} from 'src/core/objects/EncryptableObject';
+import type { Encrypter } from 'src/core/objects/Encrypter';
 import type { PDFBool } from 'src/core/objects/PDFBool';
-import { PDFDict } from 'src/core/objects/PDFDict';
-import { PDFHexString } from 'src/core/objects/PDFHexString';
+import type { PDFDict } from 'src/core/objects/PDFDict';
+import type { PDFHexString } from 'src/core/objects/PDFHexString';
 import type { PDFName } from 'src/core/objects/PDFName';
 import type { PDFNull } from 'src/core/objects/PDFNull';
 import { PDFNumber } from 'src/core/objects/PDFNumber';
 import { PDFObject } from 'src/core/objects/PDFObject';
 import type { PDFRawStream } from 'src/core/objects/PDFRawStream';
 import type { PDFRef } from 'src/core/objects/PDFRef';
-import { PDFStream } from 'src/core/objects/PDFStream';
-import { PDFString } from 'src/core/objects/PDFString';
+import type { PDFStream } from 'src/core/objects/PDFStream';
+import type { PDFString } from 'src/core/objects/PDFString';
 import type { PDFContext } from 'src/core/PDFContext';
 import { CharCodes } from 'src/core/syntax/CharCodes';
 import { PDFArrayIsNotRectangleError } from 'src/core/errors';
 
-export class PDFArray extends PDFObject implements EncryptableObject {
+export class PDFArray extends PDFObject {
   static withContext = (context: PDFContext) => new PDFArray(context);
 
   private readonly array: PDFObject[];
@@ -188,17 +185,7 @@ export class PDFArray extends PDFObject implements EncryptableObject {
   encryptWith(encrypter: Encrypter): PDFArray {
     const clone = PDFArray.withContext(this.context);
     for (const element of this.array) {
-      if (
-        element instanceof PDFStream ||
-        element instanceof PDFHexString ||
-        element instanceof PDFString ||
-        element instanceof PDFDict ||
-        element instanceof PDFArray
-      ) {
-        clone.push(element.encryptWith(encrypter));
-      } else {
-        clone.push(element);
-      }
+      clone.push(element.encryptWith(encrypter) ?? element);
     }
 
     return clone;
