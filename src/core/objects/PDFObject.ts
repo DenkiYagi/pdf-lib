@@ -1,5 +1,6 @@
 import type { PDFContext } from 'src/core/PDFContext';
-import type { Encrypter } from 'src/core/objects/Encrypter';
+import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter';
+import type { PDFRef } from 'src/core/objects/PDFRef';
 
 export abstract class PDFObject {
   abstract clone(context?: PDFContext): PDFObject;
@@ -14,7 +15,7 @@ export abstract class PDFObject {
    * Encrypt this object and returns the result as a new `PDFObject`,
    * or returns `null` if `this` can't be encrypted.
    */
-  encryptWith(_encrypter: Encrypter): PDFObject | null {
+  encryptWith(_encrypter: ObjectEncrypter, _reference: PDFRef): PDFObject | null {
     return null;
   }
 }

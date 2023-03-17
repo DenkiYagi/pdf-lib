@@ -1,6 +1,7 @@
+import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter';
 import type { PDFDict } from 'src/core/objects/PDFDict';
+import type { PDFRef } from 'src/core/objects/PDFRef';
 import { PDFStream } from 'src/core/objects/PDFStream';
-import type { Encrypter } from 'src/core/objects/Encrypter';
 import type { PDFContext } from 'src/core/PDFContext';
 import { arrayAsString } from 'src/utils';
 
@@ -35,10 +36,10 @@ export class PDFRawStream extends PDFStream {
     return this.contents.length;
   }
 
-  encryptWith(encrypter: Encrypter): PDFRawStream {
+  encryptWith(encrypter: ObjectEncrypter, reference: PDFRef): PDFRawStream {
     return new PDFRawStream(
       this.dict.clone(),
-      encrypter.encryptData(this.contents),
+      encrypter.encryptObject(this.contents, reference),
     );
   }
 }

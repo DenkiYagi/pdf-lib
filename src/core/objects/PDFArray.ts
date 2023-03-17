@@ -1,4 +1,4 @@
-import type { Encrypter } from 'src/core/objects/Encrypter';
+import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter';
 import type { PDFBool } from 'src/core/objects/PDFBool';
 import type { PDFDict } from 'src/core/objects/PDFDict';
 import type { PDFHexString } from 'src/core/objects/PDFHexString';
@@ -182,10 +182,10 @@ export class PDFArray extends PDFObject {
     }
   }
 
-  encryptWith(encrypter: Encrypter): PDFArray {
+  encryptWith(encrypter: ObjectEncrypter, reference: PDFRef): PDFArray {
     const clone = PDFArray.withContext(this.context);
     for (const element of this.array) {
-      clone.push(element.encryptWith(encrypter) ?? element);
+      clone.push(element.encryptWith(encrypter, reference) ?? element);
     }
 
     return clone;

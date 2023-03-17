@@ -1,5 +1,6 @@
+import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter';
 import { PDFObject } from 'src/core/objects/PDFObject';
-import type { Encrypter } from 'src/core/objects/Encrypter';
+import type { PDFRef } from 'src/core/objects/PDFRef';
 import { CharCodes } from 'src/core/syntax/CharCodes';
 import {
   copyStringIntoBuffer,
@@ -115,13 +116,13 @@ export class PDFString extends PDFObject {
     return this.value.length + 2;
   }
 
-  encryptWith(encrypter: Encrypter): PDFString {
+  encryptWith(encrypter: ObjectEncrypter, reference: PDFRef): PDFString {
     // This impl may not be correct.
     // TODO: improve & support non-ascii
     const bytes = new Uint8Array(this.value.length);
     for (let i = 0; i < this.value.length; ++i)
       bytes[i] = this.value.charCodeAt(i);
-    const encrypted = encrypter.encryptData(bytes);
+    const encrypted = encrypter.encryptObject(bytes, reference);
     let s = String.fromCodePoint(...encrypted);
 
     return new PDFString(s);

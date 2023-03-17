@@ -2,9 +2,12 @@ import { PDFName } from 'src/core/objects/PDFName';
 import { PDFNumber } from 'src/core/objects/PDFNumber';
 import type { PDFObject } from 'src/core/objects/PDFObject';
 import type { PDFRef } from 'src/core/objects/PDFRef';
-import type { Encrypter } from 'src/core/objects/Encrypter';
+import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter';
 import type { PDFContext } from 'src/core/PDFContext';
-import { PDFFlateStream } from 'src/core/structures/PDFFlateStream';
+import {
+  PDFFlateStream,
+  PDFFlateStreamEncryptionParams,
+} from 'src/core/structures/PDFFlateStream';
 import { CharCodes } from 'src/core/syntax/CharCodes';
 import { copyStringIntoBuffer, last } from 'src/utils';
 
@@ -26,9 +29,9 @@ export class PDFObjectStream extends PDFFlateStream {
     context: PDFContext,
     objects: IndirectObject[],
     encode: boolean,
-    encrypter: Encrypter | null,
+    encryption: PDFFlateStreamEncryptionParams | null,
   ) {
-    super(context.obj({}), encode, encrypter);
+    super(context.obj({}), encode, encryption);
 
     this.context = context;
     this.objects = objects;
@@ -101,12 +104,12 @@ export class PDFObjectStream extends PDFFlateStream {
     return offsets;
   }
 
-  encryptWith(encrypter: Encrypter): PDFObjectStream {
+  encryptWith(encrypter: ObjectEncrypter, reference: PDFRef): PDFObjectStream {
     return new PDFObjectStream(
       this.context,
       this.objects.slice(),
       this.encode,
-      encrypter,
+      { encrypter, reference },
     );
   }
 }

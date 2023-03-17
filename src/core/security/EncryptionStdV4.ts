@@ -1,5 +1,5 @@
 import type { PDFRef } from 'src/core/objects/PDFRef';
-import type { Encrypter } from 'src/core/objects/Encrypter';
+import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter';
 import {
   Encryption,
   EncryptionKey,
@@ -20,24 +20,32 @@ import {
 /**
  * Subtype of `EncryptionKey` to be used when using encryption algorithm version 4.
  */
-export class EncryptionKeyV4 extends EncryptionKey {
-  protected createEncrypter(reference: PDFRef): EncrypterV4 {
-    return new EncrypterV4(this.data, reference);
+export class EncryptionKeyV4 extends EncryptionKey implements ObjectEncrypter {
+  protected readonly encrypterCacheMap = new Map<string, DataEncrypterV4>();
+
+  encryptObject(data: Uint8Array, reference: PDFRef): Uint8Array {
+    return this.getEncrypter(reference).encryptData(data);
+  }
+
+  protected getEncrypter(reference: PDFRef): DataEncrypterV4 {
+    let encrypter = this.encrypterCacheMap.get(reference.tag);
+    if (encrypter == null) {
+      encrypter = new DataEncrypterV4(this.data, reference);
+      this.encrypterCacheMap.set(reference.tag, encrypter);
+    }
+
+    return encrypter;
   }
 }
 
-type AesParams = {
-  aesKey: WordArray;
-  initializationVector: WordArray;
-};
-
 /**
- * Implementation of `Encrypter` to be used when using encryption algorithm version 4 (with AES).
+ * Object that can encrypt arbitrary data.
+ * To be used when using encryption algorithm version 4 (with AES).
  *
  * @see ISO 32000-1 > 7.6.2 General Encryption Algorithm > Algorithm 1:
  *   Encryption of data using the RC4 or AES algorithms
  */
-class EncrypterV4 implements Encrypter {
+class DataEncrypterV4 {
   /**
    * Create a key for encrypting any data using AES algorithm.
    */
@@ -67,46 +75,27 @@ class EncrypterV4 implements Encrypter {
     return digestedKey;
   }
 
-  /** Actual bytes that constitute the encryption key. */
-  protected encryptionKey: WordArray;
-
-  /** Reference to the indirect object to be encrypted. */
-  protected reference: PDFRef;
-
-  /** Cache of data to be used for AES encryption. */
-  protected aesParamsCache: AesParams | null = null;
+  protected readonly aesKey: WordArray;
+  protected readonly initializationVector: WordArray;
 
   constructor(encryptionKey: WordArray, reference: PDFRef) {
-    this.encryptionKey = encryptionKey;
-    this.reference = reference;
+    this.aesKey = DataEncrypterV4.createAesKey(encryptionKey, reference);
+    this.initializationVector = wordArrayRandom(16);
   }
 
   encryptData(data: Uint8Array): Uint8Array {
-    const { aesKey, initializationVector } = this.prepareAes();
     const encryptedContent = encryptAES(
       wordArrayFromBytes(data),
-      aesKey,
-      initializationVector,
+      this.aesKey,
+      this.initializationVector,
     );
 
     // Initialization vector should be stored as the first 16 bytes of the encrypted data.
-    const encryptedResult = initializationVector
+    const encryptedResult = this.initializationVector
       .clone()
       .concat(encryptedContent);
 
     return wordArrayToBytes(encryptedResult);
-  }
-
-  protected prepareAes(): AesParams {
-    if (this.aesParamsCache != null) return this.aesParamsCache;
-
-    const prepared = {
-      aesKey: EncrypterV4.createAesKey(this.encryptionKey, this.reference),
-      initializationVector: wordArrayRandom(16),
-    };
-    this.aesParamsCache = prepared;
-
-    return prepared;
   }
 }
 

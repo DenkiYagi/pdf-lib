@@ -1,8 +1,9 @@
+import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter';
 import type { PDFDict } from 'src/core/objects/PDFDict';
 import { PDFName } from 'src/core/objects/PDFName';
 import { PDFNumber } from 'src/core/objects/PDFNumber';
 import { PDFObject } from 'src/core/objects/PDFObject';
-import type { Encrypter } from 'src/core/objects/Encrypter';
+import type { PDFRef } from 'src/core/objects/PDFRef';
 import type { PDFContext } from 'src/core/PDFContext';
 import { CharCodes } from 'src/core/syntax/CharCodes';
 
@@ -22,7 +23,7 @@ export abstract class PDFStream extends PDFObject {
 
   abstract getContentsSize(): number;
 
-  abstract encryptWith(encrypter: Encrypter): PDFStream;
+  abstract encryptWith(encrypter: ObjectEncrypter, reference: PDFRef): PDFStream;
 
   updateDict(): void {
     const contentsSize = this.getContentsSize();

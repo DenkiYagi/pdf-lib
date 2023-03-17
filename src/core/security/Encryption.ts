@@ -1,5 +1,5 @@
 import type { LiteralObject } from 'src/core/PDFContext';
-import type { Encrypter } from 'src/core/objects/Encrypter';
+import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter';
 import type { PDFObject } from 'src/core/objects/PDFObject';
 import type { PDFRef } from 'src/core/objects/PDFRef';
 import type { StdSecurityHandlerDict } from 'src/core/security/StdSecurityHandler';
@@ -30,7 +30,7 @@ type IndirectObject = [PDFRef, PDFObject];
 /**
  * Object that holds an encryption key and provides an encrypting function.
  */
-export abstract class EncryptionKey {
+export abstract class EncryptionKey implements ObjectEncrypter {
   /**
    * Actual bytes that constitute the encryption key.
    */
@@ -46,16 +46,11 @@ export abstract class EncryptionKey {
    */
   encryptIfPossible(indirectObject: IndirectObject): void {
     const [ref, obj] = indirectObject;
-    const encryptedObj = obj.encryptWith(this.createEncrypter(ref));
+    const encryptedObj = obj.encryptWith(this, ref);
     if (encryptedObj != null) indirectObject[1] = encryptedObj;
   }
 
-  /**
-   * Creates an `Encrypter` instance for a specified indirect object.
-   * @param reference Reference to the indirect object to be encrypted.
-   * @returns An instance that can encrypt arbitrary bytes.
-   */
-  protected abstract createEncrypter(reference: PDFRef): Encrypter;
+  abstract encryptObject(data: Uint8Array, reference: PDFRef): Uint8Array;
 }
 
 /**

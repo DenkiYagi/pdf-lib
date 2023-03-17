@@ -1,5 +1,6 @@
+import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter';
 import { PDFObject } from 'src/core/objects/PDFObject';
-import type { Encrypter } from 'src/core/objects/Encrypter';
+import type { PDFRef } from 'src/core/objects/PDFRef';
 import { CharCodes } from 'src/core/syntax/CharCodes';
 import {
   copyStringIntoBuffer,
@@ -92,9 +93,9 @@ export class PDFHexString extends PDFObject {
     return this.value.length + 2;
   }
 
-  encryptWith(encrypter: Encrypter): PDFHexString {
+  encryptWith(encrypter: ObjectEncrypter, reference: PDFRef): PDFHexString {
     const bytes = this.asBytes();
-    const encrypted = encrypter.encryptData(bytes);
+    const encrypted = encrypter.encryptObject(bytes, reference);
 
     return new PDFHexString(uint8ArrayToHex(encrypted));
   }
