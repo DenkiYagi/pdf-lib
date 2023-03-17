@@ -1,5 +1,15 @@
 # Modifications
 
+## [1.17.1-mod.2023.3]
+
+- Added encryption feature: `PDFDocument#encrypt()`
+- Changed the property `PDFDocument#isEncrypted` to a method as it is dynamic now.
+- Enabled to create/update the document ID: `PDFDocument#updateId()`
+
+## [1.17.1-mod.2023.2]
+
+- (removed)
+
 ## [1.17.1-mod.2023.1]
 
 - Used `fontkit 2` instead of `@pdf-lib/fontkit`.
