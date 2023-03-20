@@ -49,22 +49,22 @@ export class DataEncrypterV4 {
   }
 
   protected readonly aesKey: WordArray;
-  protected readonly initializationVector: WordArray;
 
   constructor(encryptionKey: WordArray, reference: PDFRef) {
     this.aesKey = DataEncrypterV4.createAesKey(encryptionKey, reference);
-    this.initializationVector = wordArrayRandom(16);
   }
 
   encryptData(data: Uint8Array): Uint8Array {
+    const initializationVector = wordArrayRandom(16);
+
     const encryptedContent = encryptAES(
       wordArrayFromBytes(data),
       this.aesKey,
-      this.initializationVector,
+      initializationVector,
     );
 
     // Initialization vector should be stored as the first 16 bytes of the encrypted data.
-    const encryptedResult = this.initializationVector
+    const encryptedResult = initializationVector
       .clone()
       .concat(encryptedContent);
 
