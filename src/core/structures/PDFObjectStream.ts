@@ -22,8 +22,8 @@ export class PDFObjectStream extends PDFFlateStream {
    *
    * Additional remarks:
    * - According to the implementation of PDFBox, the `Root` shall also not be stored
-   *   in an object stream (especially if you're going to encrypt the PDF document;
-   *   otherwise you won't be able to open the encrypted PDF with Adobe Acrobat Reader).
+   *   in an object stream if you're going to encrypt the PDF document;
+   *   otherwise you won't be able to open the encrypted PDF with Adobe Acrobat Reader.
    * - The value of `Length` entry in an object stream shall not be stored in another
    *   object stream. However in our implementation the `Length` entry of a stream is
    *   always a direct object, so it will never appear here.
@@ -35,14 +35,16 @@ export class PDFObjectStream extends PDFFlateStream {
     context: PDFContext,
   ): boolean => {
     const [ref, obj] = indirectObject;
+    const { trailerInfo } = context;
 
-    return (
-      ref === context.trailerInfo.Encrypt ||
-      ref === context.trailerInfo.Root ||
-      obj instanceof PDFStream ||
-      obj instanceof PDFInvalidObject ||
-      ref.generationNumber !== 0
-    );
+    if (trailerInfo.Encrypt != null) {
+      if (ref === trailerInfo.Encrypt || ref === trailerInfo.Root) return true;
+    }
+    if (ref.generationNumber !== 0) return true;
+    if (obj instanceof PDFStream) return true;
+    if (obj instanceof PDFInvalidObject) return true;
+
+    return false;
   };
 
   static withContextAndObjects = (
