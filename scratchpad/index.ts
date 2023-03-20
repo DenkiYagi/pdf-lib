@@ -19,7 +19,12 @@ import { PDFDocument } from 'src/api';
   const page2 = pdfDoc2.getPage(0);
   page2.drawImage(image2, { ...image2.scale(0.5), x: 100, y: 100 });
 
-  const pdfBytes = await pdfDoc2.save();
+  pdfDoc2.setTitle('テスト');
+  pdfDoc2.setAuthor('デンキヤギ');
+
+  // pdfDoc2.encrypt({ password: 'asdf' });
+
+  const pdfBytes = await pdfDoc2.save({ useObjectStreams: true });
 
   fs.writeFileSync('out.pdf', pdfBytes);
   openPdf('out.pdf', Reader.Preview);
