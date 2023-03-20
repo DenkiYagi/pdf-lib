@@ -1243,7 +1243,6 @@ export class PDFDocument {
    */
   updateId(): [Uint8Array, Uint8Array] {
     const trailer = this.context.trailerInfo;
-    const currentId = trailer.ID;
 
     const infoValues = this.getInfoDict().values();
     const infoSize = infoValues
@@ -1255,7 +1254,11 @@ export class PDFDocument {
     }
 
     /**
-     * Hash from time + ID values, which will be used for the second element of the ID.
+     * Hash from the below:
+     * - Current timestamp
+     * - Values of the `Info` dictionary in the trailer
+     *
+     * This will be used for the second element of the ID.
      */
     const currentHash = wordArrayToBytes(
       MD5(wordArray([Date.now()]).concat(wordArrayFromBytes(infoBytes))),
@@ -1267,6 +1270,7 @@ export class PDFDocument {
      * Otherwise it can be the same as the second.
      */
     let originalHash: Uint8Array = currentHash;
+    const currentId = trailer.ID;
     if (currentId instanceof PDFArray && currentId.size() == 2) {
       const firstId = currentId.get(0);
       if (firstId instanceof PDFHexString) {
