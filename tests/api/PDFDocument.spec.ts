@@ -582,7 +582,7 @@ describe(`PDFDocument`, () => {
       expect(ret.length).toBe(2);
       expect(ret[0]).toBeInstanceOf(Uint8Array);
       expect(ret[0]).toEqual(ret[1]);
-      if (!(ID instanceof PDFArray)) fail(`ID is not instance of PDFArray`);
+      if (!(ID instanceof PDFArray)) fail(`ID is not an instance of PDFArray`);
       expect(ID.size()).toBe(2);
       expect(ID.get(0)).toBeInstanceOf(PDFHexString);
       expect(ID.get(0)).toEqual(ID.get(1));
@@ -599,7 +599,7 @@ describe(`PDFDocument`, () => {
       expect(ret[0]).toBeInstanceOf(Uint8Array);
       expect(ret[1]).toBeInstanceOf(Uint8Array);
       expect(ret[0]).not.toEqual(ret[1]);
-      if (!(newID instanceof PDFArray)) fail(`ID is not instance of PDFArray`);
+      if (!(newID instanceof PDFArray)) fail(`ID is not an instance of PDFArray`);
       expect(newID.size()).toBe(2);
       expect(newID.get(0)).toEqual(originalID.get(0));
       expect(newID.get(1)).not.toEqual(originalID.get(1));
