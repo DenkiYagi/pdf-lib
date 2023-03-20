@@ -1,5 +1,6 @@
-import { PDFContext, PDFDict, PDFRawStream } from 'src/core';
+import { PDFContext, PDFDict, PDFObject, PDFRawStream, PDFRef } from 'src/core';
 import { mergeIntoTypedArray, toCharCode } from 'src/utils';
+import { security } from './shared';
 
 describe(`PDFRawStream`, () => {
   const context = PDFContext.create();
@@ -43,8 +44,18 @@ describe(`PDFRawStream`, () => {
     );
   });
 
-  it.todo(`can be encrypted to another PDFObject`);
-  () => {
-    // PDFRawStream.of(dict, data).encryptWith(encrypter, reference);
-  }
+  it(`can be encrypted to another PDFObject`, () => {
+    const { encryptionKey: key } = security;
+    const ref = PDFRef.of(1);
+
+    const input = PDFRawStream.of(dict, data);
+
+    const expectedOutput = PDFRawStream.of(
+      dict,
+      key.encryptObjectContent(data, ref),
+    );
+
+    expect(input.encryptWith(key, ref)).toBeInstanceOf(PDFObject);
+    expect(input.encryptWith(key, ref)).toEqual(expectedOutput);
+  });
 });

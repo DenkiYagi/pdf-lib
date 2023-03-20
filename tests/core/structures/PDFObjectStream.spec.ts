@@ -9,6 +9,7 @@ import {
   PDFString,
 } from 'src/core';
 import { mergeIntoTypedArray, toCharCode, typedArrayFor } from 'src/utils';
+import { security } from '../objects/shared';
 
 describe(`PDFObjectStream`, () => {
   const context = PDFContext.create();
@@ -138,8 +139,15 @@ describe(`PDFObjectStream`, () => {
     );
   });
 
-  it.todo(`can be encrypted to another PDFObject`);
-  () => {
-    // PDFObjectStream.withContextAndObjects(context, objects, false).encryptWith(encrypter, reference);
-  }
+  it(`can be encrypted to another PDFObject`, () => {
+    const { encryptionKey: key } = security;
+    const ref = PDFRef.of(1);
+
+    const input = PDFObjectStream.withContextAndObjects(
+      context,
+      objects,
+      false,
+    );
+    expect(input.encryptWith(key, ref)).toBeInstanceOf(PDFObject);
+  });
 });

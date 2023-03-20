@@ -1,5 +1,6 @@
-import { PDFHexString } from 'src/core';
+import { PDFHexString, PDFObject, PDFRef } from 'src/core';
 import { toCharCode, typedArrayFor } from 'src/utils';
+import { security } from './shared';
 
 describe(`PDFHexString`, () => {
   it(`can be constructed from PDFHexString.of(...)`, () => {
@@ -178,8 +179,22 @@ describe(`PDFHexString`, () => {
     expect(buffer).toEqual(typedArrayFor('   <901FA> '));
   });
 
-  it.todo(`can be encrypted to another PDFObject`);
-  () => {
-    // PDFHexString.of('901FA').encryptWith(encrypter, reference);
-  };
+  it(`can be encrypted to another PDFObject`, () => {
+    const { encryptionKey: key } = security;
+    const ref = PDFRef.of(1);
+
+    /** Same as `PDFHexString.fromText('ä☺𠜎️☁️💩').asBytes()` */
+    const buffer = new Uint8Array([
+      254, 255, 0, 228, 38, 58, 216, 65, 223, 14, 254, 15, 38, 1, 254, 15, 216,
+      61, 220, 169,
+    ]);
+    const input = PDFHexString.fromUint8Array(buffer);
+
+    const expectedOutput = PDFHexString.fromUint8Array(
+      key.encryptObjectContent(buffer, ref),
+    );
+
+    expect(input.encryptWith(key, ref)).toBeInstanceOf(PDFObject);
+    expect(input.encryptWith(key, ref)).toEqual(expectedOutput);
+  });
 });

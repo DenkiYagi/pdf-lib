@@ -7,11 +7,14 @@ import {
   PDFDict,
   PDFName,
   PDFNumber,
+  PDFObject,
   PDFOperator,
   PDFOperatorNames as Ops,
+  PDFRef,
   PDFString,
 } from 'src/core';
 import { mergeIntoTypedArray, toCharCode, typedArrayFor } from 'src/utils';
+import { security } from '../objects/shared';
 
 describe(`PDFContentStream`, () => {
   const context = PDFContext.create();
@@ -111,8 +114,12 @@ describe(`PDFContentStream`, () => {
     );
   });
 
-  it.todo(`can be encrypted to another PDFObject`);
-  () => {
-    // PDFContentStream.of(dict, operators, false).encryptWith(encrypter, reference);
-  }
+  it(`can be encrypted to another PDFObject`, () => {
+    const { encryptionKey: key } = security;
+    const ref = PDFRef.of(1);
+
+    const input = PDFContentStream.of(dict, operators, false);
+
+    expect(input.encryptWith(key, ref)).toBeInstanceOf(PDFObject);
+  });
 });

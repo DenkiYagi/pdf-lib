@@ -11,6 +11,7 @@ import {
   PDFString,
 } from 'src/core';
 import { toCharCode, typedArrayFor } from 'src/utils';
+import { security } from './shared';
 
 describe(`PDFArray`, () => {
   const context = PDFContext.create();
@@ -132,8 +133,29 @@ describe(`PDFArray`, () => {
     );
   });
 
-  it.todo(`can be encrypted to another PDFObject`);
-  () => {
-    // pdfArray.encryptWith(encrypter, reference);
-  }
+  it(`can be encrypted to another PDFObject if it contains any encryptable object`, () => {
+    const { encryptionKey: key } = security;
+    const ref = PDFRef.of(1);
+
+    const input = PDFArray.withContext(context);
+    input.push(pdfBool);
+    input.push(pdfHexString);
+
+    const expectedOutput = PDFArray.withContext(context);
+    expectedOutput.push(pdfBool);
+    expectedOutput.push(pdfHexString.encryptWith(key, ref)!);
+
+    expect(input.encryptWith(key, ref)).toEqual(expectedOutput);
+  });
+
+  it(`cannot be encrypted if it does not contain any encryptable object`, () => {
+    const { encryptionKey: key } = security;
+    const ref = PDFRef.of(1);
+
+    const input = PDFArray.withContext(context);
+    input.push(pdfBool);
+    input.push(pdfNumber);
+
+    expect(input.encryptWith(key, ref)).toBe(null);
+  });
 });

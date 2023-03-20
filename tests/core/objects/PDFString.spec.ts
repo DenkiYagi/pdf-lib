@@ -1,5 +1,6 @@
-import { PDFString } from 'src/core';
+import { PDFHexString, PDFObject, PDFRef, PDFString } from 'src/core';
 import { toCharCode, typedArrayFor } from 'src/utils';
+import { security } from './shared';
 
 describe(`PDFString`, () => {
   it(`can be constructed from PDFString.of(...)`, () => {
@@ -235,8 +236,18 @@ describe(`PDFString`, () => {
     expect(buffer).toEqual(typedArrayFor('   ()(b\\a/))z()     '));
   });
 
-  it.todo(`can be encrypted to another PDFObject`);
-  () => {
-    // PDFString.of('foobar').encryptWith(encrypter, reference);
-  }
+  it(`can be encrypted to another PDFObject`, () => {
+    const { encryptionKey: key } = security;
+    const ref = PDFRef.of(1);
+
+    const inputText = 'foobar';
+    const input = PDFString.of(inputText);
+
+    const expectedOutput = PDFHexString.fromUint8Array(
+      typedArrayFor(inputText),
+    ).encryptWith(key, ref);
+
+    expect(input.encryptWith(key, ref)).toBeInstanceOf(PDFObject);
+    expect(input.encryptWith(key, ref)).toEqual(expectedOutput);
+  });
 });

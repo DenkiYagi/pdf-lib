@@ -1,7 +1,8 @@
 import pako from 'pako';
 
-import { PDFContext, PDFCrossRefStream, PDFRef } from 'src/core';
+import { PDFContext, PDFCrossRefStream, PDFObject, PDFRef } from 'src/core';
 import { mergeIntoTypedArray, toCharCode } from 'src/utils';
+import { security } from '../objects/shared';
 
 describe(`PDFCrossRefStream`, () => {
   const context = PDFContext.create();
@@ -138,8 +139,10 @@ describe(`PDFCrossRefStream`, () => {
     );
   });
 
-  it.todo(`can be encrypted to another PDFObject`);
-  () => {
-    // PDFCrossRefStream.create(dict, true).encryptWith(encrypter, reference);
-  }
+  it(`can be encrypted to another PDFObject`, () => {
+    const { encryptionKey: key } = security;
+    const ref = PDFRef.of(1);
+
+    expect(stream1.encryptWith(key, ref)).toBeInstanceOf(PDFObject);
+  });
 });
