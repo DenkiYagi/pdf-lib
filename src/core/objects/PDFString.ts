@@ -11,6 +11,7 @@ import {
   toCharCode,
   parseDate,
   hasUtf16BOM,
+  typedArrayFor,
 } from 'src/utils';
 import { InvalidPDFDateStringError } from 'src/core/errors';
 
@@ -123,10 +124,7 @@ export class PDFString extends PDFObject {
   encryptWith(encrypter: ObjectEncrypter, reference: PDFRef): PDFObject | null {
     if (this.preventEncryption) return null;
 
-    const buffer = new Uint8Array(this.value.length);
-    for (let i = 0; i < this.value.length; ++i) {
-      buffer[i] = this.value.charCodeAt(i);
-    }
+    const buffer = typedArrayFor(this.value);
     const encryptedBytes = encrypter.encryptObjectContent(buffer, reference);
 
     return PDFHexString.fromUint8Array(encryptedBytes);
