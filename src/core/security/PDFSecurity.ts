@@ -17,7 +17,7 @@ export interface SecurityOptions {
 export class PDFSecurity {
   /**
    * Create a set of:
-   * - `PDFSecurity` instance.
+   * - `PDFSecurity` instance to be used for encrypting actual data.
    * - encryption dictionary to be written to the PDF file trailer.
    *
    * @param documentFirstId The first element of the PDF file identifier.
