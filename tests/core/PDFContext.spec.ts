@@ -118,12 +118,17 @@ describe(`PDFContext`, () => {
       expect(context.obj(false)).toBe(PDFBool.False);
     });
 
-    it.todo(`converts bytes to PDFHex instances`);
-    () => {
-      // const buffer = new Uint8Array();
-      // expect(context.obj(buffer)).toBeInstanceOf(PDFHexString);
-      // expect(context.obj(buffer).toString).toBe('');
-    }
+    it(`converts bytes to PDFHex instances`, () => {
+      /** Same as `PDFHexString.fromText('ä☺𠜎️☁️💩').asBytes()` */
+      const buffer = new Uint8Array([
+        254, 255, 0, 228, 38, 58, 216, 65, 223, 14, 254, 15, 38, 1, 254, 15,
+        216, 61, 220, 169,
+      ]);
+      expect(context.obj(buffer)).toBeInstanceOf(PDFHexString);
+      expect(context.obj(buffer).toString()).toBe(
+        '<FEFF00E4263AD841DF0EFE0F2601FE0FD83DDCA9>',
+      );
+    });
 
     it(`converts array literals to PDFArray instances`, () => {
       const array = [
