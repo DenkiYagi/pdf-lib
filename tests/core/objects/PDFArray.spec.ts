@@ -11,6 +11,7 @@ import {
   PDFString,
 } from 'src/core';
 import { toCharCode, typedArrayFor } from 'src/utils';
+import { mockRandom, resetMock } from '../security/mock';
 import { security } from './shared';
 
 describe(`PDFArray`, () => {
@@ -134,6 +135,8 @@ describe(`PDFArray`, () => {
   });
 
   it(`can be encrypted to another PDFObject if it contains any encryptable object`, () => {
+    mockRandom(0);
+
     const { encryptionKey: key } = security;
     const ref = PDFRef.of(1);
 
@@ -146,6 +149,8 @@ describe(`PDFArray`, () => {
     expectedOutput.push(pdfHexString.encryptWith(key, ref)!);
 
     expect(input.encryptWith(key, ref)).toEqual(expectedOutput);
+
+    resetMock();
   });
 
   it(`cannot be encrypted if it does not contain any encryptable object`, () => {

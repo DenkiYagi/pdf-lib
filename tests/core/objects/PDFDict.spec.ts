@@ -12,6 +12,7 @@ import {
   PDFObject,
 } from 'src/core';
 import { toCharCode, typedArrayFor } from 'src/utils';
+import { mockRandom, resetMock } from '../security/mock';
 import { security } from './shared';
 
 describe(`PDFDict`, () => {
@@ -195,6 +196,8 @@ describe(`PDFDict`, () => {
   });
 
   it(`can be encrypted to another PDFObject if it contains any encryptable object`, () => {
+    mockRandom(0);
+
     const { encryptionKey: key } = security;
     const ref = PDFRef.of(1);
 
@@ -211,6 +214,8 @@ describe(`PDFDict`, () => {
 
     expect(input.encryptWith(key, ref)).toBeInstanceOf(PDFObject);
     expect(input.encryptWith(key, ref)).toEqual(expectedOutput);
+
+    resetMock();
   });
 
   it(`cannot be encrypted if it does not contain any encryptable object`, () => {

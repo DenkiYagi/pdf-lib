@@ -1,5 +1,6 @@
 import { PDFHexString, PDFObject, PDFRef, PDFString } from 'src/core';
 import { toCharCode, typedArrayFor } from 'src/utils';
+import { mockRandom, resetMock } from '../security/mock';
 import { security } from './shared';
 
 describe(`PDFString`, () => {
@@ -237,6 +238,8 @@ describe(`PDFString`, () => {
   });
 
   it(`can be encrypted to another PDFObject`, () => {
+    mockRandom(0);
+
     const { encryptionKey: key } = security;
     const ref = PDFRef.of(1);
 
@@ -249,5 +252,7 @@ describe(`PDFString`, () => {
 
     expect(input.encryptWith(key, ref)).toBeInstanceOf(PDFObject);
     expect(input.encryptWith(key, ref)).toEqual(expectedOutput);
+
+    resetMock();
   });
 });
