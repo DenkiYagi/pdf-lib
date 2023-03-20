@@ -8,21 +8,16 @@ import type { WordArray } from 'src/utils/crypt';
 /**
  * Set of values that will be generated when preparing a PDF document for encryption.
  */
-export type Encryption = EncryptionGeneric<EncryptionKey, EncryptionDict>;
-
-export interface EncryptionGeneric<
-  Key extends EncryptionKey,
-  Dict extends EncryptionDict,
-> {
+export interface Encryption {
   /**
    * The encryption key.
    */
-  key: Key;
+  key: EncryptionKey;
 
   /**
    * The encryption dictionary that should be written to PDF file trailer.
    */
-  dictionary: Dict;
+  dictionary: EncryptionDict;
 }
 
 type IndirectObject = [PDFRef, PDFObject];

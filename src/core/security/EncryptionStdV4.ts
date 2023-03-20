@@ -1,5 +1,4 @@
 import type { PDFRef } from 'src/core/objects/PDFRef';
-import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter';
 import {
   Encryption,
   EncryptionKey,
@@ -12,7 +11,7 @@ import { DataEncrypterV4 } from 'src/core/security/DataEncrypterV4';
 /**
  * Subtype of `EncryptionKey` to be used when using encryption algorithm version 4.
  */
-export class EncryptionKeyV4 extends EncryptionKey implements ObjectEncrypter {
+export class EncryptionKeyV4 extends EncryptionKey {
   protected readonly encrypterCacheMap = new Map<string, DataEncrypterV4>();
 
   encryptObjectContent(data: Uint8Array, reference: PDFRef): Uint8Array {
