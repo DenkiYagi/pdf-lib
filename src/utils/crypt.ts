@@ -29,8 +29,7 @@ export const encryptAES = (
 export const createWordArray = (
   words: number[],
   byteLength?: number,
-): WordArray =>
-  CryptoJS.lib.WordArray.create(words, byteLength);
+): WordArray => CryptoJS.lib.WordArray.create(words, byteLength);
 
 /**
  * Convert `Uint8Array` to `WordArray`.
