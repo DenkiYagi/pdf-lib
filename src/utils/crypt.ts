@@ -16,13 +16,12 @@ export const encryptAES = (
   message: Message,
   key: Message,
   initializationVector: WordArray,
-): WordArray => {
-  return CryptoJS.AES.encrypt(message, key, {
+): WordArray =>
+  CryptoJS.AES.encrypt(message, key, {
     mode: CryptoJS.mode.CBC,
     padding: CryptoJS.pad.Pkcs7,
     iv: initializationVector,
   }).ciphertext;
-};
 
 /**
  * Create a new `WordArray`.
@@ -30,9 +29,8 @@ export const encryptAES = (
 export const createWordArray = (
   words: number[],
   byteLength?: number,
-): WordArray => {
-  return CryptoJS.lib.WordArray.create(words, byteLength);
-};
+): WordArray =>
+  CryptoJS.lib.WordArray.create(words, byteLength);
 
 /**
  * Convert `Uint8Array` to `WordArray`.
@@ -40,12 +38,11 @@ export const createWordArray = (
 export const wordArrayFromBytes = (
   bytes: Uint8Array,
   byteLength?: number,
-): WordArray => {
-  return CryptoJS.lib.WordArray.create(
+): WordArray =>
+  CryptoJS.lib.WordArray.create(
     bytes as unknown as number[],
     byteLength ?? bytes.length,
   );
-};
 
 /**
  * Convert `WordArray` to `Uint8Array`.
