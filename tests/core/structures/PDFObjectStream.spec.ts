@@ -2,9 +2,12 @@ import pako from 'pako';
 
 import {
   PDFContext,
+  PDFDict,
   PDFHexString,
+  PDFInvalidObject,
   PDFObject,
   PDFObjectStream,
+  PDFRawStream,
   PDFRef,
   PDFString,
 } from 'src/core';
@@ -26,8 +29,83 @@ describe(`PDFObjectStream`, () => {
     [context.nextRef(), PDFString.of('Stuff and thingz')],
   ];
 
-  it(`can tell wheter it can store a specified object or not`, () => {
-    // PDFObjectStream.shallNotStore(indirectObject, context);
+  it(`can tell if it can store a specified object (without encryption)`, () => {
+    const rootRef = PDFRef.of(9999);
+
+    const curContext = PDFContext.create();
+    curContext.trailerInfo.Root = rootRef;
+
+    const pdfDict = PDFDict.withContext(curContext);
+    const pdfStream = PDFRawStream.of(pdfDict, new Uint8Array());
+    const pdfInvalid = PDFInvalidObject.of(new Uint8Array());
+
+    // Root entry (if not encrypted)
+    expect(PDFObjectStream.shallNotStore([rootRef, pdfDict], curContext)).toBe(
+      false,
+    );
+
+    // generation number > 0
+    expect(
+      PDFObjectStream.shallNotStore([PDFRef.of(1, 1), pdfDict], curContext),
+    ).toBe(true);
+
+    // stream object
+    expect(
+      PDFObjectStream.shallNotStore([PDFRef.of(1, 0), pdfStream], curContext),
+    ).toBe(true);
+
+    // invalid object
+    expect(
+      PDFObjectStream.shallNotStore([PDFRef.of(1, 0), pdfInvalid], curContext),
+    ).toBe(true);
+
+    // otherwise
+    expect(
+      PDFObjectStream.shallNotStore([PDFRef.of(1, 0), pdfDict], curContext),
+    ).toBe(false);
+  });
+
+  it(`can tell if it can store a specified object (with encryption)`, () => {
+    const rootRef = PDFRef.of(9999);
+    const encryptRef = PDFRef.of(9998);
+
+    const curContext = PDFContext.create();
+    curContext.trailerInfo.Root = rootRef;
+    curContext.trailerInfo.Encrypt = encryptRef;
+
+    const pdfDict = PDFDict.withContext(curContext);
+    const pdfStream = PDFRawStream.of(pdfDict, new Uint8Array());
+    const pdfInvalid = PDFInvalidObject.of(new Uint8Array());
+
+    // Root entry (if encrypted)
+    expect(PDFObjectStream.shallNotStore([rootRef, pdfDict], curContext)).toBe(
+      true,
+    );
+
+    // Encrypt entry
+    expect(
+      PDFObjectStream.shallNotStore([encryptRef, pdfDict], curContext),
+    ).toBe(true);
+
+    // generation number > 0
+    expect(
+      PDFObjectStream.shallNotStore([PDFRef.of(1, 1), pdfDict], curContext),
+    ).toBe(true);
+
+    // stream object
+    expect(
+      PDFObjectStream.shallNotStore([PDFRef.of(1, 0), pdfStream], curContext),
+    ).toBe(true);
+
+    // invalid object
+    expect(
+      PDFObjectStream.shallNotStore([PDFRef.of(1, 0), pdfInvalid], curContext),
+    ).toBe(true);
+
+    // otherwise
+    expect(
+      PDFObjectStream.shallNotStore([PDFRef.of(1, 0), pdfDict], curContext),
+    ).toBe(false);
   });
 
   it(`can be constructed from PDFObjectStream.of(...)`, () => {
