@@ -599,7 +599,9 @@ describe(`PDFDocument`, () => {
       expect(ret[0]).toBeInstanceOf(Uint8Array);
       expect(ret[1]).toBeInstanceOf(Uint8Array);
       expect(ret[0]).not.toEqual(ret[1]);
-      if (!(newID instanceof PDFArray)) fail(`ID is not an instance of PDFArray`);
+      if (!(newID instanceof PDFArray)) {
+        fail(`ID is not an instance of PDFArray`);
+      }
       expect(newID.size()).toBe(2);
       expect(newID.get(0)).toEqual(originalID.get(0));
       expect(newID.get(1)).not.toEqual(originalID.get(1));
@@ -626,7 +628,9 @@ describe(`PDFDocument`, () => {
 
       pdfDoc.encrypt(options);
 
-      expect(pdfDoc.context.trailerInfo.Encrypt).toBeInstanceOf(PDFRef);
+      const { Encrypt } = pdfDoc.context.trailerInfo;
+      expect(Encrypt).toBeInstanceOf(PDFRef);
+      expect(pdfDoc.context.lookup(Encrypt)).toBeInstanceOf(PDFDict);
     });
 
     it(`Sets the security property of the context`, () => {
