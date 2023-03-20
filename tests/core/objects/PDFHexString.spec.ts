@@ -1,4 +1,5 @@
-import { PDFHexString, PDFObject, PDFRef } from 'src/core';
+import { PDFDocument } from 'src/api';
+import { PDFArray, PDFDict, PDFHexString, PDFObject, PDFRef } from 'src/core';
 import { toCharCode, typedArrayFor } from 'src/utils';
 import { mockRandom, resetMock } from '../security/mock';
 import { security } from './shared';
@@ -201,5 +202,28 @@ describe(`PDFHexString`, () => {
     expect(input.encryptWith(key, ref)).toEqual(expectedOutput);
 
     resetMock();
+  });
+
+  it(`cannot be encrypted if it is contained in ID or Encrypt entry in the trailer`, async () => {
+    const { encryptionKey: key } = security;
+    const ref = PDFRef.of(1);
+
+    const pdfDoc = await PDFDocument.create();
+    pdfDoc.encrypt({ password: 'password' });
+
+    const { ID } = pdfDoc.context.trailerInfo;
+    if (!(ID instanceof PDFArray)) fail(`Invalid ID value`);
+    for (const idElement of ID.asArray()) {
+      if (!(idElement instanceof PDFHexString)) fail(`Invalid ID element`);
+      expect(idElement.encryptWith(key, ref)).toBe(null);
+    }
+
+    const Encrypt = pdfDoc.context.lookup(pdfDoc.context.trailerInfo.Encrypt);
+    if (!(Encrypt instanceof PDFDict)) fail(`Invalid Encrypt value`);
+    for (const obj of Encrypt.values()) {
+      if (obj instanceof PDFHexString) {
+        expect(obj.encryptWith(key, ref)).toBe(null);
+      }
+    }
   });
 });
