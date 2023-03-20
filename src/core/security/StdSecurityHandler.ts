@@ -8,7 +8,7 @@ export abstract class StdSecurityHandler {
   /**
    * Bit length of the encryption key to be computed.
    */
-  public readonly keyBitLength: number;
+  readonly keyBitLength: number;
 
   constructor(keyBitLength: number) {
     this.keyBitLength = keyBitLength;

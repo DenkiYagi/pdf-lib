@@ -5,7 +5,7 @@ import {
 import {
   MD5,
   encryptRC4,
-  wordArray,
+  createWordArray,
   WordArray,
   wordArrayFromBytes,
   wordArrayToBytes,
@@ -60,7 +60,7 @@ export class StdSecurityHandlerR4 extends StdSecurityHandler {
   }) {
     super(params.keyBitLength);
 
-    this.documentFirstId = wordArray(
+    this.documentFirstId = createWordArray(
       params.documentFirstId as unknown as number[],
     );
 
@@ -85,7 +85,7 @@ export class StdSecurityHandlerR4 extends StdSecurityHandler {
     let key = this.userPassword
       .clone()
       .concat(this.computeOwnerPassword())
-      .concat(wordArray([this.permissionFlags], 4))
+      .concat(createWordArray([this.permissionFlags], 4))
       .concat(this.documentFirstId);
     // NOTE: If document metadata is not being encrypted,
     //   concat additional 4 bytes with the value 0xFFFFFFFF (not supported for now).
@@ -118,8 +118,9 @@ export class StdSecurityHandlerR4 extends StdSecurityHandler {
    *   Computing the encryption dictionary’s O (owner password) value
    */
   protected computeOwnerPassword(): WordArray {
-    if (this.cache.ownerPasswordComputed != null)
+    if (this.cache.ownerPasswordComputed != null) {
       return this.cache.ownerPasswordComputed;
+    }
 
     let md = this.ownerPassword;
     for (let i = 0; i < 51; ++i) md = MD5(md);
@@ -132,8 +133,9 @@ export class StdSecurityHandlerR4 extends StdSecurityHandler {
     let rc4Out = this.userPassword;
     for (let i = 0; i < 20; ++i) {
       const xorMask = i | (i << 8) | (i << 16) | (i << 24);
-      for (let wi = 0; wi < rc4KeyWordCount; ++wi)
+      for (let wi = 0; wi < rc4KeyWordCount; ++wi) {
         rc4KeyCurrent.words[wi] = rc4KeyOriginal.words[wi] ^ xorMask;
+      }
       rc4Out = encryptRC4(rc4Out, rc4KeyCurrent);
     }
 
@@ -148,8 +150,9 @@ export class StdSecurityHandlerR4 extends StdSecurityHandler {
    *   (Security handlers of revision 3 or greater)
    */
   protected computeUserPassword() {
-    if (this.cache.userPasswordComputed != null)
+    if (this.cache.userPasswordComputed != null) {
       return this.cache.userPasswordComputed;
+    }
 
     const rc4KeyOriginal = this.computeEncryptionKey();
     const rc4KeyWordCount = Math.ceil(rc4KeyOriginal.sigBytes / 4);
@@ -159,8 +162,9 @@ export class StdSecurityHandlerR4 extends StdSecurityHandler {
     let rc4Out = MD5(padding32.clone().concat(this.documentFirstId));
     for (let i = 0; i < 20; ++i) {
       const xorMask = i | (i << 8) | (i << 16) | (i << 24);
-      for (let wi = 0; wi < rc4KeyWordCount; ++wi)
+      for (let wi = 0; wi < rc4KeyWordCount; ++wi) {
         rc4KeyCurrent.words[wi] = rc4KeyOriginal.words[wi] ^ xorMask;
+      }
       rc4Out = encryptRC4(rc4Out, rc4KeyCurrent);
     }
     rc4Out.sigBytes = 16;
@@ -195,7 +199,7 @@ const standardPaddingBytes = new Uint8Array([
  *
  * @see ISO 32000-1 > 7.6.3.3 Encryption Key Algorithm > Algorithm 2: Computing an encryption key
  */
-function padOrTruncate32(s: string): WordArray {
+const padOrTruncate32 = (s: string): WordArray => {
   if (!latin1Only.test(s)) {
     throw new Error(`Password contains invalid characters.`);
   }
@@ -216,4 +220,4 @@ function padOrTruncate32(s: string): WordArray {
   }
 
   return wordArrayFromBytes(bytes);
-}
+};

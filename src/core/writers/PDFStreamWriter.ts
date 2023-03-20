@@ -64,8 +64,9 @@ export class PDFStreamWriter extends PDFWriter {
 
       if (PDFObjectStream.shallNotStore(indirectObject, this.context)) {
         // Encrypt each object (which is not to be compressed) before computing size.
-        if (encryptionKey != null)
+        if (encryptionKey != null) {
           encryptionKey.encryptIfPossible(indirectObject);
+        }
 
         uncompressedObjects.push(indirectObject);
         xrefStream.addUncompressedEntry(ref, size);
@@ -98,8 +99,9 @@ export class PDFStreamWriter extends PDFWriter {
       const indirectObject: [PDFRef, PDFObject] = [ref, objectStream];
 
       // Encrypt each object stream before computing size.
-      if (encryptionKey != null)
+      if (encryptionKey != null) {
         encryptionKey.encryptIfPossible(indirectObject);
+      }
 
       xrefStream.addUncompressedEntry(ref, size);
       size += this.computeIndirectObjectSize(indirectObject);

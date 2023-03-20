@@ -124,8 +124,9 @@ export class PDFWriter {
     // Encrypt the objects before computing size.
     if (this.context.security != null) {
       const { encryptionKey } = this.context.security;
-      for (const indirectObject of indirectObjects)
+      for (const indirectObject of indirectObjects) {
         encryptionKey.encryptIfPossible(indirectObject);
+      }
     }
 
     for (let idx = 0, len = indirectObjects.length; idx < len; idx++) {

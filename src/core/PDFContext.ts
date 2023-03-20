@@ -238,8 +238,9 @@ export class PDFContext {
       for (let idx = 0, len = keys.length; idx < len; idx++) {
         const key = keys[idx];
         const value = (literal as LiteralObject)[key] as any;
-        if (value !== undefined)
+        if (value !== undefined) {
           dict.set(PDFName.of(key), this.obj(value, options));
+        }
       }
       return dict;
     }

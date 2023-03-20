@@ -68,7 +68,7 @@ import { JavaScriptEmbedder } from 'src/core/embedders/JavaScriptEmbedder';
 import { PDFSecurity, SecurityOptions } from 'src/core/security/PDFSecurity';
 import {
   MD5,
-  wordArray,
+  createWordArray,
   wordArrayFromBytes,
   wordArrayToBytes,
 } from 'src/utils/crypt';
@@ -1261,7 +1261,7 @@ export class PDFDocument {
      * This will be used for the second element of the ID.
      */
     const currentHash = wordArrayToBytes(
-      MD5(wordArray([Date.now()]).concat(wordArrayFromBytes(infoBytes))),
+      MD5(createWordArray([Date.now()]).concat(wordArrayFromBytes(infoBytes))),
     );
 
     /**

@@ -15,7 +15,10 @@ export abstract class PDFObject {
    * Encrypt this object and returns the result as a new `PDFObject`,
    * or returns `null` if `this` can't be encrypted.
    */
-  encryptWith(_encrypter: ObjectEncrypter, _reference: PDFRef): PDFObject | null {
+  encryptWith(
+    _encrypter: ObjectEncrypter,
+    _reference: PDFRef,
+  ): PDFObject | null {
     return null;
   }
 }

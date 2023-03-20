@@ -50,7 +50,10 @@ export abstract class EncryptionKey implements ObjectEncrypter {
     if (encryptedObj != null) indirectObject[1] = encryptedObj;
   }
 
-  abstract encryptObjectContent(data: Uint8Array, reference: PDFRef): Uint8Array;
+  abstract encryptObjectContent(
+    data: Uint8Array,
+    reference: PDFRef,
+  ): Uint8Array;
 }
 
 /**

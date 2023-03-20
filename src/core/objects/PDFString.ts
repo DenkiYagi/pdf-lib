@@ -18,9 +18,8 @@ export class PDFString extends PDFObject {
   // The PDF spec allows newlines and parens to appear directly within a literal
   // string. These character _may_ be escaped. But they do not _have_ to be. So
   // for simplicity, we will not bother escaping them.
-  static of = (value: string, preventEncryption?: boolean) => {
-    return new PDFString(value, preventEncryption);
-  };
+  static of = (value: string, preventEncryption?: boolean) =>
+    new PDFString(value, preventEncryption);
 
   static fromDate = (date: Date) => {
     const year = padStart(String(date.getUTCFullYear()), 4, '0');
@@ -121,10 +120,7 @@ export class PDFString extends PDFObject {
     return this.value.length + 2;
   }
 
-  encryptWith(
-    encrypter: ObjectEncrypter,
-    reference: PDFRef,
-  ): PDFObject | null {
+  encryptWith(encrypter: ObjectEncrypter, reference: PDFRef): PDFObject | null {
     if (this.preventEncryption) return null;
 
     const buffer = new Uint8Array(this.value.length);

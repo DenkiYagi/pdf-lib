@@ -23,7 +23,10 @@ export abstract class PDFStream extends PDFObject {
 
   abstract getContentsSize(): number;
 
-  abstract encryptWith(encrypter: ObjectEncrypter, reference: PDFRef): PDFObject;
+  abstract encryptWith(
+    encrypter: ObjectEncrypter,
+    reference: PDFRef,
+  ): PDFObject;
 
   updateDict(): void {
     const contentsSize = this.getContentsSize();
