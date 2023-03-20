@@ -1,5 +1,6 @@
-import { PDFNumber } from 'src/core';
+import { PDFNumber, PDFRef } from 'src/core';
 import { toCharCode, typedArrayFor } from 'src/utils';
+import { security } from './shared';
 
 describe(`PDFNumber`, () => {
   it(`can be constructed from PDFNumber.of(...)`, () => {
@@ -48,9 +49,11 @@ describe(`PDFNumber`, () => {
     );
   });
 
-  it.todo(`can never be encrypted`);
-  () => {
-    // const reference = PDFRef.of(1);
-    // expect(PDFBool.True.encryptWith(encrypter, reference)).toBe(null);
-  }
+  it(`can never be encrypted`, () => {
+    const { encryptionKey: key } = security;
+    const ref = PDFRef.of(1);
+    expect(PDFNumber.of(21).encryptWith(key, ref)).toBe(null);
+    expect(PDFNumber.of(43).encryptWith(key, ref)).toBe(null);
+    expect(PDFNumber.of(-0.1e7).encryptWith(key, ref)).toBe(null);
+  });
 });

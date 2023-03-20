@@ -1,5 +1,6 @@
-import { PDFName, PrivateConstructorError } from 'src/core';
+import { PDFName, PDFRef, PrivateConstructorError } from 'src/core';
 import { toCharCode, typedArrayFor } from 'src/utils';
+import { security } from './shared';
 
 describe(`PDFName`, () => {
   it(`can be constructed from PDFName.of(...)`, () => {
@@ -120,9 +121,9 @@ describe(`PDFName`, () => {
     expect(buffer3).toEqual(typedArrayFor('    /AB'));
   });
 
-  it.todo(`can never be encrypted`);
-  () => {
-    // const reference = PDFRef.of(1);
-    // expect(PDFBool.True.encryptWith(encrypter, reference)).toBe(null);
-  }
+  it(`can never be encrypted`, () => {
+    const { encryptionKey: key } = security;
+    const ref = PDFRef.of(1);
+    expect(PDFName.of('foobar').encryptWith(key, ref)).toBe(null);
+  });
 });
