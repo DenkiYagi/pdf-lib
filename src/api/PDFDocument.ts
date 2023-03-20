@@ -1271,7 +1271,7 @@ export class PDFDocument {
      */
     let originalHash: Uint8Array = currentHash;
     const currentId = trailer.ID;
-    if (currentId instanceof PDFArray && currentId.size() == 2) {
+    if (currentId instanceof PDFArray && currentId.size() === 2) {
       const firstId = currentId.get(0);
       if (firstId instanceof PDFHexString) {
         originalHash = firstId.asBytes();
