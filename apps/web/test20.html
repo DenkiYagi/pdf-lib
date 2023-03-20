@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
+        default-src 'self' 'unsafe-inline' blob: resource:;
+        object-src 'self' data:;
+        frame-src 'self' data: blob:;
+      "
+    />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="/apps/web/index.css" />
+    <title>Test 20</title>
+    <script type="text/javascript" src="/umd/pdf-lib.js"></script>
+    <script type="text/javascript" src="/apps/web/utils.js"></script>
+  </head>
+
+  <body>
+    <div id="button-container">
+      <button onclick="window.location.href = '/apps/web/test19.html'">
+        Prev
+      </button>
+      <button onclick="test()">Run Test</button>
+      <button disabled onclick="window.location.href = '/apps/web/test21.html'">
+        Next
+      </button>
+    </div>
+    <div id="animation-target"></div>
+    <iframe id="iframe"></iframe>
+  </body>
+
+  <script type="text/javascript">
+    startFpsTracker('animation-target');
+
+    const fetchBinaryAsset = (asset) =>
+      fetch(`/assets/${asset}`).then((res) => res.arrayBuffer());
+
+    const fetchStringAsset = (asset) =>
+      fetch(`/assets/${asset}`).then((res) => res.text());
+
+    const renderInIframe = (pdfDataUri) => {
+      document.getElementById('iframe').src = pdfDataUri;
+    };
+
+    async function test() {
+      const { PDFDocument } = PDFLib;
+
+      const [normalPdf, marioImage] = await Promise.all([
+        fetchBinaryAsset('pdfs/normal.pdf'),
+        fetchBinaryAsset('images/mario_emblem.png'),
+      ]);
+
+      const pdfDoc = await PDFDocument.load(normalPdf);
+      pdfDoc.setTitle('テスト');
+      pdfDoc.setAuthor('デンキヤギ');
+
+      const page = pdfDoc.insertPage(0);
+
+      page.drawText('This is a test page\nwith an image.', {
+        size: 40,
+        x: 60,
+        y: 700,
+        lineHeight: 50,
+      });
+
+      const image = await pdfDoc.embedPng(marioImage);
+      page.drawImage(image, { x: 60, y: 500, ...image.scale(1.0) });
+
+      const password = 'asdf';
+      pdfDoc.encrypt({ password });
+
+      console.log('PDF encryption with useObjectStreams: true');
+      console.log('password:', password);
+
+      const base64PdfDataUri = await pdfDoc.saveAsBase64({
+        dataUri: true,
+        useObjectStreams: true,
+      });
+
+      renderInIframe(base64PdfDataUri);
+    }
+  </script>
+</html>
