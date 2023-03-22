@@ -1,24 +1,25 @@
 # Release Process
 
-This document describes the process used to release a new version of pdf-lib. It serves as a useful reference for maintainers when they release a new version. Users and contributors may also find it useful to understand the process.
+## Pre-release
 
-## Checklist
+1.  Run `git switch denkiyagi-fork && git pull origin denkiyagi-fork`
+2.  Update version number in `package.json` (if not yet updated)
+3.  Remove directory `node_modules` and then run `yarn install`
+4.  Run `yarn release:prep`
+5.  Run integration tests:
+    - Run `yarn apps:node 'Preview'`
+    - Run `yarn apps:node 'Adobe Acrobat'` (on Windows, passing app name does not work for now)
+    - Run `yarn apps:web` and open <http://localhost:8080/apps/web/test1.html> with any browser to be tested
+6.  Run `git commit -am 'Bump version to X.Y.Z'` (if not yet committed)
+7.  Run `git push origin denkiyagi-fork` (if not yet pushed)
 
-1. Run `git checkout master && git pull`
-2. Update version number in `package.json`
-3. Run `rm -rf node_modules && yarn install`
-4. Run `yarn release:prep`
-5. Run integration tests:
-   - Run `yarn apps:node 'Preview'`
-   - Run `yarn apps:node 'Adobe Acrobat'`
-   - Run `yarn apps:deno 'Foxit Reader'`
-   - Run `yarn apps:web:mac` and test in Firefox
-   - Run `yarn apps:web:mac` and test in Chrome
-   - Run `yarn apps:web:mac` and test in Safari
-   - Run `yarn apps:rn:ios`
-   - Run `yarn apps:rn:android`
-6. Run `git commit -am 'Bump version to X.Y.Z'`
-7. Run `yarn release:next` or `yarn release:latest`
-8. If you used `release:latest`:
-   - Edit the [release notes](https://github.com/Hopding/pdf-lib/releases)
-   - Attach the release's `.tgz`
+Regarding steps 2, 6 and 7, follow another process if you do not have push permission.
+
+## Release
+
+1.  (Prepare `.npmrc` if needed, according to your situation)
+2.  Run `npm publish`
+
+## Post-release
+
+1.  Add version tag such as `v1.17.1-mod.2023.3`
