@@ -189,9 +189,43 @@ export const drawRectangle = (options: {
   borderLineCap?: LineCapStyle;
   borderDashArray?: (number | PDFNumber)[];
   borderDashPhase?: number | PDFNumber;
+  borderTopLeftRadius?: number | PDFNumber;
+  borderTopRightRadius?: number | PDFNumber;
+  borderBottomRightRadius?: number | PDFNumber;
+  borderBottomLeftRadius?: number | PDFNumber;
   graphicsState?: string | PDFName;
-}) =>
-  [
+}) => {
+  const w = asNumber(options.width);
+  const h = asNumber(options.height);
+
+  let rTL = Math.max(0, asNumber(options.borderTopLeftRadius ?? 0));
+  let rTR = Math.max(0, asNumber(options.borderTopRightRadius ?? 0));
+  let rBL = Math.max(0, asNumber(options.borderBottomLeftRadius ?? 0));
+  let rBR = Math.max(0, asNumber(options.borderBottomRightRadius ?? 0));
+
+  /**
+   * The factor for radius values will be:
+   * - 1 in normal cases.
+   * - less than 1 if any radius is too large compared to width and height.
+   * - 0 if width or height is not positive.
+   */
+  const rFactor = Math.min(
+    1,
+    w > 0 ? w / Math.max(rTL + rTR, rBL + rBR) : 0,
+    h > 0 ? h / Math.max(rTL + rBL, rTR + rBR) : 0,
+  );
+  rTL *= rFactor;
+  rTR *= rFactor;
+  rBL *= rFactor;
+  rBR *= rFactor;
+
+  const controlFactor = 1 - KAPPA;
+  const cBL = controlFactor * rBL;
+  const cTL = controlFactor * rTL;
+  const cTR = controlFactor * rTR;
+  const cBR = controlFactor * rBR;
+
+  return [
     pushGraphicsState(),
     options.graphicsState && setGraphicsState(options.graphicsState),
     options.color && setFillingColor(options.color),
@@ -202,20 +236,26 @@ export const drawRectangle = (options: {
     translate(options.x, options.y),
     rotateRadians(toRadians(options.rotate)),
     skewRadians(toRadians(options.xSkew), toRadians(options.ySkew)),
-    moveTo(0, 0),
-    lineTo(0, options.height),
-    lineTo(options.width, options.height),
-    lineTo(options.width, 0),
+    moveTo(rBL, 0),
+    lineTo(w - rBR, 0),
+    rBR > 0 ? appendBezierCurve(w - cBR, 0, w, cBR, w, rBR) : undefined,
+    lineTo(w, h - rTR),
+    rTR > 0 ? appendBezierCurve(w, h - cTR, w - cTR, h, w - rTR, h) : undefined,
+    lineTo(rTL, h),
+    rTL > 0 ? appendBezierCurve(cTL, h, 0, h - cTL, 0, h - rTL) : undefined,
+    rBL > 0 ? lineTo(0, rBL) : undefined,
+    rBL > 0 ? appendBezierCurve(0, cBL, cBL, 0, rBL, 0) : undefined,
     closePath(),
 
     // prettier-ignore
     options.color && options.borderWidth ? fillAndStroke()
   : options.color                      ? fill()
   : options.borderColor                ? stroke()
-  : closePath(),
+  : undefined,
 
     popGraphicsState(),
   ].filter(Boolean) as PDFOperator[];
+};
 
 const KAPPA = 4.0 * ((Math.sqrt(2) - 1.0) / 3.0);
 

@@ -104,6 +104,10 @@ export interface PDFPageDrawRectangleOptions {
   borderDashArray?: number[];
   borderDashPhase?: number;
   borderLineCap?: LineCapStyle;
+  borderTopLeftRadius?: number;
+  borderTopRightRadius?: number;
+  borderBottomRightRadius?: number;
+  borderBottomLeftRadius?: number;
   blendMode?: BlendMode;
 }
 

@@ -1,5 +1,9 @@
 # Modifications
 
+## [1.17.1-mod.2023.4]
+
+- Added border-radius options to `PDFPage#drawRectangle()`
+
 ## [1.17.1-mod.2023.3]
 
 - Added encryption feature: `PDFDocument#encrypt()`

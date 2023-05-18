@@ -1376,6 +1376,10 @@ export class PDFPage {
       0,
       1,
     );
+    assertOrUndefined(options.borderTopLeftRadius, 'options.borderTopLeftRadius', ['number']);
+    assertOrUndefined(options.borderTopRightRadius, 'options.borderTopRightRadius', ['number']);
+    assertOrUndefined(options.borderBottomRightRadius, 'options.borderBottomRightRadius', ['number']);
+    assertOrUndefined(options.borderBottomLeftRadius, 'options.borderTBottomLeftadius', ['number']);
     assertIsOneOfOrUndefined(options.blendMode, 'options.blendMode', BlendMode);
 
     const graphicsStateKey = this.maybeEmbedGraphicsState({
@@ -1405,6 +1409,10 @@ export class PDFPage {
         borderDashPhase: options.borderDashPhase ?? undefined,
         graphicsState: graphicsStateKey,
         borderLineCap: options.borderLineCap ?? undefined,
+        borderTopLeftRadius: options.borderTopLeftRadius ?? undefined,
+        borderTopRightRadius: options.borderTopRightRadius ?? undefined,
+        borderBottomRightRadius: options.borderBottomRightRadius ?? undefined,
+        borderBottomLeftRadius: options.borderBottomLeftRadius ?? undefined,
       }),
     );
   }
