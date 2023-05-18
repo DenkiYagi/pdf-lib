@@ -1,6 +1,6 @@
 {
   "name": "@denkiyagi/pdf-lib",
-  "version": "1.17.1-mod.2023.3",
+  "version": "1.17.1-mod.2023.4",
   "description": "A modified version of pdf-lib. Create and modify PDF files with JavaScript",
   "author": "DenkiYagi Inc. (modified version author), Andrew Dillon <andrew.dillon.j@gmail.com> (orignal version author)",
   "contributors": [
