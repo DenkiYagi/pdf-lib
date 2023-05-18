@@ -7,12 +7,168 @@ import {
   cmyk,
   degrees,
   rgb,
+  grayscale,
 } from '../../..';
 import { values } from '../../../cjs/utils';
 
 const inchToPt = (inches: number) => Math.round(inches * 72);
 
 const firstPage = async (pdfDoc: PDFDocument) => {
+  const page = pdfDoc.addPage(PageSizes.Letter);
+
+  page.drawText('border radius (w: 200, h: 100 for each rectangle)', {
+    x: 50,
+    y: 750,
+    size: 10,
+  });
+
+  const commonParams = {
+    width: 200,
+    height: 100,
+    color: grayscale(0.9),
+    borderColor: grayscale(0),
+    borderWidth: 5,
+  };
+
+  page.drawText('TL: 40', {
+    x: 50,
+    y: 720,
+    size: 10,
+  });
+  page.drawRectangle({
+    x: 50,
+    y: 610,
+    borderTopLeftRadius: 40,
+    ...commonParams,
+  });
+
+  page.drawText('TR: 40', {
+    x: 300,
+    y: 720,
+    size: 10,
+  });
+  page.drawRectangle({
+    x: 300,
+    y: 610,
+    borderTopRightRadius: 40,
+    ...commonParams,
+  });
+
+  page.drawText('BL: 40', {
+    x: 50,
+    y: 580,
+    size: 10,
+  });
+  page.drawRectangle({
+    x: 50,
+    y: 470,
+    borderBottomLeftRadius: 40,
+    ...commonParams,
+  });
+
+  page.drawText('BR: 40', {
+    x: 300,
+    y: 580,
+    size: 10,
+  });
+  page.drawRectangle({
+    x: 300,
+    y: 470,
+    borderBottomRightRadius: 40,
+    ...commonParams,
+  });
+
+  page.drawText('TL: 10, BR: 40', {
+    x: 50,
+    y: 440,
+    size: 10,
+  });
+  page.drawRectangle({
+    x: 50,
+    y: 330,
+    borderTopLeftRadius: 10,
+    borderBottomRightRadius: 40,
+    ...commonParams,
+  });
+
+  page.drawText('TL: 10, TR: 20, BR: 40, BL: 80', {
+    x: 300,
+    y: 440,
+    size: 10,
+  });
+  page.drawRectangle({
+    x: 300,
+    y: 330,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 20,
+    borderBottomRightRadius: 40,
+    borderBottomLeftRadius: 80,
+    ...commonParams,
+  });
+
+  page.drawText('out-of-bound values:', {
+    x: 50,
+    y: 290,
+    size: 10,
+  });
+
+  page.drawText('TL: 200', {
+    x: 50,
+    y: 270,
+    size: 10,
+  });
+  page.drawRectangle({
+    x: 50,
+    y: 160,
+    borderTopLeftRadius: 200,
+    ...commonParams,
+  });
+
+  page.drawText('TL: 200, TR: 400', {
+    x: 300,
+    y: 270,
+    size: 10,
+  });
+  page.drawRectangle({
+    x: 300,
+    y: 160,
+    borderTopLeftRadius: 200,
+    borderTopRightRadius: 400,
+    ...commonParams,
+  });
+
+  page.drawText('TL: 200, TR: 400, BR: 600, BL: 800', {
+    x: 50,
+    y: 130,
+    size: 10,
+  });
+  page.drawRectangle({
+    x: 50,
+    y: 20,
+    borderTopLeftRadius: 200,
+    borderTopRightRadius: 400,
+    borderBottomRightRadius: 600,
+    borderBottomLeftRadius: 800,
+    ...commonParams,
+  });
+
+  page.drawText('TL: -50, TR: -50, BR: -50, BL: -50', {
+    x: 300,
+    y: 130,
+    size: 10,
+  });
+  page.drawRectangle({
+    x: 300,
+    y: 20,
+    borderTopLeftRadius: -50,
+    borderTopRightRadius: -50,
+    borderBottomLeftRadius: -50,
+    borderBottomRightRadius: -50,
+    ...commonParams,
+  });
+};
+
+const secondPage = async (pdfDoc: PDFDocument) => {
   const page = pdfDoc.addPage(PageSizes.Letter);
 
   // SVG sample paths from
@@ -62,7 +218,7 @@ const firstPage = async (pdfDoc: PDFDocument) => {
   });
 };
 
-const secondPage = async (pdfDoc: PDFDocument) => {
+const thirdPage = async (pdfDoc: PDFDocument) => {
   const page = pdfDoc.addPage(PageSizes.Letter);
 
   // quadratic bezier example
@@ -125,7 +281,7 @@ const secondPage = async (pdfDoc: PDFDocument) => {
   });
 };
 
-const thirdPage = async (pdfDoc: PDFDocument, assets: Assets) => {
+const fourthPage = async (pdfDoc: PDFDocument, assets: Assets) => {
   const page = pdfDoc.addPage(PageSizes.Letter);
 
   const modeNames = values(BlendMode);
@@ -273,7 +429,8 @@ export default async (assets: Assets) => {
   const pdfDoc = await PDFDocument.create();
   await firstPage(pdfDoc);
   await secondPage(pdfDoc);
-  await thirdPage(pdfDoc, assets);
+  await thirdPage(pdfDoc);
+  await fourthPage(pdfDoc, assets);
 
   const pdfBytes = await pdfDoc.save();
   return pdfBytes;
