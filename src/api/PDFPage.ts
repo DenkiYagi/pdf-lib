@@ -1376,10 +1376,26 @@ export class PDFPage {
       0,
       1,
     );
-    assertOrUndefined(options.borderTopLeftRadius, 'options.borderTopLeftRadius', ['number']);
-    assertOrUndefined(options.borderTopRightRadius, 'options.borderTopRightRadius', ['number']);
-    assertOrUndefined(options.borderBottomRightRadius, 'options.borderBottomRightRadius', ['number']);
-    assertOrUndefined(options.borderBottomLeftRadius, 'options.borderTBottomLeftadius', ['number']);
+    assertOrUndefined(
+      options.borderTopLeftRadius,
+      'options.borderTopLeftRadius',
+      ['number'],
+    );
+    assertOrUndefined(
+      options.borderTopRightRadius,
+      'options.borderTopRightRadius',
+      ['number'],
+    );
+    assertOrUndefined(
+      options.borderBottomRightRadius,
+      'options.borderBottomRightRadius',
+      ['number'],
+    );
+    assertOrUndefined(
+      options.borderBottomLeftRadius,
+      'options.borderTBottomLeftadius',
+      ['number'],
+    );
     assertIsOneOfOrUndefined(options.blendMode, 'options.blendMode', BlendMode);
 
     const graphicsStateKey = this.maybeEmbedGraphicsState({
