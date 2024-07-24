@@ -16,5 +16,4 @@ isolate*.log
 out.pdf
 *.tgz
 
-.vscode/settings.json
 .npmrc
