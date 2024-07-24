@@ -58,9 +58,9 @@
     "apps:node": "tsc --build apps/node/tsconfig.json && node apps/node-build/index.js",
     "apps:web": "http-server -c-1 ."
   },
-  "main": "cjs/index.js",
-  "module": "es/index.js",
-  "types": "cjs/index.d.ts",
+  "main": "cjs/all.js",
+  "module": "es/all.js",
+  "types": "cjs/all.d.ts",
   "typesVersions": {
     "<=3.5": {
       "*": [
