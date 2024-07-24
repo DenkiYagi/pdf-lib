@@ -1,5 +1,17 @@
 # Modifications
 
+## [1.17.1-mod.2024.1]
+
+- Exposed additional modules (including `core`) by replacing `index.js` -> `all.js` in `package.json`
+
+## [1.17.1-mod.2023.6]
+
+- Upgraded `crypto-js`
+
+## [1.17.1-mod.2023.5]
+
+- (removed)
+
 ## [1.17.1-mod.2023.4]
 
 - Added border-radius options to `PDFPage#drawRectangle()`
