@@ -5,7 +5,7 @@
 After cloning the repository and running `yarn install`, you must run the following command manually:
 
 ```bash
-yarn ts-patch install
+yarn dev:prep
 ```
 
 ## Before submitting pull request

@@ -32,6 +32,7 @@
     "Ching Chang (https://github.com/ChingChang9)"
   ],
   "scripts": {
+    "dev:prep": "ts-patch install",
     "release:prep": "yarn clean && yarn lint && yarn typecheck && yarn test && yarn build",
     "get:version": "node --eval 'console.log(require(`./package.json`).version)'",
     "clean": "rimraf ts3.4 build cjs es scratchpad/build coverage tsBuildInfo.json apps/node-build apps/node/tsBuildInfo.json isolate*.log flamegraph.html out.pdf",

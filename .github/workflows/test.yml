@@ -32,6 +32,8 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - run: yarn dev:prep
+
       - run: yarn typecheck
       - run: yarn lint
       - run: yarn test
