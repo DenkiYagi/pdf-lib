@@ -32,7 +32,7 @@
     "Ching Chang (https://github.com/ChingChang9)"
   ],
   "scripts": {
-    "prepare": "ts-patch install -s",
+    "postinstall": "ts-patch install -s",
     "release:prep": "yarn clean && yarn lint && yarn typecheck && yarn test && yarn build",
     "release:tag": "TAG=\"v$(yarn --silent get:version)\" && git tag $TAG && git push origin $TAG",
     "get:version": "node --eval 'console.log(require(`./package.json`).version)'",
