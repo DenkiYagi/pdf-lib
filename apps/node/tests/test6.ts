@@ -29,11 +29,15 @@ export default async (assets: Assets) => {
 
   const nunitoLigaFont = await pdfDoc.embedFont(fonts.ttf.nunito, {
     subset: true,
-    features: { liga: true },
+    advanced: {
+      fontFeatures: { liga: true },
+    },
   });
   const nunitoNoLigaFont = await pdfDoc.embedFont(fonts.ttf.nunito, {
     subset: true,
-    features: { liga: false },
+    advanced: {
+      fontFeatures: { liga: false },
+    },
   });
   const smallMarioImage = await pdfDoc.embedPng(images.png.small_mario);
   const smallMarioDims = smallMarioImage.scale(0.15);
