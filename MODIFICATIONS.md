@@ -1,6 +1,6 @@
 # Modifications
 
-## [1.17.1-mod.2025.1]
+## [1.17.1-mod.2025.2]
 
 - Changed npm dependency `fontkit` to `@denkiyagi/fontkit`
 - Improved `options` parameter of `PDFDocument#embedFont`
@@ -9,6 +9,10 @@
 - Improve parameters of `PDFPage#drawText`:
     - Expand the data type of the `text` parameter so that it also accepts Glyph IDs instead of string
     - Add `fontLayoutAdvancedParams` property to the `options` parameter
+
+## [1.17.1-mod.2025.1]
+
+- (removed)
 
 ## [1.17.1-mod.2023.6]
 
