@@ -1,5 +1,9 @@
 # Modifications
 
+## [1.17.1-mod.2025.5]
+
+- Update `@denkiyagi/fontkit` to `2.0.4-mod.2025.1`, which improves Unicode Variation Sequences (UVS) support.
+
 ## [1.17.1-mod.2025.4]
 
 - Changed npm dependency `fontkit` to `@denkiyagi/fontkit`
