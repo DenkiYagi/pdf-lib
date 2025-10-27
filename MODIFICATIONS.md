@@ -1,5 +1,9 @@
 # Modifications
 
+## [1.17.1-mod.2025.6]
+
+- Update `@denkiyagi/fontkit` to `2.0.4-mod.2025.2`, which enhances runtime performance for Unicode Variation Sequences (UVS) support.
+
 ## [1.17.1-mod.2025.5]
 
 - Update `@denkiyagi/fontkit` to `2.0.4-mod.2025.1`, which improves Unicode Variation Sequences (UVS) support.
