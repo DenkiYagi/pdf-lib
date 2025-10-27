@@ -293,10 +293,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@denkiyagi/fontkit@2.0.4-mod.2025.1":
-  version "2.0.4-mod.2025.1"
-  resolved "https://npm.pkg.github.com/download/@denkiyagi/fontkit/2.0.4-mod.2025.1/fa6e2345ac480958cae1d1b419af76cca101af47#fa6e2345ac480958cae1d1b419af76cca101af47"
-  integrity sha512-KOWnvKNtMYnMLAr5GN5s9vXaS/oCTB/q3puQb2LlooGzN0NBfZVyh4VLYuy/6y1Nhhx5ouDd35vpv+I5AWbejg==
+"@denkiyagi/fontkit@2.0.4-mod.2025.2":
+  version "2.0.4-mod.2025.2"
+  resolved "https://npm.pkg.github.com/download/@denkiyagi/fontkit/2.0.4-mod.2025.2/55d8cac83d16580b2380be95d6ec8adcf7f16f7b#55d8cac83d16580b2380be95d6ec8adcf7f16f7b"
+  integrity sha512-VlG6bWdM6vKzwMbpHmbPaQW0FQph8IMv6d/K/X85dqBghx7XSf1L+QmuG54sXovROgFf5sazd6YMURWbf1laWw==
   dependencies:
     "@swc/helpers" "^0.5.12"
     brotli "^1.3.2"
