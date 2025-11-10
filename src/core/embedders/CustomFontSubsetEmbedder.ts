@@ -22,13 +22,7 @@ export class CustomFontSubsetEmbedder extends CustomFontEmbedder {
     const font = createFont(fontData);
     if (font.type !== 'TTF') throw new Error(`Invalid font type: ${font.type}`);
 
-    return new CustomFontSubsetEmbedder(
-      font,
-      fontData,
-      customFontName,
-      vertical,
-      advanced,
-    );
+    return new CustomFontSubsetEmbedder(font, customFontName, vertical, advanced);
   }
 
   private readonly subset: Subset;
@@ -37,12 +31,11 @@ export class CustomFontSubsetEmbedder extends CustomFontEmbedder {
 
   private constructor(
     font: TTFFont,
-    fontData: Uint8Array,
     customFontName?: string,
     vertical?: boolean,
     advanced?: EmbedFontAdvancedOptions,
   ) {
-    super(font, fontData, customFontName, vertical, advanced);
+    super(font, customFontName, vertical, advanced);
 
     this.subset = this.font.createSubset();
     this.glyphs = [];

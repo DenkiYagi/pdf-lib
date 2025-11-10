@@ -13,6 +13,7 @@ export { PDFCrossRefSection } from 'src/core/document/PDFCrossRefSection';
 
 export { StandardFontEmbedder } from 'src/core/embedders/StandardFontEmbedder';
 export { CustomFontEmbedder } from 'src/core/embedders/CustomFontEmbedder';
+export { CustomFontNonSubsetEmbedder } from 'src/core/embedders/CustomFontNonSubsetEmbedder';
 export { CustomFontSubsetEmbedder } from 'src/core/embedders/CustomFontSubsetEmbedder';
 export { FileEmbedder, AFRelationship } from 'src/core/embedders/FileEmbedder';
 export { JpegEmbedder } from 'src/core/embedders/JpegEmbedder';

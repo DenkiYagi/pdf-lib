@@ -1,4 +1,4 @@
-import { create as createFont, LayoutAdvancedParams } from '@denkiyagi/fontkit';
+import type { LayoutAdvancedParams } from '@denkiyagi/fontkit';
 import type { TTFFont, Glyph } from '@denkiyagi/fontkit';
 
 import { createCmap } from 'src/core/embedders/CMap';
@@ -23,28 +23,9 @@ const emptyObject = {};
  * this class borrows from:
  *   https://github.com/devongovett/pdfkit/blob/e71edab0dd4657b5a767804ba86c94c58d01fbca/lib/image/jpeg.coffee
  */
-export class CustomFontEmbedder {
-  static for(
-    fontData: Uint8Array,
-    customName?: string,
-    vertical?: boolean,
-    advanced?: EmbedFontAdvancedOptions,
-  ) {
-    const font = createFont(fontData);
-    if (font.type !== 'TTF') throw new Error(`Invalid font type: ${font.type}`);
-
-    return new CustomFontEmbedder(
-      font,
-      fontData,
-      customName,
-      vertical,
-      advanced,
-    );
-  }
-
+export abstract class CustomFontEmbedder {
   readonly font: TTFFont;
   readonly scale: number;
-  readonly fontData: Uint8Array;
   readonly fontName: string;
   readonly customName: string | undefined;
   readonly vertical: boolean | undefined;
@@ -56,14 +37,12 @@ export class CustomFontEmbedder {
 
   protected constructor(
     font: TTFFont,
-    fontData: Uint8Array,
     customName?: string,
     vertical?: boolean,
     advanced: EmbedFontAdvancedOptions = emptyObject,
   ) {
     this.font = font;
     this.scale = 1000 / this.font.unitsPerEm;
-    this.fontData = fontData;
     this.fontName = this.font.postscriptName || 'Font';
     this.customName = customName;
     this.vertical = vertical;
@@ -231,9 +210,7 @@ export class CustomFontEmbedder {
     return context.register(fontDescriptor);
   }
 
-  protected serializeFont(): Uint8Array {
-    return this.fontData;
-  }
+  protected abstract serializeFont(): Uint8Array;
 
   protected embedFontStream(context: PDFContext): PDFRef {
     const fontStream = context.flateStream(this.serializeFont(), {

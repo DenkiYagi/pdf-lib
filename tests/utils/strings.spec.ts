@@ -1,7 +1,10 @@
 import { FontNames } from '@pdf-lib/standard-fonts';
 import fs from 'fs';
 
-import { CustomFontEmbedder, StandardFontEmbedder } from 'src/core';
+import {
+  CustomFontNonSubsetEmbedder,
+  StandardFontEmbedder,
+} from 'src/core';
 import { breakTextIntoLines } from 'src/utils';
 
 const font = StandardFontEmbedder.for(FontNames.Helvetica);
@@ -73,7 +76,8 @@ describe(`breakTextIntoLines`, () => {
     const sourceHansBytes = fs.readFileSync(
       'assets/fonts/source_hans_jp/SourceHanSerifJP-Regular.otf',
     );
-    const sourceHansFont = await CustomFontEmbedder.for(sourceHansBytes);
+    const sourceHansFont =
+      await CustomFontNonSubsetEmbedder.for(sourceHansBytes);
 
     const input =
       '遅未亮惑職界転藤柔索名午納，問通桑転加料演載満経信回込町者訟窃。';
