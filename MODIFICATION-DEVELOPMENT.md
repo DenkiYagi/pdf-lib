@@ -8,6 +8,12 @@ After cloning the repository and running `yarn install`, you must run the follow
 yarn dev:prep
 ```
 
+## Editor setup
+
+If you use VS Code:
+
+`TypeScript: Select TypeScript Version...` -> `Use Workspace Version`
+
 ## Before submitting pull request
 
 - Lint and typecheck
