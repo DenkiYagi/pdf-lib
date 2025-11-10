@@ -915,7 +915,7 @@ export class PDFDocument {
    * ```
    * @param font The input data for a font.
    * @param options The options to be used when embedding the font.
-   * @returns Resolves with the embedded font.
+   * @returns The embedded font represented as `PDFFont`.
    */
   embedFont(
     font: StandardFonts | string | Uint8Array | ArrayBuffer,
@@ -954,11 +954,14 @@ export class PDFDocument {
 
   /**
    * Embed a fontkit `TTFFont` instance into this document.
-   * This always performs font subsetting.
+   *
+   * NOTE: `options.subset` must be `true`, because the non-subset font embedder requires
+   * the raw font bytes which are not available from a `TTFFont` instance.
    *
    * @param font The `TTFFont` to subset and embed.
    * @param options Additional embedding options (the `subset` option must be `true` or omitted).
-   * @returns Resolves with the embedded font.
+   * @returns The embedded font represented as `PDFFont`.
+   * @throws If `options.subset` is not `true`.
    */
   embedTTFFont(
     font: TTFFont,
