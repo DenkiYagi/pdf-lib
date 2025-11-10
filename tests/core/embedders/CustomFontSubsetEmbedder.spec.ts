@@ -1,4 +1,6 @@
 import fs from 'fs';
+import { create as createFont } from '@denkiyagi/fontkit';
+import type { TTFFont } from '@denkiyagi/fontkit';
 
 import {
   CustomFontSubsetEmbedder,
@@ -56,5 +58,11 @@ describe(`CustomFontSubsetEmbedder`, () => {
     const embedder = await CustomFontSubsetEmbedder.for(ubuntuFont);
     expect(embedder.sizeOfFontAtHeight(12)).toBeCloseTo(10.705);
     expect(embedder.sizeOfFontAtHeight(24)).toBeCloseTo(21.409);
+  });
+
+  it(`accepts pre-created fontkit TTFFont instances`, async () => {
+    const ttFont = createFont(new Uint8Array(ubuntuFont)) as TTFFont;
+    const embedder = await CustomFontSubsetEmbedder.forTTFFont(ttFont);
+    expect(embedder).toBeInstanceOf(CustomFontSubsetEmbedder);
   });
 });

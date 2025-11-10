@@ -22,7 +22,28 @@ export class CustomFontSubsetEmbedder extends CustomFontEmbedder {
     const font = createFont(fontData);
     if (font.type !== 'TTF') throw new Error(`Invalid font type: ${font.type}`);
 
-    return new CustomFontSubsetEmbedder(font, customFontName, vertical, advanced);
+    return new CustomFontSubsetEmbedder(
+      font,
+      customFontName,
+      vertical,
+      advanced,
+    );
+  }
+
+  static forTTFFont(
+    font: TTFFont,
+    customFontName?: string,
+    vertical?: boolean,
+    advanced?: EmbedFontAdvancedOptions,
+  ) {
+    if (font.type !== 'TTF') throw new Error(`Invalid font type: ${font.type}`);
+
+    return new CustomFontSubsetEmbedder(
+      font,
+      customFontName,
+      vertical,
+      advanced,
+    );
   }
 
   private readonly subset: Subset;
