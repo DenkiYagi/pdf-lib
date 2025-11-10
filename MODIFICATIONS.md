@@ -1,5 +1,10 @@
 # Modifications
 
+## [Unreleased]
+
+- Add `PDFDocument#embedTTFFont` (subset-only) and `CustomFontSubsetEmbedder.forTTFFont` so pre-created fontkit `TTFFont` instances can be embedded.
+- Refactor the internal custom font embedders into separate subset and non-subset implementations by making the `CustomFontEmbedder` class abstract and adding the subclass `CustomFontNonSubsetEmbedder`.
+
 ## [1.17.1-mod.2025.6]
 
 - Update `@denkiyagi/fontkit` to `2.0.4-mod.2025.2`, which enhances runtime performance for Unicode Variation Sequences (UVS) support.
