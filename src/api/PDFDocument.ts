@@ -959,14 +959,11 @@ export class PDFDocument {
    * the raw font bytes which are not available from a `TTFFont` instance.
    *
    * @param font The `TTFFont` to subset and embed.
-   * @param options Additional embedding options (the `subset` option must be `true` or omitted).
+   * @param options Additional embedding options (the `subset` option must be `true`).
    * @returns The embedded font represented as `PDFFont`.
    * @throws If `options.subset` is not `true`.
    */
-  embedTTFFont(
-    font: TTFFont,
-    options: EmbedFontOptions = emptyObject,
-  ): PDFFont {
+  embedTTFFont(font: TTFFont, options: EmbedFontOptions): PDFFont {
     const { subset, customName, vertical, advanced } = options;
     if (subset !== true) {
       throw new TypeError(

@@ -179,7 +179,7 @@ describe(`PDFDocument`, () => {
       const pdfDoc = await PDFDocument.create({ updateMetadata: false });
       const ttFont = createFont(new Uint8Array(ubuntuFontBytes)) as TTFFont;
 
-      expect(() => pdfDoc.embedTTFFont(ttFont)).toThrow(TypeError);
+      expect(() => pdfDoc.embedTTFFont(ttFont, {})).toThrow(TypeError);
     });
 
     it(`rejects TTFFont instances when subset is false`, async () => {
