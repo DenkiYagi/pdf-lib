@@ -1,10 +1,7 @@
 import { FontNames } from '@pdf-lib/standard-fonts';
 import fs from 'fs';
 
-import {
-  CustomFontNonSubsetEmbedder,
-  StandardFontEmbedder,
-} from 'src/core';
+import { CustomFontNonSubsetEmbedder, StandardFontEmbedder } from 'src/core';
 import { breakTextIntoLines } from 'src/utils';
 
 const font = StandardFontEmbedder.for(FontNames.Helvetica);
