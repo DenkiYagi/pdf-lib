@@ -3,7 +3,7 @@ import type { Font as RawStandardFont } from '@pdf-lib/standard-fonts';
 import type { Embeddable } from 'src/api//Embeddable';
 import { PDFDocument } from 'src/api/PDFDocument';
 import {
-  CustomFontEmbedder,
+  AbstractCustomFontEmbedder,
   PDFHexString,
   PDFRef,
   StandardFontEmbedder,
@@ -11,7 +11,9 @@ import {
 import type { SingleLineTextOrGlyphs } from 'src/types/text';
 import { assertIs, assertOrUndefined } from 'src/utils';
 
-export type FontEmbedder = CustomFontEmbedder | StandardFontEmbedder;
+export type FontEmbedder =
+  | AbstractCustomFontEmbedder
+  | StandardFontEmbedder;
 
 /**
  * Represents a font that has been embedded in a [[PDFDocument]].
@@ -48,7 +50,7 @@ export class PDFFont implements Embeddable {
     assertIs(ref, 'ref', [[PDFRef, 'PDFRef']]);
     assertIs(doc, 'doc', [[PDFDocument, 'PDFDocument']]);
     assertIs(embedder, 'embedder', [
-      [CustomFontEmbedder, 'CustomFontEmbedder'],
+      [AbstractCustomFontEmbedder, 'AbstractCustomFontEmbedder'],
       [StandardFontEmbedder, 'StandardFontEmbedder'],
     ]);
 
@@ -137,9 +139,8 @@ export class PDFFont implements Embeddable {
   getCharacterSet(): number[] {
     if (this.embedder instanceof StandardFontEmbedder) {
       return this.embedder.encoding.supportedCodePoints;
-    } else {
-      return this.embedder.font.characterSet;
     }
+    return this.embedder.font.characterSet;
   }
 
   /**
@@ -148,20 +149,18 @@ export class PDFFont implements Embeddable {
   getRawStandardFont(): RawStandardFont | null {
     if (this.embedder instanceof StandardFontEmbedder) {
       return this.embedder.font;
-    } else {
-      return null;
     }
+    return null;
   }
 
   /**
    * @returns The raw standard font instance if `this` is a custom font, otherwise `null`.
    */
   getRawCustomFont(): TTFFont | null {
-    if (this.embedder instanceof CustomFontEmbedder) {
+    if (this.embedder instanceof AbstractCustomFontEmbedder) {
       return this.embedder.font;
-    } else {
-      return null;
     }
+    return null;
   }
 
   /**

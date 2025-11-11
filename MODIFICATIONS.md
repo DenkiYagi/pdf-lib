@@ -3,7 +3,7 @@
 ## [1.17.1-mod.2025.7]
 
 - Add `PDFDocument#embedTTFFont` (subset-only) and `CustomFontSubsetEmbedder.forTTFFont` so pre-created fontkit `TTFFont` instances can be embedded.
-- Refactor the internal custom font embedders into separate subset and non-subset implementations by making the `CustomFontEmbedder` class abstract and adding the subclass `CustomFontNonSubsetEmbedder`.
+- Refactor the internal custom font embedders into separate subset and non-subset implementations by adding the abstract base class `AbstractCustomFontEmbedder`.
 
 ## [1.17.1-mod.2025.6]
 
@@ -17,7 +17,7 @@
 
 - Changed npm dependency `fontkit` to `@denkiyagi/fontkit`
 - Improved `options` parameter of `PDFDocument#embedFont`
-- Fix `CustomFontEmbedder#embedCIDFontDict` so that it respects glyph metrics when embedding vertical fonts
+- Fix `AbstractCustomFontEmbedder#embedCIDFontDict` so that it respects glyph metrics when embedding vertical fonts
 - Add methods `PDFFont#getRawStandardFont` and `PDFFont#getRawCustomFont`
 - Improve parameters of `PDFPage#drawText`:
     - Expand the data type of the `text` parameter so that it also accepts Glyph IDs instead of string

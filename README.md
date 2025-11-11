@@ -1209,7 +1209,7 @@ Check out [MAINTAINERSHIP.md](docs/MAINTAINERSHIP.md) for details on how this re
 
 ## Prior Art
 
-- [`pdfkit`](https://github.com/devongovett/pdfkit) is a PDF generation library for Node and the Browser. This library was immensely helpful as a reference and existence proof when creating `pdf-lib`. `pdfkit`'s code for [font embedding](src/core/embedders/CustomFontEmbedder.ts#L17-L21), [PNG embedding](src/core/embedders/PngEmbedder.ts#L7-L11), and [JPG embedding](src/core/embedders/JpegEmbedder.ts#L25-L29) was especially useful.
+- [`pdfkit`](https://github.com/devongovett/pdfkit) is a PDF generation library for Node and the Browser. This library was immensely helpful as a reference and existence proof when creating `pdf-lib`. `pdfkit`'s code for [font embedding](src/core/embedders/AbstractCustomFontEmbedder.ts), [PNG embedding](src/core/embedders/PngEmbedder.ts#L7-L11), and [JPG embedding](src/core/embedders/JpegEmbedder.ts#L25-L29) was especially useful.
 - [`pdf.js`](https://github.com/mozilla/pdf.js) is a PDF rendering library for the Browser. This library was helpful as a reference when writing `pdf-lib`'s parser. Some of the code for stream decoding was [ported directly to TypeScript](src/core/streams) for use in `pdf-lib`.
 - [`pdfbox`](https://pdfbox.apache.org/) is a PDF generation and modification library written in Java. This library was an invaluable reference when implementing form creation and filling APIs for `pdf-lib`.
 - [`jspdf`](https://github.com/MrRio/jsPDF) is a PDF generation library for the browser.

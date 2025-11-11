@@ -13,8 +13,8 @@ import { PDFForm } from 'src/api/form/PDFForm';
 import { PageSizes } from 'src/api/sizes';
 import type { StandardFonts } from 'src/api/StandardFonts';
 import {
+  AbstractCustomFontEmbedder,
   CustomFontEmbedder,
-  CustomFontNonSubsetEmbedder,
   CustomFontSubsetEmbedder,
   JpegEmbedder,
   PageBoundingBox,
@@ -926,14 +926,14 @@ export class PDFDocument {
     assertIs(font, 'font', ['string', Uint8Array, ArrayBuffer]);
     assertIs(subset, 'subset', ['boolean']);
 
-    let embedder: CustomFontEmbedder | StandardFontEmbedder;
+    let embedder: AbstractCustomFontEmbedder | StandardFontEmbedder;
     if (isStandardFont(font)) {
       embedder = StandardFontEmbedder.for(font, customName);
     } else if (canBeConvertedToUint8Array(font)) {
       const bytes = toUint8Array(font);
       embedder = subset
         ? CustomFontSubsetEmbedder.for(bytes, customName, vertical, advanced)
-        : CustomFontNonSubsetEmbedder.for(
+        : CustomFontEmbedder.for(
             bytes,
             customName,
             vertical,
