@@ -69,11 +69,11 @@ describe(`breakTextIntoLines`, () => {
     expect(actual).toEqual(expected);
   });
 
-  it(`handles non-ascii code points and empty breaks`, async () => {
+  it(`handles non-ascii code points and empty breaks`, () => {
     const sourceHansBytes = fs.readFileSync(
       'assets/fonts/source_hans_jp/SourceHanSerifJP-Regular.otf',
     );
-    const sourceHansFont = await CustomFontEmbedder.for(sourceHansBytes);
+    const sourceHansFont = CustomFontEmbedder.for(sourceHansBytes);
 
     const input =
       '遅未亮惑職界転藤柔索名午納，問通桑転加料演載満経信回込町者訟窃。';
