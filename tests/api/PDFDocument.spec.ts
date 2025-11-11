@@ -1,4 +1,6 @@
 import fs from 'fs';
+import { create as createFont } from '@denkiyagi/fontkit';
+import type { TTFFont } from '@denkiyagi/fontkit';
 import {
   Duplex,
   NonFullScreenPageMode,
@@ -11,7 +13,13 @@ import {
   ReadingDirection,
   ViewerPreferences,
 } from 'src/core';
-import { EncryptedPDFError, ParseSpeeds, PDFDocument, PDFPage } from 'src/api';
+import {
+  EncryptedPDFError,
+  ParseSpeeds,
+  PDFDocument,
+  PDFPage,
+  PDFFont,
+} from 'src/api';
 import { PDFSecurity, SecurityOptions } from 'src/core/security/PDFSecurity';
 
 const examplePngImage =
@@ -35,6 +43,7 @@ const normalPdfBytes = fs.readFileSync('assets/pdfs/normal.pdf');
 const withViewerPrefsPdfBytes = fs.readFileSync(
   'assets/pdfs/with_viewer_prefs.pdf',
 );
+const ubuntuFontBytes = fs.readFileSync('assets/fonts/ubuntu/Ubuntu-B.ttf');
 
 describe(`PDFDocument`, () => {
   describe(`load() method`, () => {
@@ -144,7 +153,7 @@ describe(`PDFDocument`, () => {
 
   describe(`embedFont() method`, () => {
     it(`serializes the same value on every save`, async () => {
-      const customFont = fs.readFileSync('assets/fonts/ubuntu/Ubuntu-B.ttf');
+      const customFont = new Uint8Array(ubuntuFontBytes);
       const pdfDoc1 = await PDFDocument.create({ updateMetadata: false });
       const pdfDoc2 = await PDFDocument.create({ updateMetadata: false });
 
@@ -155,6 +164,31 @@ describe(`PDFDocument`, () => {
       const savedDoc2 = await pdfDoc2.save();
 
       expect(savedDoc1).toEqual(savedDoc2);
+    });
+
+    it(`supports embedding TTFFont instances when subset=true`, async () => {
+      const pdfDoc = await PDFDocument.create({ updateMetadata: false });
+      const ttFont = createFont(new Uint8Array(ubuntuFontBytes)) as TTFFont;
+
+      expect(pdfDoc.embedTTFFont(ttFont, { subset: true })).toBeInstanceOf(
+        PDFFont,
+      );
+    });
+
+    it(`rejects TTFFont instances when subset is undefined`, async () => {
+      const pdfDoc = await PDFDocument.create({ updateMetadata: false });
+      const ttFont = createFont(new Uint8Array(ubuntuFontBytes)) as TTFFont;
+
+      expect(() => pdfDoc.embedTTFFont(ttFont, {})).toThrow(TypeError);
+    });
+
+    it(`rejects TTFFont instances when subset is false`, async () => {
+      const pdfDoc = await PDFDocument.create({ updateMetadata: false });
+      const ttFont = createFont(new Uint8Array(ubuntuFontBytes)) as TTFFont;
+
+      expect(() => pdfDoc.embedTTFFont(ttFont, { subset: false })).toThrow(
+        TypeError,
+      );
     });
   });
 

@@ -12,6 +12,7 @@ export { PDFTrailerDict } from 'src/core/document/PDFTrailerDict';
 export { PDFCrossRefSection } from 'src/core/document/PDFCrossRefSection';
 
 export { StandardFontEmbedder } from 'src/core/embedders/StandardFontEmbedder';
+export { AbstractCustomFontEmbedder } from 'src/core/embedders/AbstractCustomFontEmbedder';
 export { CustomFontEmbedder } from 'src/core/embedders/CustomFontEmbedder';
 export { CustomFontSubsetEmbedder } from 'src/core/embedders/CustomFontSubsetEmbedder';
 export { FileEmbedder, AFRelationship } from 'src/core/embedders/FileEmbedder';

@@ -1,7 +1,7 @@
 import { create as createFont, LayoutAdvancedParams } from '@denkiyagi/fontkit';
 import type { TTFFont, Glyph, Subset } from '@denkiyagi/fontkit';
 
-import { CustomFontEmbedder } from 'src/core/embedders/CustomFontEmbedder';
+import { AbstractCustomFontEmbedder } from 'src/core/embedders/AbstractCustomFontEmbedder';
 import { PDFHexString } from 'src/core/objects/PDFHexString';
 import { Cache, toHexStringOfMinLength } from 'src/utils';
 import type { EmbedFontAdvancedOptions } from 'src/api';
@@ -12,7 +12,7 @@ import type { SingleLineTextOrGlyphs } from 'src/types/text';
  * this class borrows from:
  *   https://github.com/devongovett/pdfkit/blob/e71edab0dd4657b5a767804ba86c94c58d01fbca/lib/image/jpeg.coffee
  */
-export class CustomFontSubsetEmbedder extends CustomFontEmbedder {
+export class CustomFontSubsetEmbedder extends AbstractCustomFontEmbedder {
   static for(
     fontData: Uint8Array,
     customFontName?: string,
@@ -24,7 +24,22 @@ export class CustomFontSubsetEmbedder extends CustomFontEmbedder {
 
     return new CustomFontSubsetEmbedder(
       font,
-      fontData,
+      customFontName,
+      vertical,
+      advanced,
+    );
+  }
+
+  static forTTFFont(
+    font: TTFFont,
+    customFontName?: string,
+    vertical?: boolean,
+    advanced?: EmbedFontAdvancedOptions,
+  ) {
+    if (font.type !== 'TTF') throw new Error(`Invalid font type: ${font.type}`);
+
+    return new CustomFontSubsetEmbedder(
+      font,
       customFontName,
       vertical,
       advanced,
@@ -37,12 +52,11 @@ export class CustomFontSubsetEmbedder extends CustomFontEmbedder {
 
   private constructor(
     font: TTFFont,
-    fontData: Uint8Array,
     customFontName?: string,
     vertical?: boolean,
     advanced?: EmbedFontAdvancedOptions,
   ) {
-    super(font, fontData, customFontName, vertical, advanced);
+    super(font, customFontName, vertical, advanced);
 
     this.subset = this.font.createSubset();
     this.glyphs = [];

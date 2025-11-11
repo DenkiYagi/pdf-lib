@@ -1,3 +1,4 @@
+import type { TTFFont } from '@denkiyagi/fontkit';
 import type { Embeddable } from 'src/api/Embeddable';
 import {
   EncryptedPDFError,
@@ -12,6 +13,7 @@ import { PDFForm } from 'src/api/form/PDFForm';
 import { PageSizes } from 'src/api/sizes';
 import type { StandardFonts } from 'src/api/StandardFonts';
 import {
+  AbstractCustomFontEmbedder,
   CustomFontEmbedder,
   CustomFontSubsetEmbedder,
   JpegEmbedder,
@@ -913,7 +915,7 @@ export class PDFDocument {
    * ```
    * @param font The input data for a font.
    * @param options The options to be used when embedding the font.
-   * @returns Resolves with the embedded font.
+   * @returns The embedded font represented as `PDFFont`.
    */
   embedFont(
     font: StandardFonts | string | Uint8Array | ArrayBuffer,
@@ -924,19 +926,57 @@ export class PDFDocument {
     assertIs(font, 'font', ['string', Uint8Array, ArrayBuffer]);
     assertIs(subset, 'subset', ['boolean']);
 
-    let embedder: CustomFontEmbedder | StandardFontEmbedder;
+    let embedder: AbstractCustomFontEmbedder | StandardFontEmbedder;
     if (isStandardFont(font)) {
       embedder = StandardFontEmbedder.for(font, customName);
     } else if (canBeConvertedToUint8Array(font)) {
       const bytes = toUint8Array(font);
       embedder = subset
         ? CustomFontSubsetEmbedder.for(bytes, customName, vertical, advanced)
-        : CustomFontEmbedder.for(bytes, customName, vertical, advanced);
+        : CustomFontEmbedder.for(
+            bytes,
+            customName,
+            vertical,
+            advanced,
+          );
     } else {
       throw new TypeError(
         '`font` must be one of `StandardFonts | string | Uint8Array | ArrayBuffer`',
       );
     }
+
+    const ref = this.context.nextRef();
+    const pdfFont = PDFFont.of(ref, this, embedder);
+    this.fonts.push(pdfFont);
+
+    return pdfFont;
+  }
+
+  /**
+   * Embed a fontkit `TTFFont` instance into this document.
+   *
+   * NOTE: `options.subset` must be `true`, because the non-subset font embedder requires
+   * the raw font bytes which are not available from a `TTFFont` instance.
+   *
+   * @param font The `TTFFont` to subset and embed.
+   * @param options Additional embedding options (the `subset` option must be `true`).
+   * @returns The embedded font represented as `PDFFont`.
+   * @throws If `options.subset` is not `true`.
+   */
+  embedTTFFont(font: TTFFont, options: EmbedFontOptions): PDFFont {
+    const { subset, customName, vertical, advanced } = options;
+    if (subset !== true) {
+      throw new TypeError(
+        '`subset` must explicitly be true when embedding a TTFFont',
+      );
+    }
+
+    const embedder = CustomFontSubsetEmbedder.forTTFFont(
+      font,
+      customName,
+      vertical,
+      advanced,
+    );
 
     const ref = this.context.nextRef();
     const pdfFont = PDFFont.of(ref, this, embedder);
