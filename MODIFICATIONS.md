@@ -1,5 +1,20 @@
 # Modifications
 
+## [Unreleased]
+
+### Feature Removals
+
+- Remove WOFF/WOFF2/DFont support from `PDFDocument#embedFont` by updating `@denkiyagi/fontkit` to `2.0.4-mod.2025.3`;
+  only `*.ttf` and `*.otf` font formats are now supported.
+- Remove Base64 string/dataURI inputs across `PDFDocument` loading, embedding, and attachments;
+  binary data must now be provided as `Uint8Array` or `ArrayBuffer`.
+- Remove Base64 output by removing the `PDFDocument#saveAsBase64` method;
+  use `PDFDocument#save` which resolves a `Uint8Array` instead.
+
+### Internal Changes
+
+- Update several devDependencies including `typescript` to their latest versions.
+
 ## [1.17.1-mod.2025.7]
 
 - Add `PDFDocument#embedTTFFont` (subset-only) and `CustomFontSubsetEmbedder.forTTFFont` so pre-created fontkit `TTFFont` instances can be embedded.
