@@ -27,7 +27,7 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "importsNotUsedAsValues": "error",
+    "skipLibCheck": true,
 
     /* Module Resolution Options */
     "baseUrl": "./src",

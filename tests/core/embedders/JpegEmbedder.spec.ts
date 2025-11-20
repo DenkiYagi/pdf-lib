@@ -1,8 +1,12 @@
 import { JpegEmbedder, PDFContext, PDFRawStream, PDFRef } from 'src/core';
 import { readBinaryFileSync } from '../../test-utils';
 
-const catUnicornJpg = readBinaryFileSync('./assets/images/cat_riding_unicorn.jpg');
-const minionsLaughing = readBinaryFileSync('./assets/images/minions_laughing.jpg');
+const catUnicornJpg = readBinaryFileSync(
+  './assets/images/cat_riding_unicorn.jpg',
+);
+const minionsLaughing = readBinaryFileSync(
+  './assets/images/minions_laughing.jpg',
+);
 const cmykJpg = readBinaryFileSync('./assets/images/cmyk_colorspace.jpg');
 
 describe(`JpegEmbedder`, () => {

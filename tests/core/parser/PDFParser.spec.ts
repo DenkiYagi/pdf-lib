@@ -199,7 +199,9 @@ describe(`PDFParser`, () => {
   });
 
   it(`can parse PDF files with update sections`, async () => {
-    const pdfBytes = readBinaryFileSync('./assets/pdfs/with_update_sections.pdf');
+    const pdfBytes = readBinaryFileSync(
+      './assets/pdfs/with_update_sections.pdf',
+    );
 
     const parser = PDFParser.forBytesWithOptions(pdfBytes);
     const context = await parser.parseDocument();
