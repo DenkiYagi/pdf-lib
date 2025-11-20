@@ -38,8 +38,10 @@
     const fetchBinaryAsset = (asset) =>
       fetch(`/assets/${asset}`).then((res) => res.arrayBuffer());
 
-    const renderInIframe = (pdfDataUri) => {
-      document.getElementById('iframe').src = pdfDataUri;
+    const renderInIframe = (pdfBytes) => {
+      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+      const blobUrl = URL.createObjectURL(blob);
+      document.getElementById('iframe').src = blobUrl;
     };
 
     async function test() {
@@ -170,9 +172,9 @@
       console.log('Creation Date:', pdfDoc.getCreationDate());
       console.log('Modification Date:', pdfDoc.getModificationDate());
 
-      const base64PdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
+      const pdfBytes = await pdfDoc.save({ useObjectStreams: false });
 
-      renderInIframe(base64PdfDataUri);
+      renderInIframe(pdfBytes);
     }
   </script>
 </html>

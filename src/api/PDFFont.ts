@@ -163,8 +163,8 @@ export class PDFFont implements Embeddable {
 
   /**
    * > **NOTE:** You probably don't need to call this method directly. The
-   * > [[PDFDocument.save]] and [[PDFDocument.saveAsBase64]] methods will
-   * > automatically ensure all fonts get embedded.
+   * > [[PDFDocument.save]] method will automatically ensure all fonts
+   * > get embedded.
    *
    * Embed this font in its document.
    *

@@ -41,7 +41,6 @@ import {
   ParseSpeeds,
   AttachmentOptions,
   SaveOptions,
-  Base64SaveOptions,
   LoadOptions,
   CreateOptions,
   EmbedFontOptions,
@@ -73,24 +72,6 @@ import {
   wordArrayFromBytes,
   wordArrayToBytes,
 } from 'src/utils/crypt';
-
-/**
- * `base64.ts` を削除した代わりに一時的に作成。削除予定
- */
-const encodeToBase64 = (bytes: Uint8Array): string => {
-  const buffer = (globalThis as any).Buffer;
-  if (buffer?.from) return buffer.from(bytes).toString('base64');
-
-  if (typeof btoa === 'function') {
-    let binary = '';
-    for (let i = 0, len = bytes.length; i < len; i++) {
-      binary += String.fromCharCode(bytes[i]);
-    }
-    return btoa(binary);
-  }
-
-  throw new Error('Base64 encoding is not supported in this environment');
-};
 
 const emptyObject = {};
 
@@ -1276,8 +1257,8 @@ export class PDFDocument {
 
   /**
    * > **NOTE:** You shouldn't need to call this method directly. The [[save]]
-   * > and [[saveAsBase64]] methods will automatically ensure that all embedded
-   * > assets are flushed before serializing the document.
+   * > method will automatically ensure that all embedded assets are flushed
+   * > before serializing the document.
    *
    * Flush all embedded fonts, PDF pages, and images to this document's
    * [[context]].
@@ -1332,29 +1313,6 @@ export class PDFDocument {
 
     const Writer = useObjectStreams ? PDFStreamWriter : PDFWriter;
     return Writer.forContext(this.context, objectsPerTick).serializeToBuffer();
-  }
-
-  /**
-   * Serialize this document to a base64 encoded string or data URI making up a
-   * PDF file. For example:
-   * ```js
-   * const base64String = await pdfDoc.saveAsBase64()
-   * base64String // => 'JVBERi0xLjcKJYGBgYEKC...'
-   *
-   * const base64DataUri = await pdfDoc.saveAsBase64({ dataUri: true })
-   * base64DataUri // => 'data:application/pdf;base64,JVBERi0xLjcKJYGBgYEKC...'
-   * ```
-   *
-   * @param options The options to be used when saving the document.
-   * @returns Resolves with a base64 encoded string or data URI of the
-   *          serialized document.
-   */
-  async saveAsBase64(options: Base64SaveOptions = {}): Promise<string> {
-    const { dataUri = false, ...otherOptions } = options;
-    assertIs(dataUri, 'dataUri', ['boolean']);
-    const bytes = await this.save(otherOptions);
-    const base64 = encodeToBase64(bytes);
-    return dataUri ? `data:application/pdf;base64,${base64}` : base64;
   }
 
   findPageForAnnotationRef(ref: PDFRef): PDFPage | undefined {

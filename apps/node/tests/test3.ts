@@ -120,9 +120,5 @@ export default async (assets: Assets) => {
   console.log('Creation Date:', pdfDoc.getCreationDate());
   console.log('Modification Date:', pdfDoc.getModificationDate());
 
-  const base64Pdf = await pdfDoc.saveAsBase64();
-
-  const pdfBytes = Buffer.from(base64Pdf, 'base64');
-
-  return pdfBytes;
+  return pdfDoc.save();
 };

@@ -88,8 +88,8 @@ export class PDFEmbeddedPage implements Embeddable {
 
   /**
    * > **NOTE:** You probably don't need to call this method directly. The
-   * > [[PDFDocument.save]] and [[PDFDocument.saveAsBase64]] methods will
-   * > automatically ensure all embeddable pages get embedded.
+   * > [[PDFDocument.save]] method will automatically ensure all embeddable
+   * > pages get embedded.
    *
    * Embed this embeddable page in its document.
    *
