@@ -1,9 +1,9 @@
-import fs from 'fs';
 import { JpegEmbedder, PDFContext, PDFRawStream, PDFRef } from 'src/core';
+import { readBinaryFileSync } from '../../test-utils';
 
-const catUnicornJpg = fs.readFileSync('./assets/images/cat_riding_unicorn.jpg');
-const minionsLaughing = fs.readFileSync('./assets/images/minions_laughing.jpg');
-const cmykJpg = fs.readFileSync('./assets/images/cmyk_colorspace.jpg');
+const catUnicornJpg = readBinaryFileSync('./assets/images/cat_riding_unicorn.jpg');
+const minionsLaughing = readBinaryFileSync('./assets/images/minions_laughing.jpg');
+const cmykJpg = readBinaryFileSync('./assets/images/cmyk_colorspace.jpg');
 
 describe(`JpegEmbedder`, () => {
   it(`can be constructed with JpegEmbedder.for(...)`, async () => {

@@ -1,9 +1,8 @@
-import fs from 'fs';
-
 import { PDFContext, PDFName, PDFRef, PDFStreamWriter } from 'src/core';
+import { readBinaryFileSync } from '../../test-utils';
 
-const expectedPdfBytes = new Uint8Array(
-  fs.readFileSync('./tests/core/writers/data/stream-writer-1.pdf'),
+const expectedPdfBytes = readBinaryFileSync(
+  './tests/core/writers/data/stream-writer-1.pdf',
 );
 
 const contentStreamText = `

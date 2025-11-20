@@ -1,4 +1,3 @@
-import fs from 'fs';
 import { create as createFont } from '@denkiyagi/fontkit';
 import type { TTFFont } from '@denkiyagi/fontkit';
 import {
@@ -21,29 +20,30 @@ import {
   PDFFont,
 } from 'src/api';
 import { PDFSecurity, SecurityOptions } from 'src/core/security/PDFSecurity';
+import { readBinaryFileSync } from '../test-utils';
 
 const examplePngImage =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAABhGlDQ1BJQ0MgcHJvZmlsZQAAKJF9kT1Iw0AcxV9TxaoVBzuIdMhQnSyIijhKFYtgobQVWnUwufQLmjQkKS6OgmvBwY/FqoOLs64OroIg+AHi5uak6CIl/i8ptIjx4Lgf7+497t4BQqPCVLNrAlA1y0jFY2I2tyr2vKIfAgLoRVhipp5IL2bgOb7u4ePrXZRneZ/7cwwoeZMBPpF4jumGRbxBPLNp6Zz3iUOsJCnE58TjBl2Q+JHrsstvnIsOCzwzZGRS88QhYrHYwXIHs5KhEk8TRxRVo3wh67LCeYuzWqmx1j35C4N5bSXNdZphxLGEBJIQIaOGMiqwEKVVI8VEivZjHv4Rx58kl0yuMhg5FlCFCsnxg//B727NwtSkmxSMAd0vtv0xCvTsAs26bX8f23bzBPA/A1da219tALOfpNfbWuQIGNwGLq7bmrwHXO4Aw0+6ZEiO5KcpFArA+xl9Uw4YugX61tzeWvs4fQAy1NXyDXBwCIwVKXvd492Bzt7+PdPq7wcdn3KFLu4iBAAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAlFJREFUeNrt289r02AYB/Dvk6Sl4EDKpllTlFKsnUdBHXgUBEHwqHj2IJ72B0zwKHhxJ08i/gDxX/AiRfSkBxELXTcVxTa2s2xTsHNN8ngQbQL70RZqG/Z9b29JnvflkydP37whghG3ZaegoxzfwB5vBCAAAQhAAAIQgAAEIAABCEAAAhCAAAQgwB5rstWPtnP0LqBX/vZNyLF6vVrpN/hucewhb4g+B2AyAwiwY7NGOXijviS9vBeYh6CEP4edBLDADCAAAQhAAAIQgAAEIAABCDAUAFF/GIN1DM+PBYCo/ohMXDQ1WPjoeUZH1mMBEEh0oqLGvsHCy0S4NzWVWotJBogbvZB+brDwQT7UWSmXy5sxyQB9HQEROdVv4HQ+vx+QmS4iXsWmCK7Usu8AhOqAXMzlcn3VgWTbugQgEYrxMkZ/gyUPgnuhe2C6/Stxvdeg2ezMJERvhOuoZ+JBrNYBRuDdBtDuXkDM25nCHLbZSv9X6A4VHU+DpwCcbvbjcetLtTaOANtuirrux08HM0euisjDEMKC7RQuq+C+pVJqpzx3NZ3+eeBza9I0rWJgyHnxg2sAJrqnaHUzFcyN60Jox13hprv8aNopZBS4GcqWWVHM+lAkN0zY7ncgkYBukRoKLPpiXVj9UFkfV4Bdl8Jf60u3IMZZAG/6iLuhkDvaSZ74VqtUx3kp3NN7gUZt8RmA43a2eEY1OCfQ04AcBpAGkAKwpkBLIG8BfQE/eNJsvG/G4VlARj0BfjDBx2ECEIAABCAAAQhAAAIQgAAE+P/tN8YvpvbTDBOlAAAAAElFTkSuQmCC';
 
-const unencryptedPdfBytes = fs.readFileSync('assets/pdfs/normal.pdf');
-const oldEncryptedPdfBytes1 = fs.readFileSync('assets/pdfs/encrypted_old.pdf');
+const unencryptedPdfBytes = readBinaryFileSync('assets/pdfs/normal.pdf');
+const oldEncryptedPdfBytes1 = readBinaryFileSync('assets/pdfs/encrypted_old.pdf');
 
 // Had to remove this file due to DMCA complaint, so commented this line out
 // along with the 2 tests that depend on it. Would be nice to find a new file
 // that we could drop in here, but the tests are for non-critical functionality,
 // so this solution is okay for now.
-// const oldEncryptedPdfBytes2 = fs.readFileSync('pdf_specification.pdf');
+// const oldEncryptedPdfBytes2 = readBinaryFileSync('pdf_specification.pdf');
 
-const newEncryptedPdfBytes = fs.readFileSync('assets/pdfs/encrypted_new.pdf');
-const invalidObjectsPdfBytes = fs.readFileSync(
+const newEncryptedPdfBytes = readBinaryFileSync('assets/pdfs/encrypted_new.pdf');
+const invalidObjectsPdfBytes = readBinaryFileSync(
   'assets/pdfs/with_invalid_objects.pdf',
 );
-const justMetadataPdfbytes = fs.readFileSync('assets/pdfs/just_metadata.pdf');
-const normalPdfBytes = fs.readFileSync('assets/pdfs/normal.pdf');
-const withViewerPrefsPdfBytes = fs.readFileSync(
+const justMetadataPdfbytes = readBinaryFileSync('assets/pdfs/just_metadata.pdf');
+const normalPdfBytes = readBinaryFileSync('assets/pdfs/normal.pdf');
+const withViewerPrefsPdfBytes = readBinaryFileSync(
   'assets/pdfs/with_viewer_prefs.pdf',
 );
-const ubuntuFontBytes = fs.readFileSync('assets/fonts/ubuntu/Ubuntu-B.ttf');
+const ubuntuFontBytes = readBinaryFileSync('assets/fonts/ubuntu/Ubuntu-B.ttf');
 
 describe(`PDFDocument`, () => {
   describe(`load() method`, () => {

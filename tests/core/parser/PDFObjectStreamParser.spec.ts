@@ -1,4 +1,3 @@
-import fs from 'fs';
 import {
   PDFArray,
   PDFBool,
@@ -14,9 +13,10 @@ import {
   PDFString,
   ReparseError,
 } from 'src/core';
+import { readBinaryFileSync } from '../../test-utils';
 
 const readData = (file: string) =>
-  new Uint8Array(fs.readFileSync(`./tests/core/parser/data/${file}`));
+  readBinaryFileSync(`./tests/core/parser/data/${file}`);
 
 describe(`PDFObjectStreamParser`, () => {
   it(`parses simple object streams`, () => {

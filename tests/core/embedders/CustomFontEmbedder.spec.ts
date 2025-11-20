@@ -1,5 +1,3 @@
-import fs from 'fs';
-
 import {
   CustomFontEmbedder,
   PDFContext,
@@ -7,8 +5,9 @@ import {
   PDFHexString,
   PDFRef,
 } from 'src/core';
+import { readBinaryFileSync } from '../../test-utils';
 
-const ubuntuFont = fs.readFileSync('./assets/fonts/ubuntu/Ubuntu-R.ttf');
+const ubuntuFont = readBinaryFileSync('./assets/fonts/ubuntu/Ubuntu-R.ttf');
 
 describe(`CustomFontEmbedder`, () => {
   it(`can be constructed with CustomFontEmbedder.for(...)`, () => {

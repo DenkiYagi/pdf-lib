@@ -1,8 +1,8 @@
 import { FontNames } from '@pdf-lib/standard-fonts';
-import fs from 'fs';
 
 import { CustomFontEmbedder, StandardFontEmbedder } from 'src/core';
 import { breakTextIntoLines } from 'src/utils';
+import { readBinaryFileSync } from '../test-utils';
 
 const font = StandardFontEmbedder.for(FontNames.Helvetica);
 
@@ -70,7 +70,7 @@ describe(`breakTextIntoLines`, () => {
   });
 
   it(`handles non-ascii code points and empty breaks`, () => {
-    const sourceHansBytes = fs.readFileSync(
+    const sourceHansBytes = readBinaryFileSync(
       'assets/fonts/source_hans_jp/SourceHanSerifJP-Regular.otf',
     );
     const sourceHansFont = CustomFontEmbedder.for(sourceHansBytes);

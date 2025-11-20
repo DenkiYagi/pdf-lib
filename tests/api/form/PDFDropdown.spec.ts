@@ -1,8 +1,8 @@
-import fs from 'fs';
 import { AnnotationFlags } from 'src/core';
 import { PDFDocument } from 'src/api';
+import { readBinaryFileSync } from '../../test-utils';
 
-const fancyFieldsPdfBytes = fs.readFileSync('assets/pdfs/fancy_fields.pdf');
+const fancyFieldsPdfBytes = readBinaryFileSync('assets/pdfs/fancy_fields.pdf');
 
 describe(`PDFDropdown`, () => {
   it(`can read its options`, async () => {

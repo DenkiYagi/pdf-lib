@@ -1,10 +1,10 @@
-import fs from 'fs';
 import { PDFContext, PDFDict, PDFRef, FileEmbedder } from 'src/core';
+import { readBinaryFileSync } from '../../test-utils';
 
-const catRidingUnicornJpg = fs.readFileSync(
+const catRidingUnicornJpg = readBinaryFileSync(
   'assets/images/cat_riding_unicorn.jpg',
 );
-const usConstitutionPdf = fs.readFileSync('assets/pdfs/us_constitution.pdf');
+const usConstitutionPdf = readBinaryFileSync('assets/pdfs/us_constitution.pdf');
 
 describe(`FileEmbedder`, () => {
   it(`can be constructed with FileEmbedder.for(...)`, () => {

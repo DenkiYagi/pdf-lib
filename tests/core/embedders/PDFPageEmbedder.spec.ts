@@ -1,8 +1,8 @@
-import fs from 'fs';
 import { PDFDocument } from 'src/api';
 import { PDFContext, PDFPageEmbedder, PDFRawStream, PDFRef } from 'src/core';
+import { readBinaryFileSync } from '../../test-utils';
 
-const examplePdf = fs.readFileSync('./assets/pdfs/normal.pdf');
+const examplePdf = readBinaryFileSync('./assets/pdfs/normal.pdf');
 
 const examplePage = async () => {
   const doc = await PDFDocument.load(examplePdf);

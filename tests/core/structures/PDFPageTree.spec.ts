@@ -1,4 +1,3 @@
-import fs from 'fs';
 import type { TreeNode } from 'src/core/structures/PDFPageTree';
 import {
   PDFArray,
@@ -10,8 +9,9 @@ import {
   PDFRef,
 } from 'src/core';
 import { PDFDocument } from 'src/api';
+import { readBinaryFileSync } from '../../test-utils';
 
-const withNullEntryPdfBytes = fs.readFileSync(
+const withNullEntryPdfBytes = readBinaryFileSync(
   'assets/pdfs/with_null_parent_entry.pdf',
 );
 

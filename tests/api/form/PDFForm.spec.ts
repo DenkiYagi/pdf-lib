@@ -1,4 +1,3 @@
-import fs from 'fs';
 import {
   PDFAcroForm,
   PDFDict,
@@ -16,6 +15,7 @@ import {
   PDFDropdown,
   PDFForm,
 } from 'src/api';
+import { readBinaryFileSync } from '../../test-utils';
 
 const getWidgets = (pdfDoc: PDFDocument) =>
   pdfDoc.context
@@ -48,12 +48,12 @@ const getApRefs = (widget: PDFWidgetAnnotation) => {
 const flatten = <T>(arr: T[][]): T[] =>
   arr.reduce((curr, acc) => [...acc, ...curr], []);
 
-const fancyFieldsPdfBytes = fs.readFileSync('assets/pdfs/fancy_fields.pdf');
-// const sampleFormPdfBytes = fs.readFileSync('assets/pdfs/sample_form.pdf');
-// const combedPdfBytes = fs.readFileSync('assets/pdfs/with_combed_fields.pdf');
-// const dodPdfBytes = fs.readFileSync('assets/pdfs/dod_character.pdf');
-const xfaPdfBytes = fs.readFileSync('assets/pdfs/with_xfa_fields.pdf');
-const signaturePdfBytes = fs.readFileSync('assets/pdfs/with_signature.pdf');
+const fancyFieldsPdfBytes = readBinaryFileSync('assets/pdfs/fancy_fields.pdf');
+// const sampleFormPdfBytes = readBinaryFileSync('assets/pdfs/sample_form.pdf');
+// const combedPdfBytes = readBinaryFileSync('assets/pdfs/with_combed_fields.pdf');
+// const dodPdfBytes = readBinaryFileSync('assets/pdfs/dod_character.pdf');
+const xfaPdfBytes = readBinaryFileSync('assets/pdfs/with_xfa_fields.pdf');
+const signaturePdfBytes = readBinaryFileSync('assets/pdfs/with_signature.pdf');
 
 describe(`PDFForm`, () => {
   const origConsoleWarn = console.warn;

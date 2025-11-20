@@ -1,9 +1,9 @@
-import fs from 'fs';
 import { PDFContext, PDFRawStream, PDFRef, PngEmbedder } from 'src/core';
+import { readBinaryFileSync } from '../../test-utils';
 
-const greyscalePng = fs.readFileSync('./assets/images/greyscale_bird.png');
-const rgbaPng = fs.readFileSync('./assets/images/minions_banana_alpha.png');
-const rgbPng = fs.readFileSync('./assets/images/minions_banana_no_alpha.png');
+const greyscalePng = readBinaryFileSync('./assets/images/greyscale_bird.png');
+const rgbaPng = readBinaryFileSync('./assets/images/minions_banana_alpha.png');
+const rgbPng = readBinaryFileSync('./assets/images/minions_banana_no_alpha.png');
 
 describe(`PngEmbedder`, () => {
   it(`can be constructed with PngEmbedder.for(...)`, async () => {
