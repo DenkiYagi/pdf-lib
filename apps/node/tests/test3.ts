@@ -11,12 +11,12 @@ import {
 export default async (assets: Assets) => {
   const { pdfs, images } = assets;
 
-  const pdfDoc = await PDFDocument.load(pdfs.with_update_sections_base64_uri, {
+  const pdfDoc = await PDFDocument.load(pdfs.with_update_sections, {
     parseSpeed: ParseSpeeds.Fastest,
     updateMetadata: false,
   });
 
-  await pdfDoc.attach(pdfs.normal_base64, 'tax_form.pdf', {
+  await pdfDoc.attach(pdfs.normal, 'tax_form.pdf', {
     mimeType: 'application/pdf',
     description: 'D-2210 tax form for 2012 🏦',
     creationDate: new Date('2004/04/04'),

@@ -12,7 +12,7 @@ import {
 export default async (assets: Assets) => {
   const { pdfs, images } = assets;
 
-  const pdfDoc = await PDFDocument.load(pdfs.normal_base64, {
+  const pdfDoc = await PDFDocument.load(pdfs.normal, {
     parseSpeed: ParseSpeeds.Fastest,
   });
 

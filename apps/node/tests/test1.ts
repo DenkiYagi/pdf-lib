@@ -233,7 +233,7 @@ export default async (assets: Assets) => {
 
   const { fonts } = assets;
 
-  const ubuntuFont = await pdfDoc.embedFont(fonts.ttf.ubuntu_r_base64, {
+  const ubuntuFont = await pdfDoc.embedFont(fonts.ttf.ubuntu_r, {
     subset: true,
   });
   page2.drawText(ipsumLines.join('\n'), {
@@ -318,13 +318,9 @@ export default async (assets: Assets) => {
 
   const { jpg, png } = assets.images;
 
-  const catRidingUnicornImage = await pdfDoc.embedJpg(
-    jpg.cat_riding_unicorn_base64,
-  );
+  const catRidingUnicornImage = await pdfDoc.embedJpg(jpg.cat_riding_unicorn);
   const minionsLaughingImage = await pdfDoc.embedJpg(jpg.minions_laughing);
-  const greyscaleBirdImage = await pdfDoc.embedPng(
-    png.greyscale_bird_base64_uri,
-  );
+  const greyscaleBirdImage = await pdfDoc.embedPng(png.greyscale_bird);
   const minionsBananaAlphaImage = await pdfDoc.embedPng(
     png.minions_banana_alpha,
   );

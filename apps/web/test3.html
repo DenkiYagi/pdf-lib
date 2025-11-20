@@ -38,9 +38,6 @@
     const fetchBinaryAsset = (asset) =>
       fetch(`/assets/${asset}`).then((res) => res.arrayBuffer());
 
-    const fetchStringAsset = (asset) =>
-      fetch(`/assets/${asset}`).then((res) => res.text());
-
     const renderInIframe = (pdfDataUri) => {
       document.getElementById('iframe').src = pdfDataUri;
     };
@@ -49,24 +46,24 @@
       const { degrees, PDFDocument, rgb, StandardFonts, LineCapStyle } = PDFLib;
 
       const [
-        inputPdfBase64,
+        inputPdfBytes,
         catRidingUnicornBytes,
         cmykBytes,
-        normalPdfBase64,
+        normalPdfBytes,
         existingPdfBytes,
       ] = await Promise.all([
-        fetchStringAsset('pdfs/with_update_sections.pdf.base64.uri'),
+        fetchBinaryAsset('pdfs/with_update_sections.pdf'),
         fetchBinaryAsset('images/cat_riding_unicorn.jpg'),
         fetchBinaryAsset('images/cmyk_colorspace.jpg'),
-        fetchStringAsset('pdfs/normal.pdf.base64'),
+        fetchBinaryAsset('pdfs/normal.pdf'),
         fetchBinaryAsset('pdfs/with_annots.pdf'),
       ]);
 
-      const pdfDoc = await PDFDocument.load(inputPdfBase64, {
+      const pdfDoc = await PDFDocument.load(inputPdfBytes, {
         updateMetadata: false,
       });
 
-      await pdfDoc.attach(normalPdfBase64, 'tax_form.pdf', {
+      await pdfDoc.attach(normalPdfBytes, 'tax_form.pdf', {
         mimeType: 'application/pdf',
         description: 'D-2210 tax form for 2012 🏦',
         creationDate: new Date('2004/04/04'),

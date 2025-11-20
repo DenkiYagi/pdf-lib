@@ -57,7 +57,6 @@ import {
   assertRange,
   Cache,
   canBeConvertedToUint8Array,
-  encodeToBase64,
   isStandardFont,
   pluckIndices,
   range,
@@ -75,6 +74,24 @@ import {
   wordArrayToBytes,
 } from 'src/utils/crypt';
 
+/**
+ * `base64.ts` を削除した代わりに一時的に作成。削除予定
+ */
+const encodeToBase64 = (bytes: Uint8Array): string => {
+  const buffer = (globalThis as any).Buffer;
+  if (buffer?.from) return buffer.from(bytes).toString('base64');
+
+  if (typeof btoa === 'function') {
+    let binary = '';
+    for (let i = 0, len = bytes.length; i < len; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return btoa(binary);
+  }
+
+  throw new Error('Base64 encoding is not supported in this environment');
+};
+
 const emptyObject = {};
 
 /**
@@ -82,50 +99,21 @@ const emptyObject = {};
  */
 export class PDFDocument {
   /**
-   * Load an existing [[PDFDocument]]. The input data can be provided in
-   * multiple formats:
-   *
-   * | Type          | Contents                                               |
-   * | ------------- | ------------------------------------------------------ |
-   * | `string`      | A base64 encoded string (or data URI) containing a PDF |
-   * | `Uint8Array`  | The raw bytes of a PDF                                 |
-   * | `ArrayBuffer` | The raw bytes of a PDF                                 |
+   * Load an existing [[PDFDocument]] from its raw bytes.
    *
    * For example:
    * ```js
    * import { PDFDocument } from 'pdf-lib'
    *
-   * // pdf=string
-   * const base64 =
-   *  'JVBERi0xLjcKJYGBgYEKCjUgMCBvYmoKPDwKL0ZpbHRlciAvRmxhdGVEZWNvZGUKL0xlbm' +
-   *  'd0aCAxMDQKPj4Kc3RyZWFtCniccwrhMlAAwaJ0Ln2P1Jyy1JLM5ERdc0MjCwUjE4WQNC4Q' +
-   *  '6cNlCFZkqGCqYGSqEJLLZWNuYGZiZmbkYuZsZmlmZGRgZmluDCQNzc3NTM2NzdzMXMxMjQ' +
-   *  'ztFEKyuEK0uFxDuAAOERdVCmVuZHN0cmVhbQplbmRvYmoKCjYgMCBvYmoKPDwKL0ZpbHRl' +
-   *  'ciAvRmxhdGVEZWNvZGUKL1R5cGUgL09ialN0bQovTiA0Ci9GaXJzdCAyMAovTGVuZ3RoID' +
-   *  'IxNQo+PgpzdHJlYW0KeJxVj9GqwjAMhu/zFHkBzTo3nCCCiiKIHPEICuJF3cKoSCu2E8/b' +
-   *  '20wPIr1p8v9/8kVhgilmGfawX2CGaVrgcAi0/bsy0lrX7IGWpvJ4iJYEN3gEmrrGBlQwGs' +
-   *  'HHO9VBX1wNrxAqMX87RBD5xpJuddqwd82tjAHxzV1U5LPgy52DKXWnr1Lheg+j/c/pzGVr' +
-   *  'iqV0VlwZPXGPCJjElw/ybkwUmeoWgxesDXGhHJC/D/iikp1Av80ptKU0FdBEe25pPihAM1' +
-   *  'u6ytgaaWfs2Hrz35CJT1+EWmAKZW5kc3RyZWFtCmVuZG9iagoKNyAwIG9iago8PAovU2l6' +
-   *  'ZSA4Ci9Sb290IDIgMCBSCi9GaWx0ZXIgL0ZsYXRlRGVjb2RlCi9UeXBlIC9YUmVmCi9MZW' +
-   *  '5ndGggMzgKL1cgWyAxIDIgMiBdCi9JbmRleCBbIDAgOCBdCj4+CnN0cmVhbQp4nBXEwREA' +
-   *  'EBAEsCwz3vrvRmOOyyOoGhZdutHN2MT55fIAVocD+AplbmRzdHJlYW0KZW5kb2JqCgpzdG' +
-   *  'FydHhyZWYKNTEwCiUlRU9G'
-   *
-   * const dataUri = 'data:application/pdf;base64,' + base64
-   *
-   * const pdfDoc1 = await PDFDocument.load(base64)
-   * const pdfDoc2 = await PDFDocument.load(dataUri)
-   *
    * // pdf=Uint8Array
    * import fs from 'fs'
    * const uint8Array = fs.readFileSync('with_update_sections.pdf')
-   * const pdfDoc3 = await PDFDocument.load(uint8Array)
+   * const pdfDoc1 = await PDFDocument.load(uint8Array)
    *
    * // pdf=ArrayBuffer
    * const url = 'https://pdf-lib.js.org/assets/with_update_sections.pdf'
    * const arrayBuffer = await fetch(url).then(res => res.arrayBuffer())
-   * const pdfDoc4 = await PDFDocument.load(arrayBuffer)
+   * const pdfDoc2 = await PDFDocument.load(arrayBuffer)
    *
    * ```
    *
@@ -133,10 +121,7 @@ export class PDFDocument {
    * @param options The options to be used when loading the document.
    * @returns Resolves with a document loaded from the input.
    */
-  static async load(
-    pdf: string | Uint8Array | ArrayBuffer,
-    options: LoadOptions = {},
-  ) {
+  static async load(pdf: Uint8Array | ArrayBuffer, options: LoadOptions = {}) {
     const {
       ignoreEncryption = false,
       parseSpeed = ParseSpeeds.Slow,
@@ -145,7 +130,7 @@ export class PDFDocument {
       capNumbers = false,
     } = options;
 
-    assertIs(pdf, 'pdf', ['string', Uint8Array, ArrayBuffer]);
+    assertIs(pdf, 'pdf', [Uint8Array, ArrayBuffer]);
     assertIs(ignoreEncryption, 'ignoreEncryption', ['boolean']);
     assertIs(parseSpeed, 'parseSpeed', ['number']);
     assertIs(throwOnInvalidObject, 'throwOnInvalidObject', ['boolean']);
@@ -811,26 +796,11 @@ export class PDFDocument {
    *
    * | Type          | Contents                                                       |
    * | ------------- | -------------------------------------------------------------- |
-   * | `string`      | A base64 encoded string (or data URI) containing an attachment |
-   * | `Uint8Array`  | The raw bytes of an attachment                                 |
-   * | `ArrayBuffer` | The raw bytes of an attachment                                 |
+   * | `Uint8Array`  | The raw bytes of an attachment |
+   * | `ArrayBuffer` | The raw bytes of an attachment |
    *
    * For example:
    * ```js
-   * // attachment=string
-   * await pdfDoc.attach('/9j/4AAQSkZJRgABAQAAAQABAAD/2wBD...', 'cat_riding_unicorn.jpg', {
-   *   mimeType: 'image/jpeg',
-   *   description: 'Cool cat riding a unicorn! 🦄🐈🕶️',
-   *   creationDate: new Date('2019/12/01'),
-   *   modificationDate: new Date('2020/04/19'),
-   * })
-   * await pdfDoc.attach('data:image/jpeg;base64,/9j/4AAQ...', 'cat_riding_unicorn.jpg', {
-   *   mimeType: 'image/jpeg',
-   *   description: 'Cool cat riding a unicorn! 🦄🐈🕶️',
-   *   creationDate: new Date('2019/12/01'),
-   *   modificationDate: new Date('2020/04/19'),
-   * })
-   *
    * // attachment=Uint8Array
    * import fs from 'fs'
    * const uint8Array = fs.readFileSync('cat_riding_unicorn.jpg')
@@ -857,11 +827,11 @@ export class PDFDocument {
    * @returns Resolves when the attachment is complete.
    */
   async attach(
-    attachment: string | Uint8Array | ArrayBuffer,
+    attachment: Uint8Array | ArrayBuffer,
     name: string,
     options: AttachmentOptions = {},
   ): Promise<void> {
-    assertIs(attachment, 'attachment', ['string', Uint8Array, ArrayBuffer]);
+    assertIs(attachment, 'attachment', [Uint8Array, ArrayBuffer]);
     assertIs(name, 'name', ['string']);
     assertOrUndefined(options.mimeType, 'mimeType', ['string']);
     assertOrUndefined(options.description, 'description', ['string']);
@@ -887,12 +857,11 @@ export class PDFDocument {
    * Embed a font into this document. The input data can be provided in multiple
    * formats:
    *
-   * | Type            | Contents                                                |
-   * | --------------- | ------------------------------------------------------- |
-   * | `StandardFonts` | One of the standard 14 fonts                            |
-   * | `string`        | A base64 encoded string (or data URI) containing a font |
-   * | `Uint8Array`    | The raw bytes of a font                                 |
-   * | `ArrayBuffer`   | The raw bytes of a font                                 |
+   * | Type            | Contents                    |
+   * | --------------- | --------------------------- |
+   * | `StandardFonts` | One of the standard 14 fonts |
+   * | `Uint8Array`    | The raw bytes of a font      |
+   * | `ArrayBuffer`   | The raw bytes of a font      |
    *
    * For example:
    * ```js
@@ -900,30 +869,25 @@ export class PDFDocument {
    * import { StandardFonts } from 'pdf-lib'
    * const font1 = await pdfDoc.embedFont(StandardFonts.Helvetica)
    *
-   * // font=string
-   * const font2 = await pdfDoc.embedFont('AAEAAAAVAQAABABQRFNJRx/upe...')
-   * const font3 = await pdfDoc.embedFont('data:font/opentype;base64,AAEAAA...')
-   *
    * // font=Uint8Array
    * import fs from 'fs'
-   * const font4 = await pdfDoc.embedFont(fs.readFileSync('Ubuntu-R.ttf'))
+   * const font2 = await pdfDoc.embedFont(fs.readFileSync('Ubuntu-R.ttf'))
    *
    * // font=ArrayBuffer
    * const url = 'https://pdf-lib.js.org/assets/ubuntu/Ubuntu-R.ttf'
    * const ubuntuBytes = await fetch(url).then(res => res.arrayBuffer())
-   * const font5 = await pdfDoc.embedFont(ubuntuBytes)
+   * const font3 = await pdfDoc.embedFont(ubuntuBytes)
    * ```
    * @param font The input data for a font.
    * @param options The options to be used when embedding the font.
    * @returns The embedded font represented as `PDFFont`.
    */
   embedFont(
-    font: StandardFonts | string | Uint8Array | ArrayBuffer,
+    font: StandardFonts | Uint8Array | ArrayBuffer,
     options: EmbedFontOptions = emptyObject,
   ): PDFFont {
     const { subset = false, customName, vertical, advanced } = options;
 
-    assertIs(font, 'font', ['string', Uint8Array, ArrayBuffer]);
     assertIs(subset, 'subset', ['boolean']);
 
     let embedder: AbstractCustomFontEmbedder | StandardFontEmbedder;
@@ -936,7 +900,7 @@ export class PDFDocument {
         : CustomFontEmbedder.for(bytes, customName, vertical, advanced);
     } else {
       throw new TypeError(
-        '`font` must be one of `StandardFonts | string | Uint8Array | ArrayBuffer`',
+        '`font` must be one of `StandardFonts | Uint8Array | ArrayBuffer`',
       );
     }
 
@@ -1010,34 +974,29 @@ export class PDFDocument {
    * Embed a JPEG image into this document. The input data can be provided in
    * multiple formats:
    *
-   * | Type          | Contents                                                      |
-   * | ------------- | ------------------------------------------------------------- |
-   * | `string`      | A base64 encoded string (or data URI) containing a JPEG image |
-   * | `Uint8Array`  | The raw bytes of a JPEG image                                 |
-   * | `ArrayBuffer` | The raw bytes of a JPEG image                                 |
+   * | Type          | Contents                          |
+   * | ------------- | --------------------------------- |
+   * | `Uint8Array`  | The raw bytes of a JPEG image     |
+   * | `ArrayBuffer` | The raw bytes of a JPEG image     |
    *
    * For example:
    * ```js
-   * // jpg=string
-   * const image1 = await pdfDoc.embedJpg('/9j/4AAQSkZJRgABAQAAAQABAAD/2wBD...')
-   * const image2 = await pdfDoc.embedJpg('data:image/jpeg;base64,/9j/4AAQ...')
-   *
    * // jpg=Uint8Array
    * import fs from 'fs'
    * const uint8Array = fs.readFileSync('cat_riding_unicorn.jpg')
-   * const image3 = await pdfDoc.embedJpg(uint8Array)
+   * const image1 = await pdfDoc.embedJpg(uint8Array)
    *
    * // jpg=ArrayBuffer
    * const url = 'https://pdf-lib.js.org/assets/cat_riding_unicorn.jpg'
    * const arrayBuffer = await fetch(url).then(res => res.arrayBuffer())
-   * const image4 = await pdfDoc.embedJpg(arrayBuffer)
+   * const image2 = await pdfDoc.embedJpg(arrayBuffer)
    * ```
    *
    * @param jpg The input data for a JPEG image.
    * @returns Resolves with the embedded image.
    */
-  async embedJpg(jpg: string | Uint8Array | ArrayBuffer): Promise<PDFImage> {
-    assertIs(jpg, 'jpg', ['string', Uint8Array, ArrayBuffer]);
+  async embedJpg(jpg: Uint8Array | ArrayBuffer): Promise<PDFImage> {
+    assertIs(jpg, 'jpg', [Uint8Array, ArrayBuffer]);
     const bytes = toUint8Array(jpg);
     const embedder = await JpegEmbedder.for(bytes);
     const ref = this.context.nextRef();
@@ -1050,34 +1009,29 @@ export class PDFDocument {
    * Embed a PNG image into this document. The input data can be provided in
    * multiple formats:
    *
-   * | Type          | Contents                                                     |
-   * | ------------- | ------------------------------------------------------------ |
-   * | `string`      | A base64 encoded string (or data URI) containing a PNG image |
-   * | `Uint8Array`  | The raw bytes of a PNG image                                 |
-   * | `ArrayBuffer` | The raw bytes of a PNG image                                 |
+   * | Type          | Contents                     |
+   * | ------------- | ---------------------------- |
+   * | `Uint8Array`  | The raw bytes of a PNG image |
+   * | `ArrayBuffer` | The raw bytes of a PNG image |
    *
    * For example:
    * ```js
-   * // png=string
-   * const image1 = await pdfDoc.embedPng('iVBORw0KGgoAAAANSUhEUgAAAlgAAAF3...')
-   * const image2 = await pdfDoc.embedPng('data:image/png;base64,iVBORw0KGg...')
-   *
    * // png=Uint8Array
    * import fs from 'fs'
    * const uint8Array = fs.readFileSync('small_mario.png')
-   * const image3 = await pdfDoc.embedPng(uint8Array)
+   * const image1 = await pdfDoc.embedPng(uint8Array)
    *
    * // png=ArrayBuffer
    * const url = 'https://pdf-lib.js.org/assets/small_mario.png'
    * const arrayBuffer = await fetch(url).then(res => res.arrayBuffer())
-   * const image4 = await pdfDoc.embedPng(arrayBuffer)
+   * const image2 = await pdfDoc.embedPng(arrayBuffer)
    * ```
    *
    * @param png The input data for a PNG image.
    * @returns Resolves with the embedded image.
    */
-  async embedPng(png: string | Uint8Array | ArrayBuffer): Promise<PDFImage> {
-    assertIs(png, 'png', ['string', Uint8Array, ArrayBuffer]);
+  async embedPng(png: Uint8Array | ArrayBuffer): Promise<PDFImage> {
+    assertIs(png, 'png', [Uint8Array, ArrayBuffer]);
     const bytes = toUint8Array(png);
     const embedder = await PngEmbedder.for(bytes);
     const ref = this.context.nextRef();
@@ -1107,11 +1061,10 @@ export class PDFDocument {
    * @returns Resolves with an array of the embedded pages.
    */
   async embedPdf(
-    pdf: string | Uint8Array | ArrayBuffer | PDFDocument,
+    pdf: Uint8Array | ArrayBuffer | PDFDocument,
     indices: number[] = [0],
   ): Promise<PDFEmbeddedPage[]> {
     assertIs(pdf, 'pdf', [
-      'string',
       Uint8Array,
       ArrayBuffer,
       [PDFDocument, 'PDFDocument'],

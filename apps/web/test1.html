@@ -36,9 +36,6 @@
     const fetchBinaryAsset = (asset) =>
       fetch(`/assets/${asset}`).then((res) => res.arrayBuffer());
 
-    const fetchStringAsset = (asset) =>
-      fetch(`/assets/${asset}`).then((res) => res.text());
-
     const renderInIframe = (pdfBytes) => {
       const blob = new Blob([pdfBytes], { type: 'application/pdf' });
       const blobUrl = URL.createObjectURL(blob);
@@ -285,7 +282,7 @@
       page2.setFontColor(rgb(101 / 255, 123 / 255, 131 / 255));
 
       const [
-        ubuntuBase64,
+        ubuntuBytes,
         fantasqueBytes,
         indieFlowerBytes,
         greatVibesBytes,
@@ -294,7 +291,7 @@
         pressStart2PBytes,
         hussar3DBytes,
       ] = await Promise.all([
-        fetchStringAsset('fonts/ubuntu/Ubuntu-R.ttf.base64'),
+        fetchBinaryAsset('fonts/ubuntu/Ubuntu-R.ttf'),
         fetchBinaryAsset(
           'fonts/fantasque/OTF/FantasqueSansMono-BoldItalic.otf',
         ),
@@ -306,7 +303,7 @@
         fetchBinaryAsset('fonts/hussar_3d/Hussar3DFour.otf'),
       ]);
 
-      const ubuntuFont = await pdfDoc.embedFont(ubuntuBase64, { subset: true });
+      const ubuntuFont = await pdfDoc.embedFont(ubuntuBytes, { subset: true });
       page2.drawText(ipsumLines.join('\n'), {
         y: size - 20,
         size: 20,
@@ -386,26 +383,26 @@
       const page3 = pdfDoc.addPage([size, page3Height]);
 
       const [
-        catRidingUnicornBase64,
+        catRidingUnicornBytes,
         minionsLaughingBytes,
-        greyscaleBirdBase64,
+        greyscaleBirdBytes,
         minionsBananaAlphaBytes,
         minionsBananaNoAlphaBytes,
         smallMarioBytes,
       ] = await Promise.all([
-        fetchStringAsset('images/cat_riding_unicorn.jpg.base64'),
+        fetchBinaryAsset('images/cat_riding_unicorn.jpg'),
         fetchBinaryAsset('images/minions_laughing.jpg'),
-        fetchStringAsset('images/greyscale_bird.png.base64.uri'),
+        fetchBinaryAsset('images/greyscale_bird.png'),
         fetchBinaryAsset('images/minions_banana_alpha.png'),
         fetchBinaryAsset('images/minions_banana_no_alpha.png'),
         fetchBinaryAsset('images/small_mario.png'),
       ]);
 
       const catRidingUnicornImage = await pdfDoc.embedJpg(
-        catRidingUnicornBase64,
+        catRidingUnicornBytes,
       );
       const minionsLaughingImage = await pdfDoc.embedJpg(minionsLaughingBytes);
-      const greyscaleBirdImage = await pdfDoc.embedPng(greyscaleBirdBase64);
+      const greyscaleBirdImage = await pdfDoc.embedPng(greyscaleBirdBytes);
       const minionsBananaAlphaImage = await pdfDoc.embedPng(
         minionsBananaAlphaBytes,
       );

@@ -38,9 +38,6 @@
     const fetchBinaryAsset = (asset) =>
       fetch(`/assets/${asset}`).then((res) => res.arrayBuffer());
 
-    const fetchStringAsset = (asset) =>
-      fetch(`/assets/${asset}`).then((res) => res.text());
-
     const renderInIframe = (pdfBytes) => {
       const blob = new Blob([pdfBytes], { type: 'application/pdf' });
       const blobUrl = URL.createObjectURL(blob);
@@ -51,12 +48,12 @@
       const { PDFDocument, PDFPage, radians, StandardFonts, rgb, degrees } =
         PDFLib;
 
-      const [inputPdfBase64, minionsLaughingBytes] = await Promise.all([
-        fetchStringAsset('pdfs/normal.pdf.base64'),
+      const [inputPdfBytes, minionsLaughingBytes] = await Promise.all([
+        fetchBinaryAsset('pdfs/normal.pdf'),
         fetchBinaryAsset('images/minions_laughing.jpg'),
       ]);
 
-      const pdfDoc = await PDFDocument.load(inputPdfBase64);
+      const pdfDoc = await PDFDocument.load(inputPdfBytes);
 
       const minionsLaughingImage = await pdfDoc.embedJpg(minionsLaughingBytes);
       const minionsLaughingDims = minionsLaughingImage.scale(0.6);

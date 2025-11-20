@@ -40,9 +40,6 @@
         .then((res) => res.arrayBuffer())
         .then((res) => new Uint8Array(res));
 
-    const fetchStringAsset = (asset) =>
-      fetch(`/assets/${asset}`).then((res) => res.text());
-
     const renderInIframe = (pdfBytes) => {
       const blob = new Blob([pdfBytes], { type: 'application/pdf' });
       const blobUrl = URL.createObjectURL(blob);
@@ -58,14 +55,14 @@
         smallMarioBytes,
         withCropBoxPdfBytes,
         usConstitutionPdfBytes,
-        catRidingUnicornJpgBase64,
+        catRidingUnicornBytes,
       ] = await Promise.all([
         fetchAsset('pdfs/with_missing_endstream_eol_and_polluted_ctm.pdf'),
         fetchAsset('fonts/nunito/Nunito-Regular.ttf'),
         fetchAsset('images/small_mario.png'),
         fetchAsset('pdfs/with_cropbox.pdf'),
         fetchAsset('pdfs/us_constitution.pdf'),
-        fetchStringAsset('images/cat_riding_unicorn.jpg.base64'),
+        fetchAsset('images/cat_riding_unicorn.jpg'),
       ]);
 
       const pdfDoc = await PDFDocument.load(inputPdfBytes);
@@ -77,7 +74,7 @@
         modificationDate: new Date('1992/05/07'),
       });
 
-      await pdfDoc.attach(catRidingUnicornJpgBase64, 'cat_riding_unicorn.jpg', {
+      await pdfDoc.attach(catRidingUnicornBytes, 'cat_riding_unicorn.jpg', {
         mimeType: 'image/jpeg',
         description: 'Cool cat riding a unicorn! 🦄🐈🕶️',
         creationDate: new Date('2019/12/01'),
