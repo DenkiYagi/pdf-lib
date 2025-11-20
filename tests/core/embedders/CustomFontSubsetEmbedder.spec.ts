@@ -19,9 +19,7 @@ describe(`CustomFontSubsetEmbedder`, () => {
 
   it(`can embed standard font dictionaries into PDFContexts`, () => {
     const context = PDFContext.create();
-    const embedder = CustomFontSubsetEmbedder.for(
-      new Uint8Array(ubuntuFont),
-    );
+    const embedder = CustomFontSubsetEmbedder.for(new Uint8Array(ubuntuFont));
 
     expect(context.enumerateIndirectObjects().length).toBe(0);
     const ref = embedder.embedIntoContext(context);

@@ -11,9 +11,7 @@ import {
 import type { SingleLineTextOrGlyphs } from 'src/types/text';
 import { assertIs, assertOrUndefined } from 'src/utils';
 
-export type FontEmbedder =
-  | AbstractCustomFontEmbedder
-  | StandardFontEmbedder;
+export type FontEmbedder = AbstractCustomFontEmbedder | StandardFontEmbedder;
 
 /**
  * Represents a font that has been embedded in a [[PDFDocument]].

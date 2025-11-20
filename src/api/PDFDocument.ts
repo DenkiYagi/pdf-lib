@@ -933,12 +933,7 @@ export class PDFDocument {
       const bytes = toUint8Array(font);
       embedder = subset
         ? CustomFontSubsetEmbedder.for(bytes, customName, vertical, advanced)
-        : CustomFontEmbedder.for(
-            bytes,
-            customName,
-            vertical,
-            advanced,
-          );
+        : CustomFontEmbedder.for(bytes, customName, vertical, advanced);
     } else {
       throw new TypeError(
         '`font` must be one of `StandardFonts | string | Uint8Array | ArrayBuffer`',
