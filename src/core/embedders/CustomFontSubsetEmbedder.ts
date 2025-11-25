@@ -117,8 +117,6 @@ export class CustomFontSubsetEmbedder extends AbstractCustomFontEmbedder {
   }
 
   protected serializeFont(): Uint8Array {
-    // TODO: remove ts-ignore comment once fontkit is fixed
-    // @ts-ignore : fontkit's type definitions are currently incomplete
     return this.subset.encode();
   }
 }

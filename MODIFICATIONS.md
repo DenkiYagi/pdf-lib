@@ -4,7 +4,7 @@
 
 ### Feature Removals
 
-- Remove WOFF/WOFF2/DFont support from `PDFDocument#embedFont` by updating `@denkiyagi/fontkit` to `2.0.4-mod.2025.3`;
+- Remove WOFF/WOFF2/DFont support from `PDFDocument#embedFont` by updating `@denkiyagi/fontkit` to `2.0.4-mod.2025.4`;
   only `*.ttf` and `*.otf` font formats are now supported.
 - Remove Base64 string/dataURI inputs across `PDFDocument` loading, embedding, and attachments;
   binary data must now be provided as `Uint8Array` or `ArrayBuffer`.
