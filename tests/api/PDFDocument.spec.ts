@@ -14,11 +14,13 @@ import {
 } from 'src/core';
 import {
   EncryptedPDFError,
+  InvalidFontSubsetOptionError,
   ParseSpeeds,
   PDFDocument,
   PDFPage,
   PDFFont,
 } from 'src/api';
+import { InvalidIndirectObjectError } from 'src/core/errors';
 import { PDFSecurity, SecurityOptions } from 'src/core/security/PDFSecurity';
 import { readBinaryFileSync } from '../test-utils';
 
@@ -143,16 +145,13 @@ describe(`PDFDocument`, () => {
     });
 
     it(`throws an error for invalid PDFs when throwOnInvalidObject=true`, async () => {
-      const expectedError = new Error(
-        'Trying to parse invalid object: {"line":20,"column":13,"offset":126})',
-      );
       await expect(
         PDFDocument.load(invalidObjectsPdfBytes, {
           ignoreEncryption: true,
           parseSpeed: ParseSpeeds.Fastest,
           throwOnInvalidObject: true,
         }),
-      ).rejects.toEqual(expectedError);
+      ).rejects.toThrow(InvalidIndirectObjectError);
     });
   });
 
@@ -184,7 +183,9 @@ describe(`PDFDocument`, () => {
       const pdfDoc = await PDFDocument.create({ updateMetadata: false });
       const ttFont = createFont(new Uint8Array(ubuntuFontBytes)) as TTFFont;
 
-      expect(() => pdfDoc.embedTTFFont(ttFont, {})).toThrow(TypeError);
+      expect(() => pdfDoc.embedTTFFont(ttFont, {})).toThrow(
+        InvalidFontSubsetOptionError,
+      );
     });
 
     it(`rejects TTFFont instances when subset is false`, async () => {
@@ -192,7 +193,7 @@ describe(`PDFDocument`, () => {
       const ttFont = createFont(new Uint8Array(ubuntuFontBytes)) as TTFFont;
 
       expect(() => pdfDoc.embedTTFFont(ttFont, { subset: false })).toThrow(
-        TypeError,
+        InvalidFontSubsetOptionError,
       );
     });
   });
