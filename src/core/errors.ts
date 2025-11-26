@@ -1,8 +1,42 @@
 // tslint:disable: max-classes-per-file
-import { arrayAsString } from 'src/utils';
-import { PDFLibError, PDFLibErrorTypes } from './error-base';
+
+import { arrayAsString } from 'src/utils/arrays';
+import { PDFLibError, PDFLibErrorType, PDFLibErrorTypes } from './error-base';
 
 export class PDFLibCoreError extends PDFLibError {}
+
+const formatCodePointHex = (codePoint: number) =>
+  codePoint.toString(16).toUpperCase().padStart(2, '0');
+
+export class InvalidUnicodeCodePointError extends PDFLibCoreError {
+  constructor(
+    codePoint: number,
+    originType: PDFLibErrorType = PDFLibErrorTypes.INTERNAL_ASSERTION,
+    reason?: string,
+  ) {
+    const hex = formatCodePointHex(codePoint);
+    const detail = reason ? ` (${reason})` : '';
+    const msg = `Invalid code point: 0x${hex}${detail}`;
+    super(originType, msg);
+  }
+}
+
+export class InvalidByteOrderError extends PDFLibCoreError {
+  constructor(byteOrder: number) {
+    const msg = `Invalid byteOrder: ${byteOrder}`;
+    super(PDFLibErrorTypes.INTERNAL_ASSERTION, msg);
+  }
+}
+
+export class InvalidFontTypeError extends PDFLibCoreError {
+  constructor(
+    fontType: string,
+    originType: PDFLibErrorType = PDFLibErrorTypes.UNSUPPORTED_EXTERNAL_BINARY_DATA,
+  ) {
+    const msg = `Invalid font type: ${fontType}`;
+    super(originType, msg);
+  }
+}
 
 export class MethodNotImplementedError extends PDFLibCoreError {
   constructor(className: string, methodName: string) {
@@ -130,6 +164,97 @@ export class MissingTfOperatorError extends PDFLibCoreError {
   constructor(fieldName: string) {
     const msg = `No Tf operator found for DA of field: ${fieldName}`;
     super(PDFLibErrorTypes.INVALID_EXTERNAL_BINARY_DATA, msg);
+  }
+}
+
+export class MissingAcroFormFieldError extends PDFLibCoreError {
+  constructor(fieldName: string) {
+    const msg = `Tried to remove inexistent field ${fieldName}`;
+    super(PDFLibErrorTypes.INTERNAL_ASSERTION, msg);
+  }
+}
+
+export class InvalidIndirectObjectError extends PDFLibCoreError {
+  constructor(pos: Position) {
+    const msg = `Trying to parse invalid object: ${JSON.stringify(pos)})`;
+    super(PDFLibErrorTypes.INVALID_EXTERNAL_BINARY_DATA, msg);
+  }
+}
+
+export class UnexpectedAppearanceTypeError extends PDFLibCoreError {
+  constructor(actual: any) {
+    const msg = `Unexpected N type: ${actual?.constructor?.name ?? actual}`;
+    super(PDFLibErrorTypes.INVALID_EXTERNAL_BINARY_DATA, msg);
+  }
+}
+
+export type FlateDecodingErrorReason =
+  | 'INVALID_HEADER'
+  | 'UNKNOWN_COMPRESSION_METHOD'
+  | 'BAD_FCHECK'
+  | 'FDICT_SET'
+  | 'BAD_BLOCK_HEADER'
+  | 'BAD_UNCOMPRESSED_BLOCK_LENGTH'
+  | 'UNKNOWN_BLOCK_TYPE'
+  | 'BAD_ENCODING';
+
+export class FlateDecodingError extends PDFLibCoreError {
+  readonly reason: FlateDecodingErrorReason;
+
+  constructor(
+    reason: FlateDecodingErrorReason,
+    details?: { cmf?: number; flg?: number },
+  ) {
+    let msg: string;
+    if (reason === 'INVALID_HEADER') {
+      msg = `Invalid header in flate stream: ${details?.cmf}, ${details?.flg}`;
+    } else if (reason === 'UNKNOWN_COMPRESSION_METHOD') {
+      msg = `Unknown compression method in flate stream: ${details?.cmf}, ${details?.flg}`;
+    } else if (reason === 'BAD_FCHECK') {
+      msg = `Bad FCHECK in flate stream: ${details?.cmf}, ${details?.flg}`;
+    } else if (reason === 'FDICT_SET') {
+      msg = `FDICT bit set in flate stream: ${details?.cmf}, ${details?.flg}`;
+    } else if (reason === 'BAD_BLOCK_HEADER') {
+      msg = 'Bad block header in flate stream';
+    } else if (reason === 'BAD_UNCOMPRESSED_BLOCK_LENGTH') {
+      msg = 'Bad uncompressed block length in flate stream';
+    } else if (reason === 'UNKNOWN_BLOCK_TYPE') {
+      msg = 'Unknown block type in flate stream';
+    } else {
+      msg = 'Bad encoding in flate stream';
+    }
+
+    super(PDFLibErrorTypes.INVALID_EXTERNAL_BINARY_DATA, msg);
+    this.reason = reason;
+  }
+}
+
+export class InvalidPasswordError extends PDFLibCoreError {
+  constructor() {
+    super(
+      PDFLibErrorTypes.INVALID_CALLER_INPUT,
+      'Password contains invalid characters.',
+    );
+  }
+}
+
+export type InvalidJpegReason =
+  | 'SOI_NOT_FOUND'
+  | 'INVALID_MARKER'
+  | 'UNKNOWN_CHANNEL';
+
+export class InvalidJpegError extends PDFLibCoreError {
+  readonly reason: InvalidJpegReason;
+
+  constructor(reason: InvalidJpegReason) {
+    let msg: string;
+    if (reason === 'SOI_NOT_FOUND') msg = 'SOI not found in JPEG';
+    else if (reason === 'INVALID_MARKER') msg = 'Invalid marker found in JPEG';
+    else if (reason === 'UNKNOWN_CHANNEL') msg = 'Unknown JPEG channel.';
+    else msg = 'Invalid JPEG';
+
+    super(PDFLibErrorTypes.INVALID_EXTERNAL_BINARY_DATA, msg);
+    this.reason = reason;
   }
 }
 

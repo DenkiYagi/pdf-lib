@@ -9,6 +9,7 @@ import {
   createPDFAcroField,
   createPDFAcroFields,
 } from 'src/core/acroform/utils';
+import { MissingAcroFormFieldError } from 'src/core/errors';
 
 export class PDFAcroForm {
   readonly dict: PDFDict;
@@ -75,9 +76,8 @@ export class PDFAcroForm {
 
     const index = fields?.indexOf(field.ref);
     if (fields === undefined || index === undefined) {
-      throw new Error(
-        `Tried to remove inexistent field ${field.getFullyQualifiedName()}`,
-      );
+      const fieldName = field.getFullyQualifiedName() ?? '<unknown field>';
+      throw new MissingAcroFormFieldError(fieldName);
     }
 
     fields.remove(index);

@@ -4,6 +4,7 @@ import { PDFStream } from 'src/core/objects/PDFStream';
 import { PDFArray } from 'src/core/objects/PDFArray';
 import { PDFRef } from 'src/core/objects/PDFRef';
 import { PDFNumber } from 'src/core/objects/PDFNumber';
+import { UnexpectedAppearanceTypeError } from 'src/core/errors';
 
 export class PDFAnnotation {
   readonly dict: PDFDict;
@@ -67,7 +68,7 @@ export class PDFAnnotation {
     const N = AP.get(PDFName.of('N'));
     if (N instanceof PDFRef || N instanceof PDFDict) return N;
 
-    throw new Error(`Unexpected N type: ${N?.constructor.name}`);
+    throw new UnexpectedAppearanceTypeError(N);
   }
 
   /** @param appearance A PDFDict or PDFStream (direct or ref) */

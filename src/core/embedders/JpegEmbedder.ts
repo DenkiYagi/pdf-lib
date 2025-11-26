@@ -1,3 +1,4 @@
+import { InvalidJpegError } from 'src/core/errors';
 import type { PDFRef } from 'src/core/objects/PDFRef';
 import type { PDFContext } from 'src/core/PDFContext';
 
@@ -32,7 +33,7 @@ export class JpegEmbedder {
     const dataView = new DataView(imageData.buffer);
 
     const soi = dataView.getUint16(0);
-    if (soi !== 0xffd8) throw new Error('SOI not found in JPEG');
+    if (soi !== 0xffd8) throw new InvalidJpegError('SOI_NOT_FOUND');
 
     let pos = 2;
     let marker: number;
@@ -44,7 +45,9 @@ export class JpegEmbedder {
       pos += dataView.getUint16(pos);
     }
 
-    if (!MARKERS.includes(marker!)) throw new Error('Invalid JPEG');
+    if (!MARKERS.includes(marker!)) {
+      throw new InvalidJpegError('INVALID_MARKER');
+    }
     pos += 2;
 
     const bitsPerComponent = dataView.getUint8(pos++);
@@ -57,7 +60,7 @@ export class JpegEmbedder {
     const channelByte = dataView.getUint8(pos++);
     const channelName = ChannelToColorSpace[channelByte];
 
-    if (!channelName) throw new Error('Unknown JPEG channel.');
+    if (!channelName) throw new InvalidJpegError('UNKNOWN_CHANNEL');
 
     const colorSpace = channelName;
 
