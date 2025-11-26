@@ -1,22 +1,25 @@
 // tslint:disable: max-classes-per-file
 import type { PDFObject } from 'src/core/objects/PDFObject';
 import { arrayAsString } from 'src/utils';
+import { PDFLibError } from './error-base';
 
-export class MethodNotImplementedError extends Error {
+export class PDFLibCoreError extends PDFLibError {}
+
+export class MethodNotImplementedError extends PDFLibCoreError {
   constructor(className: string, methodName: string) {
     const msg = `Method ${className}.${methodName}() not implemented`;
     super(msg);
   }
 }
 
-export class PrivateConstructorError extends Error {
+export class PrivateConstructorError extends PDFLibCoreError {
   constructor(className: string) {
     const msg = `Cannot construct ${className} - it has a private constructor`;
     super(msg);
   }
 }
 
-export class UnexpectedObjectTypeError extends Error {
+export class UnexpectedObjectTypeError extends PDFLibCoreError {
   constructor(expected: any | any[], actual: any) {
     const name = (t: any) => t?.name ?? t?.constructor?.name;
 
@@ -32,35 +35,35 @@ export class UnexpectedObjectTypeError extends Error {
   }
 }
 
-export class UnsupportedEncodingError extends Error {
+export class UnsupportedEncodingError extends PDFLibCoreError {
   constructor(encoding: string) {
     const msg = `${encoding} stream encoding not supported`;
     super(msg);
   }
 }
 
-export class ReparseError extends Error {
+export class ReparseError extends PDFLibCoreError {
   constructor(className: string, methodName: string) {
     const msg = `Cannot call ${className}.${methodName}() more than once`;
     super(msg);
   }
 }
 
-export class MissingCatalogError extends Error {
+export class MissingCatalogError extends PDFLibCoreError {
   constructor(ref?: PDFObject) {
     const msg = `Missing catalog (ref=${ref})`;
     super(msg);
   }
 }
 
-export class MissingPageContentsEmbeddingError extends Error {
+export class MissingPageContentsEmbeddingError extends PDFLibCoreError {
   constructor() {
     const msg = `Can't embed page with missing Contents`;
     super(msg);
   }
 }
 
-export class UnrecognizedStreamTypeError extends Error {
+export class UnrecognizedStreamTypeError extends PDFLibCoreError {
   constructor(stream: any) {
     const streamType = stream?.contructor?.name ?? stream?.name ?? stream;
     const msg = `Unrecognized stream type: ${streamType}`;
@@ -68,70 +71,70 @@ export class UnrecognizedStreamTypeError extends Error {
   }
 }
 
-export class PageEmbeddingMismatchedContextError extends Error {
+export class PageEmbeddingMismatchedContextError extends PDFLibCoreError {
   constructor() {
     const msg = `Found mismatched contexts while embedding pages. All pages in the array passed to \`PDFDocument.embedPages()\` must be from the same document.`;
     super(msg);
   }
 }
 
-export class PDFArrayIsNotRectangleError extends Error {
+export class PDFArrayIsNotRectangleError extends PDFLibCoreError {
   constructor(size: number) {
     const msg = `Attempted to convert PDFArray with ${size} elements to rectangle, but must have exactly 4 elements.`;
     super(msg);
   }
 }
 
-export class InvalidPDFDateStringError extends Error {
+export class InvalidPDFDateStringError extends PDFLibCoreError {
   constructor(value: string) {
     const msg = `Attempted to convert "${value}" to a date, but it does not match the PDF date string format.`;
     super(msg);
   }
 }
 
-export class InvalidTargetIndexError extends Error {
+export class InvalidTargetIndexError extends PDFLibCoreError {
   constructor(targetIndex: number, Count: number) {
     const msg = `Invalid targetIndex specified: targetIndex=${targetIndex} must be less than Count=${Count}`;
     super(msg);
   }
 }
 
-export class CorruptPageTreeError extends Error {
+export class CorruptPageTreeError extends PDFLibCoreError {
   constructor(targetIndex: number, operation: string) {
     const msg = `Failed to ${operation} at targetIndex=${targetIndex} due to corrupt page tree: It is likely that one or more 'Count' entries are invalid`;
     super(msg);
   }
 }
 
-export class IndexOutOfBoundsError extends Error {
+export class IndexOutOfBoundsError extends PDFLibCoreError {
   constructor(index: number, min: number, max: number) {
     const msg = `index should be at least ${min} and at most ${max}, but was actually ${index}`;
     super(msg);
   }
 }
 
-export class InvalidAcroFieldValueError extends Error {
+export class InvalidAcroFieldValueError extends PDFLibCoreError {
   constructor() {
     const msg = `Attempted to set invalid field value`;
     super(msg);
   }
 }
 
-export class MultiSelectValueError extends Error {
+export class MultiSelectValueError extends PDFLibCoreError {
   constructor() {
     const msg = `Attempted to select multiple values for single-select field`;
     super(msg);
   }
 }
 
-export class MissingDAEntryError extends Error {
+export class MissingDAEntryError extends PDFLibCoreError {
   constructor(fieldName: string) {
     const msg = `No /DA (default appearance) entry found for field: ${fieldName}`;
     super(msg);
   }
 }
 
-export class MissingTfOperatorError extends Error {
+export class MissingTfOperatorError extends PDFLibCoreError {
   constructor(fieldName: string) {
     const msg = `No Tf operator found for DA of field: ${fieldName}`;
     super(msg);
@@ -146,7 +149,7 @@ export interface Position {
   offset: number;
 }
 
-export class NumberParsingError extends Error {
+export class NumberParsingError extends PDFLibCoreError {
   constructor(pos: Position, value: string) {
     const msg =
       `Failed to parse number ` +
@@ -155,7 +158,7 @@ export class NumberParsingError extends Error {
   }
 }
 
-export class PDFParsingError extends Error {
+export class PDFParsingError extends PDFLibCoreError {
   constructor(pos: Position, details: string) {
     const msg =
       `Failed to parse PDF document ` +
