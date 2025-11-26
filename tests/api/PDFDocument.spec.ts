@@ -26,6 +26,7 @@ import {
 } from 'src/core/errors';
 import { PDFSecurity, SecurityOptions } from 'src/core/security/PDFSecurity';
 import { readBinaryFileSync } from '../test-utils';
+import { InvalidPngError } from 'src/utils';
 
 const examplePngImage = readBinaryFileSync('assets/images/etwe.png');
 
@@ -536,6 +537,14 @@ describe(`PDFDocument`, () => {
       };
 
       await expect(noErrorFunc()).resolves.not.toThrowError();
+    });
+
+    it(`throws an error when the provided data is not a PNG`, async () => {
+      const pdfDoc = await PDFDocument.create();
+
+      await expect(pdfDoc.embedPng(ubuntuFontBytes)).rejects.toThrow(
+        InvalidPngError,
+      );
     });
   });
 

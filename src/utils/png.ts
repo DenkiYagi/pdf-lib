@@ -4,6 +4,12 @@ import {
   InvalidPngError,
 } from 'src/utils/errors';
 
+const mapUpngError = (error: unknown, msgPrefix: string): InvalidPngError => {
+  const message =
+    error instanceof Error ? `${error.name}: ${error.message}` : String(error);
+  return new InvalidPngError(`${msgPrefix} ${message}`);
+};
+
 const getImageType = (ctype: number) => {
   if (ctype === 0) return PngType.Greyscale;
   if (ctype === 2) return PngType.Truecolour;
@@ -52,10 +58,20 @@ export class PNG {
   readonly bitsPerComponent: number;
 
   private constructor(pngData: Uint8Array) {
-    // @ts-ignore : It internally does new Uint8Array()
-    const upng = UPNG.decode(pngData);
+    let upng: ReturnType<typeof UPNG.decode>;
+    try {
+      // @ts-ignore : It internally does new Uint8Array()
+      upng = UPNG.decode(pngData);
+    } catch (error) {
+      throw mapUpngError(error, 'Failed to decode PNG:');
+    }
 
-    const frames = UPNG.toRGBA8(upng);
+    let frames: ArrayBuffer[];
+    try {
+      frames = UPNG.toRGBA8(upng);
+    } catch (error) {
+      throw mapUpngError(error, 'Failed to convert PNG to RGBA8:');
+    }
 
     if (frames.length > 1) {
       throw new AnimatedPngNotSupportedError();
