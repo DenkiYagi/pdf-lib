@@ -10,7 +10,7 @@ const getImageType = (ctype: number) => {
   if (ctype === 3) return PngType.IndexedColour;
   if (ctype === 4) return PngType.GreyscaleWithAlpha;
   if (ctype === 6) return PngType.TruecolourWithAlpha;
-  throw new InvalidPngError(ctype);
+  throw new InvalidPngError(`Unknown color type: ${ctype}`);
 };
 
 const splitAlphaChannel = (rgbaChannel: Uint8Array) => {

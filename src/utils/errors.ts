@@ -50,9 +50,8 @@ export class InvalidInputTypeError extends PDFLibUtilsError {
 }
 
 export class InvalidPngError extends PDFLibUtilsError {
-  constructor(ctype: number) {
-    const msg = `Unknown color type: ${ctype}`;
-    super(PDFLibErrorTypes.INVALID_EXTERNAL_BINARY_DATA, msg);
+  constructor(message: string) {
+    super(PDFLibErrorTypes.INVALID_EXTERNAL_BINARY_DATA, message);
   }
 }
 
