@@ -1,11 +1,9 @@
-/* tslint:disable:ban-types */
-
 import { values as objectValues } from 'src/utils/objects';
+import type { Primitive, TypeDescriptor } from 'src/utils/validators-helpers';
+import { isType } from 'src/utils/validators-helpers';
 
 export const backtick = (val: any) => `\`${val}\``;
 export const singleQuote = (val: any) => `'${val}'`;
-
-type Primitive = string | number | boolean | undefined | null;
 
 // prettier-ignore
 const formatValue = (value: any) => {
@@ -86,41 +84,6 @@ export const getType = (val: any) => {
   return String(val);
 };
 
-export type TypeDescriptor =
-  | 'null'
-  | 'undefined'
-  | 'string'
-  | 'number'
-  | 'boolean'
-  | 'symbol'
-  | 'bigint'
-  | DateConstructor
-  | ArrayConstructor
-  | Uint8ArrayConstructor
-  | Uint16ArrayConstructor
-  | Uint32ArrayConstructor
-  | ArrayBufferConstructor
-  | FunctionConstructor
-  | [Function, string];
-
-export const isType = (value: any, type: TypeDescriptor) => {
-  if (type === 'null') return value === null;
-  if (type === 'undefined') return value === undefined;
-  if (type === 'string') return typeof value === 'string';
-  if (type === 'number') return typeof value === 'number' && !isNaN(value);
-  if (type === 'boolean') return typeof value === 'boolean';
-  if (type === 'symbol') return typeof value === 'symbol';
-  if (type === 'bigint') return typeof value === 'bigint';
-  if (type === Date) return value instanceof Date;
-  if (type === Array) return value instanceof Array;
-  if (type === Uint8Array) return value instanceof Uint8Array;
-  if (type === Uint16Array) return value instanceof Uint16Array;
-  if (type === Uint32Array) return value instanceof Uint32Array;
-  if (type === ArrayBuffer) return value instanceof ArrayBuffer;
-  if (type === Function) return value instanceof Function;
-  return value instanceof (type as [Function, string])[0];
-};
-
 export const createTypeErrorMsg = (
   value: any,
   valueName: string,
@@ -142,6 +105,7 @@ export const createTypeErrorMsg = (
     else if (type === Uint16Array) allowedTypes[idx] = backtick('Uint16Array');
     else if (type === Uint32Array) allowedTypes[idx] = backtick('Uint32Array');
     else if (type === ArrayBuffer) allowedTypes[idx] = backtick('ArrayBuffer');
+    // tslint:disable-next-line:ban-types
     else allowedTypes[idx] = backtick((type as [Function, string])[1]);
   }
 
