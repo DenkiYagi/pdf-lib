@@ -49,13 +49,6 @@ export class UnexpectedFieldTypeError extends PDFLibAPIError {
   }
 }
 
-export class MissingOnValueCheckError extends PDFLibAPIError {
-  constructor(onValue: any) {
-    const msg = `Failed to select check box due to missing onValue: "${onValue}"`;
-    super(PDFLibErrorTypes.INVALID_CALLER_INPUT, msg);
-  }
-}
-
 export class FieldAlreadyExistsError extends PDFLibAPIError {
   constructor(name: string) {
     const msg = `A field already exists with the specified name: "${name}"`;
@@ -66,13 +59,6 @@ export class FieldAlreadyExistsError extends PDFLibAPIError {
 export class InvalidFieldNamePartError extends PDFLibAPIError {
   constructor(namePart: string) {
     const msg = `Field name contains invalid component: "${namePart}"`;
-    super(PDFLibErrorTypes.INVALID_CALLER_INPUT, msg);
-  }
-}
-
-export class FieldExistsAsNonTerminalError extends PDFLibAPIError {
-  constructor(name: string) {
-    const msg = `A non-terminal field already exists with the specified name: "${name}"`;
     super(PDFLibErrorTypes.INVALID_CALLER_INPUT, msg);
   }
 }

@@ -1,5 +1,4 @@
 // tslint:disable: max-classes-per-file
-import type { PDFObject } from 'src/core/objects/PDFObject';
 import { arrayAsString } from 'src/utils';
 import { PDFLibError, PDFLibErrorTypes } from './error-base';
 
@@ -46,13 +45,6 @@ export class ReparseError extends PDFLibCoreError {
   constructor(className: string, methodName: string) {
     const msg = `Cannot call ${className}.${methodName}() more than once`;
     super(PDFLibErrorTypes.INVALID_CALLER_INPUT, msg);
-  }
-}
-
-export class MissingCatalogError extends PDFLibCoreError {
-  constructor(ref?: PDFObject) {
-    const msg = `Missing catalog (ref=${ref})`;
-    super(PDFLibErrorTypes.INVALID_EXTERNAL_BINARY_DATA, msg);
   }
 }
 
