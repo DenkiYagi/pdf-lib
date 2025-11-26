@@ -1,3 +1,4 @@
+export * from 'src/utils/errors';
 export * from 'src/utils/arrays';
 export * from 'src/utils/async';
 export * from 'src/utils/strings';

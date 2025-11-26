@@ -1,4 +1,7 @@
-import { toHexString } from 'src/utils/strings';
+import {
+  InvalidByteOrderError,
+  InvalidUnicodeCodePointError,
+} from 'src/core/errors';
 
 /**
  * Encodes a string to UTF-8.
@@ -130,7 +133,7 @@ export const utf8Encode = (input: string, byteOrderMark = true): Uint8Array => {
     }
 
     // Should never reach this case
-    else throw new Error(`Invalid code point: 0x${toHexString(codePoint)}`);
+    else throw new InvalidUnicodeCodePointError(codePoint);
   }
 
   return new Uint8Array(encoded);
@@ -224,7 +227,7 @@ export const utf16Encode = (
     }
 
     // Should never reach this case
-    else throw new Error(`Invalid code point: 0x${toHexString(codePoint)}`);
+    else throw new InvalidUnicodeCodePointError(codePoint);
   }
 
   return new Uint16Array(encoded);
@@ -358,7 +361,7 @@ const decodeValues = (first: number, second: number, byteOrder: ByteOrder) => {
   // the second one.
   if (byteOrder === ByteOrder.LittleEndian) return (second << 8) | first;
   if (byteOrder === ByteOrder.BigEndian) return (first << 8) | second;
-  throw new Error(`Invalid byteOrder: ${byteOrder}`);
+  throw new InvalidByteOrderError(byteOrder);
 };
 
 /**

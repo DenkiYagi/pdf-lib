@@ -1,4 +1,5 @@
 import { charFromCode } from 'src/utils/strings';
+import { InvalidInputTypeError } from 'src/utils/errors';
 
 export const last = <T>(array: T[]): T => array[array.length - 1];
 
@@ -114,7 +115,7 @@ export const canBeConvertedToUint8Array = (
 export const toUint8Array = (input: ArrayBuffer | Uint8Array) => {
   if (input instanceof ArrayBuffer) return new Uint8Array(input);
   if (input instanceof Uint8Array) return input;
-  throw new TypeError('`input` must be one of `ArrayBuffer | Uint8Array`');
+  throw new InvalidInputTypeError('input', 'ArrayBuffer | Uint8Array', input);
 };
 
 const byteToHex: string[] = [];
