@@ -1,4 +1,4 @@
-import { assertIs, error } from 'src/utils';
+import { assertIs } from 'src/utils';
 
 export enum RotationTypes {
   Degrees = 'degrees',
@@ -32,17 +32,27 @@ const { Radians, Degrees } = RotationTypes;
 export const degreesToRadians = (degree: number) => (degree * Math.PI) / 180;
 export const radiansToDegrees = (radian: number) => (radian * 180) / Math.PI;
 
-// prettier-ignore
-export const toRadians = (rotation: Rotation) => 
-    rotation.type === Radians ? rotation.angle
-  : rotation.type === Degrees ? degreesToRadians(rotation.angle)
-  : error(`Invalid rotation: ${JSON.stringify(rotation)}`);
+export const toRadians = (rotation: Rotation) => {
+  switch (rotation.type) {
+    case Radians:
+      return rotation.angle;
+    case Degrees:
+      return degreesToRadians(rotation.angle);
+    default:
+      throw new Error(`Invalid rotation: ${JSON.stringify(rotation)}`);
+  }
+};
 
-// prettier-ignore
-export const toDegrees = (rotation: Rotation) => 
-    rotation.type === Radians ? radiansToDegrees(rotation.angle)
-  : rotation.type === Degrees ? rotation.angle
-  : error(`Invalid rotation: ${JSON.stringify(rotation)}`);
+export const toDegrees = (rotation: Rotation) => {
+  switch (rotation.type) {
+    case Radians:
+      return radiansToDegrees(rotation.angle);
+    case Degrees:
+      return rotation.angle;
+    default:
+      throw new Error(`Invalid rotation: ${JSON.stringify(rotation)}`);
+  }
+};
 
 export const reduceRotation = (degreeAngle = 0) => {
   const quadrants = (degreeAngle / 90) % 4;
