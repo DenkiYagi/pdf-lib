@@ -3,6 +3,7 @@ import type { Embeddable } from 'src/api/Embeddable';
 import {
   EncryptedPDFError,
   ForeignPageError,
+  InvalidFontSubsetOptionError,
   RemovePageFromEmptyDocumentError,
 } from 'src/api/errors';
 import { PDFEmbeddedPage } from 'src/api/PDFEmbeddedPage';
@@ -11,7 +12,7 @@ import { PDFImage } from 'src/api/PDFImage';
 import { PDFPage } from 'src/api/PDFPage';
 import { PDFForm } from 'src/api/form/PDFForm';
 import { PageSizes } from 'src/api/sizes';
-import type { StandardFonts } from 'src/api/StandardFonts';
+import { StandardFonts } from 'src/api/StandardFonts';
 import {
   AbstractCustomFontEmbedder,
   CustomFontEmbedder,
@@ -50,6 +51,8 @@ import type { PDFObject } from 'src/core/objects/PDFObject';
 import type { PDFRef } from 'src/core/objects/PDFRef';
 import type { TransformationMatrix } from 'src/types/matrix';
 import {
+  InvalidOptionPassedError,
+  InvalidTypePassedError,
   assertIs,
   assertIsOneOfOrUndefined,
   assertOrUndefined,
@@ -60,6 +63,7 @@ import {
   pluckIndices,
   range,
   toUint8Array,
+  values,
 } from 'src/utils';
 import { FileEmbedder, AFRelationship } from 'src/core/embedders/FileEmbedder';
 import { PDFEmbeddedFile } from 'src/api/PDFEmbeddedFile';
@@ -880,8 +884,10 @@ export class PDFDocument {
         ? CustomFontSubsetEmbedder.for(bytes, customName, vertical, advanced)
         : CustomFontEmbedder.for(bytes, customName, vertical, advanced);
     } else {
-      throw new TypeError(
-        '`font` must be one of `StandardFonts | Uint8Array | ArrayBuffer`',
+      throw new InvalidTypePassedError(
+        'font',
+        ['string', Uint8Array, ArrayBuffer],
+        font,
       );
     }
 
@@ -906,9 +912,7 @@ export class PDFDocument {
   embedTTFFont(font: TTFFont, options: EmbedFontOptions): PDFFont {
     const { subset, customName, vertical, advanced } = options;
     if (subset !== true) {
-      throw new TypeError(
-        '`subset` must explicitly be true when embedding a TTFFont',
-      );
+      throw new InvalidFontSubsetOptionError(subset);
     }
 
     const embedder = CustomFontSubsetEmbedder.forTTFFont(
@@ -939,7 +943,7 @@ export class PDFDocument {
   embedStandardFont(font: StandardFonts, customName?: string): PDFFont {
     assertIs(font, 'font', ['string']);
     if (!isStandardFont(font)) {
-      throw new TypeError('`font` must be one of type `StandardFonts`');
+      throw new InvalidOptionPassedError('font', values(StandardFonts), font);
     }
 
     const embedder = StandardFontEmbedder.for(font, customName);

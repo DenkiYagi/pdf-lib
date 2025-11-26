@@ -13,6 +13,9 @@ import {
   UnexpectedFieldTypeError,
   FieldAlreadyExistsError,
   InvalidFieldNamePartError,
+  InvalidFieldNameError,
+  MissingAppearanceStreamError,
+  MissingWidgetError,
 } from 'src/api/errors';
 import { PDFFont } from 'src/api/PDFFont';
 import { StandardFonts } from 'src/api/StandardFonts';
@@ -704,13 +707,13 @@ export class PDFForm {
     if (page === undefined) {
       const widgetRef = this.doc.context.getObjectRef(widget.dict);
       if (widgetRef === undefined) {
-        throw new Error('Could not find PDFRef for PDFObject');
+        throw new MissingWidgetError('PDF_REF_FOR_OBJECT');
       }
 
       page = this.doc.findPageForAnnotationRef(widgetRef);
 
       if (page === undefined) {
-        throw new Error(`Could not find page for PDFRef ${widgetRef}`);
+        throw new MissingWidgetError('PAGE_FOR_REF', widgetRef);
       }
     }
 
@@ -737,7 +740,7 @@ export class PDFForm {
 
     if (!(refOrDict instanceof PDFRef)) {
       const name = field.getName();
-      throw new Error(`Failed to extract appearance ref for: ${name}`);
+      throw new MissingAppearanceStreamError(name);
     }
 
     return refOrDict;
@@ -812,16 +815,14 @@ const convertToPDFField = (
 
 const splitFieldName = (fullyQualifiedName: string) => {
   if (fullyQualifiedName.length === 0) {
-    throw new Error('PDF field names must not be empty strings');
+    throw new InvalidFieldNameError('EMPTY', fullyQualifiedName);
   }
 
   const parts = fullyQualifiedName.split('.');
 
   for (let idx = 0, len = parts.length; idx < len; idx++) {
     if (parts[idx] === '') {
-      throw new Error(
-        `Periods in PDF field names must be separated by at least one character: "${fullyQualifiedName}"`,
-      );
+      throw new InvalidFieldNameError('ADJACENT_PERIODS', fullyQualifiedName);
     }
   }
 

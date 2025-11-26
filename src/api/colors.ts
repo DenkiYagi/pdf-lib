@@ -6,6 +6,7 @@ import {
   setStrokingGrayscaleColor,
   setStrokingRgbColor,
 } from 'src/api/operators';
+import { InvalidColorError } from 'src/api/errors';
 import { assertRange } from 'src/utils';
 
 export enum ColorTypes {
@@ -77,7 +78,7 @@ export const setFillingColor = (color: Color) => {
         color.key,
       );
     default:
-      throw new Error(`Invalid color: ${JSON.stringify(color)}`);
+      throw new InvalidColorError(color);
   }
 };
 
@@ -95,7 +96,7 @@ export const setStrokingColor = (color: Color) => {
         color.key,
       );
     default:
-      throw new Error(`Invalid color: ${JSON.stringify(color)}`);
+      throw new InvalidColorError(color);
   }
 };
 
@@ -127,6 +128,6 @@ export const colorToComponents = (color: Color) => {
     case CMYK:
       return [color.cyan, color.magenta, color.yellow, color.key];
     default:
-      throw new Error(`Invalid color: ${JSON.stringify(color)}`);
+      throw new InvalidColorError(color);
   }
 };

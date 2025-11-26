@@ -1,3 +1,4 @@
+import { InvalidRotationError } from 'src/api/errors';
 import { assertIs } from 'src/utils';
 
 export enum RotationTypes {
@@ -39,7 +40,7 @@ export const toRadians = (rotation: Rotation) => {
     case Degrees:
       return degreesToRadians(rotation.angle);
     default:
-      throw new Error(`Invalid rotation: ${JSON.stringify(rotation)}`);
+      throw new InvalidRotationError(rotation);
   }
 };
 
@@ -50,7 +51,7 @@ export const toDegrees = (rotation: Rotation) => {
     case Degrees:
       return rotation.angle;
     default:
-      throw new Error(`Invalid rotation: ${JSON.stringify(rotation)}`);
+      throw new InvalidRotationError(rotation);
   }
 };
 

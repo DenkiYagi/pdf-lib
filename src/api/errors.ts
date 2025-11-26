@@ -90,3 +90,64 @@ export class InvalidMaxLengthError extends PDFLibAPIError {
     super(PDFLibErrorTypes.INVALID_CALLER_INPUT, msg);
   }
 }
+
+export class InvalidColorError extends PDFLibAPIError {
+  constructor(color: any) {
+    const msg = `Invalid color: ${JSON.stringify(color)}`;
+    super(PDFLibErrorTypes.INVALID_CALLER_INPUT, msg);
+  }
+}
+
+export class InvalidRotationError extends PDFLibAPIError {
+  constructor(rotation: any) {
+    const msg = `Invalid rotation: ${JSON.stringify(rotation)}`;
+    super(PDFLibErrorTypes.INVALID_CALLER_INPUT, msg);
+  }
+}
+
+export class InvalidFontSubsetOptionError extends PDFLibAPIError {
+  constructor(actual: any) {
+    const msg =
+      `\`subset\` must explicitly be true when embedding a TTFFont, ` +
+      `but was ${actual}`;
+    super(PDFLibErrorTypes.INVALID_CALLER_INPUT, msg);
+  }
+}
+
+export class MissingWidgetError extends PDFLibAPIError {
+  constructor(
+    reason: 'PDF_REF_FOR_OBJECT' | 'PAGE_FOR_REF',
+    ref?: { toString(): string },
+  ) {
+    let msg: string;
+    if (reason === 'PDF_REF_FOR_OBJECT') {
+      msg = 'Could not find PDFRef for PDFObject';
+    } else if (reason === 'PAGE_FOR_REF') {
+      msg = `Could not find page for PDFRef ${ref}`;
+    } else {
+      msg = 'Could not find widget';
+    }
+    super(PDFLibErrorTypes.INVALID_EXTERNAL_BINARY_DATA, msg);
+  }
+}
+
+export class MissingAppearanceStreamError extends PDFLibAPIError {
+  constructor(fieldName: string) {
+    const msg = `Failed to extract appearance ref for: ${fieldName}`;
+    super(PDFLibErrorTypes.INVALID_EXTERNAL_BINARY_DATA, msg);
+  }
+}
+
+export class InvalidFieldNameError extends PDFLibAPIError {
+  constructor(reason: 'EMPTY' | 'ADJACENT_PERIODS', fieldName: string) {
+    let msg: string;
+    if (reason === 'EMPTY') {
+      msg = 'PDF field names must not be empty strings';
+    } else if (reason === 'ADJACENT_PERIODS') {
+      msg = `Periods in PDF field names must be separated by at least one character: "${fieldName}"`;
+    } else {
+      msg = `Invalid PDF field name: "${fieldName}"`;
+    }
+    super(PDFLibErrorTypes.INVALID_CALLER_INPUT, msg);
+  }
+}
