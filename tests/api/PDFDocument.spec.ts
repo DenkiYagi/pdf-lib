@@ -20,7 +20,10 @@ import {
   PDFPage,
   PDFFont,
 } from 'src/api';
-import { InvalidIndirectObjectError } from 'src/core/errors';
+import {
+  InvalidIndirectObjectError,
+  UnsupportedFontFileFormatError,
+} from 'src/core/errors';
 import { PDFSecurity, SecurityOptions } from 'src/core/security/PDFSecurity';
 import { readBinaryFileSync } from '../test-utils';
 
@@ -194,6 +197,14 @@ describe(`PDFDocument`, () => {
 
       expect(() => pdfDoc.embedTTFFont(ttFont, { subset: false })).toThrow(
         InvalidFontSubsetOptionError,
+      );
+    });
+
+    it(`rejects buffer data that is not a font`, async () => {
+      const pdfDoc = await PDFDocument.create({ updateMetadata: false });
+
+      expect(() => pdfDoc.embedFont(examplePngImage)).toThrow(
+        UnsupportedFontFileFormatError,
       );
     });
   });

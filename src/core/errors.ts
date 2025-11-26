@@ -38,6 +38,30 @@ export class InvalidFontTypeError extends PDFLibCoreError {
   }
 }
 
+export class UnsupportedFontFileFormatError extends PDFLibCoreError {
+  constructor(message: string) {
+    super(PDFLibErrorTypes.UNSUPPORTED_EXTERNAL_BINARY_DATA, message);
+  }
+}
+
+export class UnsupportedFontDataError extends PDFLibCoreError {
+  constructor(message: string) {
+    super(PDFLibErrorTypes.UNSUPPORTED_EXTERNAL_BINARY_DATA, message);
+  }
+}
+
+export class InvalidFontDataError extends PDFLibCoreError {
+  constructor(message: string) {
+    super(PDFLibErrorTypes.INVALID_EXTERNAL_BINARY_DATA, message);
+  }
+}
+
+export class FontkitAssertionError extends PDFLibCoreError {
+  constructor(message: string) {
+    super(PDFLibErrorTypes.INTERNAL_ASSERTION, message);
+  }
+}
+
 export class MethodNotImplementedError extends PDFLibCoreError {
   constructor(className: string, methodName: string) {
     const msg = `Method ${className}.${methodName}() not implemented`;

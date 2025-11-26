@@ -3,6 +3,7 @@ import type { TTFFont, Glyph, Subset } from '@denkiyagi/fontkit';
 
 import { AbstractCustomFontEmbedder } from 'src/core/embedders/AbstractCustomFontEmbedder';
 import { InvalidFontTypeError } from 'src/core/errors';
+import { mapFontkitError } from 'src/core/embedders/fontkit-helpers';
 import { PDFLibErrorTypes } from 'src/core/error-base';
 import { PDFHexString } from 'src/core/objects/PDFHexString';
 import { Cache, toHexStringOfMinLength } from 'src/utils';
@@ -21,7 +22,13 @@ export class CustomFontSubsetEmbedder extends AbstractCustomFontEmbedder {
     vertical?: boolean,
     advanced?: EmbedFontAdvancedOptions,
   ) {
-    const font = createFont(fontData);
+    let font;
+    try {
+      font = createFont(fontData);
+    } catch (error) {
+      throw mapFontkitError(error);
+    }
+
     if (font.type !== 'TTF') throw new InvalidFontTypeError(font.type);
 
     return new CustomFontSubsetEmbedder(
