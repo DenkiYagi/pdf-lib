@@ -2,7 +2,13 @@ import {
   AssertionError as FontkitAssertionError,
   create as createFont,
 } from '@denkiyagi/fontkit';
-import type { TTFFont } from '@denkiyagi/fontkit';
+import type {
+  BBox,
+  Glyph,
+  GlyphRun,
+  Subset,
+  TTFFont,
+} from '@denkiyagi/fontkit';
 import {
   Duplex,
   NonFullScreenPageMode,
@@ -65,40 +71,48 @@ const ubuntuFontBytes = readBinaryFileSync('assets/fonts/ubuntu/Ubuntu-B.ttf');
  * This is not a valid font—it's just enough shape to drive error mapping and guard coverage.
  */
 const makeStubTTFFont = (overrides: Partial<TTFFont> = {}): TTFFont => {
-  const glyph = {
+  const glyph: Partial<Glyph> = {
     id: 1,
     advanceWidth: 0,
     advanceHeight: 0,
     vertOriginY: 0,
-  } as any;
-  const subset = {
+  };
+  const subset: Subset = {
     type: 'TTF',
+    font: undefined as unknown as TTFFont,
+    glyphs: [],
+    mapping: {},
     includeGlyph: jest.fn().mockReturnValue(1),
     encode: jest.fn().mockReturnValue(new Uint8Array()),
-  } as any;
+  };
   const layout = jest.fn(
-    () =>
-      ({
-        glyphs: [glyph],
-        positions: null,
-        script: null,
-        language: null,
-        direction: 'ltr',
-        features: {},
-      }) as any,
-  ) as any;
+    (): Partial<GlyphRun> => ({
+      glyphs: [glyph as Glyph],
+      positions: null,
+      script: null,
+      language: null,
+      direction: 'ltr',
+      features: {},
+    }),
+  );
+  const bbox: Partial<BBox> = {
+    minX: 0,
+    minY: 0,
+    maxX: 0,
+    maxY: 0,
+  };
   const baseFont: Partial<TTFFont> = {
     type: 'TTF',
     unitsPerEm: 1000,
     postscriptName: 'FakeFont',
     characterSet: [],
-    bbox: { minX: 0, minY: 0, maxX: 0, maxY: 0 } as any,
-    head: { macStyle: { italic: false } } as any,
-    post: { isFixedPitch: false } as any,
-    layout,
-    getGlyph: jest.fn(() => glyph),
-    glyphForCodePoint: jest.fn(() => glyph),
-    createSubset: (() => subset) as unknown as TTFFont['createSubset'],
+    bbox: bbox as BBox,
+    head: { macStyle: { italic: false } },
+    post: { isFixedPitch: false },
+    layout: layout as TTFFont['layout'],
+    getGlyph: jest.fn(() => glyph as Glyph),
+    glyphForCodePoint: jest.fn(() => glyph as Glyph),
+    createSubset: (() => subset) as TTFFont['createSubset'],
     defaultVertOriginY: 0,
     cff: false,
     ascent: 0,
@@ -107,6 +121,8 @@ const makeStubTTFFont = (overrides: Partial<TTFFont> = {}): TTFFont => {
     capHeight: 0,
     xHeight: 0,
   };
+
+  subset.font = baseFont as TTFFont;
 
   return { ...baseFont, ...overrides } as TTFFont;
 };
