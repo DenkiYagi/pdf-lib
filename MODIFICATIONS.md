@@ -1,6 +1,6 @@
 # Modifications
 
-## [Unreleased]
+## [1.17.1-mod.2025.8]
 
 ### Feature Removals
 
