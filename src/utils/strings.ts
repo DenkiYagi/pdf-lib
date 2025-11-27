@@ -1,3 +1,5 @@
+import { InvalidWordBreakError } from 'src/utils/errors';
+
 export const toCharCode = (character: string) => character.charCodeAt(0);
 
 export const toCodePoint = (character: string) => character.codePointAt(0);
@@ -93,7 +95,7 @@ const buildWordBreakRegex = (wordBreaks: string[]) => {
   for (let idx = 0, len = wordBreaks.length; idx < len; idx++) {
     const wordBreak = wordBreaks[idx];
     if (isNewlineChar(wordBreak)) {
-      throw new TypeError(`\`wordBreak\` must not include ${newlineCharUnion}`);
+      throw new InvalidWordBreakError(newlineCharUnion);
     }
     escapedRules.push(wordBreak === '' ? '.' : escapeRegExp(wordBreak));
   }

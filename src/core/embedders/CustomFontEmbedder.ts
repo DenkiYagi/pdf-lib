@@ -2,6 +2,7 @@ import { create as createFont } from '@denkiyagi/fontkit';
 import type { TTFFont } from '@denkiyagi/fontkit';
 
 import { AbstractCustomFontEmbedder } from 'src/core/embedders/AbstractCustomFontEmbedder';
+import { InvalidFontTypeError } from 'src/core/errors';
 import type { EmbedFontAdvancedOptions } from 'src/api';
 
 export class CustomFontEmbedder extends AbstractCustomFontEmbedder {
@@ -12,7 +13,7 @@ export class CustomFontEmbedder extends AbstractCustomFontEmbedder {
     advanced?: EmbedFontAdvancedOptions,
   ) {
     const font = createFont(fontData);
-    if (font.type !== 'TTF') throw new Error(`Invalid font type: ${font.type}`);
+    if (font.type !== 'TTF') throw new InvalidFontTypeError(font.type);
     return new CustomFontEmbedder(
       font,
       fontData,

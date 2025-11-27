@@ -1,5 +1,14 @@
-import { create as createFont } from '@denkiyagi/fontkit';
-import type { TTFFont } from '@denkiyagi/fontkit';
+import {
+  AssertionError as FontkitAssertionError,
+  create as createFont,
+} from '@denkiyagi/fontkit';
+import type {
+  BBox,
+  Glyph,
+  GlyphRun,
+  Subset,
+  TTFFont,
+} from '@denkiyagi/fontkit';
 import {
   Duplex,
   NonFullScreenPageMode,
@@ -14,13 +23,20 @@ import {
 } from 'src/core';
 import {
   EncryptedPDFError,
+  InvalidFontSubsetOptionError,
   ParseSpeeds,
   PDFDocument,
   PDFPage,
   PDFFont,
 } from 'src/api';
+import {
+  InvalidIndirectObjectError,
+  FontkitAssertionError as PDFLibFontkitAssertionError,
+  UnsupportedFontFileFormatError,
+} from 'src/core/errors';
 import { PDFSecurity, SecurityOptions } from 'src/core/security/PDFSecurity';
 import { readBinaryFileSync } from '../test-utils';
+import { InvalidPngError } from 'src/utils';
 
 const examplePngImage = readBinaryFileSync('assets/images/etwe.png');
 
@@ -49,6 +65,67 @@ const withViewerPrefsPdfBytes = readBinaryFileSync(
   'assets/pdfs/with_viewer_prefs.pdf',
 );
 const ubuntuFontBytes = readBinaryFileSync('assets/fonts/ubuntu/Ubuntu-B.ttf');
+
+/**
+ * Build a lightweight stub `TTFFont` for tests, with optional overrides for specific methods.
+ * This is not a valid font—it's just enough shape to drive error mapping and guard coverage.
+ */
+const makeStubTTFFont = (overrides: Partial<TTFFont> = {}): TTFFont => {
+  const glyph: Partial<Glyph> = {
+    id: 1,
+    advanceWidth: 0,
+    advanceHeight: 0,
+    vertOriginY: 0,
+  };
+  const subset: Subset = {
+    type: 'TTF',
+    font: undefined as unknown as TTFFont,
+    glyphs: [],
+    mapping: {},
+    includeGlyph: jest.fn().mockReturnValue(1),
+    encode: jest.fn().mockReturnValue(new Uint8Array()),
+  };
+  const layout = jest.fn(
+    (): Partial<GlyphRun> => ({
+      glyphs: [glyph as Glyph],
+      positions: null,
+      script: null,
+      language: null,
+      direction: 'ltr',
+      features: {},
+    }),
+  );
+  const bbox: Partial<BBox> = {
+    minX: 0,
+    minY: 0,
+    maxX: 0,
+    maxY: 0,
+  };
+  const baseFont: Partial<TTFFont> = {
+    type: 'TTF',
+    unitsPerEm: 1000,
+    postscriptName: 'FakeFont',
+    characterSet: [],
+    bbox: bbox as BBox,
+    head: { macStyle: { italic: false } },
+    post: { isFixedPitch: false },
+    layout: layout as TTFFont['layout'],
+    getGlyph: jest.fn(() => glyph as Glyph),
+    glyphForCodePoint: jest.fn(() => glyph as Glyph),
+    createSubset: (() => subset) as TTFFont['createSubset'],
+    defaultVertOriginY: 0,
+    cff: false,
+    ascent: 0,
+    descent: 0,
+    italicAngle: 0,
+    capHeight: 0,
+    xHeight: 0,
+  };
+
+  subset.font = baseFont as TTFFont;
+
+  return { ...baseFont, ...overrides } as TTFFont;
+};
 
 describe(`PDFDocument`, () => {
   describe(`load() method`, () => {
@@ -143,16 +220,13 @@ describe(`PDFDocument`, () => {
     });
 
     it(`throws an error for invalid PDFs when throwOnInvalidObject=true`, async () => {
-      const expectedError = new Error(
-        'Trying to parse invalid object: {"line":20,"column":13,"offset":126})',
-      );
       await expect(
         PDFDocument.load(invalidObjectsPdfBytes, {
           ignoreEncryption: true,
           parseSpeed: ParseSpeeds.Fastest,
           throwOnInvalidObject: true,
         }),
-      ).rejects.toEqual(expectedError);
+      ).rejects.toThrow(InvalidIndirectObjectError);
     });
   });
 
@@ -184,7 +258,9 @@ describe(`PDFDocument`, () => {
       const pdfDoc = await PDFDocument.create({ updateMetadata: false });
       const ttFont = createFont(new Uint8Array(ubuntuFontBytes)) as TTFFont;
 
-      expect(() => pdfDoc.embedTTFFont(ttFont, {})).toThrow(TypeError);
+      expect(() => pdfDoc.embedTTFFont(ttFont, {})).toThrow(
+        InvalidFontSubsetOptionError,
+      );
     });
 
     it(`rejects TTFFont instances when subset is false`, async () => {
@@ -192,7 +268,50 @@ describe(`PDFDocument`, () => {
       const ttFont = createFont(new Uint8Array(ubuntuFontBytes)) as TTFFont;
 
       expect(() => pdfDoc.embedTTFFont(ttFont, { subset: false })).toThrow(
-        TypeError,
+        InvalidFontSubsetOptionError,
+      );
+    });
+
+    it(`rejects buffer data that is not a font`, async () => {
+      const pdfDoc = await PDFDocument.create({ updateMetadata: false });
+
+      expect(() => pdfDoc.embedFont(examplePngImage)).toThrow(
+        UnsupportedFontFileFormatError,
+      );
+    });
+
+    it(`maps fontkit errors thrown during embedding TTFFont`, async () => {
+      const pdfDoc = await PDFDocument.create({ updateMetadata: false });
+      const fontkitError = new FontkitAssertionError('boom');
+      const ttFont = makeStubTTFFont({
+        createSubset: () => {
+          throw fontkitError;
+        },
+      });
+
+      expect(() => pdfDoc.embedTTFFont(ttFont, { subset: true })).toThrow(
+        PDFLibFontkitAssertionError,
+      );
+    });
+
+    it(`maps fontkit errors thrown while encoding text`, async () => {
+      const layoutError = new FontkitAssertionError('layout fail');
+      const subset = {
+        type: 'TTF',
+        includeGlyph: jest.fn().mockReturnValue(1),
+        encode: jest.fn().mockReturnValue(new Uint8Array()),
+      };
+      const ttFont = makeStubTTFFont({
+        createSubset: (() => subset) as unknown as TTFFont['createSubset'],
+        layout: () => {
+          throw layoutError;
+        },
+      });
+      const pdfDoc = await PDFDocument.create({ updateMetadata: false });
+      const pdfFont = pdfDoc.embedTTFFont(ttFont, { subset: true });
+
+      expect(() => pdfFont.encodeText('Hi')).toThrow(
+        PDFLibFontkitAssertionError,
       );
     });
   });
@@ -524,6 +643,14 @@ describe(`PDFDocument`, () => {
       };
 
       await expect(noErrorFunc()).resolves.not.toThrowError();
+    });
+
+    it(`throws an error when the provided data is not a PNG`, async () => {
+      const pdfDoc = await PDFDocument.create();
+
+      await expect(pdfDoc.embedPng(ubuntuFontBytes)).rejects.toThrow(
+        InvalidPngError,
+      );
     });
   });
 

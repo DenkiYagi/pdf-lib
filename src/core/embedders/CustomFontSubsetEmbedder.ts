@@ -2,6 +2,8 @@ import { create as createFont, LayoutAdvancedParams } from '@denkiyagi/fontkit';
 import type { TTFFont, Glyph, Subset } from '@denkiyagi/fontkit';
 
 import { AbstractCustomFontEmbedder } from 'src/core/embedders/AbstractCustomFontEmbedder';
+import { InvalidFontTypeError } from 'src/core/errors';
+import { PDFLibErrorTypes } from 'src/core/error-base';
 import { PDFHexString } from 'src/core/objects/PDFHexString';
 import { Cache, toHexStringOfMinLength } from 'src/utils';
 import type { EmbedFontAdvancedOptions } from 'src/api';
@@ -20,7 +22,7 @@ export class CustomFontSubsetEmbedder extends AbstractCustomFontEmbedder {
     advanced?: EmbedFontAdvancedOptions,
   ) {
     const font = createFont(fontData);
-    if (font.type !== 'TTF') throw new Error(`Invalid font type: ${font.type}`);
+    if (font.type !== 'TTF') throw new InvalidFontTypeError(font.type);
 
     return new CustomFontSubsetEmbedder(
       font,
@@ -36,7 +38,12 @@ export class CustomFontSubsetEmbedder extends AbstractCustomFontEmbedder {
     vertical?: boolean,
     advanced?: EmbedFontAdvancedOptions,
   ) {
-    if (font.type !== 'TTF') throw new Error(`Invalid font type: ${font.type}`);
+    if (font.type !== 'TTF') {
+      throw new InvalidFontTypeError(
+        font.type,
+        PDFLibErrorTypes.INVALID_CALLER_INPUT,
+      );
+    }
 
     return new CustomFontSubsetEmbedder(
       font,

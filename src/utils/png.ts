@@ -1,4 +1,14 @@
 import UPNG from '@pdf-lib/upng';
+import {
+  AnimatedPngNotSupportedError,
+  InvalidPngError,
+} from 'src/utils/errors';
+
+const mapUpngError = (error: unknown, msgPrefix: string): InvalidPngError => {
+  const message =
+    error instanceof Error ? `${error.name}: ${error.message}` : String(error);
+  return new InvalidPngError(`${msgPrefix} ${message}`);
+};
 
 const getImageType = (ctype: number) => {
   if (ctype === 0) return PngType.Greyscale;
@@ -6,7 +16,7 @@ const getImageType = (ctype: number) => {
   if (ctype === 3) return PngType.IndexedColour;
   if (ctype === 4) return PngType.GreyscaleWithAlpha;
   if (ctype === 6) return PngType.TruecolourWithAlpha;
-  throw new Error(`Unknown color type: ${ctype}`);
+  throw new InvalidPngError(`Unknown color type: ${ctype}`);
 };
 
 const splitAlphaChannel = (rgbaChannel: Uint8Array) => {
@@ -48,12 +58,24 @@ export class PNG {
   readonly bitsPerComponent: number;
 
   private constructor(pngData: Uint8Array) {
-    // @ts-ignore : It internally does new Uint8Array()
-    const upng = UPNG.decode(pngData);
+    let upng: ReturnType<typeof UPNG.decode>;
+    try {
+      // @ts-ignore : It internally does new Uint8Array()
+      upng = UPNG.decode(pngData);
+    } catch (error) {
+      throw mapUpngError(error, 'Failed to decode PNG:');
+    }
 
-    const frames = UPNG.toRGBA8(upng);
+    let frames: ArrayBuffer[];
+    try {
+      frames = UPNG.toRGBA8(upng);
+    } catch (error) {
+      throw mapUpngError(error, 'Failed to convert PNG to RGBA8:');
+    }
 
-    if (frames.length > 1) throw new Error(`Animated PNGs are not supported`);
+    if (frames.length > 1) {
+      throw new AnimatedPngNotSupportedError();
+    }
 
     const frame = new Uint8Array(frames[0]);
     const { rgbChannel, alphaChannel } = splitAlphaChannel(frame);

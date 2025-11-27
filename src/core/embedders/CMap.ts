@@ -1,6 +1,8 @@
 import type { Glyph } from '@denkiyagi/fontkit';
 
-import { toHexString, toHexStringOfMinLength } from 'src/utils';
+import { InvalidUnicodeCodePointError } from 'src/core/errors';
+import { PDFLibErrorTypes } from 'src/core/error-base';
+import { toHexStringOfMinLength } from 'src/utils';
 import {
   hasSurrogates,
   highSurrogate,
@@ -64,7 +66,9 @@ const cmapCodePointFormat = (codePoint: number) => {
     return `${cmapHexString(hs)}${cmapHexString(ls)}`;
   }
 
-  const hex = toHexString(codePoint);
-  const msg = `0x${hex} is not a valid UTF-8 or UTF-16 codepoint.`;
-  throw new Error(msg);
+  throw new InvalidUnicodeCodePointError(
+    codePoint,
+    PDFLibErrorTypes.INVALID_EXTERNAL_BINARY_DATA,
+    'not a valid UTF-8 or UTF-16 codepoint',
+  );
 };

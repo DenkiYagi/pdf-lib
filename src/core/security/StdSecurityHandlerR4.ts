@@ -2,6 +2,7 @@ import {
   StdSecurityHandler,
   StdSecurityHandlerDict,
 } from 'src/core/security/StdSecurityHandler';
+import { InvalidPasswordError } from 'src/core/errors';
 import {
   MD5,
   encryptRC4,
@@ -201,7 +202,7 @@ const standardPaddingBytes = new Uint8Array([
  */
 const padOrTruncate32 = (s: string): WordArray => {
   if (!latin1Only.test(s)) {
-    throw new Error(`Password contains invalid characters.`);
+    throw new InvalidPasswordError();
   }
 
   const significantLength = Math.min(s.length, 32);

@@ -4,6 +4,7 @@ import { PDFTrailer } from 'src/core/document/PDFTrailer';
 import {
   MissingKeywordError,
   MissingPDFHeaderError,
+  InvalidIndirectObjectError,
   PDFInvalidObjectParsingError,
   ReparseError,
   StalledParserError,
@@ -181,7 +182,9 @@ export class PDFParser extends PDFObjectParser {
     const startPos = this.bytes.position();
 
     const msg = `Trying to parse invalid object: ${JSON.stringify(startPos)})`;
-    if (this.throwOnInvalidObject) throw new Error(msg);
+    if (this.throwOnInvalidObject) {
+      throw new InvalidIndirectObjectError(startPos);
+    }
     console.warn(msg);
 
     const ref = this.parseIndirectObjectHeader();

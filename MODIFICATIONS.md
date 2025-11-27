@@ -1,6 +1,6 @@
 # Modifications
 
-## [Unreleased]
+## [1.17.1-mod.2025.8]
 
 ### Feature Removals
 
@@ -10,6 +10,12 @@
   binary data must now be provided as `Uint8Array` or `ArrayBuffer`.
 - Remove Base64 output by removing the `PDFDocument#saveAsBase64` method;
   use `PDFDocument#save` which resolves a `Uint8Array` instead.
+
+### Error Handling
+
+- Introduced `PDFLibError` (exported from `src/core`) with a machine-readable `type: PDFLibErrorType` to classify errors.
+- Refactored API/core/utils errors so that all errors extend `PDFLibError` instead of throwing bare `Error`/`TypeError`.
+- Normalize external failure surfaces by catching `@denkiyagi/fontkit` and `@pdf-lib/upng` exceptions and rethrowing corresponding `PDFLibError` subclasses (e.g., `InvalidFontDataError`) instead of leaking third-party errors.
 
 ### Internal Changes
 

@@ -1,3 +1,4 @@
+export * from 'src/core/error-base';
 export * from 'src/core/errors';
 export { CharCodes } from 'src/core/syntax/CharCodes';
 

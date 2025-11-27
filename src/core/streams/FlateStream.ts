@@ -15,6 +15,7 @@
  */
 
 /* tslint:disable  no-conditional-assignment */
+import { FlateDecodingError } from 'src/core/errors';
 import { DecodeStream } from 'src/core/streams/DecodeStream';
 import type { StreamType } from 'src/core/streams/Stream';
 
@@ -128,18 +129,16 @@ export class FlateStream extends DecodeStream {
     const cmf = stream.getByte();
     const flg = stream.getByte();
     if (cmf === -1 || flg === -1) {
-      throw new Error(`Invalid header in flate stream: ${cmf}, ${flg}`);
+      throw new FlateDecodingError('INVALID_HEADER', { cmf, flg });
     }
     if ((cmf & 0x0f) !== 0x08) {
-      throw new Error(
-        `Unknown compression method in flate stream: ${cmf}, ${flg}`,
-      );
+      throw new FlateDecodingError('UNKNOWN_COMPRESSION_METHOD', { cmf, flg });
     }
     if (((cmf << 8) + flg) % 31 !== 0) {
-      throw new Error(`Bad FCHECK in flate stream: ${cmf}, ${flg}`);
+      throw new FlateDecodingError('BAD_FCHECK', { cmf, flg });
     }
     if (flg & 0x20) {
-      throw new Error(`FDICT bit set in flate stream: ${cmf}, ${flg}`);
+      throw new FlateDecodingError('FDICT_SET', { cmf, flg });
     }
 
     this.codeSize = 0;
@@ -162,24 +161,24 @@ export class FlateStream extends DecodeStream {
       let b;
 
       if ((b = str.getByte()) === -1) {
-        throw new Error('Bad block header in flate stream');
+        throw new FlateDecodingError('BAD_BLOCK_HEADER');
       }
       let blockLen = b;
       if ((b = str.getByte()) === -1) {
-        throw new Error('Bad block header in flate stream');
+        throw new FlateDecodingError('BAD_BLOCK_HEADER');
       }
       blockLen |= b << 8;
       if ((b = str.getByte()) === -1) {
-        throw new Error('Bad block header in flate stream');
+        throw new FlateDecodingError('BAD_BLOCK_HEADER');
       }
       let check = b;
       if ((b = str.getByte()) === -1) {
-        throw new Error('Bad block header in flate stream');
+        throw new FlateDecodingError('BAD_BLOCK_HEADER');
       }
       check |= b << 8;
       if (check !== (~blockLen & 0xffff) && (blockLen !== 0 || check !== 0)) {
         // Ignoring error for bad "empty" block (see issue 1277)
-        throw new Error('Bad uncompressed block length in flate stream');
+        throw new FlateDecodingError('BAD_UNCOMPRESSED_BLOCK_LENGTH');
       }
 
       this.codeBuf = 0;
@@ -266,7 +265,7 @@ export class FlateStream extends DecodeStream {
         codeLengths.subarray(numLitCodes, codes),
       );
     } else {
-      throw new Error('Unknown block type in flate stream');
+      throw new FlateDecodingError('UNKNOWN_BLOCK_TYPE');
     }
 
     buffer = this.buffer;
@@ -318,7 +317,7 @@ export class FlateStream extends DecodeStream {
     let b;
     while (codeSize < bits) {
       if ((b = str.getByte()) === -1) {
-        throw new Error('Bad encoding in flate stream');
+        throw new FlateDecodingError('BAD_ENCODING');
       }
       codeBuf |= b << codeSize;
       codeSize += 8;
@@ -354,7 +353,7 @@ export class FlateStream extends DecodeStream {
     const codeLen = code >> 16;
     const codeVal = code & 0xffff;
     if (codeLen < 1 || codeSize < codeLen) {
-      throw new Error('Bad encoding in flate stream');
+      throw new FlateDecodingError('BAD_ENCODING');
     }
     this.codeBuf = codeBuf >> codeLen;
     this.codeSize = codeSize - codeLen;
