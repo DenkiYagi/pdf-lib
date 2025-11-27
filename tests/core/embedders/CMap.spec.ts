@@ -1,4 +1,4 @@
-import fontkit, { Font, Glyph } from '@denkiyagi/fontkit';
+import fontkit, { type TTFFont, type Glyph } from '@denkiyagi/fontkit';
 import fs from 'fs';
 
 import { createCmap } from 'src/core/embedders/CMap';
@@ -16,7 +16,7 @@ const sourceHansJpFontCmap = fs.readFileSync(
   './tests/core/embedders/data/SourceHanSerifJP-Regular.otf.cmap',
 );
 
-const allGlyphsInFontSortedById = (font: Font) => {
+const allGlyphsInFontSortedById = (font: TTFFont) => {
   const glyphs: Glyph[] = new Array(font.characterSet.length);
   for (let idx = 0, len = glyphs.length; idx < len; idx++) {
     const codePoint = font.characterSet[idx];

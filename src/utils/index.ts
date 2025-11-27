@@ -4,7 +4,6 @@ export * from 'src/utils/strings';
 export * from 'src/utils/unicode';
 export * from 'src/utils/numbers';
 export * from 'src/utils/errors';
-export * from 'src/utils/base64';
 export * from 'src/utils/objects';
 export * from 'src/utils/validators';
 export * from 'src/utils/pdfDocEncoding';

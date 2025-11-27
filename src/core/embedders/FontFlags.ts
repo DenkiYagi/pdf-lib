@@ -1,4 +1,4 @@
-import type { Font } from '@denkiyagi/fontkit';
+import type { TTFFont } from '@denkiyagi/fontkit';
 
 export interface FontFlagOptions {
   fixedPitch?: boolean;
@@ -32,7 +32,7 @@ const makeFontFlags = (options: FontFlagOptions) => {
 };
 
 // From: https://github.com/foliojs/pdfkit/blob/83f5f7243172a017adcf6a7faa5547c55982c57b/lib/font/embedded.js#L123-L129
-export const deriveFontFlags = (font: Font): number => {
+export const deriveFontFlags = (font: TTFFont): number => {
   const familyClass = font['OS/2'] ? font['OS/2'].sFamilyClass : 0;
   const flags = makeFontFlags({
     fixedPitch: font.post?.isFixedPitch,

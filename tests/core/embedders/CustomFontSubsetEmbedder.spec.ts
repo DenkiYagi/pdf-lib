@@ -1,4 +1,3 @@
-import fs from 'fs';
 import { create as createFont } from '@denkiyagi/fontkit';
 import type { TTFFont } from '@denkiyagi/fontkit';
 
@@ -8,8 +7,9 @@ import {
   PDFDict,
   PDFHexString,
 } from 'src/core';
+import { readBinaryFileSync } from '../../test-utils';
 
-const ubuntuFont = fs.readFileSync('./assets/fonts/ubuntu/Ubuntu-R.ttf');
+const ubuntuFont = readBinaryFileSync('./assets/fonts/ubuntu/Ubuntu-R.ttf');
 
 describe(`CustomFontSubsetEmbedder`, () => {
   it(`can be constructed with CustomFontSubsetEmbedder.for(...)`, () => {
@@ -19,9 +19,7 @@ describe(`CustomFontSubsetEmbedder`, () => {
 
   it(`can embed standard font dictionaries into PDFContexts`, () => {
     const context = PDFContext.create();
-    const embedder = CustomFontSubsetEmbedder.for(
-      new Uint8Array(ubuntuFont),
-    );
+    const embedder = CustomFontSubsetEmbedder.for(new Uint8Array(ubuntuFont));
 
     expect(context.enumerateIndirectObjects().length).toBe(0);
     const ref = embedder.embedIntoContext(context);

@@ -11,9 +11,7 @@ import {
 import type { SingleLineTextOrGlyphs } from 'src/types/text';
 import { assertIs, assertOrUndefined } from 'src/utils';
 
-export type FontEmbedder =
-  | AbstractCustomFontEmbedder
-  | StandardFontEmbedder;
+export type FontEmbedder = AbstractCustomFontEmbedder | StandardFontEmbedder;
 
 /**
  * Represents a font that has been embedded in a [[PDFDocument]].
@@ -165,8 +163,8 @@ export class PDFFont implements Embeddable {
 
   /**
    * > **NOTE:** You probably don't need to call this method directly. The
-   * > [[PDFDocument.save]] and [[PDFDocument.saveAsBase64]] methods will
-   * > automatically ensure all fonts get embedded.
+   * > [[PDFDocument.save]] method will automatically ensure all fonts
+   * > get embedded.
    *
    * Embed this font in its document.
    *

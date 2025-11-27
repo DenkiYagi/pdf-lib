@@ -1,8 +1,8 @@
-import fs from 'fs';
 import { AnnotationFlags, PDFArray, PDFHexString, PDFName } from 'src/core';
 import { PDFDocument } from 'src/api';
+import { readBinaryFileSync } from '../../test-utils';
 
-const fancyFieldsPdfBytes = fs.readFileSync('assets/pdfs/fancy_fields.pdf');
+const fancyFieldsPdfBytes = readBinaryFileSync('assets/pdfs/fancy_fields.pdf');
 
 describe(`PDFRadioGroup`, () => {
   it(`can read its options`, async () => {

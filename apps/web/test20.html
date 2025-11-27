@@ -38,11 +38,10 @@
     const fetchBinaryAsset = (asset) =>
       fetch(`/assets/${asset}`).then((res) => res.arrayBuffer());
 
-    const fetchStringAsset = (asset) =>
-      fetch(`/assets/${asset}`).then((res) => res.text());
-
-    const renderInIframe = (pdfDataUri) => {
-      document.getElementById('iframe').src = pdfDataUri;
+    const renderInIframe = (pdfBytes) => {
+      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+      const blobUrl = URL.createObjectURL(blob);
+      document.getElementById('iframe').src = blobUrl;
     };
 
     async function test() {
@@ -75,12 +74,11 @@
       console.log('PDF encryption with useObjectStreams: true');
       console.log('password:', password);
 
-      const base64PdfDataUri = await pdfDoc.saveAsBase64({
-        dataUri: true,
+      const pdfBytes = await pdfDoc.save({
         useObjectStreams: true,
       });
 
-      renderInIframe(base64PdfDataUri);
+      renderInIframe(pdfBytes);
     }
   </script>
 </html>

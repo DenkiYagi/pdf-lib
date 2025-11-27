@@ -18,10 +18,6 @@ export interface SaveOptions {
   updateFieldAppearances?: boolean;
 }
 
-export interface Base64SaveOptions extends SaveOptions {
-  dataUri?: boolean;
-}
-
 export interface LoadOptions {
   ignoreEncryption?: boolean;
   parseSpeed?: ParseSpeeds | number;

@@ -72,7 +72,6 @@ const assets = {
   fonts: {
     ttf: {
       ubuntu_r: readFont('ubuntu/Ubuntu-R.ttf'),
-      ubuntu_r_base64: String(readFont('ubuntu/Ubuntu-R.ttf.base64')),
       bio_rhyme_r: readFont('bio_rhyme/BioRhymeExpanded-Regular.ttf'),
       press_start_2p_r: readFont('press_start_2p/PressStart2P-Regular.ttf'),
       indie_flower_r: readFont('indie_flower/IndieFlower.ttf'),
@@ -91,17 +90,11 @@ const assets = {
   images: {
     jpg: {
       cat_riding_unicorn: readImage('cat_riding_unicorn.jpg'),
-      cat_riding_unicorn_base64: String(
-        readImage('cat_riding_unicorn.jpg.base64'),
-      ),
       minions_laughing: readImage('minions_laughing.jpg'),
       cmyk_colorspace: readImage('cmyk_colorspace.jpg'),
     },
     png: {
       greyscale_bird: readImage('greyscale_bird.png'),
-      greyscale_bird_base64_uri: String(
-        readImage('greyscale_bird.png.base64.uri'),
-      ),
       minions_banana_alpha: readImage('minions_banana_alpha.png'),
       minions_banana_no_alpha: readImage('minions_banana_no_alpha.png'),
       small_mario: readImage('small_mario.png'),
@@ -112,11 +105,7 @@ const assets = {
   },
   pdfs: {
     normal: readPdf('normal.pdf'),
-    normal_base64: String(readPdf('normal.pdf.base64')),
     with_update_sections: readPdf('with_update_sections.pdf'),
-    with_update_sections_base64_uri: String(
-      readPdf('with_update_sections.pdf.base64.uri'),
-    ),
     linearized_with_object_streams: readPdf(
       'linearized_with_object_streams.pdf',
     ),

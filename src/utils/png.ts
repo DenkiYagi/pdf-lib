@@ -48,7 +48,9 @@ export class PNG {
   readonly bitsPerComponent: number;
 
   private constructor(pngData: Uint8Array) {
+    // @ts-ignore : It internally does new Uint8Array()
     const upng = UPNG.decode(pngData);
+
     const frames = UPNG.toRGBA8(upng);
 
     if (frames.length > 1) throw new Error(`Animated PNGs are not supported`);

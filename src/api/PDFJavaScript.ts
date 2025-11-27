@@ -42,8 +42,8 @@ export class PDFJavaScript implements Embeddable {
 
   /**
    * > **NOTE:** You probably don't need to call this method directly. The
-   * > [[PDFDocument.save]] and [[PDFDocument.saveAsBase64]] methods will
-   * > automatically ensure all JavaScripts get embedded.
+   * > [[PDFDocument.save]] method will automatically ensure all JavaScripts get
+   * > embedded.
    *
    * Embed this JavaScript in its document.
    *

@@ -1,8 +1,8 @@
-import fs from 'fs';
 import { PDFArray, PDFName } from 'src/core';
 import { PDFDocument, StandardFonts } from 'src/api';
+import { readBinaryFileSync } from '../test-utils';
 
-const birdPng = fs.readFileSync('assets/images/greyscale_bird.png');
+const birdPng = readBinaryFileSync('assets/images/greyscale_bird.png');
 
 describe(`PDFDocument`, () => {
   describe(`getSize() method`, () => {

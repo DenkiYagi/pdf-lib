@@ -1,5 +1,3 @@
-import fs from 'fs';
-
 import {
   CharCodes,
   PDFDict,
@@ -12,6 +10,7 @@ import {
   ReparseError,
 } from 'src/core';
 import { mergeIntoTypedArray, typedArrayFor } from 'src/utils';
+import { readBinaryFileSync } from '../../test-utils';
 
 describe(`PDFParser`, () => {
   const origConsoleWarn = console.warn;
@@ -150,7 +149,7 @@ describe(`PDFParser`, () => {
   });
 
   it(`can parse PDF files with comments and stuff preceding the header`, async () => {
-    const pdfBytes = fs.readFileSync(
+    const pdfBytes = readBinaryFileSync(
       './assets/pdfs/pdf20examples/PDF 2.0 with offset start.pdf',
     );
 
@@ -163,7 +162,7 @@ describe(`PDFParser`, () => {
   });
 
   it(`can parse PDF files with comments stuff following the header`, async () => {
-    const pdfBytes = fs.readFileSync(
+    const pdfBytes = readBinaryFileSync(
       './assets/pdfs/stuff_following_header.pdf',
     );
 
@@ -176,7 +175,7 @@ describe(`PDFParser`, () => {
   });
 
   it(`can parse PDF files with missing xref table, trailer dict, and trailer`, async () => {
-    const pdfBytes = fs.readFileSync(
+    const pdfBytes = readBinaryFileSync(
       './assets/pdfs/missing_xref_trailer_dict.pdf',
     );
 
@@ -189,7 +188,7 @@ describe(`PDFParser`, () => {
   });
 
   it(`can parse PDF files without object streams or update sections`, async () => {
-    const pdfBytes = fs.readFileSync('./assets/pdfs/normal.pdf');
+    const pdfBytes = readBinaryFileSync('./assets/pdfs/normal.pdf');
 
     const parser = PDFParser.forBytesWithOptions(pdfBytes);
     const context = await parser.parseDocument();
@@ -200,7 +199,9 @@ describe(`PDFParser`, () => {
   });
 
   it(`can parse PDF files with update sections`, async () => {
-    const pdfBytes = fs.readFileSync('./assets/pdfs/with_update_sections.pdf');
+    const pdfBytes = readBinaryFileSync(
+      './assets/pdfs/with_update_sections.pdf',
+    );
 
     const parser = PDFParser.forBytesWithOptions(pdfBytes);
     const context = await parser.parseDocument();
@@ -211,7 +212,7 @@ describe(`PDFParser`, () => {
   });
 
   it(`can parse PDF files with comments`, async () => {
-    const pdfBytes = fs.readFileSync('./assets/pdfs/with_comments.pdf');
+    const pdfBytes = readBinaryFileSync('./assets/pdfs/with_comments.pdf');
 
     const parser = PDFParser.forBytesWithOptions(pdfBytes);
     const context = await parser.parseDocument();
@@ -222,7 +223,7 @@ describe(`PDFParser`, () => {
   });
 
   it(`prevents double parsing`, async () => {
-    const pdfBytes = fs.readFileSync('./assets/pdfs/normal.pdf');
+    const pdfBytes = readBinaryFileSync('./assets/pdfs/normal.pdf');
 
     const parser = PDFParser.forBytesWithOptions(pdfBytes);
 
@@ -233,7 +234,7 @@ describe(`PDFParser`, () => {
   });
 
   it(`can parse PDF files with binary jibberish between indirect objects`, async () => {
-    const pdfBytes = fs.readFileSync('./assets/pdfs/giraffe.pdf');
+    const pdfBytes = readBinaryFileSync('./assets/pdfs/giraffe.pdf');
 
     const parser = PDFParser.forBytesWithOptions(pdfBytes);
     const context = await parser.parseDocument();
@@ -244,7 +245,7 @@ describe(`PDFParser`, () => {
   });
 
   it(`can fix incorrect values for /Root`, async () => {
-    const pdfBytes = fs.readFileSync('./assets/pdfs/invalid_root_ref.pdf');
+    const pdfBytes = readBinaryFileSync('./assets/pdfs/invalid_root_ref.pdf');
 
     const parser = PDFParser.forBytesWithOptions(pdfBytes);
     const context = await parser.parseDocument();
@@ -256,7 +257,7 @@ describe(`PDFParser`, () => {
   });
 
   it(`can parse files containing indirect objects missing their 'endobj' keyword`, async () => {
-    const pdfBytes = fs.readFileSync(
+    const pdfBytes = readBinaryFileSync(
       './assets/pdfs/missing_endobj_keyword.pdf',
     );
 
@@ -269,7 +270,7 @@ describe(`PDFParser`, () => {
   });
 
   it(`can parse files with containing large arrays with most 'null' values`, async () => {
-    const pdfBytes = fs.readFileSync('./assets/pdfs/bixby_guide.pdf');
+    const pdfBytes = readBinaryFileSync('./assets/pdfs/bixby_guide.pdf');
 
     const parser = PDFParser.forBytesWithOptions(pdfBytes);
     const context = await parser.parseDocument();
@@ -285,7 +286,7 @@ describe(`PDFParser`, () => {
   });
 
   it(`can parse files with invalid stream EOLs: "stream \r\n`, async () => {
-    const pdfBytes = fs.readFileSync(
+    const pdfBytes = readBinaryFileSync(
       './assets/pdfs/with_invalid_stream_EOL.pdf',
     );
 

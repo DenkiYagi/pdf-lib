@@ -1,13 +1,13 @@
-import fs from 'fs';
 import {
   PDFContext,
   PDFRawStream,
   PDFXRefStreamParser,
   ReparseError,
 } from 'src/core';
+import { readBinaryFileSync } from '../../test-utils';
 
 const readData = (file: string) =>
-  new Uint8Array(fs.readFileSync(`./tests/core/parser/data/${file}`));
+  readBinaryFileSync(`./tests/core/parser/data/${file}`);
 
 describe(`PDFXRefStreamParser`, () => {
   it(`can parse XRef streams (1)`, () => {

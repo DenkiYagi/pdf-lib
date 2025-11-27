@@ -30,7 +30,6 @@ jobs:
             cjs/
             es/
             umd/
-            ts3.4/
 
   publish-gpr:
     needs: build
