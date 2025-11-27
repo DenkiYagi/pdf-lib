@@ -1,4 +1,7 @@
-import { create as createFont } from '@denkiyagi/fontkit';
+import {
+  AssertionError as FontkitAssertionError,
+  create as createFont,
+} from '@denkiyagi/fontkit';
 import type { TTFFont } from '@denkiyagi/fontkit';
 import {
   Duplex,
@@ -22,6 +25,7 @@ import {
 } from 'src/api';
 import {
   InvalidIndirectObjectError,
+  FontkitAssertionError as PDFLibFontkitAssertionError,
   UnsupportedFontFileFormatError,
 } from 'src/core/errors';
 import { PDFSecurity, SecurityOptions } from 'src/core/security/PDFSecurity';
@@ -55,6 +59,57 @@ const withViewerPrefsPdfBytes = readBinaryFileSync(
   'assets/pdfs/with_viewer_prefs.pdf',
 );
 const ubuntuFontBytes = readBinaryFileSync('assets/fonts/ubuntu/Ubuntu-B.ttf');
+
+/**
+ * Build a lightweight stub `TTFFont` for tests, with optional overrides for specific methods.
+ * This is not a valid font—it's just enough shape to drive error mapping and guard coverage.
+ */
+const makeStubTTFFont = (overrides: Partial<TTFFont> = {}): TTFFont => {
+  const glyph = {
+    id: 1,
+    advanceWidth: 0,
+    advanceHeight: 0,
+    vertOriginY: 0,
+  } as any;
+  const subset = {
+    type: 'TTF',
+    includeGlyph: jest.fn().mockReturnValue(1),
+    encode: jest.fn().mockReturnValue(new Uint8Array()),
+  } as any;
+  const layout = jest.fn(
+    () =>
+      ({
+        glyphs: [glyph],
+        positions: null,
+        script: null,
+        language: null,
+        direction: 'ltr',
+        features: {},
+      }) as any,
+  ) as any;
+  const baseFont: Partial<TTFFont> = {
+    type: 'TTF',
+    unitsPerEm: 1000,
+    postscriptName: 'FakeFont',
+    characterSet: [],
+    bbox: { minX: 0, minY: 0, maxX: 0, maxY: 0 } as any,
+    head: { macStyle: { italic: false } } as any,
+    post: { isFixedPitch: false } as any,
+    layout,
+    getGlyph: jest.fn(() => glyph),
+    glyphForCodePoint: jest.fn(() => glyph),
+    createSubset: (() => subset) as unknown as TTFFont['createSubset'],
+    defaultVertOriginY: 0,
+    cff: false,
+    ascent: 0,
+    descent: 0,
+    italicAngle: 0,
+    capHeight: 0,
+    xHeight: 0,
+  };
+
+  return { ...baseFont, ...overrides } as TTFFont;
+};
 
 describe(`PDFDocument`, () => {
   describe(`load() method`, () => {
@@ -206,6 +261,41 @@ describe(`PDFDocument`, () => {
 
       expect(() => pdfDoc.embedFont(examplePngImage)).toThrow(
         UnsupportedFontFileFormatError,
+      );
+    });
+
+    it(`maps fontkit errors thrown during embedding TTFFont`, async () => {
+      const pdfDoc = await PDFDocument.create({ updateMetadata: false });
+      const fontkitError = new FontkitAssertionError('boom');
+      const ttFont = makeStubTTFFont({
+        createSubset: () => {
+          throw fontkitError;
+        },
+      });
+
+      expect(() => pdfDoc.embedTTFFont(ttFont, { subset: true })).toThrow(
+        PDFLibFontkitAssertionError,
+      );
+    });
+
+    it(`maps fontkit errors thrown while encoding text`, async () => {
+      const layoutError = new FontkitAssertionError('layout fail');
+      const subset = {
+        type: 'TTF',
+        includeGlyph: jest.fn().mockReturnValue(1),
+        encode: jest.fn().mockReturnValue(new Uint8Array()),
+      };
+      const ttFont = makeStubTTFFont({
+        createSubset: (() => subset) as unknown as TTFFont['createSubset'],
+        layout: () => {
+          throw layoutError;
+        },
+      });
+      const pdfDoc = await PDFDocument.create({ updateMetadata: false });
+      const pdfFont = pdfDoc.embedTTFFont(ttFont, { subset: true });
+
+      expect(() => pdfFont.encodeText('Hi')).toThrow(
+        PDFLibFontkitAssertionError,
       );
     });
   });

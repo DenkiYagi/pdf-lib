@@ -8,6 +8,7 @@ import {
   PDFRef,
   StandardFontEmbedder,
 } from 'src/core';
+import { mapFontkitError } from 'src/core/embedders/fontkit-helpers';
 import type { SingleLineTextOrGlyphs } from 'src/types/text';
 import { assertIs, assertOrUndefined } from 'src/utils';
 
@@ -76,7 +77,13 @@ export class PDFFont implements Embeddable {
   ): PDFHexString {
     assertIs(text, 'text', ['string', Array, Uint16Array, Uint32Array]);
     this.modified = true;
-    return this.embedder.encodeText(text, layoutAdvancedParams);
+    try {
+      return this.embedder.encodeText(text, layoutAdvancedParams);
+    } catch (error) {
+      const mappedError = mapFontkitError(error);
+      if (mappedError) throw mappedError;
+      throw error;
+    }
   }
 
   /**
@@ -93,7 +100,13 @@ export class PDFFont implements Embeddable {
   widthOfTextAtSize(text: string, size: number): number {
     assertIs(text, 'text', ['string']);
     assertIs(size, 'size', ['number']);
-    return this.embedder.widthOfTextAtSize(text, size);
+    try {
+      return this.embedder.widthOfTextAtSize(text, size);
+    } catch (error) {
+      const mappedError = mapFontkitError(error);
+      if (mappedError) throw mappedError;
+      throw error;
+    }
   }
 
   /**
@@ -173,7 +186,13 @@ export class PDFFont implements Embeddable {
   async embed(): Promise<void> {
     // TODO: Cleanup orphan embedded objects if a font is embedded multiple times...
     if (this.modified) {
-      await this.embedder.embedIntoContext(this.doc.context, this.ref);
+      try {
+        this.embedder.embedIntoContext(this.doc.context, this.ref);
+      } catch (error) {
+        const mappedError = mapFontkitError(error);
+        if (mappedError) throw mappedError;
+        throw error;
+      }
       this.modified = false;
     }
   }

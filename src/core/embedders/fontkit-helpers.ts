@@ -5,19 +5,21 @@ import {
   UnsupportedFontDataError as FontkitUnsupportedFontDataError,
   UnsupportedFontFileFormatError as FontkitUnsupportedFontFileFormatError,
 } from '@denkiyagi/fontkit';
-import { PDFLibError } from 'src/core/error-base';
 import {
   FontkitAssertionError as PDFLibFontkitAssertionError,
   InvalidFontDataError,
   UnsupportedFontDataError,
   UnsupportedFontFileFormatError,
 } from 'src/core/errors';
+import type { PDFLibError } from 'src/core/error-base';
 
 /**
  * Map known fontkit errors into the pdf-lib error family
  * so callers do not see raw fontkit exceptions.
+ *
+ * Returns `null` if the error is not recognized.
  */
-export const mapFontkitError = (error: unknown): PDFLibError => {
+export const mapFontkitError = (error: unknown): PDFLibError | null => {
   if (error instanceof FontkitUnsupportedFontFileFormatError) {
     return new UnsupportedFontFileFormatError(error.message);
   }
@@ -37,7 +39,5 @@ export const mapFontkitError = (error: unknown): PDFLibError => {
     return new PDFLibFontkitAssertionError(error.message);
   }
 
-  const msg =
-    error instanceof Error ? `${error.name}: ${error.message}` : String(error);
-  return new PDFLibFontkitAssertionError(`Unknown error: ${msg}`);
+  return null;
 };

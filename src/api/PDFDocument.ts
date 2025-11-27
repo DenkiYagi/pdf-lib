@@ -38,6 +38,7 @@ import {
   StandardFontEmbedder,
   UnexpectedObjectTypeError,
 } from 'src/core';
+import { mapFontkitError } from 'src/core/embedders/fontkit-helpers';
 import {
   ParseSpeeds,
   AttachmentOptions,
@@ -880,9 +881,15 @@ export class PDFDocument {
       embedder = StandardFontEmbedder.for(font, customName);
     } else if (canBeConvertedToUint8Array(font)) {
       const bytes = toUint8Array(font);
-      embedder = subset
-        ? CustomFontSubsetEmbedder.for(bytes, customName, vertical, advanced)
-        : CustomFontEmbedder.for(bytes, customName, vertical, advanced);
+      try {
+        embedder = subset
+          ? CustomFontSubsetEmbedder.for(bytes, customName, vertical, advanced)
+          : CustomFontEmbedder.for(bytes, customName, vertical, advanced);
+      } catch (error) {
+        const mappedError = mapFontkitError(error);
+        if (mappedError) throw mappedError;
+        throw error;
+      }
     } else {
       throw new InvalidTypePassedError(
         'font',
@@ -915,12 +922,19 @@ export class PDFDocument {
       throw new InvalidFontSubsetOptionError(subset);
     }
 
-    const embedder = CustomFontSubsetEmbedder.forTTFFont(
-      font,
-      customName,
-      vertical,
-      advanced,
-    );
+    let embedder: AbstractCustomFontEmbedder;
+    try {
+      embedder = CustomFontSubsetEmbedder.forTTFFont(
+        font,
+        customName,
+        vertical,
+        advanced,
+      );
+    } catch (error) {
+      const mappedError = mapFontkitError(error);
+      if (mappedError) throw mappedError;
+      throw error;
+    }
 
     const ref = this.context.nextRef();
     const pdfFont = PDFFont.of(ref, this, embedder);
