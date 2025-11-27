@@ -40,15 +40,6 @@ const formatAllowedTypes = (types: TypeDescriptor[]) => {
   return allowedTypes.join(' or ');
 };
 
-export class InvalidInputTypeError extends PDFLibUtilsError {
-  constructor(valueName: string, expectedTypes: string, actual: any) {
-    const msg =
-      `${backtick(valueName)} must be one of ${expectedTypes}, ` +
-      `but was actually ${formatValue(actual)}`;
-    super(PDFLibErrorTypes.INVALID_CALLER_INPUT, msg);
-  }
-}
-
 export class InvalidPngError extends PDFLibUtilsError {
   constructor(message: string) {
     super(PDFLibErrorTypes.INVALID_EXTERNAL_BINARY_DATA, message);
