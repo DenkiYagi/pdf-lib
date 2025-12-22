@@ -1,8 +1,5 @@
 import UPNGModule from '@pdf-lib/upng';
-import {
-  AnimatedPngNotSupportedError,
-  InvalidPngError,
-} from 'src/utils/errors.js';
+import { InvalidPngError } from 'src/utils/errors.js';
 
 /**
  * UPNGModule has different shapes depending on the bundler / module system.
@@ -84,10 +81,6 @@ export class PNG {
       frames = UPNG.toRGBA8(decoded);
     } catch (error) {
       throw mapPngError(error, 'Failed to convert PNG to RGBA8:');
-    }
-
-    if (frames.length > 1) {
-      throw new AnimatedPngNotSupportedError();
     }
     const rgbaBuffer = frames[0];
 
