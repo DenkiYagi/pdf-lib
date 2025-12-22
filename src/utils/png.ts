@@ -1,14 +1,6 @@
-import UPNGModule from '@pdf-lib/upng';
+import { decode } from 'fast-png';
+import { toRgba8 } from 'src/utils/fast-png-helper.js';
 import { InvalidPngError } from 'src/utils/errors.js';
-
-/**
- * UPNGModule has different shapes depending on the bundler / module system.
- * The following attempts to cover the most common cases.
- */
-const UPNG: typeof UPNGModule =
-  (UPNGModule as any)?.default?.default ??
-  (UPNGModule as any)?.default ??
-  (UPNGModule as any);
 
 const mapPngError = (error: unknown, msgPrefix: string): InvalidPngError => {
   const message =
@@ -20,13 +12,13 @@ const mapPngError = (error: unknown, msgPrefix: string): InvalidPngError => {
   return new InvalidPngError(`${msgPrefix} ${message}`);
 };
 
-const getImageType = (ctype: number) => {
-  if (ctype === 0) return PngType.Greyscale;
-  if (ctype === 2) return PngType.Truecolour;
-  if (ctype === 3) return PngType.IndexedColour;
-  if (ctype === 4) return PngType.GreyscaleWithAlpha;
-  if (ctype === 6) return PngType.TruecolourWithAlpha;
-  throw new InvalidPngError(`Unknown color type: ${ctype}`);
+const getImageType = (channels: number, palette?: Array<unknown[]>): PngType => {
+  if (palette) return PngType.IndexedColour;
+  if (channels === 1) return PngType.Greyscale;
+  if (channels === 2) return PngType.GreyscaleWithAlpha;
+  if (channels === 3) return PngType.Truecolour;
+  if (channels === 4) return PngType.TruecolourWithAlpha;
+  throw new InvalidPngError(`Unknown channel count: ${channels}`);
 };
 
 const splitAlphaChannel = (rgbaChannel: Uint8Array) => {
@@ -68,22 +60,19 @@ export class PNG {
   readonly bitsPerComponent: number;
 
   private constructor(pngData: Uint8Array) {
-    let decoded: ReturnType<typeof UPNG.decode>;
+    let decoded: ReturnType<typeof decode>;
     try {
-      // @ts-ignore : It internally does new Uint8Array()
-      decoded = UPNG.decode(pngData);
+      decoded = decode(pngData);
     } catch (error) {
       throw mapPngError(error, 'Failed to decode PNG:');
     }
 
-    let frames: ArrayBuffer[];
+    let rgbaBuffer: Uint8Array;
     try {
-      frames = UPNG.toRGBA8(decoded);
+      rgbaBuffer = toRgba8(decoded);
     } catch (error) {
       throw mapPngError(error, 'Failed to convert PNG to RGBA8:');
     }
-    const frame = frames[0];
-    const rgbaBuffer = new Uint8Array(frame);
 
     const { rgbChannel, alphaChannel } = splitAlphaChannel(rgbaBuffer);
 
@@ -92,7 +81,7 @@ export class PNG {
     const hasAlphaValues = alphaChannel.some((a) => a < 255);
     if (hasAlphaValues) this.alphaChannel = alphaChannel;
 
-    this.type = getImageType(decoded.ctype);
+    this.type = getImageType(decoded.channels, decoded.palette);
 
     this.width = decoded.width;
     this.height = decoded.height;
