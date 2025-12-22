@@ -67,17 +67,17 @@ export class PNG {
   readonly bitsPerComponent: number;
 
   private constructor(pngData: Uint8Array) {
-    let upng: ReturnType<typeof UPNG.decode>;
+    let decoded: ReturnType<typeof UPNG.decode>;
     try {
       // @ts-ignore : It internally does new Uint8Array()
-      upng = UPNG.decode(pngData);
+      decoded = UPNG.decode(pngData);
     } catch (error) {
       throw mapUpngError(error, 'Failed to decode PNG:');
     }
 
     let frames: ArrayBuffer[];
     try {
-      frames = UPNG.toRGBA8(upng);
+      frames = UPNG.toRGBA8(decoded);
     } catch (error) {
       throw mapUpngError(error, 'Failed to convert PNG to RGBA8:');
     }
@@ -85,8 +85,9 @@ export class PNG {
     if (frames.length > 1) {
       throw new AnimatedPngNotSupportedError();
     }
+    const rgbaBuffer = frames[0];
 
-    const frame = new Uint8Array(frames[0]);
+    const frame = new Uint8Array(rgbaBuffer);
     const { rgbChannel, alphaChannel } = splitAlphaChannel(frame);
 
     this.rgbChannel = rgbChannel;
@@ -94,10 +95,10 @@ export class PNG {
     const hasAlphaValues = alphaChannel.some((a) => a < 255);
     if (hasAlphaValues) this.alphaChannel = alphaChannel;
 
-    this.type = getImageType(upng.ctype);
+    this.type = getImageType(decoded.ctype);
 
-    this.width = upng.width;
-    this.height = upng.height;
+    this.width = decoded.width;
+    this.height = decoded.height;
     this.bitsPerComponent = 8;
   }
 }
