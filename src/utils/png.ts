@@ -82,10 +82,10 @@ export class PNG {
     } catch (error) {
       throw mapPngError(error, 'Failed to convert PNG to RGBA8:');
     }
-    const rgbaBuffer = frames[0];
+    const frame = frames[0];
+    const rgbaBuffer = new Uint8Array(frame);
 
-    const frame = new Uint8Array(rgbaBuffer);
-    const { rgbChannel, alphaChannel } = splitAlphaChannel(frame);
+    const { rgbChannel, alphaChannel } = splitAlphaChannel(rgbaBuffer);
 
     this.rgbChannel = rgbChannel;
 
