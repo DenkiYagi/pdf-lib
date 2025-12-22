@@ -13,9 +13,13 @@ const UPNG: typeof UPNGModule =
   (UPNGModule as any)?.default ??
   (UPNGModule as any);
 
-const mapUpngError = (error: unknown, msgPrefix: string): InvalidPngError => {
+const mapPngError = (error: unknown, msgPrefix: string): InvalidPngError => {
   const message =
-    error instanceof Error ? `${error.name}: ${error.message}` : String(error);
+    error instanceof InvalidPngError
+      ? error.message
+      : error instanceof Error
+        ? `${error.name}: ${error.message}`
+        : String(error);
   return new InvalidPngError(`${msgPrefix} ${message}`);
 };
 
@@ -72,14 +76,14 @@ export class PNG {
       // @ts-ignore : It internally does new Uint8Array()
       decoded = UPNG.decode(pngData);
     } catch (error) {
-      throw mapUpngError(error, 'Failed to decode PNG:');
+      throw mapPngError(error, 'Failed to decode PNG:');
     }
 
     let frames: ArrayBuffer[];
     try {
       frames = UPNG.toRGBA8(decoded);
     } catch (error) {
-      throw mapUpngError(error, 'Failed to convert PNG to RGBA8:');
+      throw mapPngError(error, 'Failed to convert PNG to RGBA8:');
     }
 
     if (frames.length > 1) {
