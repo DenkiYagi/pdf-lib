@@ -62,10 +62,10 @@
     "es/",
     "umd/",
     "src/",
-    "LICENSE.md",
+    "LICENSE.txt",
     "package.json",
     "README.md",
-    "yarn.lock"
+    "MODIFICATIONS.md"
   ],
   "dependencies": {
     "@denkiyagi/fontkit": "2.0.4-mod.2025.4",
