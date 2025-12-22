@@ -16,7 +16,7 @@
 
 ## Tech Stack
 - Node.js 20+ runtime, Yarn package manager.
-- TypeScript 4.x across source and typings.
+- TypeScript 5.x across source and typings.
 - Critical dependency: `@denkiyagi/fontkit` (our fork) powers font parsing, embedding, and subsetting.
 
 ## Common Commands
