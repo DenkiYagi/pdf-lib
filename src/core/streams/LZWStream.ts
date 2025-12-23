@@ -6,8 +6,8 @@
  * under the Apache 2.0 open source license.
  */
 
-import { DecodeStream } from 'src/core/streams/DecodeStream';
-import type { StreamType } from 'src/core/streams/Stream';
+import { DecodeStream } from 'src/core/streams/DecodeStream.js';
+import type { StreamType } from 'src/core/streams/Stream.js';
 
 export class LZWStream extends DecodeStream {
   private stream: StreamType;

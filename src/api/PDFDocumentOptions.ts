@@ -1,5 +1,5 @@
 import type { Shaper } from '@denkiyagi/fontkit';
-import type { EmbeddedFileOptions } from 'src/core/embedders/FileEmbedder';
+import type { EmbeddedFileOptions } from 'src/core/embedders/FileEmbedder.js';
 
 export enum ParseSpeeds {
   Fastest = Infinity,
@@ -9,7 +9,7 @@ export enum ParseSpeeds {
 }
 
 export interface AttachmentOptions extends EmbeddedFileOptions {}
-export { AFRelationship } from 'src/core/embedders/FileEmbedder';
+export { AFRelationship } from 'src/core/embedders/FileEmbedder.js';
 
 export interface SaveOptions {
   useObjectStreams?: boolean;

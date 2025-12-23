@@ -1,11 +1,14 @@
-import { PDFArray } from 'src/core/objects/PDFArray';
-import { PDFDict, DictMap } from 'src/core/objects/PDFDict';
-import { PDFName } from 'src/core/objects/PDFName';
-import { PDFNumber } from 'src/core/objects/PDFNumber';
-import type { PDFRef } from 'src/core/objects/PDFRef';
-import type { PDFContext } from 'src/core/PDFContext';
-import { PDFPageLeaf } from 'src/core/structures/PDFPageLeaf';
-import { InvalidTargetIndexError, CorruptPageTreeError } from 'src/core/errors';
+import { PDFArray } from 'src/core/objects/PDFArray.js';
+import { PDFDict, DictMap } from 'src/core/objects/PDFDict.js';
+import { PDFName } from 'src/core/objects/PDFName.js';
+import { PDFNumber } from 'src/core/objects/PDFNumber.js';
+import type { PDFRef } from 'src/core/objects/PDFRef.js';
+import type { PDFContext } from 'src/core/PDFContext.js';
+import { PDFPageLeaf } from 'src/core/structures/PDFPageLeaf.js';
+import {
+  InvalidTargetIndexError,
+  CorruptPageTreeError,
+} from 'src/core/errors.js';
 
 export type TreeNode = PDFPageTree | PDFPageLeaf;
 

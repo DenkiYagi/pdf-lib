@@ -1,5 +1,5 @@
 import type { ShapingPlan } from '@denkiyagi/fontkit';
-import { BasicPresetShaper } from './BasicPresetShaper';
+import { BasicPresetShaper } from './BasicPresetShaper.js';
 
 /**
  * `Shaper` with [GSUB](https://learn.microsoft.com/en-us/typography/opentype/spec/gsub) features

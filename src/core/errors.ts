@@ -1,7 +1,11 @@
 // tslint:disable: max-classes-per-file
 
-import { arrayAsString } from 'src/utils/arrays';
-import { PDFLibError, PDFLibErrorType, PDFLibErrorTypes } from './error-base';
+import { arrayAsString } from 'src/utils/arrays.js';
+import {
+  PDFLibError,
+  PDFLibErrorType,
+  PDFLibErrorTypes,
+} from './error-base.js';
 
 export class PDFLibCoreError extends PDFLibError {}
 

@@ -1,10 +1,10 @@
-import type { PDFRef } from 'src/core/objects/PDFRef';
-import type { PDFDict } from 'src/core/objects/PDFDict';
-import { PDFName } from 'src/core/objects/PDFName';
-import { PDFAcroButton } from 'src/core/acroform/PDFAcroButton';
-import type { PDFContext } from 'src/core/PDFContext';
-import { AcroButtonFlags } from 'src/core/acroform/flags';
-import { InvalidAcroFieldValueError } from 'src/core/errors';
+import type { PDFRef } from 'src/core/objects/PDFRef.js';
+import type { PDFDict } from 'src/core/objects/PDFDict.js';
+import { PDFName } from 'src/core/objects/PDFName.js';
+import { PDFAcroButton } from 'src/core/acroform/PDFAcroButton.js';
+import type { PDFContext } from 'src/core/PDFContext.js';
+import { AcroButtonFlags } from 'src/core/acroform/flags.js';
+import { InvalidAcroFieldValueError } from 'src/core/errors.js';
 
 export class PDFAcroRadioButton extends PDFAcroButton {
   static fromDict = (dict: PDFDict, ref: PDFRef) =>

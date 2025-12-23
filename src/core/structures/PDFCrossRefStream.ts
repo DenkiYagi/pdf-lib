@@ -1,14 +1,20 @@
-import type { PDFDict } from 'src/core/objects/PDFDict';
-import { PDFName } from 'src/core/objects/PDFName';
-import type { PDFObject } from 'src/core/objects/PDFObject';
-import { PDFRef } from 'src/core/objects/PDFRef';
-import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter';
-import type { PDFContext } from 'src/core/PDFContext';
+import type { PDFDict } from 'src/core/objects/PDFDict.js';
+import { PDFName } from 'src/core/objects/PDFName.js';
+import type { PDFObject } from 'src/core/objects/PDFObject.js';
+import { PDFRef } from 'src/core/objects/PDFRef.js';
+import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter.js';
+import type { PDFContext } from 'src/core/PDFContext.js';
 import {
   PDFFlateStreamEncryptionParams,
   PDFFlateStream,
-} from 'src/core/structures/PDFFlateStream';
-import { bytesFor, Cache, reverseArray, sizeInBytes, sum } from 'src/utils';
+} from 'src/core/structures/PDFFlateStream.js';
+import {
+  bytesFor,
+  Cache,
+  reverseArray,
+  sizeInBytes,
+  sum,
+} from 'src/utils/index.js';
 
 export enum EntryType {
   Deleted = 0,

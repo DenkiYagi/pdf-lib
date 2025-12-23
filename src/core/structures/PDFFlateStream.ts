@@ -1,11 +1,11 @@
 import pako from 'pako';
 
-import type { PDFDict } from 'src/core/objects/PDFDict';
-import { PDFName } from 'src/core/objects/PDFName';
-import { PDFStream } from 'src/core/objects/PDFStream';
-import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter';
-import { Cache } from 'src/utils';
-import type { PDFRef } from '../objects/PDFRef';
+import type { PDFDict } from 'src/core/objects/PDFDict.js';
+import { PDFName } from 'src/core/objects/PDFName.js';
+import { PDFStream } from 'src/core/objects/PDFStream.js';
+import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter.js';
+import { Cache } from 'src/utils/index.js';
+import type { PDFRef } from '../objects/PDFRef.js';
 
 export type PDFFlateStreamEncryptionParams = {
   readonly encrypter: ObjectEncrypter;

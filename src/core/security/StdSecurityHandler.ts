@@ -1,4 +1,4 @@
-import type { WordArray } from 'src/utils/crypt';
+import type { WordArray } from 'src/utils/crypt.js';
 
 /**
  * Represents a standard security handler and provides

@@ -1,4 +1,4 @@
-import { PDFObject } from 'src/core/objects/PDFObject';
+import { PDFObject } from 'src/core/objects/PDFObject.js';
 
 export class PDFInvalidObject extends PDFObject {
   static of = (data: Uint8Array) => new PDFInvalidObject(data);

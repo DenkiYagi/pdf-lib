@@ -1,4 +1,4 @@
-import { Color, setFillingColor, setStrokingColor } from 'src/api/colors';
+import { Color, setFillingColor, setStrokingColor } from 'src/api/colors.js';
 import {
   beginText,
   closePath,
@@ -31,11 +31,16 @@ import {
   clip,
   endPath,
   appendBezierCurve,
-} from 'src/api/operators';
-import { Rotation, degrees, toRadians } from 'src/api/rotations';
-import { svgPathToOperators } from 'src/api/svgPath';
-import type { PDFHexString, PDFName, PDFNumber, PDFOperator } from 'src/core';
-import { asNumber } from 'src/api/objects';
+} from 'src/api/operators.js';
+import { Rotation, degrees, toRadians } from 'src/api/rotations.js';
+import { svgPathToOperators } from 'src/api/svgPath.js';
+import type {
+  PDFHexString,
+  PDFName,
+  PDFNumber,
+  PDFOperator,
+} from 'src/core/index.js';
+import { asNumber } from 'src/api/objects.js';
 
 export interface DrawTextOptions {
   color: Color;

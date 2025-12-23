@@ -1,12 +1,12 @@
-import { ReparseError } from 'src/core/errors';
-import { PDFArray } from 'src/core/objects/PDFArray';
-import type { PDFDict } from 'src/core/objects/PDFDict';
-import { PDFName } from 'src/core/objects/PDFName';
-import { PDFNumber } from 'src/core/objects/PDFNumber';
-import type { PDFRawStream } from 'src/core/objects/PDFRawStream';
-import { PDFRef } from 'src/core/objects/PDFRef';
-import { ByteStream } from 'src/core/parser/ByteStream';
-import type { PDFContext } from 'src/core/PDFContext';
+import { ReparseError } from 'src/core/errors.js';
+import { PDFArray } from 'src/core/objects/PDFArray.js';
+import type { PDFDict } from 'src/core/objects/PDFDict.js';
+import { PDFName } from 'src/core/objects/PDFName.js';
+import { PDFNumber } from 'src/core/objects/PDFNumber.js';
+import type { PDFRawStream } from 'src/core/objects/PDFRawStream.js';
+import { PDFRef } from 'src/core/objects/PDFRef.js';
+import { ByteStream } from 'src/core/parser/ByteStream.js';
+import type { PDFContext } from 'src/core/PDFContext.js';
 
 export interface Entry {
   ref: PDFRef;

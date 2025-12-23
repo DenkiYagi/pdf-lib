@@ -1,13 +1,13 @@
-import { PrivateConstructorError } from 'src/core/errors';
-import { PDFObject } from 'src/core/objects/PDFObject';
-import { CharCodes } from 'src/core/syntax/CharCodes';
-import { IsIrregular } from 'src/core/syntax/Irregular';
+import { PrivateConstructorError } from 'src/core/errors.js';
+import { PDFObject } from 'src/core/objects/PDFObject.js';
+import { CharCodes } from 'src/core/syntax/CharCodes.js';
+import { IsIrregular } from 'src/core/syntax/Irregular.js';
 import {
   charFromHexCode,
   copyStringIntoBuffer,
   toCharCode,
   toHexString,
-} from 'src/utils';
+} from 'src/utils/index.js';
 
 const decodeName = (name: string) =>
   name.replace(/#([\dABCDEF]{2})/g, (_, hex) => charFromHexCode(hex));

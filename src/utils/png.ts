@@ -2,7 +2,7 @@ import UPNG from '@pdf-lib/upng';
 import {
   AnimatedPngNotSupportedError,
   InvalidPngError,
-} from 'src/utils/errors';
+} from 'src/utils/errors.js';
 
 const mapUpngError = (error: unknown, msgPrefix: string): InvalidPngError => {
   const message =

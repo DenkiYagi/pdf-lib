@@ -1,4 +1,4 @@
-import { CharCodes } from 'src/core/syntax/CharCodes';
+import { CharCodes } from 'src/core/syntax/CharCodes.js';
 
 export const IsDelimiter = new Uint8Array(256);
 

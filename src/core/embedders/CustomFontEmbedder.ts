@@ -1,9 +1,9 @@
 import { create as createFont } from '@denkiyagi/fontkit';
 import type { TTFFont } from '@denkiyagi/fontkit';
 
-import { AbstractCustomFontEmbedder } from 'src/core/embedders/AbstractCustomFontEmbedder';
-import { InvalidFontTypeError } from 'src/core/errors';
-import type { EmbedFontAdvancedOptions } from 'src/api';
+import { AbstractCustomFontEmbedder } from 'src/core/embedders/AbstractCustomFontEmbedder.js';
+import { InvalidFontTypeError } from 'src/core/errors.js';
+import type { EmbedFontAdvancedOptions } from 'src/api/index.js';
 
 export class CustomFontEmbedder extends AbstractCustomFontEmbedder {
   static for(

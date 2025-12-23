@@ -1,4 +1,4 @@
-import { CharCodes } from 'src/core/syntax/CharCodes';
+import { CharCodes } from 'src/core/syntax/CharCodes.js';
 
 const { Space, CarriageReturn, Newline } = CharCodes;
 

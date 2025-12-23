@@ -1,20 +1,20 @@
 import type { LayoutAdvancedParams } from '@denkiyagi/fontkit';
 import type { TTFFont, Glyph } from '@denkiyagi/fontkit';
 
-import { createCmap } from 'src/core/embedders/CMap';
-import { deriveFontFlags } from 'src/core/embedders/FontFlags';
-import { PDFHexString } from 'src/core/objects/PDFHexString';
-import type { PDFRef } from 'src/core/objects/PDFRef';
-import { PDFString } from 'src/core/objects/PDFString';
-import type { PDFContext } from 'src/core/PDFContext';
+import { createCmap } from 'src/core/embedders/CMap.js';
+import { deriveFontFlags } from 'src/core/embedders/FontFlags.js';
+import { PDFHexString } from 'src/core/objects/PDFHexString.js';
+import type { PDFRef } from 'src/core/objects/PDFRef.js';
+import { PDFString } from 'src/core/objects/PDFString.js';
+import type { PDFContext } from 'src/core/PDFContext.js';
 import {
   byAscendingId,
   Cache,
   sortedUniq,
   toHexStringOfMinLength,
-} from 'src/utils';
-import type { EmbedFontAdvancedOptions } from 'src/api';
-import type { SingleLineTextOrGlyphs } from 'src/types/text';
+} from 'src/utils/index.js';
+import type { EmbedFontAdvancedOptions } from 'src/api/index.js';
+import type { SingleLineTextOrGlyphs } from 'src/types/text.js';
 
 const emptyObject = {};
 

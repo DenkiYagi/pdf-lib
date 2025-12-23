@@ -1,6 +1,6 @@
 // tslint:disable: max-classes-per-file
 
-import { PDFLibError, PDFLibErrorTypes } from 'src/core';
+import { PDFLibError, PDFLibErrorTypes } from 'src/core/index.js';
 
 export class PDFLibAPIError extends PDFLibError {}
 

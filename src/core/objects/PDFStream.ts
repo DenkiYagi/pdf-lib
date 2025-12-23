@@ -1,11 +1,11 @@
-import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter';
-import type { PDFDict } from 'src/core/objects/PDFDict';
-import { PDFName } from 'src/core/objects/PDFName';
-import { PDFNumber } from 'src/core/objects/PDFNumber';
-import { PDFObject } from 'src/core/objects/PDFObject';
-import type { PDFRef } from 'src/core/objects/PDFRef';
-import type { PDFContext } from 'src/core/PDFContext';
-import { CharCodes } from 'src/core/syntax/CharCodes';
+import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter.js';
+import type { PDFDict } from 'src/core/objects/PDFDict.js';
+import { PDFName } from 'src/core/objects/PDFName.js';
+import { PDFNumber } from 'src/core/objects/PDFNumber.js';
+import { PDFObject } from 'src/core/objects/PDFObject.js';
+import type { PDFRef } from 'src/core/objects/PDFRef.js';
+import type { PDFContext } from 'src/core/PDFContext.js';
+import { CharCodes } from 'src/core/syntax/CharCodes.js';
 
 export abstract class PDFStream extends PDFObject {
   readonly dict: PDFDict;

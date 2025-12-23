@@ -1,4 +1,4 @@
-import { Color, rgb } from 'src/api/colors';
+import { Color, rgb } from 'src/api/colors.js';
 import {
   drawImage,
   drawLine,
@@ -7,18 +7,18 @@ import {
   drawRectangle,
   drawSvgPath,
   drawEllipse,
-} from 'src/api/operations';
+} from 'src/api/operations.js';
 import {
   popGraphicsState,
   pushGraphicsState,
   translate,
   LineCapStyle,
   scale,
-} from 'src/api/operators';
-import { PDFDocument } from 'src/api/PDFDocument';
-import { PDFEmbeddedPage } from 'src/api/PDFEmbeddedPage';
-import { PDFFont } from 'src/api/PDFFont';
-import { PDFImage } from 'src/api/PDFImage';
+} from 'src/api/operators.js';
+import { PDFDocument } from 'src/api/PDFDocument.js';
+import { PDFEmbeddedPage } from 'src/api/PDFEmbeddedPage.js';
+import { PDFFont } from 'src/api/PDFFont.js';
+import { PDFImage } from 'src/api/PDFImage.js';
 import {
   PDFPageDrawCircleOptions,
   PDFPageDrawEllipseOptions,
@@ -30,9 +30,9 @@ import {
   PDFPageDrawSVGOptions,
   PDFPageDrawTextOptions,
   BlendMode,
-} from 'src/api/PDFPageOptions';
-import { degrees, Rotation, toDegrees } from 'src/api/rotations';
-import { StandardFonts } from 'src/api/StandardFonts';
+} from 'src/api/PDFPageOptions.js';
+import { degrees, Rotation, toDegrees } from 'src/api/rotations.js';
+import { StandardFonts } from 'src/api/StandardFonts.js';
 import {
   PDFContentStream,
   PDFHexString,
@@ -42,11 +42,11 @@ import {
   PDFRef,
   PDFDict,
   PDFArray,
-} from 'src/core';
+} from 'src/core/index.js';
 import type {
   MultiLineTextOrGlyphs,
   SingleLineTextOrGlyphs,
-} from 'src/types/text';
+} from 'src/types/text.js';
 import {
   assertEachIs,
   assertIs,
@@ -58,7 +58,7 @@ import {
   lineSplit,
   assertRangeOrUndefined,
   assertIsOneOfOrUndefined,
-} from 'src/utils';
+} from 'src/utils/index.js';
 
 /**
  * Represents a single page of a [[PDFDocument]].

@@ -1,14 +1,14 @@
-import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter';
-import type { PDFDict } from 'src/core/objects/PDFDict';
-import type { PDFObject } from 'src/core/objects/PDFObject';
-import type { PDFRef } from 'src/core/objects/PDFRef';
-import type { PDFOperator } from 'src/core/operators/PDFOperator';
-import type { PDFContext } from 'src/core/PDFContext';
+import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter.js';
+import type { PDFDict } from 'src/core/objects/PDFDict.js';
+import type { PDFObject } from 'src/core/objects/PDFObject.js';
+import type { PDFRef } from 'src/core/objects/PDFRef.js';
+import type { PDFOperator } from 'src/core/operators/PDFOperator.js';
+import type { PDFContext } from 'src/core/PDFContext.js';
 import {
   PDFFlateStream,
   PDFFlateStreamEncryptionParams,
-} from 'src/core/structures/PDFFlateStream';
-import { CharCodes } from 'src/core/syntax/CharCodes';
+} from 'src/core/structures/PDFFlateStream.js';
+import { CharCodes } from 'src/core/syntax/CharCodes.js';
 
 export class PDFContentStream extends PDFFlateStream {
   static of = (dict: PDFDict, operators: PDFOperator[], encode = true) =>

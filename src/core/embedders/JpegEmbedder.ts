@@ -1,6 +1,6 @@
-import { InvalidJpegError } from 'src/core/errors';
-import type { PDFRef } from 'src/core/objects/PDFRef';
-import type { PDFContext } from 'src/core/PDFContext';
+import { InvalidJpegError } from 'src/core/errors.js';
+import type { PDFRef } from 'src/core/objects/PDFRef.js';
+import type { PDFContext } from 'src/core/PDFContext.js';
 
 // prettier-ignore
 const MARKERS = [
