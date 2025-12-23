@@ -2,9 +2,7 @@
   "compilerOptions": {
     /* Basic Options */
     "target": "es2022",
-    "module": "commonjs",
-    "allowJs": false,
-    "checkJs": false,
+    "module": "nodenext",
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
@@ -36,7 +34,7 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "preserveSymlinks": true,
-    "moduleResolution": "node",
+    "moduleResolution": "nodenext",
 
     /* Plugins */
     "plugins": [

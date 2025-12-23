@@ -45,8 +45,8 @@
     "lint:tslint:tests": "tslint --project tests/tsconfig.json --fix",
     "lint:prettier": "prettier --write \"./{src,tests,apps}/**/*.{ts,js,json,html,css}\" --log-level error",
     "build": "yarn build:cjs && yarn build:es && yarn build:umd",
-    "build:cjs": "tsc --module commonjs --outDir cjs",
-    "build:es": "tsc --module es2020 --outDir es",
+    "build:cjs": "tsc --module commonjs --moduleResolution node10 --outDir cjs",
+    "build:es": "tsc --module nodenext --moduleResolution nodenext --outDir es",
     "build:umd": "yarn rollup --config rollup.config.mjs",
     "scratchpad:start": "tsc --build scratchpad/tsconfig.json --watch",
     "scratchpad:run": "node scratchpad/build/scratchpad/index.js",
@@ -54,6 +54,7 @@
     "apps:node": "tsc --build apps/node/tsconfig.json && node apps/node-build/index.js",
     "apps:web": "http-server -c-1 ."
   },
+  "type": "module",
   "main": "cjs/index.js",
   "module": "es/index.js",
   "types": "cjs/index.d.ts",

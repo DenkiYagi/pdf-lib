@@ -4,6 +4,7 @@
   "buildOptions": {},
   "compilerOptions": {
     "rootDir": null,
-    "rootDirs": ["../src", "../tests"]
+    "rootDirs": ["../src", "../tests"],
+    "isolatedModules": true
   }
 }
