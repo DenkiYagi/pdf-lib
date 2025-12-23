@@ -27,9 +27,7 @@ jobs:
         with:
           name: build-output
           path: |
-            cjs/
-            es/
-            umd/
+            dist/
 
   publish-gpr:
     needs: build
