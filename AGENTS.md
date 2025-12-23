@@ -24,7 +24,7 @@
 
 ## Common Commands
 - `yarn build` – Builds the library into `dist/`.
-- `yarn typecheck` – Checks TypeScript types across the codebase. Some test codes rely on the build output, so run `yarn build` before if `dist/` is missing.
+- `yarn typecheck` – Checks TypeScript types across the codebase. Some test codes like `apps/` rely on the build output, so run `yarn build` before if `dist/` is missing.
 - `yarn lint` – Runs and fixes the lint rules expected by CI.
 - `yarn test` – Runs the full test suite once.
 
