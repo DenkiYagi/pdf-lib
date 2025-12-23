@@ -83,6 +83,9 @@
     "README.md",
     "MODIFICATIONS.md"
   ],
+  "engines": {
+    "node": ">=20"
+  },
   "dependencies": {
     "@denkiyagi/fontkit": "2.0.4-mod.2025.5",
     "@pdf-lib/standard-fonts": "^1.0.0",
