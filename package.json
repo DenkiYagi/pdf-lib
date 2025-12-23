@@ -50,8 +50,8 @@
     "scratchpad:start": "tsc --build scratchpad/tsconfig.json --watch",
     "scratchpad:run": "node scratchpad/build/scratchpad/index.js",
     "scratchpad:flame": "rimraf isolate*.log && node --prof scratchpad/build/scratchpad/index.js && node --prof-process --preprocess -j isolate*.log | flamebearer",
-    "apps:node": "tsc --build apps/node/tsconfig.json && node apps/node-build/index.js",
-    "apps:web": "http-server -c-1 ."
+    "apps:node": "yarn build:es && tsc --build apps/node/tsconfig.json && node apps/node-build/index.js",
+    "apps:web": "yarn build:umd && http-server -c-1 ."
   },
   "type": "module",
   "main": "dist/es/index.js",
