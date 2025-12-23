@@ -11,7 +11,7 @@
 - `apps/` – Example and manual-test harnesses used to validate real-world document flows.
 - `dist/` – Build outputs (`dist/es` ESM + typings, `dist/umd` UMD bundle).
 - `assets/` – Sample PDFs, fonts, and images consumed by docs and tests; treat as fixtures when updating expectations.
-- `build/`, `rollup.config.mjs`, `tsconfig.json`, `vitest.config.ts` – Tooling scaffolding for bundling, type emission, and tests.
+- `tsconfig.json`, `tsconfig.build.json`, `rollup.config.mjs`, `vitest.config.ts` – Tooling scaffolding for bundling, type emission, and tests.
 - `docs/` – Markdown/docs site material mirrored from upstream. CAUTION: do not rely on them; they may be outdated.
 - `scratchpad/` – Throwaway experiments; do not rely on contents for production logic.
 
@@ -23,10 +23,11 @@
 - Critical dependency: `@denkiyagi/fontkit` (our fork) powers font parsing, embedding, and subsetting.
 
 ## Common Commands
-- `yarn build` – Builds the library into `dist/`.
-- `yarn typecheck` – Checks TypeScript types across the codebase. Some test codes like `apps/` rely on the build output, so run `yarn build` before if `dist/` is missing.
+- `yarn typecheck` – Checks TypeScript types across `src/` and `tests/`.
 - `yarn lint` – Runs and fixes the lint rules expected by CI.
 - `yarn test` – Runs the full test suite once.
+- `yarn build` – Builds the library into `dist/` (uses `tsconfig.build.json`).
+- `yarn apps:typecheck` – Checks TypeScript types across `apps/` (requires a prior build).
 
 ## Helpful References
 - Change log: `MODIFICATIONS.md` (what differs from upstream).

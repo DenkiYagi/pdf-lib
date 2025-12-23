@@ -4,8 +4,7 @@
     "target": "es2022",
     "module": "nodenext",
     "composite": false,
-    "incremental": true,
-    "tsBuildInfoFile": "./tsBuildInfo.json",
+    "incremental": false,
     "outDir": "../node-build",
 
     /* Strict Type-Checking Options */

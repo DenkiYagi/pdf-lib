@@ -3,24 +3,17 @@
     /* Basic Options */
     "target": "es2022",
     "module": "nodenext",
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
-    "outDir": "./build",
-    "rootDir": "./src",
+    "noEmit": true,
     "composite": false,
-    "incremental": true,
-    "tsBuildInfoFile": "./tsBuildInfo.json",
+    "incremental": false,
     "removeComments": false,
     "importHelpers": true,
     "downlevelIteration": false,
     "isolatedModules": false,
     "newLine": "LF",
-
-    /* Strict Type-Checking Options */
+    
+    /* Lint Options */
     "strict": true,
-
-    /* Additional Checks */
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,

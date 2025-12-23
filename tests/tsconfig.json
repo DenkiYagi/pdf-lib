@@ -1,14 +1,18 @@
 {
   "extends": "../tsconfig.json",
-  "include": ["../**/*"],
-  "exclude": ["../dist"],
+  "include": ["./**/*", "../src/**/*"],
   "buildOptions": {},
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["../src/*"]
+    },
+    "lib": ["es2022", "dom"],
     "rootDir": null,
     "rootDirs": ["../src", "../tests"],
     "isolatedModules": true,
     "module": "nodenext",
     "moduleResolution": "nodenext",
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals", "node"]
   }
 }
