@@ -4,7 +4,12 @@
   "coverageReporters": ["html"],
   "testMatch": ["<rootDir>/tests/**/*.spec.ts"],
   "roots": ["src", "tests"],
+  "transform": {
+    "^.+\\.tsx?$": ["ts-jest", { "tsconfig": "<rootDir>/tests/tsconfig.json" }]
+  },
   "moduleNameMapper": {
+    "^src/(.*)\\.js$": "<rootDir>/src/$1.ts",
     "^src/(.*)$": "<rootDir>/src/$1"
-  }
+  },
+  "resolver": "./jest.resolver.cjs"
 }

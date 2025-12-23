@@ -5,6 +5,8 @@
   "compilerOptions": {
     "rootDir": null,
     "rootDirs": ["../src", "../tests"],
-    "isolatedModules": true
+    "isolatedModules": true,
+    "module": "commonjs",
+    "moduleResolution": "node10"
   }
 }
