@@ -57,7 +57,25 @@
   "type": "module",
   "main": "cjs/index.js",
   "module": "es/index.js",
-  "types": "cjs/index.d.ts",
+  "types": "es/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./es/index.js",
+      "require": "./cjs/index.js",
+      "types": "./es/index.d.ts"
+    },
+    "./all": {
+      "import": "./es/all.js",
+      "require": "./cjs/all.js",
+      "types": "./es/all.d.ts"
+    },
+    "./core": {
+      "import": "./es/core/index.js",
+      "default": "./cjs/core/index.js",
+      "types": "./es/core/index.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
   "files": [
     "cjs/",
     "es/",
