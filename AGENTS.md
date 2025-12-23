@@ -23,8 +23,10 @@
 - Critical dependency: `@denkiyagi/fontkit` (our fork) powers font parsing, embedding, and subsetting.
 
 ## Common Commands
-- `yarn typecheck` – Checks TypeScript types across the codebase.
-- `yarn lint` – Runs the lint rules expected by CI; fix warnings locally to avoid pipeline noise.
+- `yarn build` – Builds the library into `dist/`.
+- `yarn typecheck` – Checks TypeScript types across the codebase. Some test codes rely on the build output, so run `yarn build` before if `dist/` is missing.
+- `yarn lint` – Runs and fixes the lint rules expected by CI.
+- `yarn test` – Runs the full test suite once.
 
 ## Helpful References
 - Change log: `MODIFICATIONS.md` (what differs from upstream).
