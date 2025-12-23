@@ -1,6 +1,6 @@
 import fs from 'fs';
-import { openPdf, Reader } from './open';
-import { PDFDocument } from 'src/api';
+import { openPdf, Reader } from './open.js';
+import { PDFDocument } from 'src/api/index.js';
 
 (async () => {
   const pdfDoc1 = await PDFDocument.create();
