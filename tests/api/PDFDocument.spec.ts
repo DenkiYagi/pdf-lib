@@ -20,7 +20,7 @@ import {
   PrintScaling,
   ReadingDirection,
   ViewerPreferences,
-} from 'src/core';
+} from 'src/core/index.js';
 import {
   EncryptedPDFError,
   InvalidFontSubsetOptionError,
@@ -28,15 +28,15 @@ import {
   PDFDocument,
   PDFPage,
   PDFFont,
-} from 'src/api';
+} from 'src/api/index.js';
 import {
   InvalidIndirectObjectError,
   FontkitAssertionError as PDFLibFontkitAssertionError,
   UnsupportedFontFileFormatError,
-} from 'src/core/errors';
-import { PDFSecurity, SecurityOptions } from 'src/core/security/PDFSecurity';
-import { readBinaryFileSync } from '../test-utils';
-import { InvalidPngError } from 'src/utils';
+} from 'src/core/errors.js';
+import { PDFSecurity, SecurityOptions } from 'src/core/security/PDFSecurity.js';
+import { readBinaryFileSync } from '../test-utils.js';
+import { InvalidPngError } from 'src/utils/index.js';
 
 const examplePngImage = readBinaryFileSync('assets/images/etwe.png');
 
@@ -82,10 +82,10 @@ const makeStubTTFFont = (overrides: Partial<TTFFont> = {}): TTFFont => {
     font: undefined as unknown as TTFFont,
     glyphs: [],
     mapping: {},
-    includeGlyph: jest.fn().mockReturnValue(1),
-    encode: jest.fn().mockReturnValue(new Uint8Array()),
+    includeGlyph: vi.fn().mockReturnValue(1),
+    encode: vi.fn().mockReturnValue(new Uint8Array()),
   };
-  const layout = jest.fn(
+  const layout = vi.fn(
     (): Partial<GlyphRun> => ({
       glyphs: [glyph as Glyph],
       positions: null,
@@ -110,8 +110,8 @@ const makeStubTTFFont = (overrides: Partial<TTFFont> = {}): TTFFont => {
     head: { macStyle: { italic: false } },
     post: { isFixedPitch: false },
     layout: layout as TTFFont['layout'],
-    getGlyph: jest.fn(() => glyph as Glyph),
-    glyphForCodePoint: jest.fn(() => glyph as Glyph),
+    getGlyph: vi.fn(() => glyph as Glyph),
+    glyphForCodePoint: vi.fn(() => glyph as Glyph),
     createSubset: (() => subset) as TTFFont['createSubset'],
     defaultVertOriginY: 0,
     cff: false,
@@ -136,14 +136,14 @@ describe(`PDFDocument`, () => {
         'Trying to parse invalid object:',
         'Invalid object ref:',
       ];
-      console.warn = jest.fn((...args) => {
+      console.warn = vi.fn((...args) => {
         const isIgnored = ignoredWarnings.find((iw) => args[0].includes(iw));
         if (!isIgnored) origConsoleWarn(...args);
       });
     });
 
     beforeEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     afterAll(() => {
@@ -298,8 +298,8 @@ describe(`PDFDocument`, () => {
       const layoutError = new FontkitAssertionError('layout fail');
       const subset = {
         type: 'TTF',
-        includeGlyph: jest.fn().mockReturnValue(1),
-        encode: jest.fn().mockReturnValue(new Uint8Array()),
+        includeGlyph: vi.fn().mockReturnValue(1),
+        encode: vi.fn().mockReturnValue(new Uint8Array()),
       };
       const ttFont = makeStubTTFFont({
         createSubset: (() => subset) as unknown as TTFFont['createSubset'],
@@ -748,7 +748,7 @@ describe(`PDFDocument`, () => {
       expect(ret.length).toBe(2);
       expect(ret[0]).toBeInstanceOf(Uint8Array);
       expect(ret[0]).toEqual(ret[1]);
-      if (!(ID instanceof PDFArray)) fail(`ID is not an instance of PDFArray`);
+      if (!(ID instanceof PDFArray)) assert.fail(`ID is not an instance of PDFArray`);
       expect(ID.size()).toBe(2);
       expect(ID.get(0)).toBeInstanceOf(PDFHexString);
       expect(ID.get(0)).toEqual(ID.get(1));
@@ -756,7 +756,7 @@ describe(`PDFDocument`, () => {
 
     it(`Updates only the second element of the ID array if an ID already exists`, () => {
       const { ID: originalID } = pdfDoc.context.trailerInfo;
-      if (!(originalID instanceof PDFArray)) fail(`Invalid ID entry`);
+      if (!(originalID instanceof PDFArray)) assert.fail(`Invalid ID entry`);
 
       const ret = pdfDoc.updateId();
       const { ID: newID } = pdfDoc.context.trailerInfo;
@@ -766,7 +766,7 @@ describe(`PDFDocument`, () => {
       expect(ret[1]).toBeInstanceOf(Uint8Array);
       expect(ret[0]).not.toEqual(ret[1]);
       if (!(newID instanceof PDFArray)) {
-        fail(`ID is not an instance of PDFArray`);
+        assert.fail(`ID is not an instance of PDFArray`);
       }
       expect(newID.size()).toBe(2);
       expect(newID.get(0)).toEqual(originalID.get(0));

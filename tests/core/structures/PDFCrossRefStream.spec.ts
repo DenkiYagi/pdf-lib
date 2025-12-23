@@ -1,8 +1,8 @@
 import pako from 'pako';
 
-import { PDFContext, PDFCrossRefStream, PDFObject, PDFRef } from 'src/core';
-import { mergeIntoTypedArray, toCharCode } from 'src/utils';
-import { security } from '../objects/shared';
+import { PDFContext, PDFCrossRefStream, PDFObject, PDFRef } from 'src/core/index.js';
+import { mergeIntoTypedArray, toCharCode } from 'src/utils/index.js';
+import { security } from '../objects/shared.js';
 
 describe(`PDFCrossRefStream`, () => {
   const context = PDFContext.create();

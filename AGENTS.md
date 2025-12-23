@@ -7,10 +7,10 @@
 
 ## Project Orientation
 - `src/` – Primary TypeScript source for the library; exports must remain framework-agnostic and compatible with browsers and Node.
-- `tests/` – Jest-powered regression coverage.
+- `tests/` – vitest-powered regression coverage.
 - `apps/` – Example and manual-test harnesses used to validate real-world document flows.
 - `assets/` – Sample PDFs, fonts, and images consumed by docs and tests; treat as fixtures when updating expectations.
-- `build/`, `rollup.config.mjs`, `tsconfig.json`, `jest.json` – Tooling scaffolding for bundling, type emission, and tests.
+- `build/`, `rollup.config.mjs`, `tsconfig.json`, `vitest.config.ts` – Tooling scaffolding for bundling, type emission, and tests.
 - `docs/` – Markdown/docs site material mirrored from upstream; update only when behavior changes.
 - `scratchpad/` – Throwaway experiments; do not rely on contents for production logic.
 

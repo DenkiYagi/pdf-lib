@@ -1,6 +1,6 @@
-import { PDFDocument } from 'src/api';
-import { PDFContext, PDFPageEmbedder, PDFRawStream, PDFRef } from 'src/core';
-import { readBinaryFileSync } from '../../test-utils';
+import { PDFDocument } from 'src/api/index.js';
+import { PDFContext, PDFPageEmbedder, PDFRawStream, PDFRef } from 'src/core/index.js';
+import { readBinaryFileSync } from '../../test-utils.js';
 
 const examplePdf = readBinaryFileSync('./assets/pdfs/normal.pdf');
 

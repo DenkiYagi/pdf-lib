@@ -9,10 +9,10 @@ import {
   PDFNumber,
   PDFRef,
   PDFString,
-} from 'src/core';
-import { toCharCode, typedArrayFor } from 'src/utils';
-import { mockRandom, resetMock } from '../security/mock';
-import { security } from './shared';
+} from 'src/core/index.js';
+import { toCharCode, typedArrayFor } from 'src/utils/index.js';
+import { mockRandom, resetMock } from '../security/mock.js';
+import { security } from './shared.js';
 
 describe(`PDFArray`, () => {
   const context = PDFContext.create();

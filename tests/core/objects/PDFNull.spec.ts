@@ -1,6 +1,6 @@
-import { PDFNull, PDFRef } from 'src/core';
-import { toCharCode, typedArrayFor } from 'src/utils';
-import { security } from './shared';
+import { PDFNull, PDFRef } from 'src/core/index.js';
+import { toCharCode, typedArrayFor } from 'src/utils/index.js';
+import { security } from './shared.js';
 
 describe(`PDFNull`, () => {
   it(`cannot be publicly constructed`, () => {

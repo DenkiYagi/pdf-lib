@@ -1,5 +1,5 @@
-import { PDFContext, PDFDict, PDFRef, FileEmbedder } from 'src/core';
-import { readBinaryFileSync } from '../../test-utils';
+import { PDFContext, PDFDict, PDFRef, FileEmbedder } from 'src/core/index.js';
+import { readBinaryFileSync } from '../../test-utils.js';
 
 const catRidingUnicornJpg = readBinaryFileSync(
   'assets/images/cat_riding_unicorn.jpg',

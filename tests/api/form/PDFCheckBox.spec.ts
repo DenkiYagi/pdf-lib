@@ -1,6 +1,6 @@
-import { AnnotationFlags } from 'src/core';
-import { PDFDocument } from 'src/api';
-import { readBinaryFileSync } from '../../test-utils';
+import { AnnotationFlags } from 'src/core/index.js';
+import { PDFDocument } from 'src/api/index.js';
+import { readBinaryFileSync } from '../../test-utils.js';
 
 const fancyFieldsPdfBytes = readBinaryFileSync('assets/pdfs/fancy_fields.pdf');
 const pdfDocPromise = PDFDocument.load(fancyFieldsPdfBytes);

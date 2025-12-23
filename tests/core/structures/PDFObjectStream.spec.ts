@@ -10,9 +10,9 @@ import {
   PDFRawStream,
   PDFRef,
   PDFString,
-} from 'src/core';
-import { mergeIntoTypedArray, toCharCode, typedArrayFor } from 'src/utils';
-import { security } from '../objects/shared';
+} from 'src/core/index.js';
+import { mergeIntoTypedArray, toCharCode, typedArrayFor } from 'src/utils/index.js';
+import { security } from '../objects/shared.js';
 
 describe(`PDFObjectStream`, () => {
   const context = PDFContext.create();

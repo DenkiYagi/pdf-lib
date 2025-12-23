@@ -6,7 +6,8 @@
     "rootDir": null,
     "rootDirs": ["../src", "../tests"],
     "isolatedModules": true,
-    "module": "commonjs",
-    "moduleResolution": "node10"
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "types": ["vitest/globals"]
   }
 }

@@ -1,4 +1,4 @@
-import { PDFPageLeaf } from 'src/core/structures/PDFPageLeaf';
+import { PDFPageLeaf } from 'src/core/structures/PDFPageLeaf.js';
 import {
   PDFArray,
   PDFBool,
@@ -14,8 +14,8 @@ import {
   PDFRawStream,
   PDFRef,
   PDFString,
-} from 'src/core';
-import { mergeIntoTypedArray, numberToString, typedArrayFor } from 'src/utils';
+} from 'src/core/index.js';
+import { mergeIntoTypedArray, numberToString, typedArrayFor } from 'src/utils/index.js';
 
 type ParseOptions = { capNumbers?: boolean };
 
@@ -42,14 +42,14 @@ describe(`PDFObjectParser`, () => {
     const ignoredWarnings = [
       'Parsed number that is too large for some PDF readers:',
     ];
-    console.warn = jest.fn((...args) => {
+    console.warn = vi.fn((...args) => {
       const isIgnored = ignoredWarnings.find((iw) => args[0].includes(iw));
       if (!isIgnored) origConsoleWarn(...args);
     });
   });
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   afterAll(() => {

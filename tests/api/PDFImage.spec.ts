@@ -1,6 +1,6 @@
-import { PDFDocument, PDFImage } from 'src/api';
-import { PngEmbedder } from 'src/core';
-import { readBinaryFileSync } from '../test-utils';
+import { PDFDocument, PDFImage } from 'src/api/index.js';
+import { PngEmbedder } from 'src/core/index.js';
+import { readBinaryFileSync } from '../test-utils.js';
 
 const examplePngImage = readBinaryFileSync('assets/images/etwe.png');
 

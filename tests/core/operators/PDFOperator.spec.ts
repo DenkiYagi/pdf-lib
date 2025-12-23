@@ -3,8 +3,8 @@ import {
   PDFOperator,
   PDFOperatorNames as Ops,
   PDFString,
-} from 'src/core';
-import { toCharCode, typedArrayFor } from 'src/utils';
+} from 'src/core/index.js';
+import { toCharCode, typedArrayFor } from 'src/utils/index.js';
 
 describe(`PDFOperator`, () => {
   it(`can be constructed with args`, () => {

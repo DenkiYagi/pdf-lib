@@ -1,8 +1,8 @@
 import { FontNames } from '@pdf-lib/standard-fonts';
 
-import { CustomFontEmbedder, StandardFontEmbedder } from 'src/core';
-import { breakTextIntoLines } from 'src/utils';
-import { readBinaryFileSync } from '../test-utils';
+import { CustomFontEmbedder, StandardFontEmbedder } from 'src/core/index.js';
+import { breakTextIntoLines } from 'src/utils/index.js';
+import { readBinaryFileSync } from '../test-utils.js';
 
 const font = StandardFontEmbedder.for(FontNames.Helvetica);
 

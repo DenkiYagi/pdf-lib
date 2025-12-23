@@ -4,7 +4,7 @@ import {
   PDFRef,
   PDFName,
   PDFWidgetAnnotation,
-} from 'src/core';
+} from 'src/core/index.js';
 import {
   PDFDocument,
   PDFTextField,
@@ -14,8 +14,8 @@ import {
   PDFOptionList,
   PDFDropdown,
   PDFForm,
-} from 'src/api';
-import { readBinaryFileSync } from '../../test-utils';
+} from 'src/api/index.js';
+import { readBinaryFileSync } from '../../test-utils.js';
 
 const getWidgets = (pdfDoc: PDFDocument) =>
   pdfDoc.context
@@ -62,14 +62,14 @@ describe(`PDFForm`, () => {
     const ignoredWarnings = [
       'Removing XFA form data as pdf-lib does not support reading or writing XFA',
     ];
-    console.warn = jest.fn((...args) => {
+    console.warn = vi.fn((...args) => {
       const isIgnored = ignoredWarnings.find((iw) => args[0].includes(iw));
       if (!isIgnored) origConsoleWarn(...args);
     });
   });
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   afterAll(() => {
@@ -292,7 +292,7 @@ describe(`PDFForm`, () => {
 
     expect(() => form.updateFieldAppearances()).not.toThrow();
 
-    expect(
+    await expect(
       pdfDoc.save({ updateFieldAppearances: true }),
     ).resolves.toBeInstanceOf(Uint8Array);
   });
