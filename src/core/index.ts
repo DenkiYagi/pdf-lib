@@ -24,6 +24,9 @@ export { JpegEmbedder } from 'src/core/embedders/JpegEmbedder.js';
 export { PngEmbedder } from 'src/core/embedders/PngEmbedder.js';
 export { PDFPageEmbedder } from 'src/core/embedders/PDFPageEmbedder.js';
 export type { PageBoundingBox } from 'src/core/embedders/PDFPageEmbedder.js';
+export { BasicPresetShaper } from 'src/core/embedders/shapers/BasicPresetShaper.js';
+export { HorizontalPresetShaper } from 'src/core/embedders/shapers/HorizontalPresetShaper.js';
+export { VerticalPresetShaper } from 'src/core/embedders/shapers/VerticalPresetShaper.js';
 
 export {
   ViewerPreferences,
