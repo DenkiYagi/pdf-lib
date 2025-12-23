@@ -18,9 +18,9 @@ import {
   rgb,
   setLineJoin,
   StandardFonts,
-} from '../../../es/index.js';
-import { AFRelationship } from '../../../es/core/index.js';
-import { typedArrayFor } from '../../../es/utils/index.js';
+} from '../../../dist/es/index.js';
+import { AFRelationship } from '../../../dist/es/core/index.js';
+import { typedArrayFor } from '../../../dist/es/utils/index.js';
 
 const ipsumLines = [
   'Eligendi est pariatur quidem in non excepturi et.',

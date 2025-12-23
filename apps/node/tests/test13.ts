@@ -1,7 +1,7 @@
 import fs from 'fs';
 
 import { Assets } from '../index.js';
-import { PDFDocument, rgb } from '../../../es/index.js';
+import { PDFDocument, rgb } from '../../../dist/es/index.js';
 
 // prettier-ignore
 const pngSuite = [

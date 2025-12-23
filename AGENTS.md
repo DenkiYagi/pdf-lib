@@ -9,6 +9,7 @@
 - `src/` – Primary TypeScript source for the library; exports must remain framework-agnostic and compatible with browsers and Node.
 - `tests/` – vitest-powered unit tests.
 - `apps/` – Example and manual-test harnesses used to validate real-world document flows.
+- `dist/` – Build outputs (`dist/es` ESM + typings, `dist/umd` UMD bundle).
 - `assets/` – Sample PDFs, fonts, and images consumed by docs and tests; treat as fixtures when updating expectations.
 - `build/`, `rollup.config.mjs`, `tsconfig.json`, `vitest.config.ts` – Tooling scaffolding for bundling, type emission, and tests.
 - `docs/` – Markdown/docs site material mirrored from upstream. CAUTION: do not rely on them; they may be outdated.

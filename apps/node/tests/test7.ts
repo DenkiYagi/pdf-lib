@@ -1,5 +1,5 @@
 import { Assets } from '../index.js';
-import { degrees, ParseSpeeds, PDFDocument, StandardFonts } from '../../../es/index.js';
+import { degrees, ParseSpeeds, PDFDocument, StandardFonts } from '../../../dist/es/index.js';
 
 const createDonorPdf = async () => {
   const pdfDoc = await PDFDocument.create();

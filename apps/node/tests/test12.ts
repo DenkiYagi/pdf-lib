@@ -8,8 +8,8 @@ import {
   degrees,
   rgb,
   grayscale,
-} from '../../../es/index.js';
-import { values } from '../../../es/utils/index.js';
+} from '../../../dist/es/index.js';
+import { values } from '../../../dist/es/utils/index.js';
 
 const inchToPt = (inches: number) => Math.round(inches * 72);
 

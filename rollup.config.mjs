@@ -4,16 +4,16 @@ import json from '@rollup/plugin-json';
 import terser from '@rollup/plugin-terser';
 
 export default {
-  input: 'es/all.js',
+  input: 'dist/es/all.js',
   output: [
     {
-      file: 'umd/pdf-lib.js',
+      file: 'dist/umd/pdf-lib.js',
       name: 'PDFLib',
       format: 'umd',
       sourcemap: true,
     },
     {
-      file: 'umd/pdf-lib.min.js',
+      file: 'dist/umd/pdf-lib.min.js',
       name: 'PDFLib',
       format: 'umd',
       sourcemap: true,

@@ -1,6 +1,6 @@
 import { Assets } from '../index.js';
-import { PDFDocument, PDFFont, StandardFonts } from '../../../es/index.js';
-import { charAtIndex, last } from '../../../es/utils/index.js';
+import { PDFDocument, PDFFont, StandardFonts } from '../../../dist/es/index.js';
+import { charAtIndex, last } from '../../../dist/es/utils/index.js';
 
 const breakTextIntoLines = (
   text: string,

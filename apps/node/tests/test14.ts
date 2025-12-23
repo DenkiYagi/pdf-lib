@@ -1,7 +1,7 @@
 import { Assets } from '../index.js';
-import { PDFDocument, PDFTextField } from '../../../es/index.js';
-import type { PDFField } from '../../../es/api/form/PDFField.js';
-import { values } from '../../../es/utils/index.js';
+import { PDFDocument, PDFTextField } from '../../../dist/es/index.js';
+import type { PDFField } from '../../../dist/es/api/form/PDFField.js';
+import { values } from '../../../dist/es/utils/index.js';
 
 const fieldNames = {
   // Page 1
