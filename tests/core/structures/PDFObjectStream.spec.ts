@@ -11,7 +11,11 @@ import {
   PDFRef,
   PDFString,
 } from 'src/core/index.js';
-import { mergeIntoTypedArray, toCharCode, typedArrayFor } from 'src/utils/index.js';
+import {
+  mergeIntoTypedArray,
+  toCharCode,
+  typedArrayFor,
+} from 'src/utils/index.js';
 import { security } from '../objects/shared.js';
 
 describe(`PDFObjectStream`, () => {

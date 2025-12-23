@@ -1,5 +1,9 @@
 import pako from 'pako';
-import { moveText, popGraphicsState, pushGraphicsState } from 'src/api/index.js';
+import {
+  moveText,
+  popGraphicsState,
+  pushGraphicsState,
+} from 'src/api/index.js';
 
 import {
   PDFContentStream,
@@ -13,7 +17,11 @@ import {
   PDFRef,
   PDFString,
 } from 'src/core/index.js';
-import { mergeIntoTypedArray, toCharCode, typedArrayFor } from 'src/utils/index.js';
+import {
+  mergeIntoTypedArray,
+  toCharCode,
+  typedArrayFor,
+} from 'src/utils/index.js';
 import { security } from '../objects/shared.js';
 
 describe(`PDFContentStream`, () => {

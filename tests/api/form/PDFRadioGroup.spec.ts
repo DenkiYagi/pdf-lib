@@ -1,4 +1,9 @@
-import { AnnotationFlags, PDFArray, PDFHexString, PDFName } from 'src/core/index.js';
+import {
+  AnnotationFlags,
+  PDFArray,
+  PDFHexString,
+  PDFName,
+} from 'src/core/index.js';
 import { PDFDocument } from 'src/api/index.js';
 import { readBinaryFileSync } from '../../test-utils.js';
 

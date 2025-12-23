@@ -15,7 +15,11 @@ import {
   PDFRef,
   PDFString,
 } from 'src/core/index.js';
-import { mergeIntoTypedArray, numberToString, typedArrayFor } from 'src/utils/index.js';
+import {
+  mergeIntoTypedArray,
+  numberToString,
+  typedArrayFor,
+} from 'src/utils/index.js';
 
 type ParseOptions = { capNumbers?: boolean };
 

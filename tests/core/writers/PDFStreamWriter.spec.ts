@@ -1,4 +1,9 @@
-import { PDFContext, PDFName, PDFRef, PDFStreamWriter } from 'src/core/index.js';
+import {
+  PDFContext,
+  PDFName,
+  PDFRef,
+  PDFStreamWriter,
+} from 'src/core/index.js';
 import { readBinaryFileSync } from '../../test-utils.js';
 
 const expectedPdfBytes = readBinaryFileSync(

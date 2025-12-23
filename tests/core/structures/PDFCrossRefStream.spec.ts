@@ -1,6 +1,11 @@
 import pako from 'pako';
 
-import { PDFContext, PDFCrossRefStream, PDFObject, PDFRef } from 'src/core/index.js';
+import {
+  PDFContext,
+  PDFCrossRefStream,
+  PDFObject,
+  PDFRef,
+} from 'src/core/index.js';
 import { mergeIntoTypedArray, toCharCode } from 'src/utils/index.js';
 import { security } from '../objects/shared.js';
 

@@ -1,4 +1,10 @@
-import { PDFContext, PDFDict, PDFObject, PDFRawStream, PDFRef } from 'src/core/index.js';
+import {
+  PDFContext,
+  PDFDict,
+  PDFObject,
+  PDFRawStream,
+  PDFRef,
+} from 'src/core/index.js';
 import { mergeIntoTypedArray, toCharCode } from 'src/utils/index.js';
 import { mockRandom, resetMock } from '../security/mock.js';
 import { security } from './shared.js';

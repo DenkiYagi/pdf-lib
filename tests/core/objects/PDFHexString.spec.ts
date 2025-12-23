@@ -1,5 +1,11 @@
 import { PDFDocument } from 'src/api/index.js';
-import { PDFArray, PDFDict, PDFHexString, PDFObject, PDFRef } from 'src/core/index.js';
+import {
+  PDFArray,
+  PDFDict,
+  PDFHexString,
+  PDFObject,
+  PDFRef,
+} from 'src/core/index.js';
 import { toCharCode, typedArrayFor } from 'src/utils/index.js';
 import { mockRandom, resetMock } from '../security/mock.js';
 import { security } from './shared.js';
@@ -214,7 +220,9 @@ describe(`PDFHexString`, () => {
     const { ID } = pdfDoc.context.trailerInfo;
     if (!(ID instanceof PDFArray)) assert.fail(`Invalid ID value`);
     for (const idElement of ID.asArray()) {
-      if (!(idElement instanceof PDFHexString)) assert.fail(`Invalid ID element`);
+      if (!(idElement instanceof PDFHexString)) {
+        assert.fail(`Invalid ID element`);
+      }
       expect(idElement.encryptWith(key, ref)).toBe(null);
     }
 

@@ -1,5 +1,10 @@
 import { Assets } from '../index.js';
-import { ParseSpeeds, PDFDocument, PDFPage, rgb } from '../../../dist/es/index.js';
+import {
+  ParseSpeeds,
+  PDFDocument,
+  PDFPage,
+  rgb,
+} from '../../../dist/es/index.js';
 
 // This test loads an existing PDF document with many pages.
 // It inserts data for every page (images, rectangles, texts, embedded PDFs).
