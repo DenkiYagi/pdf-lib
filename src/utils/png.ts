@@ -1,8 +1,17 @@
-import UPNG from '@pdf-lib/upng';
+import UPNGModule from '@pdf-lib/upng';
 import {
   AnimatedPngNotSupportedError,
   InvalidPngError,
 } from 'src/utils/errors.js';
+
+/**
+ * UPNGModule has different shapes depending on the bundler / module system.
+ * The following attempts to cover the most common cases.
+ */
+const UPNG: typeof UPNGModule =
+  (UPNGModule as any)?.default?.default ??
+  (UPNGModule as any)?.default ??
+  (UPNGModule as any);
 
 const mapUpngError = (error: unknown, msgPrefix: string): InvalidPngError => {
   const message =
