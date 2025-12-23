@@ -44,8 +44,7 @@
     "lint:tslint:src": "tslint --project tsconfig.json --fix",
     "lint:tslint:tests": "tslint --project tests/tsconfig.json --fix",
     "lint:prettier": "prettier --write \"./{src,tests,apps}/**/*.{ts,js,json,html,css}\" --log-level error",
-    "build": "yarn build:cjs && yarn build:es && yarn build:umd",
-    "build:cjs": "tsc --module commonjs --moduleResolution node10 --outDir cjs",
+    "build": "yarn build:es && yarn build:umd",
     "build:es": "tsc --module nodenext --moduleResolution nodenext --outDir es",
     "build:umd": "yarn rollup --config rollup.config.mjs",
     "scratchpad:start": "tsc --build scratchpad/tsconfig.json --watch",
@@ -55,29 +54,25 @@
     "apps:web": "http-server -c-1 ."
   },
   "type": "module",
-  "main": "cjs/index.js",
+  "main": "es/index.js",
   "module": "es/index.js",
   "types": "es/index.d.ts",
   "exports": {
     ".": {
       "import": "./es/index.js",
-      "require": "./cjs/index.js",
       "types": "./es/index.d.ts"
     },
     "./all": {
       "import": "./es/all.js",
-      "require": "./cjs/all.js",
       "types": "./es/all.d.ts"
     },
     "./core": {
       "import": "./es/core/index.js",
-      "default": "./cjs/core/index.js",
       "types": "./es/core/index.d.ts"
     },
     "./package.json": "./package.json"
   },
   "files": [
-    "cjs/",
     "es/",
     "umd/",
     "src/",
