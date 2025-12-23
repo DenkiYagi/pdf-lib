@@ -2,7 +2,7 @@
   "compilerOptions": {
     /* Basic Options */
     "target": "es2022",
-    "module": "commonjs",
+    "module": "nodenext",
     "composite": false,
     "incremental": true,
     "tsBuildInfoFile": "./tsBuildInfo.json",
@@ -21,7 +21,7 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "preserveSymlinks": true,
-    "moduleResolution": "node"
+    "moduleResolution": "nodenext"
   },
   "include": ["./**/*"]
 }

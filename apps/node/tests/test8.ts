@@ -1,5 +1,11 @@
-import { Assets } from '..';
-import { ParseSpeeds, PDFDocument, rgb, StandardFonts } from '../../..';
+import { Assets } from '../index.js';
+import {
+  ParseSpeeds,
+  PDFDocument,
+  PDFPage,
+  rgb,
+  StandardFonts,
+} from '../../../es/index.js';
 
 export default async (assets: Assets) => {
   const { pdfs } = assets;
@@ -24,7 +30,7 @@ export default async (assets: Assets) => {
   firstPage.setFontColor(rgb(1, 0, 0));
   firstPage.drawText(text);
 
-  pages.forEach((page, idx) => {
+  pages.forEach((page: PDFPage, idx: number) => {
     page.moveTo(10, 10);
     page.setFont(helveticaFont);
     page.setFontSize(17);

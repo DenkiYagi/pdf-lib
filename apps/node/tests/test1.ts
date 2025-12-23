@@ -1,4 +1,4 @@
-import { Assets } from '..';
+import { Assets } from '../index.js';
 import {
   clip,
   clipEvenOdd,
@@ -18,9 +18,9 @@ import {
   rgb,
   setLineJoin,
   StandardFonts,
-} from '../../..';
-import { AFRelationship } from '../../../cjs/core';
-import { typedArrayFor } from '../../../cjs/utils';
+} from '../../../es/index.js';
+import { AFRelationship } from '../../../es/core/index.js';
+import { typedArrayFor } from '../../../es/utils/index.js';
 
 const ipsumLines = [
   'Eligendi est pariatur quidem in non excepturi et.',

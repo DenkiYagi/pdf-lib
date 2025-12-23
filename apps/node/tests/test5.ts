@@ -1,5 +1,11 @@
-import { Assets } from '..';
-import { ParseSpeeds, PDFDocument, rgb, StandardFonts } from '../../..';
+import { Assets } from '../index.js';
+import {
+  ParseSpeeds,
+  PDFDocument,
+  PDFPage,
+  rgb,
+  StandardFonts,
+} from '../../../es/index.js';
 
 export default async (assets: Assets) => {
   const { pdfs, images } = assets;
@@ -18,7 +24,7 @@ export default async (assets: Assets) => {
 
   const pages = pdfDoc.getPages();
 
-  pages.forEach((page) => {
+  pages.forEach((page: PDFPage) => {
     const { width, height } = page.getSize();
     page.drawImage(minionsBananaImage, {
       ...minionsBananaDims,
@@ -28,7 +34,7 @@ export default async (assets: Assets) => {
   });
 
   // Interleave new pages between all existing ones
-  pages.forEach((_, idx) => {
+  pages.forEach((_page: PDFPage, idx: number) => {
     const newPage = pdfDoc.insertPage(2 * idx + 1, [500, 150]);
 
     const fontSize = 24;

@@ -1,5 +1,5 @@
-import { Assets } from '..';
-import { PDFDocument } from '../../..';
+import { Assets } from '../index.js';
+import { PDFDocument } from '../../../es/index.js';
 
 // Based on test14.ts
 const loadA = async (assets: Assets) => {

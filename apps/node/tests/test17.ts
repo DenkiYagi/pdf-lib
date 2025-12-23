@@ -1,4 +1,4 @@
-import { Assets } from '..';
+import { Assets } from '../index.js';
 import {
   PDFDocument,
   StandardFonts,
@@ -8,8 +8,8 @@ import {
   drawText,
   PDFFont,
   drawEllipse,
-} from '../../..';
-import { PDFWidgetAnnotation } from '../../../cjs/core';
+} from '../../../es/index.js';
+import { PDFWidgetAnnotation } from '../../../es/core/index.js';
 
 export default async (assets: Assets) => {
   const pdfDoc = await PDFDocument.load(assets.pdfs.fancy_fields);
@@ -159,32 +159,32 @@ export default async (assets: Assets) => {
     if (!condition) throw new Error(msg || 'Assertion failed');
   };
 
-  btn.updateAppearances(symbol, (field, widget, font) => {
+  btn.updateAppearances(symbol, (field: typeof btn, widget: PDFWidgetAnnotation, font: PDFFont) => {
     assert(field === btn);
     assert(widget instanceof PDFWidgetAnnotation);
     return [...rectangle, ...symbolText(font)];
   });
-  cb.updateAppearances((field, widget) => {
+  cb.updateAppearances((field: typeof cb, widget: PDFWidgetAnnotation) => {
     assert(field === cb);
     assert(widget instanceof PDFWidgetAnnotation);
     return { on: [...rectangle, ...circle], off: [...rectangle, ...circle] };
   });
-  dd.updateAppearances(symbol, (field, widget, font) => {
+  dd.updateAppearances(symbol, (field: typeof dd, widget: PDFWidgetAnnotation, font: PDFFont) => {
     assert(field === dd);
     assert(widget instanceof PDFWidgetAnnotation);
     return [...rectangle, ...symbolText(font)];
   });
-  ol.updateAppearances(symbol, (field, widget, font) => {
+  ol.updateAppearances(symbol, (field: typeof ol, widget: PDFWidgetAnnotation, font: PDFFont) => {
     assert(field === ol);
     assert(widget instanceof PDFWidgetAnnotation);
     return [...rectangle, ...symbolText(font)];
   });
-  rg.updateAppearances((field, widget) => {
+  rg.updateAppearances((field: typeof rg, widget: PDFWidgetAnnotation) => {
     assert(field === rg);
     assert(widget instanceof PDFWidgetAnnotation);
     return { on: [...rectangle, ...circle], off: [...rectangle, ...circle] };
   });
-  tf.updateAppearances(symbol, (field, widget, font) => {
+  tf.updateAppearances(symbol, (field: typeof tf, widget: PDFWidgetAnnotation, font: PDFFont) => {
     assert(field === tf);
     assert(widget instanceof PDFWidgetAnnotation);
     return [...rectangle, ...symbolText(font)];

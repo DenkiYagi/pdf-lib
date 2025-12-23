@@ -1,6 +1,7 @@
-import { Assets } from '..';
-import { PDFDocument, PDFTextField } from '../../..';
-import { values } from '../../../cjs/utils';
+import { Assets } from '../index.js';
+import { PDFDocument, PDFTextField } from '../../../es/index.js';
+import type { PDFField } from '../../../es/api/form/PDFField.js';
+import { values } from '../../../es/utils/index.js';
 
 const fieldNames = {
   // Page 1
@@ -121,7 +122,7 @@ export default async (assets: Assets) => {
   // Fill in remaining fields with random numeric values
   const fieldNameValues = values(fieldNames);
   const fields = form.getFields();
-  fields.forEach((field) => {
+  fields.forEach((field: PDFField) => {
     if (!fieldNameValues.includes(field.getName())) {
       if (field instanceof PDFTextField) {
         const value = String(Math.floor(Math.random() * 1000000) / 100);

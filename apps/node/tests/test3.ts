@@ -1,4 +1,4 @@
-import { Assets } from '..';
+import { Assets } from '../index.js';
 import {
   degrees,
   ParseSpeeds,
@@ -6,7 +6,7 @@ import {
   rgb,
   StandardFonts,
   LineCapStyle,
-} from '../../..';
+} from '../../../es/index.js';
 
 export default async (assets: Assets) => {
   const { pdfs, images } = assets;
