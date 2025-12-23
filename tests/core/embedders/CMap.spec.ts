@@ -1,4 +1,4 @@
-import * as fontkit from '@denkiyagi/fontkit';
+import { create as createFont } from '@denkiyagi/fontkit';
 import type { TTFFont, Glyph } from '@denkiyagi/fontkit';
 import fs from 'fs';
 
@@ -28,7 +28,7 @@ const allGlyphsInFontSortedById = (font: TTFFont) => {
 
 describe(`createCmap`, () => {
   it(`creates CMaps for embedded Ubuntu-R font files`, () => {
-    const font = fontkit.create(ubuntuFont);
+    const font = createFont(ubuntuFont);
     if (font.type !== 'TTF') assert.fail(`Invalid font type: ${font.type}`);
 
     const glyphs = allGlyphsInFontSortedById(font);
@@ -38,7 +38,7 @@ describe(`createCmap`, () => {
   });
 
   it(`creates CMaps for embedded SourceHanSerifJP-Regular font files`, () => {
-    const font = fontkit.create(sourceHansJpFont);
+    const font = createFont(sourceHansJpFont);
     if (font.type !== 'TTF') assert.fail(`Invalid font type: ${font.type}`);
 
     const glyphs = allGlyphsInFontSortedById(font);
