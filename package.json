@@ -68,7 +68,7 @@
     "MODIFICATIONS.md"
   ],
   "dependencies": {
-    "@denkiyagi/fontkit": "2.0.4-mod.2025.4",
+    "@denkiyagi/fontkit": "2.0.4-mod.2025.5",
     "@pdf-lib/standard-fonts": "^1.0.0",
     "@pdf-lib/upng": "^1.0.1",
     "crypto-js": "^4.2.0",

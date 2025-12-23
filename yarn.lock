@@ -443,10 +443,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@denkiyagi/fontkit@2.0.4-mod.2025.4":
-  version "2.0.4-mod.2025.4"
-  resolved "https://npm.pkg.github.com/download/@denkiyagi/fontkit/2.0.4-mod.2025.4/2cff0a6b879c92fbc2c513a9a497afd07f1647d8#2cff0a6b879c92fbc2c513a9a497afd07f1647d8"
-  integrity sha512-7HmTlx9Kh3d4sa+oY4ypfVZU6p7SysLx9A50ZAJ6TK/Nr8dUEimTamdwvM3JHi1DoOaKAzu+L49NGTWGRiMC/A==
+"@denkiyagi/fontkit@2.0.4-mod.2025.5":
+  version "2.0.4-mod.2025.5"
+  resolved "https://npm.pkg.github.com/download/@denkiyagi/fontkit/2.0.4-mod.2025.5/e02922b8aa4af61e5ef7d055cd027076f389de07#e02922b8aa4af61e5ef7d055cd027076f389de07"
+  integrity sha512-kgyQclBo9+Dc5hW+QYB3DoQJDlZFXlwYoVyoAR4GCNszg9eXKb46gyScoa2bzVkvf35sFWwuh8Z4xRMq+4/o+w==
   dependencies:
     "@swc/helpers" "^0.5.17"
     dfa "^1.2.0"
