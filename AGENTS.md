@@ -7,16 +7,18 @@
 
 ## Project Orientation
 - `src/` – Primary TypeScript source for the library; exports must remain framework-agnostic and compatible with browsers and Node.
-- `tests/` – vitest-powered regression coverage.
+- `tests/` – vitest-powered unit tests.
 - `apps/` – Example and manual-test harnesses used to validate real-world document flows.
 - `assets/` – Sample PDFs, fonts, and images consumed by docs and tests; treat as fixtures when updating expectations.
 - `build/`, `rollup.config.mjs`, `tsconfig.json`, `vitest.config.ts` – Tooling scaffolding for bundling, type emission, and tests.
-- `docs/` – Markdown/docs site material mirrored from upstream; update only when behavior changes.
+- `docs/` – Markdown/docs site material mirrored from upstream. CAUTION: do not rely on them; they may be outdated.
 - `scratchpad/` – Throwaway experiments; do not rely on contents for production logic.
 
 ## Tech Stack
 - Node.js 20+ runtime, Yarn package manager.
 - TypeScript 5.x across source and typings.
+- Native ES modules both for source and build outputs.
+- vitest for unit testing.
 - Critical dependency: `@denkiyagi/fontkit` (our fork) powers font parsing, embedding, and subsetting.
 
 ## Common Commands
