@@ -22,10 +22,8 @@ export {
 } from 'src/core/embedders/FileEmbedder.js';
 export { JpegEmbedder } from 'src/core/embedders/JpegEmbedder.js';
 export { PngEmbedder } from 'src/core/embedders/PngEmbedder.js';
-export {
-  PDFPageEmbedder,
-  PageBoundingBox,
-} from 'src/core/embedders/PDFPageEmbedder.js';
+export { PDFPageEmbedder } from 'src/core/embedders/PDFPageEmbedder.js';
+export type { PageBoundingBox } from 'src/core/embedders/PDFPageEmbedder.js';
 
 export {
   ViewerPreferences,

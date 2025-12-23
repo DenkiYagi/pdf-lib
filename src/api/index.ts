@@ -17,4 +17,4 @@ export { PDFImage } from 'src/api/PDFImage.js';
 export { PDFPage } from 'src/api/PDFPage.js';
 export { PDFEmbeddedPage } from 'src/api/PDFEmbeddedPage.js';
 export { PDFJavaScript } from 'src/api/PDFJavaScript.js';
-export { Embeddable } from 'src/api/Embeddable.js';
+export type { Embeddable } from 'src/api/Embeddable.js';
