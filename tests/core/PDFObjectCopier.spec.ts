@@ -14,7 +14,7 @@ import {
   PDFRawStream,
   PDFRef,
   PDFString,
-} from 'src/core';
+} from 'src/core/index.js';
 
 describe(`PDFObjectCopier`, () => {
   it(`copies PDFDicts, including their indirect references`, () => {

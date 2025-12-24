@@ -1,8 +1,8 @@
-import type { PDFDict } from 'src/core/objects/PDFDict';
-import { PDFAcroButton } from 'src/core/acroform/PDFAcroButton';
-import type { PDFContext } from 'src/core/PDFContext';
-import type { PDFRef } from 'src/core/objects/PDFRef';
-import { AcroButtonFlags } from 'src/core/acroform/flags';
+import type { PDFDict } from 'src/core/objects/PDFDict.js';
+import { PDFAcroButton } from 'src/core/acroform/PDFAcroButton.js';
+import type { PDFContext } from 'src/core/PDFContext.js';
+import type { PDFRef } from 'src/core/objects/PDFRef.js';
+import { AcroButtonFlags } from 'src/core/acroform/flags.js';
 
 export class PDFAcroPushButton extends PDFAcroButton {
   static fromDict = (dict: PDFDict, ref: PDFRef) =>

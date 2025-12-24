@@ -1,5 +1,7 @@
 # Maintainership
 
+> **CAUTION**: This document is mirrored from upstream and is out of date.
+
 Hello friend! I'm [@hopding](https://github.com/Hopding/), the principal maintainer of `pdf-lib` 👋. I [started the project](https://github.com/Hopding/pdf-lib/commit/fd7459e5ecee898c4f6bbccae021af2d837d64be) in September 2017 and have been building and maintaining it ever since 🙂.
 
 I value the time and effort contributors put into improving the project. I also appreciate `pdf-lib`'s users and understand that they have questions about the project and suggestions for how to improve it.

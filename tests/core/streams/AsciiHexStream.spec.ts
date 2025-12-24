@@ -1,6 +1,6 @@
-import { AsciiHexStream } from 'src/core/streams/AsciiHexStream';
-import { Stream } from 'src/core/streams/Stream';
-import { readBinaryFileSync } from '../../test-utils';
+import { AsciiHexStream } from 'src/core/streams/AsciiHexStream.js';
+import { Stream } from 'src/core/streams/Stream.js';
+import { readBinaryFileSync } from '../../test-utils.js';
 
 const DIR = `tests/core/streams/data/asciihex`;
 const FILES = ['1', '2'];

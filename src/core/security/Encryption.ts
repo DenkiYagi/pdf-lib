@@ -1,9 +1,9 @@
-import type { LiteralObject } from 'src/core/PDFContext';
-import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter';
-import type { PDFObject } from 'src/core/objects/PDFObject';
-import type { PDFRef } from 'src/core/objects/PDFRef';
-import type { StdSecurityHandlerDict } from 'src/core/security/StdSecurityHandler';
-import type { WordArray } from 'src/utils/crypt';
+import type { LiteralObject } from 'src/core/PDFContext.js';
+import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter.js';
+import type { PDFObject } from 'src/core/objects/PDFObject.js';
+import type { PDFRef } from 'src/core/objects/PDFRef.js';
+import type { StdSecurityHandlerDict } from 'src/core/security/StdSecurityHandler.js';
+import type { WordArray } from 'src/utils/crypt.js';
 
 /**
  * Set of values that will be generated when preparing a PDF document for encryption.

@@ -1,10 +1,10 @@
-import { PDFDict, DictMap } from 'src/core/objects/PDFDict';
-import { PDFName } from 'src/core/objects/PDFName';
-import type { PDFRef } from 'src/core/objects/PDFRef';
-import type { PDFContext } from 'src/core/PDFContext';
-import type { PDFPageTree } from 'src/core/structures/PDFPageTree';
-import { PDFAcroForm } from 'src/core/acroform';
-import { ViewerPreferences } from '../interactive/ViewerPreferences';
+import { PDFDict, DictMap } from 'src/core/objects/PDFDict.js';
+import { PDFName } from 'src/core/objects/PDFName.js';
+import type { PDFRef } from 'src/core/objects/PDFRef.js';
+import type { PDFContext } from 'src/core/PDFContext.js';
+import type { PDFPageTree } from 'src/core/structures/PDFPageTree.js';
+import { PDFAcroForm } from 'src/core/acroform/index.js';
+import { ViewerPreferences } from '../interactive/ViewerPreferences.js';
 
 export class PDFCatalog extends PDFDict {
   static withContextAndPages = (

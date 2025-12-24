@@ -1,16 +1,16 @@
-import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter';
-import type { PDFArray } from 'src/core/objects/PDFArray';
-import type { PDFBool } from 'src/core/objects/PDFBool';
-import type { PDFHexString } from 'src/core/objects/PDFHexString';
-import { PDFName } from 'src/core/objects/PDFName';
-import { PDFNull } from 'src/core/objects/PDFNull';
-import type { PDFNumber } from 'src/core/objects/PDFNumber';
-import { PDFObject } from 'src/core/objects/PDFObject';
-import type { PDFRef } from 'src/core/objects/PDFRef';
-import type { PDFStream } from 'src/core/objects/PDFStream';
-import type { PDFString } from 'src/core/objects/PDFString';
-import type { PDFContext } from 'src/core/PDFContext';
-import { CharCodes } from 'src/core/syntax/CharCodes';
+import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter.js';
+import type { PDFArray } from 'src/core/objects/PDFArray.js';
+import type { PDFBool } from 'src/core/objects/PDFBool.js';
+import type { PDFHexString } from 'src/core/objects/PDFHexString.js';
+import { PDFName } from 'src/core/objects/PDFName.js';
+import { PDFNull } from 'src/core/objects/PDFNull.js';
+import type { PDFNumber } from 'src/core/objects/PDFNumber.js';
+import { PDFObject } from 'src/core/objects/PDFObject.js';
+import type { PDFRef } from 'src/core/objects/PDFRef.js';
+import type { PDFStream } from 'src/core/objects/PDFStream.js';
+import type { PDFString } from 'src/core/objects/PDFString.js';
+import type { PDFContext } from 'src/core/PDFContext.js';
+import { CharCodes } from 'src/core/syntax/CharCodes.js';
 
 export type DictMap = Map<PDFName, PDFObject>;
 

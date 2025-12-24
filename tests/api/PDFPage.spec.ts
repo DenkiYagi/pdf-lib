@@ -1,6 +1,6 @@
-import { PDFArray, PDFName } from 'src/core';
-import { PDFDocument, StandardFonts } from 'src/api';
-import { readBinaryFileSync } from '../test-utils';
+import { PDFArray, PDFName } from 'src/core/index.js';
+import { PDFDocument, StandardFonts } from 'src/api/index.js';
+import { readBinaryFileSync } from '../test-utils.js';
 
 const birdPng = readBinaryFileSync('assets/images/greyscale_bird.png');
 

@@ -1,4 +1,4 @@
-import type { TreeNode } from 'src/core/structures/PDFPageTree';
+import type { TreeNode } from 'src/core/structures/PDFPageTree.js';
 import {
   PDFArray,
   PDFContext,
@@ -7,9 +7,9 @@ import {
   PDFPageLeaf,
   PDFPageTree,
   PDFRef,
-} from 'src/core';
-import { PDFDocument } from 'src/api';
-import { readBinaryFileSync } from '../../test-utils';
+} from 'src/core/index.js';
+import { PDFDocument } from 'src/api/index.js';
+import { readBinaryFileSync } from '../../test-utils.js';
 
 const withNullEntryPdfBytes = readBinaryFileSync(
   'assets/pdfs/with_null_parent_entry.pdf',

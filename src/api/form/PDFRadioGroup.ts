@@ -1,17 +1,17 @@
-import type { PDFDocument } from 'src/api/PDFDocument';
-import { PDFPage } from 'src/api/PDFPage';
+import type { PDFDocument } from 'src/api/PDFDocument.js';
+import { PDFPage } from 'src/api/PDFPage.js';
 import {
   PDFField,
   FieldAppearanceOptions,
   assertFieldAppearanceOptions,
-} from 'src/api/form/PDFField';
+} from 'src/api/form/PDFField.js';
 import {
   AppearanceProviderFor,
   normalizeAppearance,
   defaultRadioGroupAppearanceProvider,
-} from 'src/api/form/appearances';
-import { rgb } from 'src/api/colors';
-import { degrees } from 'src/api/rotations';
+} from 'src/api/form/appearances.js';
+import { rgb } from 'src/api/colors.js';
+import { degrees } from 'src/api/rotations.js';
 
 import {
   PDFName,
@@ -21,8 +21,8 @@ import {
   PDFWidgetAnnotation,
   PDFAcroRadioButton,
   AcroButtonFlags,
-} from 'src/core';
-import { assertIs, assertOrUndefined, assertIsOneOf } from 'src/utils';
+} from 'src/core/index.js';
+import { assertIs, assertOrUndefined, assertIsOneOf } from 'src/utils/index.js';
 
 /**
  * Represents a radio group field of a [[PDFForm]].

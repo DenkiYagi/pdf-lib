@@ -1,5 +1,10 @@
-import { Assets } from '..';
-import { ParseSpeeds, PDFDocument, rgb } from '../../..';
+import { Assets } from '../index.js';
+import {
+  ParseSpeeds,
+  PDFDocument,
+  PDFPage,
+  rgb,
+} from '../../../dist/es/index.js';
 
 export default async (assets: Assets) => {
   const { pdfs, fonts, images } = assets;
@@ -27,7 +32,7 @@ export default async (assets: Assets) => {
 
   const textWidth = ubuntuFont.widthOfTextAtSize(lines[2], fontSize);
 
-  pages.forEach((page) => {
+  pages.forEach((page: PDFPage) => {
     const { width, height } = page.getSize();
     const centerX = width / 2;
     const centerY = height / 2 - 250;

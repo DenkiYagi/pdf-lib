@@ -1,7 +1,7 @@
-import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter';
-import { PDFObject } from 'src/core/objects/PDFObject';
-import type { PDFRef } from 'src/core/objects/PDFRef';
-import { CharCodes } from 'src/core/syntax/CharCodes';
+import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter.js';
+import { PDFObject } from 'src/core/objects/PDFObject.js';
+import type { PDFRef } from 'src/core/objects/PDFRef.js';
+import { CharCodes } from 'src/core/syntax/CharCodes.js';
 import {
   copyStringIntoBuffer,
   toHexStringOfMinLength,
@@ -11,8 +11,8 @@ import {
   parseDate,
   hasUtf16BOM,
   uint8ArrayToHex,
-} from 'src/utils';
-import { InvalidPDFDateStringError } from 'src/core/errors';
+} from 'src/utils/index.js';
+import { InvalidPDFDateStringError } from 'src/core/errors.js';
 
 export class PDFHexString extends PDFObject {
   static of = (value: string, preventEncryption?: boolean) =>

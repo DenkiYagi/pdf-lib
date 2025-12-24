@@ -1,6 +1,6 @@
 import pako from 'pako';
-import { PDFContext, PDFName, PDFRef, PDFWriter } from 'src/core';
-import { mergeIntoTypedArray, typedArrayFor } from 'src/utils';
+import { PDFContext, PDFName, PDFRef, PDFWriter } from 'src/core/index.js';
+import { mergeIntoTypedArray, typedArrayFor } from 'src/utils/index.js';
 
 const contentStreamText = `
   BT

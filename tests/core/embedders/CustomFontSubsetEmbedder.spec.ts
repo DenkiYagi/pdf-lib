@@ -6,8 +6,8 @@ import {
   PDFContext,
   PDFDict,
   PDFHexString,
-} from 'src/core';
-import { readBinaryFileSync } from '../../test-utils';
+} from 'src/core/index.js';
+import { readBinaryFileSync } from '../../test-utils.js';
 
 const ubuntuFont = readBinaryFileSync('./assets/fonts/ubuntu/Ubuntu-R.ttf');
 

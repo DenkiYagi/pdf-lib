@@ -1,8 +1,8 @@
-import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter';
-import { PDFHexString } from 'src/core/objects/PDFHexString';
-import { PDFObject } from 'src/core/objects/PDFObject';
-import type { PDFRef } from 'src/core/objects/PDFRef';
-import { CharCodes } from 'src/core/syntax/CharCodes';
+import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter.js';
+import { PDFHexString } from 'src/core/objects/PDFHexString.js';
+import { PDFObject } from 'src/core/objects/PDFObject.js';
+import type { PDFRef } from 'src/core/objects/PDFRef.js';
+import { CharCodes } from 'src/core/syntax/CharCodes.js';
 import {
   copyStringIntoBuffer,
   padStart,
@@ -12,8 +12,8 @@ import {
   parseDate,
   hasUtf16BOM,
   typedArrayFor,
-} from 'src/utils';
-import { InvalidPDFDateStringError } from 'src/core/errors';
+} from 'src/utils/index.js';
+import { InvalidPDFDateStringError } from 'src/core/errors.js';
 
 export class PDFString extends PDFObject {
   // The PDF spec allows newlines and parens to appear directly within a literal

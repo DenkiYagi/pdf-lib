@@ -1,7 +1,7 @@
-import { PDFBool, PDFHexString, PDFObject, PDFRef } from 'src/core';
-import { PDFSecurity } from 'src/core/security/PDFSecurity';
-import { typedArrayFor } from 'src/utils';
-import { mockRandom, resetMock } from './mock';
+import { PDFBool, PDFHexString, PDFObject, PDFRef } from 'src/core/index.js';
+import { PDFSecurity } from 'src/core/security/PDFSecurity.js';
+import { typedArrayFor } from 'src/utils/index.js';
+import { mockRandom, resetMock } from './mock.js';
 
 describe(`EncryptionKey`, () => {
   const { security } = PDFSecurity.create(new Uint8Array([0]), {

@@ -1,18 +1,18 @@
-import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter';
-import type { PDFBool } from 'src/core/objects/PDFBool';
-import type { PDFDict } from 'src/core/objects/PDFDict';
-import type { PDFHexString } from 'src/core/objects/PDFHexString';
-import type { PDFName } from 'src/core/objects/PDFName';
-import type { PDFNull } from 'src/core/objects/PDFNull';
-import { PDFNumber } from 'src/core/objects/PDFNumber';
-import { PDFObject } from 'src/core/objects/PDFObject';
-import type { PDFRawStream } from 'src/core/objects/PDFRawStream';
-import type { PDFRef } from 'src/core/objects/PDFRef';
-import type { PDFStream } from 'src/core/objects/PDFStream';
-import type { PDFString } from 'src/core/objects/PDFString';
-import type { PDFContext } from 'src/core/PDFContext';
-import { CharCodes } from 'src/core/syntax/CharCodes';
-import { PDFArrayIsNotRectangleError } from 'src/core/errors';
+import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter.js';
+import type { PDFBool } from 'src/core/objects/PDFBool.js';
+import type { PDFDict } from 'src/core/objects/PDFDict.js';
+import type { PDFHexString } from 'src/core/objects/PDFHexString.js';
+import type { PDFName } from 'src/core/objects/PDFName.js';
+import type { PDFNull } from 'src/core/objects/PDFNull.js';
+import { PDFNumber } from 'src/core/objects/PDFNumber.js';
+import { PDFObject } from 'src/core/objects/PDFObject.js';
+import type { PDFRawStream } from 'src/core/objects/PDFRawStream.js';
+import type { PDFRef } from 'src/core/objects/PDFRef.js';
+import type { PDFStream } from 'src/core/objects/PDFStream.js';
+import type { PDFString } from 'src/core/objects/PDFString.js';
+import type { PDFContext } from 'src/core/PDFContext.js';
+import { CharCodes } from 'src/core/syntax/CharCodes.js';
+import { PDFArrayIsNotRectangleError } from 'src/core/errors.js';
 
 export class PDFArray extends PDFObject {
   static withContext = (context: PDFContext) => new PDFArray(context);

@@ -1,4 +1,9 @@
-import { PDFAcroTerminal, PDFContext, PDFRef, PDFArray } from 'src/core';
+import {
+  PDFAcroTerminal,
+  PDFContext,
+  PDFRef,
+  PDFArray,
+} from 'src/core/index.js';
 
 describe(`PDFAcroTerminal`, () => {
   it(`returns Kids when it has them`, () => {

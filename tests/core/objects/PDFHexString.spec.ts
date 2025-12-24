@@ -1,8 +1,14 @@
-import { PDFDocument } from 'src/api';
-import { PDFArray, PDFDict, PDFHexString, PDFObject, PDFRef } from 'src/core';
-import { toCharCode, typedArrayFor } from 'src/utils';
-import { mockRandom, resetMock } from '../security/mock';
-import { security } from './shared';
+import { PDFDocument } from 'src/api/index.js';
+import {
+  PDFArray,
+  PDFDict,
+  PDFHexString,
+  PDFObject,
+  PDFRef,
+} from 'src/core/index.js';
+import { toCharCode, typedArrayFor } from 'src/utils/index.js';
+import { mockRandom, resetMock } from '../security/mock.js';
+import { security } from './shared.js';
 
 describe(`PDFHexString`, () => {
   it(`can be constructed from PDFHexString.of(...)`, () => {
@@ -212,14 +218,16 @@ describe(`PDFHexString`, () => {
     pdfDoc.encrypt({ password: 'password' });
 
     const { ID } = pdfDoc.context.trailerInfo;
-    if (!(ID instanceof PDFArray)) fail(`Invalid ID value`);
+    if (!(ID instanceof PDFArray)) assert.fail(`Invalid ID value`);
     for (const idElement of ID.asArray()) {
-      if (!(idElement instanceof PDFHexString)) fail(`Invalid ID element`);
+      if (!(idElement instanceof PDFHexString)) {
+        assert.fail(`Invalid ID element`);
+      }
       expect(idElement.encryptWith(key, ref)).toBe(null);
     }
 
     const Encrypt = pdfDoc.context.lookup(pdfDoc.context.trailerInfo.Encrypt);
-    if (!(Encrypt instanceof PDFDict)) fail(`Invalid Encrypt value`);
+    if (!(Encrypt instanceof PDFDict)) assert.fail(`Invalid Encrypt value`);
     for (const obj of Encrypt.values()) {
       if (obj instanceof PDFHexString) {
         expect(obj.encryptWith(key, ref)).toBe(null);

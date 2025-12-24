@@ -1,7 +1,7 @@
-import type { Color } from 'src/api/colors';
-import type { PDFFont } from 'src/api/PDFFont';
-import type { Rotation } from 'src/api/rotations';
-import type { LineCapStyle } from 'src/api/operators';
+import type { Color } from 'src/api/colors.js';
+import type { PDFFont } from 'src/api/PDFFont.js';
+import type { Rotation } from 'src/api/rotations.js';
+import type { LineCapStyle } from 'src/api/operators.js';
 import type { LayoutAdvancedParams } from '@denkiyagi/fontkit';
 
 export enum BlendMode {

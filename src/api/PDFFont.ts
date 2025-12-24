@@ -1,16 +1,16 @@
 import type { LayoutAdvancedParams, TTFFont } from '@denkiyagi/fontkit';
 import type { Font as RawStandardFont } from '@pdf-lib/standard-fonts';
-import type { Embeddable } from 'src/api//Embeddable';
-import { PDFDocument } from 'src/api/PDFDocument';
+import type { Embeddable } from 'src/api/Embeddable.js';
+import { PDFDocument } from 'src/api/PDFDocument.js';
 import {
   AbstractCustomFontEmbedder,
   PDFHexString,
   PDFRef,
   StandardFontEmbedder,
-} from 'src/core';
-import { mapFontkitError } from 'src/core/embedders/fontkit-helpers';
-import type { SingleLineTextOrGlyphs } from 'src/types/text';
-import { assertIs, assertOrUndefined } from 'src/utils';
+} from 'src/core/index.js';
+import { mapFontkitError } from 'src/core/embedders/fontkit-helpers.js';
+import type { SingleLineTextOrGlyphs } from 'src/types/text.js';
+import { assertIs, assertOrUndefined } from 'src/utils/index.js';
 
 export type FontEmbedder = AbstractCustomFontEmbedder | StandardFontEmbedder;
 

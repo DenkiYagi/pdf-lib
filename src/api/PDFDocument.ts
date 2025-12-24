@@ -1,18 +1,18 @@
 import type { TTFFont } from '@denkiyagi/fontkit';
-import type { Embeddable } from 'src/api/Embeddable';
+import type { Embeddable } from 'src/api/Embeddable.js';
 import {
   EncryptedPDFError,
   ForeignPageError,
   InvalidFontSubsetOptionError,
   RemovePageFromEmptyDocumentError,
-} from 'src/api/errors';
-import { PDFEmbeddedPage } from 'src/api/PDFEmbeddedPage';
-import { PDFFont } from 'src/api/PDFFont';
-import { PDFImage } from 'src/api/PDFImage';
-import { PDFPage } from 'src/api/PDFPage';
-import { PDFForm } from 'src/api/form/PDFForm';
-import { PageSizes } from 'src/api/sizes';
-import { StandardFonts } from 'src/api/StandardFonts';
+} from 'src/api/errors.js';
+import { PDFEmbeddedPage } from 'src/api/PDFEmbeddedPage.js';
+import { PDFFont } from 'src/api/PDFFont.js';
+import { PDFImage } from 'src/api/PDFImage.js';
+import { PDFPage } from 'src/api/PDFPage.js';
+import { PDFForm } from 'src/api/form/PDFForm.js';
+import { PageSizes } from 'src/api/sizes.js';
+import { StandardFonts } from 'src/api/StandardFonts.js';
 import {
   AbstractCustomFontEmbedder,
   CustomFontEmbedder,
@@ -37,8 +37,8 @@ import {
   PngEmbedder,
   StandardFontEmbedder,
   UnexpectedObjectTypeError,
-} from 'src/core';
-import { mapFontkitError } from 'src/core/embedders/fontkit-helpers';
+} from 'src/core/index.js';
+import { mapFontkitError } from 'src/core/embedders/fontkit-helpers.js';
 import {
   ParseSpeeds,
   AttachmentOptions,
@@ -47,10 +47,10 @@ import {
   CreateOptions,
   EmbedFontOptions,
   SetTitleOptions,
-} from 'src/api/PDFDocumentOptions';
-import type { PDFObject } from 'src/core/objects/PDFObject';
-import type { PDFRef } from 'src/core/objects/PDFRef';
-import type { TransformationMatrix } from 'src/types/matrix';
+} from 'src/api/PDFDocumentOptions.js';
+import type { PDFObject } from 'src/core/objects/PDFObject.js';
+import type { PDFRef } from 'src/core/objects/PDFRef.js';
+import type { TransformationMatrix } from 'src/types/matrix.js';
 import {
   InvalidOptionPassedError,
   InvalidTypePassedError,
@@ -65,18 +65,21 @@ import {
   range,
   toUint8Array,
   values,
-} from 'src/utils';
-import { FileEmbedder, AFRelationship } from 'src/core/embedders/FileEmbedder';
-import { PDFEmbeddedFile } from 'src/api/PDFEmbeddedFile';
-import { PDFJavaScript } from 'src/api/PDFJavaScript';
-import { JavaScriptEmbedder } from 'src/core/embedders/JavaScriptEmbedder';
-import { PDFSecurity, SecurityOptions } from 'src/core/security/PDFSecurity';
+} from 'src/utils/index.js';
+import {
+  FileEmbedder,
+  AFRelationship,
+} from 'src/core/embedders/FileEmbedder.js';
+import { PDFEmbeddedFile } from 'src/api/PDFEmbeddedFile.js';
+import { PDFJavaScript } from 'src/api/PDFJavaScript.js';
+import { JavaScriptEmbedder } from 'src/core/embedders/JavaScriptEmbedder.js';
+import { PDFSecurity, SecurityOptions } from 'src/core/security/PDFSecurity.js';
 import {
   MD5,
   createWordArray,
   wordArrayFromBytes,
   wordArrayToBytes,
-} from 'src/utils/crypt';
+} from 'src/utils/crypt.js';
 
 const emptyObject = {};
 

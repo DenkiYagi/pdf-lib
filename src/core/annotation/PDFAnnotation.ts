@@ -1,10 +1,10 @@
-import { PDFDict } from 'src/core/objects/PDFDict';
-import { PDFName } from 'src/core/objects/PDFName';
-import { PDFStream } from 'src/core/objects/PDFStream';
-import { PDFArray } from 'src/core/objects/PDFArray';
-import { PDFRef } from 'src/core/objects/PDFRef';
-import { PDFNumber } from 'src/core/objects/PDFNumber';
-import { UnexpectedAppearanceTypeError } from 'src/core/errors';
+import { PDFDict } from 'src/core/objects/PDFDict.js';
+import { PDFName } from 'src/core/objects/PDFName.js';
+import { PDFStream } from 'src/core/objects/PDFStream.js';
+import { PDFArray } from 'src/core/objects/PDFArray.js';
+import { PDFRef } from 'src/core/objects/PDFRef.js';
+import { PDFNumber } from 'src/core/objects/PDFNumber.js';
+import { UnexpectedAppearanceTypeError } from 'src/core/errors.js';
 
 export class PDFAnnotation {
   readonly dict: PDFDict;

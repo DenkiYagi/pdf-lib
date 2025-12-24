@@ -4,6 +4,7 @@
   "compilerOptions": {
     "outDir": "./build",
     "rootDir": null,
-    "rootDirs": ["../src", "../scratchpad"]
+    "rootDirs": ["../src", "../scratchpad"],
+    "incremental": true
   }
 }

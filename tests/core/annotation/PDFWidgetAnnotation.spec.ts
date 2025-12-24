@@ -5,7 +5,7 @@ import {
   PDFHexString,
   PDFName,
   PDFNull,
-} from 'src/core';
+} from 'src/core/index.js';
 
 describe(`PDFWidgetAnnotation`, () => {
   it(`returns undefined for missing (DAs)`, () => {

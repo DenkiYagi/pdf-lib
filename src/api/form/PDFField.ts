@@ -1,7 +1,7 @@
-import { PDFDocument } from 'src/api/PDFDocument';
-import type { PDFFont } from 'src/api/PDFFont';
-import type { AppearanceMapping } from 'src/api/form/appearances';
-import { Color, colorToComponents, setFillingColor } from 'src/api/colors';
+import { PDFDocument } from 'src/api/PDFDocument.js';
+import type { PDFFont } from 'src/api/PDFFont.js';
+import type { AppearanceMapping } from 'src/api/form/appearances.js';
+import { Color, colorToComponents, setFillingColor } from 'src/api/colors.js';
 import {
   Rotation,
   toDegrees,
@@ -9,7 +9,7 @@ import {
   reduceRotation,
   adjustDimsForRotation,
   degrees,
-} from 'src/api/rotations';
+} from 'src/api/rotations.js';
 
 import {
   PDFRef,
@@ -21,11 +21,15 @@ import {
   AcroFieldFlags,
   PDFAcroTerminal,
   AnnotationFlags,
-} from 'src/core';
-import { assertIs, assertMultiple, assertOrUndefined } from 'src/utils';
-import { ImageAlignment } from '../image';
-import type { PDFImage } from '../PDFImage';
-import { drawImage, rotateInPlace } from '../operations';
+} from 'src/core/index.js';
+import {
+  assertIs,
+  assertMultiple,
+  assertOrUndefined,
+} from 'src/utils/index.js';
+import { ImageAlignment } from '../image/index.js';
+import type { PDFImage } from '../PDFImage.js';
+import { drawImage, rotateInPlace } from '../operations.js';
 
 export interface FieldAppearanceOptions {
   x?: number;

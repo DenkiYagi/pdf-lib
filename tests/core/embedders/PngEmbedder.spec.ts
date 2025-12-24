@@ -1,5 +1,10 @@
-import { PDFContext, PDFRawStream, PDFRef, PngEmbedder } from 'src/core';
-import { readBinaryFileSync } from '../../test-utils';
+import {
+  PDFContext,
+  PDFRawStream,
+  PDFRef,
+  PngEmbedder,
+} from 'src/core/index.js';
+import { readBinaryFileSync } from '../../test-utils.js';
 
 const greyscalePng = readBinaryFileSync('./assets/images/greyscale_bird.png');
 const rgbaPng = readBinaryFileSync('./assets/images/minions_banana_alpha.png');

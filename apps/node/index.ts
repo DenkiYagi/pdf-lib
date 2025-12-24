@@ -4,26 +4,26 @@ import os from 'os';
 import { sep } from 'path';
 import readline from 'readline';
 
-import test1 from './tests/test1';
-import test2 from './tests/test2';
-import test3 from './tests/test3';
-import test4 from './tests/test4';
-import test5 from './tests/test5';
-import test6 from './tests/test6';
-import test7 from './tests/test7';
-import test8 from './tests/test8';
-import test9 from './tests/test9';
-import test10 from './tests/test10';
-import test11 from './tests/test11';
-import test12 from './tests/test12';
-import test13 from './tests/test13';
-import test14 from './tests/test14';
-import test15 from './tests/test15';
-import test16 from './tests/test16';
-import test17 from './tests/test17';
-import test18 from './tests/test18';
-import test19 from './tests/test19';
-import test20 from './tests/test20';
+import test1 from './tests/test1.js';
+import test2 from './tests/test2.js';
+import test3 from './tests/test3.js';
+import test4 from './tests/test4.js';
+import test5 from './tests/test5.js';
+import test6 from './tests/test6.js';
+import test7 from './tests/test7.js';
+import test8 from './tests/test8.js';
+import test9 from './tests/test9.js';
+import test10 from './tests/test10.js';
+import test11 from './tests/test11.js';
+import test12 from './tests/test12.js';
+import test13 from './tests/test13.js';
+import test14 from './tests/test14.js';
+import test15 from './tests/test15.js';
+import test16 from './tests/test16.js';
+import test17 from './tests/test17.js';
+import test18 from './tests/test18.js';
+import test19 from './tests/test19.js';
+import test20 from './tests/test20.js';
 
 const cli = readline.createInterface({
   input: process.stdin,

@@ -1,4 +1,4 @@
-import { Assets } from '..';
+import { Assets } from '../index.js';
 import {
   PageSizes,
   PDFDocument,
@@ -8,8 +8,8 @@ import {
   degrees,
   rgb,
   grayscale,
-} from '../../..';
-import { values } from '../../../cjs/utils';
+} from '../../../dist/es/index.js';
+import { values } from '../../../dist/es/utils/index.js';
 
 const inchToPt = (inches: number) => Math.round(inches * 72);
 

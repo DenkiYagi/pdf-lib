@@ -1,13 +1,13 @@
-import { PDFDocument } from 'src/api/PDFDocument';
-import type { PDFPage } from 'src/api/PDFPage';
-import type { PDFField } from 'src/api/form/PDFField';
-import { PDFButton } from 'src/api/form/PDFButton';
-import { PDFCheckBox } from 'src/api/form/PDFCheckBox';
-import { PDFDropdown } from 'src/api/form/PDFDropdown';
-import { PDFOptionList } from 'src/api/form/PDFOptionList';
-import { PDFRadioGroup } from 'src/api/form/PDFRadioGroup';
-import { PDFSignature } from 'src/api/form/PDFSignature';
-import { PDFTextField } from 'src/api/form/PDFTextField';
+import { PDFDocument } from 'src/api/PDFDocument.js';
+import type { PDFPage } from 'src/api/PDFPage.js';
+import type { PDFField } from 'src/api/form/PDFField.js';
+import { PDFButton } from 'src/api/form/PDFButton.js';
+import { PDFCheckBox } from 'src/api/form/PDFCheckBox.js';
+import { PDFDropdown } from 'src/api/form/PDFDropdown.js';
+import { PDFOptionList } from 'src/api/form/PDFOptionList.js';
+import { PDFRadioGroup } from 'src/api/form/PDFRadioGroup.js';
+import { PDFSignature } from 'src/api/form/PDFSignature.js';
+import { PDFTextField } from 'src/api/form/PDFTextField.js';
 import {
   NoSuchFieldError,
   UnexpectedFieldTypeError,
@@ -16,16 +16,16 @@ import {
   InvalidFieldNameError,
   MissingAppearanceStreamError,
   MissingWidgetError,
-} from 'src/api/errors';
-import { PDFFont } from 'src/api/PDFFont';
-import { StandardFonts } from 'src/api/StandardFonts';
-import { rotateInPlace } from 'src/api/operations';
+} from 'src/api/errors.js';
+import { PDFFont } from 'src/api/PDFFont.js';
+import { StandardFonts } from 'src/api/StandardFonts.js';
+import { rotateInPlace } from 'src/api/operations.js';
 import {
   drawObject,
   popGraphicsState,
   pushGraphicsState,
   translate,
-} from 'src/api/operators';
+} from 'src/api/operators.js';
 import {
   PDFAcroForm,
   PDFAcroField,
@@ -43,8 +43,8 @@ import {
   createPDFAcroFields,
   PDFName,
   PDFWidgetAnnotation,
-} from 'src/core';
-import { assertIs, Cache, assertOrUndefined } from 'src/utils';
+} from 'src/core/index.js';
+import { assertIs, Cache, assertOrUndefined } from 'src/utils/index.js';
 
 export interface FlattenOptions {
   updateFieldAppearances: boolean;

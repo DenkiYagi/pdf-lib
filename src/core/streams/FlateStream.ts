@@ -15,9 +15,9 @@
  */
 
 /* tslint:disable  no-conditional-assignment */
-import { FlateDecodingError } from 'src/core/errors';
-import { DecodeStream } from 'src/core/streams/DecodeStream';
-import type { StreamType } from 'src/core/streams/Stream';
+import { FlateDecodingError } from 'src/core/errors.js';
+import { DecodeStream } from 'src/core/streams/DecodeStream.js';
+import type { StreamType } from 'src/core/streams/Stream.js';
 
 // prettier-ignore
 const codeLenCodeMap = new Int32Array([

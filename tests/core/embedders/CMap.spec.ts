@@ -1,8 +1,9 @@
-import fontkit, { type TTFFont, type Glyph } from '@denkiyagi/fontkit';
+import { create as createFont } from '@denkiyagi/fontkit';
+import type { TTFFont, Glyph } from '@denkiyagi/fontkit';
 import fs from 'fs';
 
-import { createCmap } from 'src/core/embedders/CMap';
-import { byAscendingId, sortedUniq } from 'src/utils';
+import { createCmap } from 'src/core/embedders/CMap.js';
+import { byAscendingId, sortedUniq } from 'src/utils/index.js';
 
 const ubuntuFont = fs.readFileSync('./assets/fonts/ubuntu/Ubuntu-R.ttf');
 const sourceHansJpFont = fs.readFileSync(
@@ -27,8 +28,8 @@ const allGlyphsInFontSortedById = (font: TTFFont) => {
 
 describe(`createCmap`, () => {
   it(`creates CMaps for embedded Ubuntu-R font files`, () => {
-    const font = fontkit.create(ubuntuFont);
-    if (font.type !== 'TTF') fail(`Invalid font type: ${font.type}`);
+    const font = createFont(ubuntuFont);
+    if (font.type !== 'TTF') assert.fail(`Invalid font type: ${font.type}`);
 
     const glyphs = allGlyphsInFontSortedById(font);
     const cmap = createCmap(glyphs, (g) => (g ? g.id : -1));
@@ -37,8 +38,8 @@ describe(`createCmap`, () => {
   });
 
   it(`creates CMaps for embedded SourceHanSerifJP-Regular font files`, () => {
-    const font = fontkit.create(sourceHansJpFont);
-    if (font.type !== 'TTF') fail(`Invalid font type: ${font.type}`);
+    const font = createFont(sourceHansJpFont);
+    if (font.type !== 'TTF') assert.fail(`Invalid font type: ${font.type}`);
 
     const glyphs = allGlyphsInFontSortedById(font);
     const cmap = createCmap(glyphs, (g) => (g ? g.id : -1));

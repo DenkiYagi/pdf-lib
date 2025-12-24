@@ -1,6 +1,6 @@
-import { Ascii85Stream } from 'src/core/streams/Ascii85Stream';
-import { Stream } from 'src/core/streams/Stream';
-import { readBinaryFileSync } from '../../test-utils';
+import { Ascii85Stream } from 'src/core/streams/Ascii85Stream.js';
+import { Stream } from 'src/core/streams/Stream.js';
+import { readBinaryFileSync } from '../../test-utils.js';
 
 const DIR = `tests/core/streams/data/ascii85`;
 const FILES = ['1'];

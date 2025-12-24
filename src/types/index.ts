@@ -1,1 +1,1 @@
-export { TransformationMatrix } from 'src/types/matrix';
+export type { TransformationMatrix } from 'src/types/matrix.js';

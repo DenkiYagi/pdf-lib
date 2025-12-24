@@ -1,5 +1,5 @@
-import { Assets } from '..';
-import { PDFDocument } from '../../..';
+import { Assets } from '../index.js';
+import { PDFDocument } from '../../../dist/es/index.js';
 
 // Based on test19.ts
 export default async (assets: Assets) => {

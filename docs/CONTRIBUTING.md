@@ -1,5 +1,7 @@
 # Contributing to `pdf-lib`
 
+> **CAUTION**: This document is mirrored from upstream and is out of date.
+
 :+1::tada: First off, thanks for taking the time to contribute! :tada::+1:
 
 `pdf-lib` is a JavaScript library designed to create and modify PDF files in any JavaScript environment. Contributions are welcomed and appreciated! Please read through this document to learn how to setup and run the project on your machine. If you have any questions or run into trouble, please [create a discussion](https://github.com/Hopding/pdf-lib/discussions).

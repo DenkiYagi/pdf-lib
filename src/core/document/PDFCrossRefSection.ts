@@ -1,6 +1,6 @@
-import { PDFRef } from 'src/core/objects/PDFRef';
-import { CharCodes } from 'src/core/syntax/CharCodes';
-import { copyStringIntoBuffer, padStart } from 'src/utils';
+import { PDFRef } from 'src/core/objects/PDFRef.js';
+import { CharCodes } from 'src/core/syntax/CharCodes.js';
+import { copyStringIntoBuffer, padStart } from 'src/utils/index.js';
 
 export interface Entry {
   ref: PDFRef;

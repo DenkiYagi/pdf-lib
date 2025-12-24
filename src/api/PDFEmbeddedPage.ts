@@ -1,7 +1,7 @@
-import type { Embeddable } from 'src/api/Embeddable';
-import { PDFDocument } from 'src/api/PDFDocument';
-import { PDFPageEmbedder, PDFRef } from 'src/core';
-import { assertIs } from 'src/utils';
+import type { Embeddable } from 'src/api/Embeddable.js';
+import { PDFDocument } from 'src/api/PDFDocument.js';
+import { PDFPageEmbedder, PDFRef } from 'src/core/index.js';
+import { assertIs } from 'src/utils/index.js';
 
 /**
  * Represents a PDF page that has been embedded in a [[PDFDocument]].

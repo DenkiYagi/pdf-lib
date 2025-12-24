@@ -33,7 +33,8 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - run: yarn dev:prep
-
       - run: yarn typecheck
       - run: yarn lint
       - run: yarn test
+      - run: yarn build
+      - run: yarn apps:typecheck

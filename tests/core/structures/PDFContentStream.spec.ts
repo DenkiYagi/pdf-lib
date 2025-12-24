@@ -1,5 +1,9 @@
 import pako from 'pako';
-import { moveText, popGraphicsState, pushGraphicsState } from 'src/api';
+import {
+  moveText,
+  popGraphicsState,
+  pushGraphicsState,
+} from 'src/api/index.js';
 
 import {
   PDFContentStream,
@@ -12,9 +16,13 @@ import {
   PDFOperatorNames as Ops,
   PDFRef,
   PDFString,
-} from 'src/core';
-import { mergeIntoTypedArray, toCharCode, typedArrayFor } from 'src/utils';
-import { security } from '../objects/shared';
+} from 'src/core/index.js';
+import {
+  mergeIntoTypedArray,
+  toCharCode,
+  typedArrayFor,
+} from 'src/utils/index.js';
+import { security } from '../objects/shared.js';
 
 describe(`PDFContentStream`, () => {
   const context = PDFContext.create();

@@ -1,5 +1,11 @@
 # Modifications
 
+## [Unreleased]
+
+- Native ESM everywhere: all src/tests/apps use `.js`-suffixed local imports; Jest replaced with vitest; CJS build removed.
+- Build outputs relocated to `dist/`: `dist/es` (native ESM + typings) and `dist/umd` (bundled).
+- Package now uses conditional exports; consumers must import via the published entry points (`import`/`exports` map) rather than deep-linking files.
+
 ## [1.17.1-mod.2025.8]
 
 ### Feature Removals

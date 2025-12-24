@@ -1,4 +1,4 @@
-import { PDFSecurity } from 'src/core/security/PDFSecurity';
+import { PDFSecurity } from 'src/core/security/PDFSecurity.js';
 
 /**
  * A `PDFSecurity` instance for testing.

@@ -1,12 +1,12 @@
-import { PDFDict } from 'src/core/objects/PDFDict';
-import { PDFName } from 'src/core/objects/PDFName';
-import { PDFRef } from 'src/core/objects/PDFRef';
-import { PDFString } from 'src/core/objects/PDFString';
-import { PDFHexString } from 'src/core/objects/PDFHexString';
-import type { PDFContext } from 'src/core/PDFContext';
-import { BorderStyle } from 'src/core/annotation/BorderStyle';
-import { PDFAnnotation } from 'src/core/annotation/PDFAnnotation';
-import { AppearanceCharacteristics } from 'src/core/annotation/AppearanceCharacteristics';
+import { PDFDict } from 'src/core/objects/PDFDict.js';
+import { PDFName } from 'src/core/objects/PDFName.js';
+import { PDFRef } from 'src/core/objects/PDFRef.js';
+import { PDFString } from 'src/core/objects/PDFString.js';
+import { PDFHexString } from 'src/core/objects/PDFHexString.js';
+import type { PDFContext } from 'src/core/PDFContext.js';
+import { BorderStyle } from 'src/core/annotation/BorderStyle.js';
+import { PDFAnnotation } from 'src/core/annotation/PDFAnnotation.js';
+import { AppearanceCharacteristics } from 'src/core/annotation/AppearanceCharacteristics.js';
 
 export class PDFWidgetAnnotation extends PDFAnnotation {
   static fromDict = (dict: PDFDict): PDFWidgetAnnotation =>

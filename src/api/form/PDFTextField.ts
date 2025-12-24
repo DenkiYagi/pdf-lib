@@ -1,26 +1,26 @@
-import type { PDFDocument } from 'src/api/PDFDocument';
-import { PDFPage } from 'src/api/PDFPage';
-import { PDFFont } from 'src/api/PDFFont';
-import type { PDFImage } from 'src/api/PDFImage';
+import type { PDFDocument } from 'src/api/PDFDocument.js';
+import { PDFPage } from 'src/api/PDFPage.js';
+import { PDFFont } from 'src/api/PDFFont.js';
+import type { PDFImage } from 'src/api/PDFImage.js';
 import {
   PDFField,
   FieldAppearanceOptions,
   assertFieldAppearanceOptions,
-} from 'src/api/form/PDFField';
+} from 'src/api/form/PDFField.js';
 import {
   AppearanceProviderFor,
   normalizeAppearance,
   defaultTextFieldAppearanceProvider,
-} from 'src/api/form/appearances';
-import { rgb } from 'src/api/colors';
-import { degrees } from 'src/api/rotations';
+} from 'src/api/form/appearances.js';
+import { rgb } from 'src/api/colors.js';
+import { degrees } from 'src/api/rotations.js';
 import {
   RichTextFieldReadError,
   ExceededMaxLengthError,
   InvalidMaxLengthError,
-} from 'src/api/errors';
-import { ImageAlignment } from 'src/api/image/alignment';
-import { TextAlignment } from 'src/api/text/alignment';
+} from 'src/api/errors.js';
+import { ImageAlignment } from 'src/api/image/alignment.js';
+import { TextAlignment } from 'src/api/text/alignment.js';
 
 import {
   PDFHexString,
@@ -29,14 +29,14 @@ import {
   PDFAcroText,
   AcroTextFlags,
   PDFWidgetAnnotation,
-} from 'src/core';
+} from 'src/core/index.js';
 import {
   assertIs,
   assertIsOneOf,
   assertOrUndefined,
   assertPositive,
   assertRangeOrUndefined,
-} from 'src/utils';
+} from 'src/utils/index.js';
 
 /**
  * Represents a text field of a [[PDFForm]].
