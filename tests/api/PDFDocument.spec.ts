@@ -652,6 +652,18 @@ describe(`PDFDocument`, () => {
         InvalidPngError,
       );
     });
+
+    it(`throws an error when the PNG data is truncated`, async () => {
+      const pdfDoc = await PDFDocument.create();
+      const truncatedPng = examplePngImage.slice(
+        0,
+        Math.floor(examplePngImage.length / 2),
+      );
+
+      await expect(pdfDoc.embedPng(truncatedPng)).rejects.toThrow(
+        InvalidPngError,
+      );
+    });
   });
 
   describe(`save() method`, () => {
