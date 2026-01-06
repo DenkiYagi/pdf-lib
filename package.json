@@ -81,9 +81,7 @@
     "LICENSE.txt",
     "package.json",
     "README.md",
-    "MODIFICATIONS.md",
-    "tsconfig.json",
-    "yarn.lock"
+    "MODIFICATIONS.md"
   ],
   "engines": {
     "node": ">=20"
