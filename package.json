@@ -89,7 +89,6 @@
   "dependencies": {
     "@denkiyagi/fontkit": "2.0.4-mod.2025.5",
     "@pdf-lib/standard-fonts": "^1.0.0",
-    "@pdf-lib/upng": "^1.0.1",
     "crypto-js": "^4.2.0",
     "fast-png": "^8.0.0",
     "pako": "^2.1.0",
