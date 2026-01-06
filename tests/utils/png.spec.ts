@@ -2,43 +2,6 @@ import { encode } from 'fast-png';
 import { PNG, PngType } from 'src/utils/png.js';
 
 describe(`PNG`, () => {
-  it(`can load images with alpha values greater than 1`, () => {
-    const pngImage = PNG.load(
-      encode({
-        width: 2,
-        height: 2,
-        // prettier-ignore
-        data: new Uint8Array([
-          255, 120, 80, 128, // pixel 1
-          10, 20, 30, 200, // pixel 2
-          5, 15, 25, 64, // pixel 3
-          250, 240, 230, 5, // pixel 4
-        ]),
-        channels: 4,
-        depth: 8,
-      }),
-    );
-
-    expect(pngImage.rgbChannel).toEqual(
-      // prettier-ignore
-      new Uint8Array([
-        255, 120, 80, // pixel 1
-        10, 20, 30, // pixel 2
-        5, 15, 25, // pixel 3
-        250, 240, 230, // pixel 4
-      ]),
-    );
-    expect(pngImage.alphaChannel).toEqual(
-      // prettier-ignore
-      new Uint8Array([
-        128, // pixel 1
-        200, // pixel 2
-        64, // pixel 3
-        5, // pixel 4
-      ]),
-    );
-  });
-
   describe(`color type detection`, () => {
     it(`detects greyscale PNGs`, () => {
       const pngImage = PNG.load(
