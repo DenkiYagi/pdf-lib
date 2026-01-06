@@ -46,6 +46,8 @@ const unpackSamples = (image: DecodedPng): Uint8Array | Uint16Array => {
       bitsRemaining -= depth;
       samples[sampleIndex++] = (currentByte >> bitsRemaining) & mask;
     }
+
+    bitsRemaining = 0;
   }
 
   return samples;
