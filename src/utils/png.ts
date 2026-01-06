@@ -12,10 +12,7 @@ const mapPngError = (error: unknown, msgPrefix: string): InvalidPngError => {
   return new InvalidPngError(`${msgPrefix} ${message}`);
 };
 
-const getImageType = (
-  channels: number,
-  palette?: unknown[][],
-): PngType => {
+const getImageType = (channels: number, palette?: unknown[][]): PngType => {
   if (palette) return PngType.IndexedColour;
   if (channels === 1) return PngType.Greyscale;
   if (channels === 2) return PngType.GreyscaleWithAlpha;
