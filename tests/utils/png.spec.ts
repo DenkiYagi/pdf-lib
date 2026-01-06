@@ -1,4 +1,5 @@
-import { PNG } from 'src/utils/png.js';
+import { encode } from 'fast-png';
+import { PNG, PngType } from 'src/utils/png.js';
 
 describe(`PNG`, () => {
   it(`can load images with alpha values greater than 1`, () => {
@@ -23,5 +24,196 @@ describe(`PNG`, () => {
 
     expect(pngImage.rgbChannel).toEqual(new Uint8Array([255, 120, 80]));
     expect(pngImage.alphaChannel).toEqual(new Uint8Array([128]));
+  });
+
+  describe(`color type detection`, () => {
+    it(`detects greyscale PNGs`, () => {
+      const pngImage = PNG.load(
+        encode({
+          width: 1,
+          height: 1,
+          data: new Uint8Array([32]),
+          channels: 1,
+          depth: 8,
+        }),
+      );
+
+      expect(pngImage.type).toBe(PngType.Greyscale);
+      expect(pngImage.rgbChannel).toEqual(new Uint8Array([32, 32, 32]));
+      expect(pngImage.alphaChannel).toBeUndefined();
+    });
+
+    it(`detects truecolour PNGs`, () => {
+      const pngImage = PNG.load(
+        encode({
+          width: 1,
+          height: 1,
+          data: new Uint8Array([10, 20, 30]),
+          channels: 3,
+          depth: 8,
+        }),
+      );
+
+      expect(pngImage.type).toBe(PngType.Truecolour);
+      expect(pngImage.rgbChannel).toEqual(new Uint8Array([10, 20, 30]));
+      expect(pngImage.alphaChannel).toBeUndefined();
+    });
+
+    it(`detects indexed-colour PNGs`, () => {
+      const pngImage = PNG.load(
+        encode({
+          width: 1,
+          height: 1,
+          data: new Uint8Array([0]),
+          channels: 1,
+          depth: 8,
+          palette: [[100, 110, 120]],
+        }),
+      );
+
+      expect(pngImage.type).toBe(PngType.IndexedColour);
+      expect(pngImage.rgbChannel).toEqual(new Uint8Array([100, 110, 120]));
+      expect(pngImage.alphaChannel).toBeUndefined();
+    });
+
+    it(`detects greyscale-with-alpha PNGs`, () => {
+      const pngImage = PNG.load(
+        encode({
+          width: 1,
+          height: 1,
+          data: new Uint8Array([40, 200]),
+          channels: 2,
+          depth: 8,
+        }),
+      );
+
+      expect(pngImage.type).toBe(PngType.GreyscaleWithAlpha);
+      expect(pngImage.rgbChannel).toEqual(new Uint8Array([40, 40, 40]));
+      expect(pngImage.alphaChannel).toEqual(new Uint8Array([200]));
+    });
+
+    it(`detects truecolour-with-alpha PNGs`, () => {
+      const pngImage = PNG.load(
+        encode({
+          width: 1,
+          height: 1,
+          data: new Uint8Array([1, 2, 3, 4]),
+          channels: 4,
+          depth: 8,
+        }),
+      );
+
+      expect(pngImage.type).toBe(PngType.TruecolourWithAlpha);
+      expect(pngImage.rgbChannel).toEqual(new Uint8Array([1, 2, 3]));
+      expect(pngImage.alphaChannel).toEqual(new Uint8Array([4]));
+    });
+  });
+
+  describe(`alpha channel handling`, () => {
+    it(`drops fully opaque alpha channels`, () => {
+      const pngImage = PNG.load(
+        encode({
+          width: 1,
+          height: 1,
+          data: new Uint8Array([9, 8, 7, 255]),
+          channels: 4,
+          depth: 8,
+        }),
+      );
+
+      expect(pngImage.rgbChannel).toEqual(new Uint8Array([9, 8, 7]));
+      expect(pngImage.alphaChannel).toBeUndefined();
+    });
+
+    it(`preserves palette alpha for indexed PNGs`, () => {
+      const pngImage = PNG.load(
+        encode({
+          width: 1,
+          height: 1,
+          data: new Uint8Array([0]),
+          channels: 1, // indexed
+          depth: 8,
+          palette: [[12, 34, 56, 128]],
+        }),
+      );
+
+      expect(pngImage.type).toBe(PngType.IndexedColour);
+      expect(pngImage.rgbChannel).toEqual(new Uint8Array([12, 34, 56]));
+      expect(pngImage.alphaChannel).toEqual(new Uint8Array([128]));
+    });
+  });
+
+  describe(`bit depth normalization`, () => {
+    it(`handles 1-bit PNGs`, () => {
+      const pngImage = PNG.load(
+        encode({
+          width: 1,
+          height: 2,
+          data: new Uint8Array([0b10000000, 0b00000000]),
+          channels: 1, // greyscale
+          depth: 1,
+        }),
+      );
+
+      expect(pngImage.rgbChannel).toEqual(
+        new Uint8Array([255, 255, 255, 0, 0, 0]),
+      );
+    });
+
+    it(`handles 2-bit PNGs`, () => {
+      const pngImage = PNG.load(
+        encode({
+          width: 1,
+          height: 1,
+          data: new Uint8Array([0b11000000]),
+          channels: 1, // greyscale
+          depth: 2,
+        }),
+      );
+
+      expect(pngImage.rgbChannel).toEqual(new Uint8Array([255, 255, 255]));
+    });
+
+    it(`handles 4-bit PNGs`, () => {
+      const pngImage = PNG.load(
+        encode({
+          width: 1,
+          height: 1,
+          data: new Uint8Array([0b11110000]),
+          channels: 1, // greyscale
+          depth: 4,
+        }),
+      );
+
+      expect(pngImage.rgbChannel).toEqual(new Uint8Array([255, 255, 255]));
+    });
+
+    it(`handles 8-bit PNGs`, () => {
+      const pngImage = PNG.load(
+        encode({
+          width: 1,
+          height: 1,
+          data: new Uint8Array([12, 34, 56]),
+          channels: 3, // RGB
+          depth: 8,
+        }),
+      );
+
+      expect(pngImage.rgbChannel).toEqual(new Uint8Array([12, 34, 56]));
+    });
+
+    it(`handles 16-bit PNGs`, () => {
+      const pngImage = PNG.load(
+        encode({
+          width: 1,
+          height: 1,
+          data: new Uint16Array([0xffff, 0x8000, 0x0000]),
+          channels: 3, // RGB
+          depth: 16,
+        }),
+      );
+
+      expect(pngImage.rgbChannel).toEqual(new Uint8Array([255, 128, 0]));
+    });
   });
 });
