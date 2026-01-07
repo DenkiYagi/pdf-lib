@@ -7,8 +7,12 @@ on:
   release:
     types: [created]
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
-  build:
+  build-and-publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -18,33 +22,11 @@ jobs:
           registry-url: https://npm.pkg.github.com/
           scope: '@denkiyagi'
           cache: yarn
-      - run: yarn install
+      - run: yarn install --frozen-lockfile
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: yarn dev:prep
       - run: yarn build
-      - uses: actions/upload-artifact@v4
-        with:
-          name: build-output
-          path: |
-            dist/
-
-  publish-gpr:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          registry-url: https://npm.pkg.github.com/
-          scope: '@denkiyagi'
-      - uses: actions/download-artifact@v4
-        with:
-          name: build-output
       - run: yarn publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
