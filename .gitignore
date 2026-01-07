@@ -1,11 +1,9 @@
-scratchpad/build/
-apps/node-build/
 node_modules/
-coverage/
-ts3.4/
-umd/
-cjs/
-es/
+
+/scratchpad/build/
+/apps/node-build/
+/coverage/
+/dist/
 
 tsBuildInfo.json
 flamegraph.html
