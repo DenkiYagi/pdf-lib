@@ -1,10 +1,17 @@
 # Modifications
 
-## [Unreleased]
+## [1.17.1-mod.2026.1]
+
+### Build System Changes
 
 - Native ESM everywhere: all src/tests/apps use `.js`-suffixed local imports; Jest replaced with vitest; CJS build removed.
 - Build outputs relocated to `dist/`: `dist/es` (native ESM + typings) and `dist/umd` (bundled).
 - Package now uses conditional exports; consumers must import via the published entry points (`import`/`exports` map) rather than deep-linking files.
+
+### PNG Handling Changes
+
+- Switched PNG decoding from `@pdf-lib/upng` to `fast-png`, preventing freezes on truncated PNG inputs.
+- Animated PNGs are now accepted and decoded as a single image.
 
 ## [1.17.1-mod.2025.8]
 

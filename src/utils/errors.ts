@@ -49,15 +49,6 @@ export class InvalidPngError extends PDFLibUtilsError {
   }
 }
 
-export class AnimatedPngNotSupportedError extends PDFLibUtilsError {
-  constructor() {
-    super(
-      PDFLibErrorTypes.UNSUPPORTED_EXTERNAL_BINARY_DATA,
-      'Animated PNGs are not supported',
-    );
-  }
-}
-
 export class InvalidOptionPassedError extends PDFLibUtilsError {
   constructor(valueName: string, allowedValues: Primitive[], actual: any) {
     const allowed = allowedValues.map(formatValue).join(' or ');
