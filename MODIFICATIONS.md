@@ -1,6 +1,6 @@
 # Modifications
 
-## [1.17.1-mod.2026.2]
+## [1.17.1-mod.2026.3]
 
 ### Build System Changes
 
@@ -12,6 +12,10 @@
 
 - Switched PNG decoding from `@pdf-lib/upng` to `fast-png`, preventing freezes on truncated PNG inputs.
 - Animated PNGs are now accepted and decoded as a single image.
+
+## [1.17.1-mod.2026.2]
+
+- (removed)
 
 ## [1.17.1-mod.2026.1]
 
