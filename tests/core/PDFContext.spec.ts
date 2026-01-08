@@ -1,17 +1,17 @@
 import pako from 'pako';
 
-import { PDFContext } from 'src/core/PDFContext.js';
-import { PDFArray } from 'src/core/objects/PDFArray.js';
-import { PDFBool } from 'src/core/objects/PDFBool.js';
-import { PDFDict } from 'src/core/objects/PDFDict.js';
-import { PDFHexString } from 'src/core/objects/PDFHexString.js';
-import { PDFName } from 'src/core/objects/PDFName.js';
-import { PDFNull } from 'src/core/objects/PDFNull.js';
-import { PDFNumber } from 'src/core/objects/PDFNumber.js';
-import { PDFRef } from 'src/core/objects/PDFRef.js';
-import { PDFString } from 'src/core/objects/PDFString.js';
-import { PDFContentStream } from 'src/core/structures/PDFContentStream.js';
-import { mergeIntoTypedArray } from 'src/utils/arrays.js';
+import { PDFContext } from '../../src/core/PDFContext.js';
+import { PDFArray } from '../../src/core/objects/PDFArray.js';
+import { PDFBool } from '../../src/core/objects/PDFBool.js';
+import { PDFDict } from '../../src/core/objects/PDFDict.js';
+import { PDFHexString } from '../../src/core/objects/PDFHexString.js';
+import { PDFName } from '../../src/core/objects/PDFName.js';
+import { PDFNull } from '../../src/core/objects/PDFNull.js';
+import { PDFNumber } from '../../src/core/objects/PDFNumber.js';
+import { PDFRef } from '../../src/core/objects/PDFRef.js';
+import { PDFString } from '../../src/core/objects/PDFString.js';
+import { PDFContentStream } from '../../src/core/structures/PDFContentStream.js';
+import { mergeIntoTypedArray } from '../../src/utils/arrays.js';
 
 describe(`PDFContext`, () => {
   it(`retains assigned objects`, () => {

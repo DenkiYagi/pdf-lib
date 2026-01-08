@@ -1,10 +1,10 @@
-import { PDFContext } from 'src/core/PDFContext.js';
-import { PDFDict } from 'src/core/objects/PDFDict.js';
-import { PDFName } from 'src/core/objects/PDFName.js';
-import { PDFRef } from 'src/core/objects/PDFRef.js';
-import { PDFCatalog } from 'src/core/structures/PDFCatalog.js';
-import { PDFPageLeaf } from 'src/core/structures/PDFPageLeaf.js';
-import { PDFPageTree } from 'src/core/structures/PDFPageTree.js';
+import { PDFContext } from '../../../src/core/PDFContext.js';
+import { PDFDict } from '../../../src/core/objects/PDFDict.js';
+import { PDFName } from '../../../src/core/objects/PDFName.js';
+import { PDFRef } from '../../../src/core/objects/PDFRef.js';
+import { PDFCatalog } from '../../../src/core/structures/PDFCatalog.js';
+import { PDFPageLeaf } from '../../../src/core/structures/PDFPageLeaf.js';
+import { PDFPageTree } from '../../../src/core/structures/PDFPageTree.js';
 
 describe(`PDFCatalog`, () => {
   it(`can be constructed directly from a Map and PDFContext`, () => {

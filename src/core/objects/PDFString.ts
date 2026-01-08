@@ -1,18 +1,18 @@
-import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter.js';
-import { PDFHexString } from 'src/core/objects/PDFHexString.js';
-import { PDFObject } from 'src/core/objects/PDFObject.js';
-import type { PDFRef } from 'src/core/objects/PDFRef.js';
-import { CharCodes } from 'src/core/syntax/CharCodes.js';
-import { typedArrayFor } from 'src/utils/arrays.js';
-import { pdfDocEncodingDecode } from 'src/utils/pdfDocEncoding.js';
+import type { ObjectEncrypter } from './ObjectEncrypter.js';
+import { PDFHexString } from './PDFHexString.js';
+import { PDFObject } from './PDFObject.js';
+import type { PDFRef } from './PDFRef.js';
+import { CharCodes } from '../syntax/CharCodes.js';
+import { typedArrayFor } from '../../utils/arrays.js';
+import { pdfDocEncodingDecode } from '../../utils/pdfDocEncoding.js';
 import {
   copyStringIntoBuffer,
   padStart,
   parseDate,
   toCharCode,
-} from 'src/utils/strings.js';
-import { hasUtf16BOM, utf16Decode } from 'src/utils/unicode.js';
-import { InvalidPDFDateStringError } from 'src/core/errors.js';
+} from '../../utils/strings.js';
+import { hasUtf16BOM, utf16Decode } from '../../utils/unicode.js';
+import { InvalidPDFDateStringError } from '../errors.js';
 
 export class PDFString extends PDFObject {
   // The PDF spec allows newlines and parens to appear directly within a literal

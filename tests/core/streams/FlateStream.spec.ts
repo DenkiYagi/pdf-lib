@@ -1,5 +1,5 @@
-import { FlateStream } from 'src/core/streams/FlateStream.js';
-import { Stream } from 'src/core/streams/Stream.js';
+import { FlateStream } from '../../../src/core/streams/FlateStream.js';
+import { Stream } from '../../../src/core/streams/Stream.js';
 import { readBinaryFileSync } from '../../test-utils.js';
 
 const DIR = `tests/core/streams/data/flate`;

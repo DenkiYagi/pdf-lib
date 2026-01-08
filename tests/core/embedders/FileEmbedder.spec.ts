@@ -1,7 +1,7 @@
-import { PDFContext } from 'src/core/PDFContext.js';
-import { FileEmbedder } from 'src/core/embedders/FileEmbedder.js';
-import { PDFDict } from 'src/core/objects/PDFDict.js';
-import { PDFRef } from 'src/core/objects/PDFRef.js';
+import { PDFContext } from '../../../src/core/PDFContext.js';
+import { FileEmbedder } from '../../../src/core/embedders/FileEmbedder.js';
+import { PDFDict } from '../../../src/core/objects/PDFDict.js';
+import { PDFRef } from '../../../src/core/objects/PDFRef.js';
 import { readBinaryFileSync } from '../../test-utils.js';
 
 const catRidingUnicornJpg = readBinaryFileSync(

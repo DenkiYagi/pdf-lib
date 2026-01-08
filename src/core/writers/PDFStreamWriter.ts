@@ -1,15 +1,15 @@
-import { PDFHeader } from 'src/core/document/PDFHeader.js';
-import { PDFTrailer } from 'src/core/document/PDFTrailer.js';
-import { PDFName } from 'src/core/objects/PDFName.js';
-import { PDFNumber } from 'src/core/objects/PDFNumber.js';
-import type { PDFObject } from 'src/core/objects/PDFObject.js';
-import { PDFRef } from 'src/core/objects/PDFRef.js';
-import type { PDFContext } from 'src/core/PDFContext.js';
-import { PDFCrossRefStream } from 'src/core/structures/PDFCrossRefStream.js';
-import { PDFObjectStream } from 'src/core/structures/PDFObjectStream.js';
-import { PDFWriter } from 'src/core/writers/PDFWriter.js';
-import { last } from 'src/utils/arrays.js';
-import { waitForTick } from 'src/utils/async.js';
+import { PDFHeader } from '../document/PDFHeader.js';
+import { PDFTrailer } from '../document/PDFTrailer.js';
+import { PDFName } from '../objects/PDFName.js';
+import { PDFNumber } from '../objects/PDFNumber.js';
+import type { PDFObject } from '../objects/PDFObject.js';
+import { PDFRef } from '../objects/PDFRef.js';
+import type { PDFContext } from '../PDFContext.js';
+import { PDFCrossRefStream } from '../structures/PDFCrossRefStream.js';
+import { PDFObjectStream } from '../structures/PDFObjectStream.js';
+import { PDFWriter } from './PDFWriter.js';
+import { last } from '../../utils/arrays.js';
+import { waitForTick } from '../../utils/async.js';
 
 export class PDFStreamWriter extends PDFWriter {
   static forContext = (

@@ -1,5 +1,5 @@
-import { charFromCode } from 'src/utils/strings.js';
-import { InvalidTypePassedError } from 'src/utils/errors.js';
+import { charFromCode } from './strings.js';
+import { InvalidTypePassedError } from './errors.js';
 
 export const last = <T>(array: T[]): T => array[array.length - 1];
 

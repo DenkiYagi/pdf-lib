@@ -1,4 +1,4 @@
-import { SimpleRNG } from 'src/utils/rng.js';
+import { SimpleRNG } from '../../src/utils/rng.js';
 
 describe(`psuedo random numbers`, () => {
   it(`generates distinct numbers`, () => {

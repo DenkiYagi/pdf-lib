@@ -1,6 +1,6 @@
-import { PDFHeader } from 'src/core/document/PDFHeader.js';
-import { typedArrayFor } from 'src/utils/arrays.js';
-import { toCharCode } from 'src/utils/strings.js';
+import { PDFHeader } from '../../../src/core/document/PDFHeader.js';
+import { typedArrayFor } from '../../../src/utils/arrays.js';
+import { toCharCode } from '../../../src/utils/strings.js';
 
 describe(`PDFHeader`, () => {
   it(`can be constructed from PDFHeader.forVersion(...)`, () => {

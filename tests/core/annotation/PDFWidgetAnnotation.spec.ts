@@ -1,9 +1,9 @@
-import { PDFContext } from 'src/core/PDFContext.js';
-import { PDFWidgetAnnotation } from 'src/core/annotation/PDFWidgetAnnotation.js';
-import { PDFHexString } from 'src/core/objects/PDFHexString.js';
-import { PDFName } from 'src/core/objects/PDFName.js';
-import { PDFNull } from 'src/core/objects/PDFNull.js';
-import { PDFString } from 'src/core/objects/PDFString.js';
+import { PDFContext } from '../../../src/core/PDFContext.js';
+import { PDFWidgetAnnotation } from '../../../src/core/annotation/PDFWidgetAnnotation.js';
+import { PDFHexString } from '../../../src/core/objects/PDFHexString.js';
+import { PDFName } from '../../../src/core/objects/PDFName.js';
+import { PDFNull } from '../../../src/core/objects/PDFNull.js';
+import { PDFString } from '../../../src/core/objects/PDFString.js';
 
 describe(`PDFWidgetAnnotation`, () => {
   it(`returns undefined for missing (DAs)`, () => {

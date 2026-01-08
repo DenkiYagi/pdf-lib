@@ -1,4 +1,4 @@
-import type { PDFRef } from 'src/core/objects/PDFRef.js';
+import type { PDFRef } from '../objects/PDFRef.js';
 import {
   MD5,
   encryptAES,
@@ -7,7 +7,7 @@ import {
   wordArrayToBytes,
   wordArrayRandom,
   WordArray,
-} from 'src/utils/crypt.js';
+} from '../../utils/crypt.js';
 
 /**
  * (For internal use in `EncryptionKeyV4`)

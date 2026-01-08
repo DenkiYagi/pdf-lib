@@ -1,7 +1,7 @@
-import { PDFNumber } from 'src/core/objects/PDFNumber.js';
-import { PDFRef } from 'src/core/objects/PDFRef.js';
-import { typedArrayFor } from 'src/utils/arrays.js';
-import { toCharCode } from 'src/utils/strings.js';
+import { PDFNumber } from '../../../src/core/objects/PDFNumber.js';
+import { PDFRef } from '../../../src/core/objects/PDFRef.js';
+import { typedArrayFor } from '../../../src/utils/arrays.js';
+import { toCharCode } from '../../../src/utils/strings.js';
 import { security } from './shared.js';
 
 describe(`PDFNumber`, () => {

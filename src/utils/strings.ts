@@ -1,4 +1,4 @@
-import { InvalidWordBreakError } from 'src/utils/errors.js';
+import { InvalidWordBreakError } from './errors.js';
 
 export const toCharCode = (character: string) => character.charCodeAt(0);
 

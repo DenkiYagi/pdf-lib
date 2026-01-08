@@ -1,6 +1,6 @@
-import { PDFCrossRefSection } from 'src/core/document/PDFCrossRefSection.js';
-import { PDFHeader } from 'src/core/document/PDFHeader.js';
-import { PDFTrailer } from 'src/core/document/PDFTrailer.js';
+import { PDFCrossRefSection } from '../document/PDFCrossRefSection.js';
+import { PDFHeader } from '../document/PDFHeader.js';
+import { PDFTrailer } from '../document/PDFTrailer.js';
 import {
   MissingKeywordError,
   MissingPDFHeaderError,
@@ -8,22 +8,22 @@ import {
   PDFInvalidObjectParsingError,
   ReparseError,
   StalledParserError,
-} from 'src/core/errors.js';
-import { PDFDict } from 'src/core/objects/PDFDict.js';
-import { PDFInvalidObject } from 'src/core/objects/PDFInvalidObject.js';
-import { PDFName } from 'src/core/objects/PDFName.js';
-import type { PDFObject } from 'src/core/objects/PDFObject.js';
-import { PDFRawStream } from 'src/core/objects/PDFRawStream.js';
-import { PDFRef } from 'src/core/objects/PDFRef.js';
-import { ByteStream } from 'src/core/parser/ByteStream.js';
-import { PDFObjectParser } from 'src/core/parser/PDFObjectParser.js';
-import { PDFObjectStreamParser } from 'src/core/parser/PDFObjectStreamParser.js';
-import { PDFXRefStreamParser } from 'src/core/parser/PDFXRefStreamParser.js';
-import { PDFContext } from 'src/core/PDFContext.js';
-import { CharCodes } from 'src/core/syntax/CharCodes.js';
-import { Keywords } from 'src/core/syntax/Keywords.js';
-import { IsDigit } from 'src/core/syntax/Numeric.js';
-import { waitForTick } from 'src/utils/async.js';
+} from '../errors.js';
+import { PDFDict } from '../objects/PDFDict.js';
+import { PDFInvalidObject } from '../objects/PDFInvalidObject.js';
+import { PDFName } from '../objects/PDFName.js';
+import type { PDFObject } from '../objects/PDFObject.js';
+import { PDFRawStream } from '../objects/PDFRawStream.js';
+import { PDFRef } from '../objects/PDFRef.js';
+import { ByteStream } from './ByteStream.js';
+import { PDFObjectParser } from './PDFObjectParser.js';
+import { PDFObjectStreamParser } from './PDFObjectStreamParser.js';
+import { PDFXRefStreamParser } from './PDFXRefStreamParser.js';
+import { PDFContext } from '../PDFContext.js';
+import { CharCodes } from '../syntax/CharCodes.js';
+import { Keywords } from '../syntax/Keywords.js';
+import { IsDigit } from '../syntax/Numeric.js';
+import { waitForTick } from '../../utils/async.js';
 
 export class PDFParser extends PDFObjectParser {
   static forBytesWithOptions = (

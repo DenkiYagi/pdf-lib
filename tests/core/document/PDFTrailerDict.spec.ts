@@ -1,7 +1,7 @@
-import { PDFContext } from 'src/core/PDFContext.js';
-import { PDFTrailerDict } from 'src/core/document/PDFTrailerDict.js';
-import { typedArrayFor } from 'src/utils/arrays.js';
-import { toCharCode } from 'src/utils/strings.js';
+import { PDFContext } from '../../../src/core/PDFContext.js';
+import { PDFTrailerDict } from '../../../src/core/document/PDFTrailerDict.js';
+import { typedArrayFor } from '../../../src/utils/arrays.js';
+import { toCharCode } from '../../../src/utils/strings.js';
 
 describe(`PDFTrailerDict`, () => {
   const dict = PDFContext.create().obj({ Foo: 'Bar' });

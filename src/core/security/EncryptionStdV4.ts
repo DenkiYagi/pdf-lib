@@ -1,12 +1,8 @@
-import type { PDFRef } from 'src/core/objects/PDFRef.js';
-import {
-  Encryption,
-  EncryptionKey,
-  EncryptionDictStd,
-} from 'src/core/security/Encryption.js';
-import type { SecurityOptions } from 'src/core/security/PDFSecurity.js';
-import { StdSecurityHandlerR4 } from 'src/core/security/StdSecurityHandlerR4.js';
-import { DataEncrypterV4 } from 'src/core/security/DataEncrypterV4.js';
+import type { PDFRef } from '../objects/PDFRef.js';
+import { Encryption, EncryptionKey, EncryptionDictStd } from './Encryption.js';
+import type { SecurityOptions } from './PDFSecurity.js';
+import { StdSecurityHandlerR4 } from './StdSecurityHandlerR4.js';
+import { DataEncrypterV4 } from './DataEncrypterV4.js';
 
 /**
  * Subtype of `EncryptionKey` to be used when using encryption algorithm version 4.

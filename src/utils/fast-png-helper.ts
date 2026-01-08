@@ -1,5 +1,5 @@
 import { convertIndexedToRgb, type DecodedPng } from 'fast-png';
-import { InvalidPngError } from 'src/utils/errors.js';
+import { InvalidPngError } from './errors.js';
 
 const toByte = (value: number, depth: number) => {
   if (depth === 8) return value;

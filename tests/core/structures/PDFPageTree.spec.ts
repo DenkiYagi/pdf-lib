@@ -1,12 +1,12 @@
-import type { TreeNode } from 'src/core/structures/PDFPageTree.js';
-import { PDFContext } from 'src/core/PDFContext.js';
-import { PDFArray } from 'src/core/objects/PDFArray.js';
-import { PDFName } from 'src/core/objects/PDFName.js';
-import { PDFNumber } from 'src/core/objects/PDFNumber.js';
-import { PDFRef } from 'src/core/objects/PDFRef.js';
-import { PDFPageLeaf } from 'src/core/structures/PDFPageLeaf.js';
-import { PDFPageTree } from 'src/core/structures/PDFPageTree.js';
-import { PDFDocument } from 'src/api/PDFDocument.js';
+import type { TreeNode } from '../../../src/core/structures/PDFPageTree.js';
+import { PDFContext } from '../../../src/core/PDFContext.js';
+import { PDFArray } from '../../../src/core/objects/PDFArray.js';
+import { PDFName } from '../../../src/core/objects/PDFName.js';
+import { PDFNumber } from '../../../src/core/objects/PDFNumber.js';
+import { PDFRef } from '../../../src/core/objects/PDFRef.js';
+import { PDFPageLeaf } from '../../../src/core/structures/PDFPageLeaf.js';
+import { PDFPageTree } from '../../../src/core/structures/PDFPageTree.js';
+import { PDFDocument } from '../../../src/api/PDFDocument.js';
 import { readBinaryFileSync } from '../../test-utils.js';
 
 const withNullEntryPdfBytes = readBinaryFileSync(

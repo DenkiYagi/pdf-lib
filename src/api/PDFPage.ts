@@ -1,4 +1,4 @@
-import { Color, rgb } from 'src/api/colors.js';
+import { Color, rgb } from './colors.js';
 import {
   drawImage,
   drawLine,
@@ -7,18 +7,18 @@ import {
   drawRectangle,
   drawSvgPath,
   drawEllipse,
-} from 'src/api/operations.js';
+} from './operations.js';
 import {
   popGraphicsState,
   pushGraphicsState,
   translate,
   LineCapStyle,
   scale,
-} from 'src/api/operators.js';
-import { PDFDocument } from 'src/api/PDFDocument.js';
-import { PDFEmbeddedPage } from 'src/api/PDFEmbeddedPage.js';
-import { PDFFont } from 'src/api/PDFFont.js';
-import { PDFImage } from 'src/api/PDFImage.js';
+} from './operators.js';
+import { PDFDocument } from './PDFDocument.js';
+import { PDFEmbeddedPage } from './PDFEmbeddedPage.js';
+import { PDFFont } from './PDFFont.js';
+import { PDFImage } from './PDFImage.js';
 import {
   PDFPageDrawCircleOptions,
   PDFPageDrawEllipseOptions,
@@ -30,21 +30,21 @@ import {
   PDFPageDrawSVGOptions,
   PDFPageDrawTextOptions,
   BlendMode,
-} from 'src/api/PDFPageOptions.js';
-import { degrees, Rotation, toDegrees } from 'src/api/rotations.js';
-import { StandardFonts } from 'src/api/StandardFonts.js';
-import { PDFContentStream } from 'src/core/structures/PDFContentStream.js';
-import { PDFPageLeaf } from 'src/core/structures/PDFPageLeaf.js';
-import { PDFArray } from 'src/core/objects/PDFArray.js';
-import { PDFDict } from 'src/core/objects/PDFDict.js';
-import { PDFHexString } from 'src/core/objects/PDFHexString.js';
-import { PDFName } from 'src/core/objects/PDFName.js';
-import { PDFRef } from 'src/core/objects/PDFRef.js';
-import { PDFOperator } from 'src/core/operators/PDFOperator.js';
+} from './PDFPageOptions.js';
+import { degrees, Rotation, toDegrees } from './rotations.js';
+import { StandardFonts } from './StandardFonts.js';
+import { PDFContentStream } from '../core/structures/PDFContentStream.js';
+import { PDFPageLeaf } from '../core/structures/PDFPageLeaf.js';
+import { PDFArray } from '../core/objects/PDFArray.js';
+import { PDFDict } from '../core/objects/PDFDict.js';
+import { PDFHexString } from '../core/objects/PDFHexString.js';
+import { PDFName } from '../core/objects/PDFName.js';
+import { PDFRef } from '../core/objects/PDFRef.js';
+import { PDFOperator } from '../core/operators/PDFOperator.js';
 import type {
   MultiLineTextOrGlyphs,
   SingleLineTextOrGlyphs,
-} from 'src/types/text.js';
+} from '../types/text.js';
 import {
   assertEachIs,
   assertIs,
@@ -52,9 +52,9 @@ import {
   assertMultiple,
   assertOrUndefined,
   assertRangeOrUndefined,
-} from 'src/utils/validators.js';
-import { rectanglesAreEqual } from 'src/utils/objects.js';
-import { breakTextIntoLines, cleanText, lineSplit } from 'src/utils/strings.js';
+} from '../utils/validators.js';
+import { rectanglesAreEqual } from '../utils/objects.js';
+import { breakTextIntoLines, cleanText, lineSplit } from '../utils/strings.js';
 
 /**
  * Represents a single page of a [[PDFDocument]].

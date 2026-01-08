@@ -15,28 +15,31 @@ import {
   PrintScaling,
   ReadingDirection,
   ViewerPreferences,
-} from 'src/core/interactive/ViewerPreferences.js';
-import { PDFArray } from 'src/core/objects/PDFArray.js';
-import { PDFDict } from 'src/core/objects/PDFDict.js';
-import { PDFHexString } from 'src/core/objects/PDFHexString.js';
-import { PDFName } from 'src/core/objects/PDFName.js';
-import { PDFRef } from 'src/core/objects/PDFRef.js';
+} from '../../src/core/interactive/ViewerPreferences.js';
+import { PDFArray } from '../../src/core/objects/PDFArray.js';
+import { PDFDict } from '../../src/core/objects/PDFDict.js';
+import { PDFHexString } from '../../src/core/objects/PDFHexString.js';
+import { PDFName } from '../../src/core/objects/PDFName.js';
+import { PDFRef } from '../../src/core/objects/PDFRef.js';
 import {
   EncryptedPDFError,
   InvalidFontSubsetOptionError,
-} from 'src/api/errors.js';
-import { ParseSpeeds } from 'src/api/PDFDocumentOptions.js';
-import { PDFDocument } from 'src/api/PDFDocument.js';
-import { PDFPage } from 'src/api/PDFPage.js';
-import { PDFFont } from 'src/api/PDFFont.js';
+} from '../../src/api/errors.js';
+import { ParseSpeeds } from '../../src/api/PDFDocumentOptions.js';
+import { PDFDocument } from '../../src/api/PDFDocument.js';
+import { PDFPage } from '../../src/api/PDFPage.js';
+import { PDFFont } from '../../src/api/PDFFont.js';
 import {
   InvalidIndirectObjectError,
   FontkitAssertionError as PDFLibFontkitAssertionError,
   UnsupportedFontFileFormatError,
-} from 'src/core/errors.js';
-import { PDFSecurity, SecurityOptions } from 'src/core/security/PDFSecurity.js';
+} from '../../src/core/errors.js';
+import {
+  PDFSecurity,
+  SecurityOptions,
+} from '../../src/core/security/PDFSecurity.js';
 import { readBinaryFileSync } from '../test-utils.js';
-import { InvalidPngError } from 'src/utils/errors.js';
+import { InvalidPngError } from '../../src/utils/errors.js';
 
 const examplePngImage = readBinaryFileSync('assets/images/etwe.png');
 

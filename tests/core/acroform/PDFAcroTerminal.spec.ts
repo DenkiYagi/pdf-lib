@@ -1,7 +1,7 @@
-import { PDFContext } from 'src/core/PDFContext.js';
-import { PDFAcroTerminal } from 'src/core/acroform/PDFAcroTerminal.js';
-import { PDFArray } from 'src/core/objects/PDFArray.js';
-import { PDFRef } from 'src/core/objects/PDFRef.js';
+import { PDFContext } from '../../../src/core/PDFContext.js';
+import { PDFAcroTerminal } from '../../../src/core/acroform/PDFAcroTerminal.js';
+import { PDFArray } from '../../../src/core/objects/PDFArray.js';
+import { PDFRef } from '../../../src/core/objects/PDFRef.js';
 
 describe(`PDFAcroTerminal`, () => {
   it(`returns Kids when it has them`, () => {

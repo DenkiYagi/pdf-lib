@@ -1,5 +1,5 @@
-import { CharCodes } from 'src/core/syntax/CharCodes.js';
-import { charFromCode, copyStringIntoBuffer } from 'src/utils/strings.js';
+import { CharCodes } from '../syntax/CharCodes.js';
+import { charFromCode, copyStringIntoBuffer } from '../../utils/strings.js';
 
 export class PDFHeader {
   static forVersion = (major: number, minor: number) =>

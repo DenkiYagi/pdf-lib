@@ -1,4 +1,4 @@
-import type { PDFRef } from 'src/core/objects/PDFRef.js';
+import type { PDFRef } from './PDFRef.js';
 
 /**
  * Object that can encrypt arbitrary PDF object.

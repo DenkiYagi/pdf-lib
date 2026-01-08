@@ -1,14 +1,14 @@
-import type { PDFWidgetAnnotation } from 'src/core/annotation/PDFWidgetAnnotation.js';
-import type { PDFOperator } from 'src/core/operators/PDFOperator.js';
-import type { PDFFont } from 'src/api/PDFFont.js';
-import type { PDFButton } from 'src/api/form/PDFButton.js';
-import type { PDFCheckBox } from 'src/api/form/PDFCheckBox.js';
-import type { PDFDropdown } from 'src/api/form/PDFDropdown.js';
-import type { PDFField } from 'src/api/form/PDFField.js';
-import type { PDFOptionList } from 'src/api/form/PDFOptionList.js';
-import type { PDFRadioGroup } from 'src/api/form/PDFRadioGroup.js';
-import type { PDFSignature } from 'src/api/form/PDFSignature.js';
-import type { PDFTextField } from 'src/api/form/PDFTextField.js';
+import type { PDFWidgetAnnotation } from '../../core/annotation/PDFWidgetAnnotation.js';
+import type { PDFOperator } from '../../core/operators/PDFOperator.js';
+import type { PDFFont } from '../PDFFont.js';
+import type { PDFButton } from './PDFButton.js';
+import type { PDFCheckBox } from './PDFCheckBox.js';
+import type { PDFDropdown } from './PDFDropdown.js';
+import type { PDFField } from './PDFField.js';
+import type { PDFOptionList } from './PDFOptionList.js';
+import type { PDFRadioGroup } from './PDFRadioGroup.js';
+import type { PDFSignature } from './PDFSignature.js';
+import type { PDFTextField } from './PDFTextField.js';
 import {
   drawCheckBox,
   rotateInPlace,
@@ -16,7 +16,7 @@ import {
   drawButton,
   drawTextField,
   drawOptionList,
-} from 'src/api/operations.js';
+} from '../operations.js';
 import {
   rgb,
   componentsToColor,
@@ -24,17 +24,17 @@ import {
   grayscale,
   cmyk,
   Color,
-} from 'src/api/colors.js';
-import { reduceRotation, adjustDimsForRotation } from 'src/api/rotations.js';
+} from '../colors.js';
+import { reduceRotation, adjustDimsForRotation } from '../rotations.js';
 import {
   layoutMultilineText,
   layoutCombedText,
   TextPosition,
   layoutSinglelineText,
-} from 'src/api/text/layout.js';
-import { TextAlignment } from 'src/api/text/alignment.js';
-import { setFontAndSize } from 'src/api/operators.js';
-import { findLastMatch } from 'src/utils/strings.js';
+} from '../text/layout.js';
+import { TextAlignment } from '../text/alignment.js';
+import { setFontAndSize } from '../operators.js';
+import { findLastMatch } from '../../utils/strings.js';
 
 /*********************** Appearance Provider Types ****************************/
 

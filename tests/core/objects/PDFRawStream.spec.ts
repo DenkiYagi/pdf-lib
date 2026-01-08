@@ -1,10 +1,10 @@
-import { PDFContext } from 'src/core/PDFContext.js';
-import { PDFDict } from 'src/core/objects/PDFDict.js';
-import { PDFObject } from 'src/core/objects/PDFObject.js';
-import { PDFRawStream } from 'src/core/objects/PDFRawStream.js';
-import { PDFRef } from 'src/core/objects/PDFRef.js';
-import { mergeIntoTypedArray } from 'src/utils/arrays.js';
-import { toCharCode } from 'src/utils/strings.js';
+import { PDFContext } from '../../../src/core/PDFContext.js';
+import { PDFDict } from '../../../src/core/objects/PDFDict.js';
+import { PDFObject } from '../../../src/core/objects/PDFObject.js';
+import { PDFRawStream } from '../../../src/core/objects/PDFRawStream.js';
+import { PDFRef } from '../../../src/core/objects/PDFRef.js';
+import { mergeIntoTypedArray } from '../../../src/utils/arrays.js';
+import { toCharCode } from '../../../src/utils/strings.js';
 import { mockRandom, resetMock } from '../security/mock.js';
 import { security } from './shared.js';
 

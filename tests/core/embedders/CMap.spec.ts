@@ -2,8 +2,8 @@ import { create as createFont } from '@denkiyagi/fontkit';
 import type { TTFFont, Glyph } from '@denkiyagi/fontkit';
 import fs from 'fs';
 
-import { createCmap } from 'src/core/embedders/CMap.js';
-import { byAscendingId, sortedUniq } from 'src/utils/arrays.js';
+import { createCmap } from '../../../src/core/embedders/CMap.js';
+import { byAscendingId, sortedUniq } from '../../../src/utils/arrays.js';
 
 const ubuntuFont = fs.readFileSync('./assets/fonts/ubuntu/Ubuntu-R.ttf');
 const sourceHansJpFont = fs.readFileSync(

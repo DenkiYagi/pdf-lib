@@ -1,6 +1,6 @@
-import { PDFTrailer } from 'src/core/document/PDFTrailer.js';
-import { typedArrayFor } from 'src/utils/arrays.js';
-import { toCharCode } from 'src/utils/strings.js';
+import { PDFTrailer } from '../../../src/core/document/PDFTrailer.js';
+import { typedArrayFor } from '../../../src/utils/arrays.js';
+import { toCharCode } from '../../../src/utils/strings.js';
 
 describe(`PDFTrailer`, () => {
   it(`can be constructed from PDFTrailer.forLastCrossRefSectionOffset(...)`, () => {

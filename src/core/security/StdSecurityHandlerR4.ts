@@ -1,8 +1,8 @@
 import {
   StdSecurityHandler,
   StdSecurityHandlerDict,
-} from 'src/core/security/StdSecurityHandler.js';
-import { InvalidPasswordError } from 'src/core/errors.js';
+} from './StdSecurityHandler.js';
+import { InvalidPasswordError } from '../errors.js';
 import {
   MD5,
   encryptRC4,
@@ -10,7 +10,7 @@ import {
   WordArray,
   wordArrayFromBytes,
   wordArrayToBytes,
-} from 'src/utils/crypt.js';
+} from '../../utils/crypt.js';
 
 /**
  * Standard security handler, revision 4.

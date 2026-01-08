@@ -1,7 +1,7 @@
-import { ReparseError } from 'src/core/errors.js';
-import { PDFContext } from 'src/core/PDFContext.js';
-import { PDFRawStream } from 'src/core/objects/PDFRawStream.js';
-import { PDFXRefStreamParser } from 'src/core/parser/PDFXRefStreamParser.js';
+import { ReparseError } from '../../../src/core/errors.js';
+import { PDFContext } from '../../../src/core/PDFContext.js';
+import { PDFRawStream } from '../../../src/core/objects/PDFRawStream.js';
+import { PDFXRefStreamParser } from '../../../src/core/parser/PDFXRefStreamParser.js';
 import { readBinaryFileSync } from '../../test-utils.js';
 
 const readData = (file: string) =>

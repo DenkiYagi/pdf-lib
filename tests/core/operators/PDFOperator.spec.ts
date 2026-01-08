@@ -1,9 +1,9 @@
-import { PDFNumber } from 'src/core/objects/PDFNumber.js';
-import { PDFString } from 'src/core/objects/PDFString.js';
-import { PDFOperator } from 'src/core/operators/PDFOperator.js';
-import { PDFOperatorNames as Ops } from 'src/core/operators/PDFOperatorNames.js';
-import { typedArrayFor } from 'src/utils/arrays.js';
-import { toCharCode } from 'src/utils/strings.js';
+import { PDFNumber } from '../../../src/core/objects/PDFNumber.js';
+import { PDFString } from '../../../src/core/objects/PDFString.js';
+import { PDFOperator } from '../../../src/core/operators/PDFOperator.js';
+import { PDFOperatorNames as Ops } from '../../../src/core/operators/PDFOperatorNames.js';
+import { typedArrayFor } from '../../../src/utils/arrays.js';
+import { toCharCode } from '../../../src/utils/strings.js';
 
 describe(`PDFOperator`, () => {
   it(`can be constructed with args`, () => {

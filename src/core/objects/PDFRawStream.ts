@@ -1,10 +1,10 @@
-import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter.js';
-import type { PDFDict } from 'src/core/objects/PDFDict.js';
-import type { PDFObject } from 'src/core/objects/PDFObject.js';
-import type { PDFRef } from 'src/core/objects/PDFRef.js';
-import { PDFStream } from 'src/core/objects/PDFStream.js';
-import type { PDFContext } from 'src/core/PDFContext.js';
-import { arrayAsString } from 'src/utils/arrays.js';
+import type { ObjectEncrypter } from './ObjectEncrypter.js';
+import type { PDFDict } from './PDFDict.js';
+import type { PDFObject } from './PDFObject.js';
+import type { PDFRef } from './PDFRef.js';
+import { PDFStream } from './PDFStream.js';
+import type { PDFContext } from '../PDFContext.js';
+import { arrayAsString } from '../../utils/arrays.js';
 
 export class PDFRawStream extends PDFStream {
   static of = (dict: PDFDict, contents: Uint8Array) =>

@@ -1,6 +1,6 @@
 // tslint:disable: max-classes-per-file
 
-import { arrayAsString } from 'src/utils/arrays.js';
+import { arrayAsString } from '../utils/arrays.js';
 import {
   PDFLibError,
   PDFLibErrorType,

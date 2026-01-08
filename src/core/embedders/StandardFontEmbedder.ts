@@ -5,11 +5,11 @@ import {
   EncodingType,
 } from '@pdf-lib/standard-fonts';
 
-import { PDFHexString } from 'src/core/objects/PDFHexString.js';
-import type { PDFRef } from 'src/core/objects/PDFRef.js';
-import type { PDFContext } from 'src/core/PDFContext.js';
-import type { SingleLineTextOrGlyphs } from 'src/types/text.js';
-import { toCodePoint, toHexString } from 'src/utils/strings.js';
+import { PDFHexString } from '../objects/PDFHexString.js';
+import type { PDFRef } from '../objects/PDFRef.js';
+import type { PDFContext } from '../PDFContext.js';
+import type { SingleLineTextOrGlyphs } from '../../types/text.js';
+import { toCodePoint, toHexString } from '../../utils/strings.js';
 
 export interface Glyph {
   code: number;

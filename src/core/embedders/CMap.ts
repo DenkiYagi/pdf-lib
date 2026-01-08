@@ -1,14 +1,14 @@
 import type { Glyph } from '@denkiyagi/fontkit';
 
-import { InvalidUnicodeCodePointError } from 'src/core/errors.js';
-import { PDFLibErrorTypes } from 'src/core/error-base.js';
-import { toHexStringOfMinLength } from 'src/utils/strings.js';
+import { InvalidUnicodeCodePointError } from '../errors.js';
+import { PDFLibErrorTypes } from '../error-base.js';
+import { toHexStringOfMinLength } from '../../utils/strings.js';
 import {
   hasSurrogates,
   highSurrogate,
   isWithinBMP,
   lowSurrogate,
-} from 'src/utils/unicode.js';
+} from '../../utils/unicode.js';
 
 /** [fontId, codePoint] */
 type BfChar = [string, string];

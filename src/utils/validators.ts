@@ -5,13 +5,10 @@ import {
   InvalidPositiveNumberPassedError,
   InvalidRangePassedError,
   InvalidTypePassedError,
-} from 'src/utils/errors.js';
-import { values as objectValues } from 'src/utils/objects.js';
-import type {
-  Primitive,
-  TypeDescriptor,
-} from 'src/utils/validators-helpers.js';
-import { isType } from 'src/utils/validators-helpers.js';
+} from './errors.js';
+import { values as objectValues } from './objects.js';
+import type { Primitive, TypeDescriptor } from './validators-helpers.js';
+import { isType } from './validators-helpers.js';
 
 export const assertIsOneOf = (
   value: any,

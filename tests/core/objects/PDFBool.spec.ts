@@ -1,8 +1,8 @@
-import { PrivateConstructorError } from 'src/core/errors.js';
-import { PDFBool } from 'src/core/objects/PDFBool.js';
-import { PDFRef } from 'src/core/objects/PDFRef.js';
-import { typedArrayFor } from 'src/utils/arrays.js';
-import { toCharCode } from 'src/utils/strings.js';
+import { PrivateConstructorError } from '../../../src/core/errors.js';
+import { PDFBool } from '../../../src/core/objects/PDFBool.js';
+import { PDFRef } from '../../../src/core/objects/PDFRef.js';
+import { typedArrayFor } from '../../../src/utils/arrays.js';
+import { toCharCode } from '../../../src/utils/strings.js';
 import { security } from './shared.js';
 
 describe(`PDFBool`, () => {

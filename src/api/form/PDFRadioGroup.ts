@@ -1,30 +1,30 @@
-import type { PDFDocument } from 'src/api/PDFDocument.js';
-import { PDFPage } from 'src/api/PDFPage.js';
+import type { PDFDocument } from '../PDFDocument.js';
+import { PDFPage } from '../PDFPage.js';
 import {
   PDFField,
   FieldAppearanceOptions,
   assertFieldAppearanceOptions,
-} from 'src/api/form/PDFField.js';
+} from './PDFField.js';
 import {
   AppearanceProviderFor,
   normalizeAppearance,
   defaultRadioGroupAppearanceProvider,
-} from 'src/api/form/appearances.js';
-import { rgb } from 'src/api/colors.js';
-import { degrees } from 'src/api/rotations.js';
+} from './appearances.js';
+import { rgb } from '../colors.js';
+import { degrees } from '../rotations.js';
 
-import { PDFAcroRadioButton } from 'src/core/acroform/PDFAcroRadioButton.js';
-import { AcroButtonFlags } from 'src/core/acroform/flags.js';
-import { PDFWidgetAnnotation } from 'src/core/annotation/PDFWidgetAnnotation.js';
-import { PDFDict } from 'src/core/objects/PDFDict.js';
-import { PDFHexString } from 'src/core/objects/PDFHexString.js';
-import { PDFName } from 'src/core/objects/PDFName.js';
-import { PDFRef } from 'src/core/objects/PDFRef.js';
+import { PDFAcroRadioButton } from '../../core/acroform/PDFAcroRadioButton.js';
+import { AcroButtonFlags } from '../../core/acroform/flags.js';
+import { PDFWidgetAnnotation } from '../../core/annotation/PDFWidgetAnnotation.js';
+import { PDFDict } from '../../core/objects/PDFDict.js';
+import { PDFHexString } from '../../core/objects/PDFHexString.js';
+import { PDFName } from '../../core/objects/PDFName.js';
+import { PDFRef } from '../../core/objects/PDFRef.js';
 import {
   assertIs,
   assertIsOneOf,
   assertOrUndefined,
-} from 'src/utils/validators.js';
+} from '../../utils/validators.js';
 
 /**
  * Represents a radio group field of a [[PDFForm]].

@@ -1,6 +1,6 @@
-import type { PDFRef } from 'src/core/objects/PDFRef.js';
-import type { PDFContext } from 'src/core/PDFContext.js';
-import { PNG } from 'src/utils/png.js';
+import type { PDFRef } from '../objects/PDFRef.js';
+import type { PDFContext } from '../PDFContext.js';
+import { PNG } from '../../utils/png.js';
 
 /**
  * A note of thanks to the developers of https://github.com/foliojs/pdfkit, as

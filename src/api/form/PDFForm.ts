@@ -1,13 +1,13 @@
-import { PDFDocument } from 'src/api/PDFDocument.js';
-import type { PDFPage } from 'src/api/PDFPage.js';
-import type { PDFField } from 'src/api/form/PDFField.js';
-import { PDFButton } from 'src/api/form/PDFButton.js';
-import { PDFCheckBox } from 'src/api/form/PDFCheckBox.js';
-import { PDFDropdown } from 'src/api/form/PDFDropdown.js';
-import { PDFOptionList } from 'src/api/form/PDFOptionList.js';
-import { PDFRadioGroup } from 'src/api/form/PDFRadioGroup.js';
-import { PDFSignature } from 'src/api/form/PDFSignature.js';
-import { PDFTextField } from 'src/api/form/PDFTextField.js';
+import { PDFDocument } from '../PDFDocument.js';
+import type { PDFPage } from '../PDFPage.js';
+import type { PDFField } from './PDFField.js';
+import { PDFButton } from './PDFButton.js';
+import { PDFCheckBox } from './PDFCheckBox.js';
+import { PDFDropdown } from './PDFDropdown.js';
+import { PDFOptionList } from './PDFOptionList.js';
+import { PDFRadioGroup } from './PDFRadioGroup.js';
+import { PDFSignature } from './PDFSignature.js';
+import { PDFTextField } from './PDFTextField.js';
 import {
   NoSuchFieldError,
   UnexpectedFieldTypeError,
@@ -16,34 +16,34 @@ import {
   InvalidFieldNameError,
   MissingAppearanceStreamError,
   MissingWidgetError,
-} from 'src/api/errors.js';
-import { PDFFont } from 'src/api/PDFFont.js';
-import { StandardFonts } from 'src/api/StandardFonts.js';
-import { rotateInPlace } from 'src/api/operations.js';
+} from '../errors.js';
+import { PDFFont } from '../PDFFont.js';
+import { StandardFonts } from '../StandardFonts.js';
+import { rotateInPlace } from '../operations.js';
 import {
   drawObject,
   popGraphicsState,
   pushGraphicsState,
   translate,
-} from 'src/api/operators.js';
-import { PDFAcroCheckBox } from 'src/core/acroform/PDFAcroCheckBox.js';
-import { PDFAcroComboBox } from 'src/core/acroform/PDFAcroComboBox.js';
-import { PDFAcroField } from 'src/core/acroform/PDFAcroField.js';
-import { PDFAcroForm } from 'src/core/acroform/PDFAcroForm.js';
-import { PDFAcroListBox } from 'src/core/acroform/PDFAcroListBox.js';
-import { PDFAcroNonTerminal } from 'src/core/acroform/PDFAcroNonTerminal.js';
-import { PDFAcroPushButton } from 'src/core/acroform/PDFAcroPushButton.js';
-import { PDFAcroRadioButton } from 'src/core/acroform/PDFAcroRadioButton.js';
-import { PDFAcroSignature } from 'src/core/acroform/PDFAcroSignature.js';
-import { PDFAcroText } from 'src/core/acroform/PDFAcroText.js';
-import { createPDFAcroFields } from 'src/core/acroform/utils.js';
-import { PDFWidgetAnnotation } from 'src/core/annotation/PDFWidgetAnnotation.js';
-import { PDFDict } from 'src/core/objects/PDFDict.js';
-import { PDFName } from 'src/core/objects/PDFName.js';
-import { PDFRef } from 'src/core/objects/PDFRef.js';
-import { PDFOperator } from 'src/core/operators/PDFOperator.js';
-import { Cache } from 'src/utils/Cache.js';
-import { assertIs, assertOrUndefined } from 'src/utils/validators.js';
+} from '../operators.js';
+import { PDFAcroCheckBox } from '../../core/acroform/PDFAcroCheckBox.js';
+import { PDFAcroComboBox } from '../../core/acroform/PDFAcroComboBox.js';
+import { PDFAcroField } from '../../core/acroform/PDFAcroField.js';
+import { PDFAcroForm } from '../../core/acroform/PDFAcroForm.js';
+import { PDFAcroListBox } from '../../core/acroform/PDFAcroListBox.js';
+import { PDFAcroNonTerminal } from '../../core/acroform/PDFAcroNonTerminal.js';
+import { PDFAcroPushButton } from '../../core/acroform/PDFAcroPushButton.js';
+import { PDFAcroRadioButton } from '../../core/acroform/PDFAcroRadioButton.js';
+import { PDFAcroSignature } from '../../core/acroform/PDFAcroSignature.js';
+import { PDFAcroText } from '../../core/acroform/PDFAcroText.js';
+import { createPDFAcroFields } from '../../core/acroform/utils.js';
+import { PDFWidgetAnnotation } from '../../core/annotation/PDFWidgetAnnotation.js';
+import { PDFDict } from '../../core/objects/PDFDict.js';
+import { PDFName } from '../../core/objects/PDFName.js';
+import { PDFRef } from '../../core/objects/PDFRef.js';
+import { PDFOperator } from '../../core/operators/PDFOperator.js';
+import { Cache } from '../../utils/Cache.js';
+import { assertIs, assertOrUndefined } from '../../utils/validators.js';
 
 export interface FlattenOptions {
   updateFieldAppearances: boolean;

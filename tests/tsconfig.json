@@ -3,10 +3,6 @@
   "include": ["./**/*", "../src/**/*"],
   "buildOptions": {},
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "src/*": ["../src/*"]
-    },
     "lib": ["es2022", "dom"],
     "rootDir": null,
     "rootDirs": ["../src", "../tests"],

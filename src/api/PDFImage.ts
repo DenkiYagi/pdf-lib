@@ -1,9 +1,9 @@
-import type { Embeddable } from 'src/api/Embeddable.js';
-import { PDFDocument } from 'src/api/PDFDocument.js';
-import { JpegEmbedder } from 'src/core/embedders/JpegEmbedder.js';
-import { PngEmbedder } from 'src/core/embedders/PngEmbedder.js';
-import { PDFRef } from 'src/core/objects/PDFRef.js';
-import { assertIs } from 'src/utils/validators.js';
+import type { Embeddable } from './Embeddable.js';
+import { PDFDocument } from './PDFDocument.js';
+import { JpegEmbedder } from '../core/embedders/JpegEmbedder.js';
+import { PngEmbedder } from '../core/embedders/PngEmbedder.js';
+import { PDFRef } from '../core/objects/PDFRef.js';
+import { assertIs } from '../utils/validators.js';
 
 export type ImageEmbedder = JpegEmbedder | PngEmbedder;
 

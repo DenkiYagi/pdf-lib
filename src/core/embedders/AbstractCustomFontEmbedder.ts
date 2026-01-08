@@ -1,17 +1,17 @@
 import type { LayoutAdvancedParams } from '@denkiyagi/fontkit';
 import type { TTFFont, Glyph } from '@denkiyagi/fontkit';
 
-import { createCmap } from 'src/core/embedders/CMap.js';
-import { deriveFontFlags } from 'src/core/embedders/FontFlags.js';
-import { PDFHexString } from 'src/core/objects/PDFHexString.js';
-import type { PDFRef } from 'src/core/objects/PDFRef.js';
-import { PDFString } from 'src/core/objects/PDFString.js';
-import type { PDFContext } from 'src/core/PDFContext.js';
-import { Cache } from 'src/utils/Cache.js';
-import { byAscendingId, sortedUniq } from 'src/utils/arrays.js';
-import { toHexStringOfMinLength } from 'src/utils/strings.js';
-import type { EmbedFontAdvancedOptions } from 'src/api/PDFDocumentOptions.js';
-import type { SingleLineTextOrGlyphs } from 'src/types/text.js';
+import { createCmap } from './CMap.js';
+import { deriveFontFlags } from './FontFlags.js';
+import { PDFHexString } from '../objects/PDFHexString.js';
+import type { PDFRef } from '../objects/PDFRef.js';
+import { PDFString } from '../objects/PDFString.js';
+import type { PDFContext } from '../PDFContext.js';
+import { Cache } from '../../utils/Cache.js';
+import { byAscendingId, sortedUniq } from '../../utils/arrays.js';
+import { toHexStringOfMinLength } from '../../utils/strings.js';
+import type { EmbedFontAdvancedOptions } from '../../api/PDFDocumentOptions.js';
+import type { SingleLineTextOrGlyphs } from '../../types/text.js';
 
 const emptyObject = {};
 

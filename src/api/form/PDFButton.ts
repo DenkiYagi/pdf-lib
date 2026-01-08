@@ -1,30 +1,30 @@
-import type { PDFDocument } from 'src/api/PDFDocument.js';
-import { PDFPage } from 'src/api/PDFPage.js';
-import { PDFFont } from 'src/api/PDFFont.js';
-import type { PDFImage } from 'src/api/PDFImage.js';
-import { ImageAlignment } from 'src/api/image/alignment.js';
+import type { PDFDocument } from '../PDFDocument.js';
+import { PDFPage } from '../PDFPage.js';
+import { PDFFont } from '../PDFFont.js';
+import type { PDFImage } from '../PDFImage.js';
+import { ImageAlignment } from '../image/alignment.js';
 import {
   AppearanceProviderFor,
   normalizeAppearance,
   defaultButtonAppearanceProvider,
-} from 'src/api/form/appearances.js';
+} from './appearances.js';
 import {
   PDFField,
   FieldAppearanceOptions,
   assertFieldAppearanceOptions,
-} from 'src/api/form/PDFField.js';
-import { rgb } from 'src/api/colors.js';
-import { degrees } from 'src/api/rotations.js';
+} from './PDFField.js';
+import { rgb } from '../colors.js';
+import { degrees } from '../rotations.js';
 
-import { PDFAcroPushButton } from 'src/core/acroform/PDFAcroPushButton.js';
-import { PDFWidgetAnnotation } from 'src/core/annotation/PDFWidgetAnnotation.js';
-import { PDFRef } from 'src/core/objects/PDFRef.js';
-import { PDFStream } from 'src/core/objects/PDFStream.js';
+import { PDFAcroPushButton } from '../../core/acroform/PDFAcroPushButton.js';
+import { PDFWidgetAnnotation } from '../../core/annotation/PDFWidgetAnnotation.js';
+import { PDFRef } from '../../core/objects/PDFRef.js';
+import { PDFStream } from '../../core/objects/PDFStream.js';
 import {
   assertIs,
   assertOrUndefined,
   assertPositive,
-} from 'src/utils/validators.js';
+} from '../../utils/validators.js';
 
 /**
  * Represents a button field of a [[PDFForm]].

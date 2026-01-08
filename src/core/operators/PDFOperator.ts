@@ -1,13 +1,13 @@
-import type { PDFArray } from 'src/core/objects/PDFArray.js';
-import type { PDFHexString } from 'src/core/objects/PDFHexString.js';
-import type { PDFName } from 'src/core/objects/PDFName.js';
-import type { PDFNumber } from 'src/core/objects/PDFNumber.js';
-import { PDFObject } from 'src/core/objects/PDFObject.js';
-import type { PDFString } from 'src/core/objects/PDFString.js';
-import type { PDFOperatorNames } from 'src/core/operators/PDFOperatorNames.js';
-import type { PDFContext } from 'src/core/PDFContext.js';
-import { CharCodes } from 'src/core/syntax/CharCodes.js';
-import { copyStringIntoBuffer } from 'src/utils/strings.js';
+import type { PDFArray } from '../objects/PDFArray.js';
+import type { PDFHexString } from '../objects/PDFHexString.js';
+import type { PDFName } from '../objects/PDFName.js';
+import type { PDFNumber } from '../objects/PDFNumber.js';
+import { PDFObject } from '../objects/PDFObject.js';
+import type { PDFString } from '../objects/PDFString.js';
+import type { PDFOperatorNames } from './PDFOperatorNames.js';
+import type { PDFContext } from '../PDFContext.js';
+import { CharCodes } from '../syntax/CharCodes.js';
+import { copyStringIntoBuffer } from '../../utils/strings.js';
 
 export type PDFOperatorArg =
   | string

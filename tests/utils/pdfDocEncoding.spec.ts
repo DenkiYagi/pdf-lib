@@ -1,5 +1,5 @@
-import { range } from 'src/utils/arrays.js';
-import { pdfDocEncodingDecode } from 'src/utils/pdfDocEncoding.js';
+import { range } from '../../src/utils/arrays.js';
+import { pdfDocEncodingDecode } from '../../src/utils/pdfDocEncoding.js';
 
 type Mapping = [number, string];
 

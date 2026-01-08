@@ -1,14 +1,14 @@
 import { create as createFont, LayoutAdvancedParams } from '@denkiyagi/fontkit';
 import type { TTFFont, Glyph, Subset } from '@denkiyagi/fontkit';
 
-import { AbstractCustomFontEmbedder } from 'src/core/embedders/AbstractCustomFontEmbedder.js';
-import { InvalidFontTypeError } from 'src/core/errors.js';
-import { PDFLibErrorTypes } from 'src/core/error-base.js';
-import { PDFHexString } from 'src/core/objects/PDFHexString.js';
-import { Cache } from 'src/utils/Cache.js';
-import { toHexStringOfMinLength } from 'src/utils/strings.js';
-import type { EmbedFontAdvancedOptions } from 'src/api/PDFDocumentOptions.js';
-import type { SingleLineTextOrGlyphs } from 'src/types/text.js';
+import { AbstractCustomFontEmbedder } from './AbstractCustomFontEmbedder.js';
+import { InvalidFontTypeError } from '../errors.js';
+import { PDFLibErrorTypes } from '../error-base.js';
+import { PDFHexString } from '../objects/PDFHexString.js';
+import { Cache } from '../../utils/Cache.js';
+import { toHexStringOfMinLength } from '../../utils/strings.js';
+import type { EmbedFontAdvancedOptions } from '../../api/PDFDocumentOptions.js';
+import type { SingleLineTextOrGlyphs } from '../../types/text.js';
 
 /**
  * A note of thanks to the developers of https://github.com/foliojs/pdfkit, as

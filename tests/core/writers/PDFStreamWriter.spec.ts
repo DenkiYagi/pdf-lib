@@ -1,7 +1,7 @@
-import { PDFContext } from 'src/core/PDFContext.js';
-import { PDFName } from 'src/core/objects/PDFName.js';
-import { PDFRef } from 'src/core/objects/PDFRef.js';
-import { PDFStreamWriter } from 'src/core/writers/PDFStreamWriter.js';
+import { PDFContext } from '../../../src/core/PDFContext.js';
+import { PDFName } from '../../../src/core/objects/PDFName.js';
+import { PDFRef } from '../../../src/core/objects/PDFRef.js';
+import { PDFStreamWriter } from '../../../src/core/writers/PDFStreamWriter.js';
 import { readBinaryFileSync } from '../../test-utils.js';
 
 const expectedPdfBytes = readBinaryFileSync(

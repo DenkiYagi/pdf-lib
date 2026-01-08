@@ -1,5 +1,5 @@
-import type { EncryptionKey } from 'src/core/security/Encryption.js';
-import { prepareEncryptionStdV4 } from 'src/core/security/EncryptionStdV4.js';
+import type { EncryptionKey } from './Encryption.js';
+import { prepareEncryptionStdV4 } from './EncryptionStdV4.js';
 
 /**
  * Security options to be provided as input for `PDFSecurity`.

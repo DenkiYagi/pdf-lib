@@ -1,44 +1,44 @@
 import type { TTFFont } from '@denkiyagi/fontkit';
-import type { Embeddable } from 'src/api/Embeddable.js';
+import type { Embeddable } from './Embeddable.js';
 import {
   EncryptedPDFError,
   ForeignPageError,
   InvalidFontSubsetOptionError,
   RemovePageFromEmptyDocumentError,
-} from 'src/api/errors.js';
-import { PDFEmbeddedPage } from 'src/api/PDFEmbeddedPage.js';
-import { PDFFont } from 'src/api/PDFFont.js';
-import { PDFImage } from 'src/api/PDFImage.js';
-import { PDFPage } from 'src/api/PDFPage.js';
-import { PDFForm } from 'src/api/form/PDFForm.js';
-import { PageSizes } from 'src/api/sizes.js';
-import { StandardFonts } from 'src/api/StandardFonts.js';
-import { PDFContext } from 'src/core/PDFContext.js';
-import { PDFObjectCopier } from 'src/core/PDFObjectCopier.js';
-import { AbstractCustomFontEmbedder } from 'src/core/embedders/AbstractCustomFontEmbedder.js';
-import { CustomFontEmbedder } from 'src/core/embedders/CustomFontEmbedder.js';
-import { CustomFontSubsetEmbedder } from 'src/core/embedders/CustomFontSubsetEmbedder.js';
-import { JpegEmbedder } from 'src/core/embedders/JpegEmbedder.js';
-import { PDFPageEmbedder } from 'src/core/embedders/PDFPageEmbedder.js';
-import type { PageBoundingBox } from 'src/core/embedders/PDFPageEmbedder.js';
-import { PngEmbedder } from 'src/core/embedders/PngEmbedder.js';
-import { StandardFontEmbedder } from 'src/core/embedders/StandardFontEmbedder.js';
+} from './errors.js';
+import { PDFEmbeddedPage } from './PDFEmbeddedPage.js';
+import { PDFFont } from './PDFFont.js';
+import { PDFImage } from './PDFImage.js';
+import { PDFPage } from './PDFPage.js';
+import { PDFForm } from './form/PDFForm.js';
+import { PageSizes } from './sizes.js';
+import { StandardFonts } from './StandardFonts.js';
+import { PDFContext } from '../core/PDFContext.js';
+import { PDFObjectCopier } from '../core/PDFObjectCopier.js';
+import { AbstractCustomFontEmbedder } from '../core/embedders/AbstractCustomFontEmbedder.js';
+import { CustomFontEmbedder } from '../core/embedders/CustomFontEmbedder.js';
+import { CustomFontSubsetEmbedder } from '../core/embedders/CustomFontSubsetEmbedder.js';
+import { JpegEmbedder } from '../core/embedders/JpegEmbedder.js';
+import { PDFPageEmbedder } from '../core/embedders/PDFPageEmbedder.js';
+import type { PageBoundingBox } from '../core/embedders/PDFPageEmbedder.js';
+import { PngEmbedder } from '../core/embedders/PngEmbedder.js';
+import { StandardFontEmbedder } from '../core/embedders/StandardFontEmbedder.js';
 import {
   PageEmbeddingMismatchedContextError,
   UnexpectedObjectTypeError,
-} from 'src/core/errors.js';
-import { PDFArray } from 'src/core/objects/PDFArray.js';
-import { PDFDict } from 'src/core/objects/PDFDict.js';
-import { PDFHexString } from 'src/core/objects/PDFHexString.js';
-import { PDFName } from 'src/core/objects/PDFName.js';
-import { PDFString } from 'src/core/objects/PDFString.js';
-import { PDFParser } from 'src/core/parser/PDFParser.js';
-import { PDFCatalog } from 'src/core/structures/PDFCatalog.js';
-import { PDFPageLeaf } from 'src/core/structures/PDFPageLeaf.js';
-import { PDFPageTree } from 'src/core/structures/PDFPageTree.js';
-import { PDFStreamWriter } from 'src/core/writers/PDFStreamWriter.js';
-import { PDFWriter } from 'src/core/writers/PDFWriter.js';
-import { mapFontkitError } from 'src/core/embedders/fontkit-helpers.js';
+} from '../core/errors.js';
+import { PDFArray } from '../core/objects/PDFArray.js';
+import { PDFDict } from '../core/objects/PDFDict.js';
+import { PDFHexString } from '../core/objects/PDFHexString.js';
+import { PDFName } from '../core/objects/PDFName.js';
+import { PDFString } from '../core/objects/PDFString.js';
+import { PDFParser } from '../core/parser/PDFParser.js';
+import { PDFCatalog } from '../core/structures/PDFCatalog.js';
+import { PDFPageLeaf } from '../core/structures/PDFPageLeaf.js';
+import { PDFPageTree } from '../core/structures/PDFPageTree.js';
+import { PDFStreamWriter } from '../core/writers/PDFStreamWriter.js';
+import { PDFWriter } from '../core/writers/PDFWriter.js';
+import { mapFontkitError } from '../core/embedders/fontkit-helpers.js';
 import {
   ParseSpeeds,
   AttachmentOptions,
@@ -47,42 +47,42 @@ import {
   CreateOptions,
   EmbedFontOptions,
   SetTitleOptions,
-} from 'src/api/PDFDocumentOptions.js';
-import type { PDFObject } from 'src/core/objects/PDFObject.js';
-import type { PDFRef } from 'src/core/objects/PDFRef.js';
-import type { TransformationMatrix } from 'src/types/matrix.js';
+} from './PDFDocumentOptions.js';
+import type { PDFObject } from '../core/objects/PDFObject.js';
+import type { PDFRef } from '../core/objects/PDFRef.js';
+import type { TransformationMatrix } from '../types/matrix.js';
 import {
   InvalidOptionPassedError,
   InvalidTypePassedError,
-} from 'src/utils/errors.js';
+} from '../utils/errors.js';
 import {
   canBeConvertedToUint8Array,
   pluckIndices,
   range,
   toUint8Array,
-} from 'src/utils/arrays.js';
-import { Cache } from 'src/utils/Cache.js';
-import { isStandardFont, values } from 'src/utils/objects.js';
+} from '../utils/arrays.js';
+import { Cache } from '../utils/Cache.js';
+import { isStandardFont, values } from '../utils/objects.js';
 import {
   assertIs,
   assertIsOneOfOrUndefined,
   assertOrUndefined,
   assertRange,
-} from 'src/utils/validators.js';
+} from '../utils/validators.js';
 import {
   FileEmbedder,
   AFRelationship,
-} from 'src/core/embedders/FileEmbedder.js';
-import { PDFEmbeddedFile } from 'src/api/PDFEmbeddedFile.js';
-import { PDFJavaScript } from 'src/api/PDFJavaScript.js';
-import { JavaScriptEmbedder } from 'src/core/embedders/JavaScriptEmbedder.js';
-import { PDFSecurity, SecurityOptions } from 'src/core/security/PDFSecurity.js';
+} from '../core/embedders/FileEmbedder.js';
+import { PDFEmbeddedFile } from './PDFEmbeddedFile.js';
+import { PDFJavaScript } from './PDFJavaScript.js';
+import { JavaScriptEmbedder } from '../core/embedders/JavaScriptEmbedder.js';
+import { PDFSecurity, SecurityOptions } from '../core/security/PDFSecurity.js';
 import {
   MD5,
   createWordArray,
   wordArrayFromBytes,
   wordArrayToBytes,
-} from 'src/utils/crypt.js';
+} from '../utils/crypt.js';
 
 const emptyObject = {};
 

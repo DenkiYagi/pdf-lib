@@ -1,11 +1,11 @@
 import pako from 'pako';
 
-import { PDFContext } from 'src/core/PDFContext.js';
-import { PDFObject } from 'src/core/objects/PDFObject.js';
-import { PDFRef } from 'src/core/objects/PDFRef.js';
-import { PDFCrossRefStream } from 'src/core/structures/PDFCrossRefStream.js';
-import { mergeIntoTypedArray } from 'src/utils/arrays.js';
-import { toCharCode } from 'src/utils/strings.js';
+import { PDFContext } from '../../../src/core/PDFContext.js';
+import { PDFObject } from '../../../src/core/objects/PDFObject.js';
+import { PDFRef } from '../../../src/core/objects/PDFRef.js';
+import { PDFCrossRefStream } from '../../../src/core/structures/PDFCrossRefStream.js';
+import { mergeIntoTypedArray } from '../../../src/utils/arrays.js';
+import { toCharCode } from '../../../src/utils/strings.js';
 import { security } from '../objects/shared.js';
 
 describe(`PDFCrossRefStream`, () => {

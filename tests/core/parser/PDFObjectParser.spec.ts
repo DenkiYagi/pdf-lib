@@ -1,20 +1,23 @@
-import { PDFPageLeaf } from 'src/core/structures/PDFPageLeaf.js';
-import { PDFContext } from 'src/core/PDFContext.js';
-import { PDFArray } from 'src/core/objects/PDFArray.js';
-import { PDFBool } from 'src/core/objects/PDFBool.js';
-import { PDFDict } from 'src/core/objects/PDFDict.js';
-import { PDFHexString } from 'src/core/objects/PDFHexString.js';
-import { PDFName } from 'src/core/objects/PDFName.js';
-import { PDFNull } from 'src/core/objects/PDFNull.js';
-import { PDFNumber } from 'src/core/objects/PDFNumber.js';
-import { PDFRawStream } from 'src/core/objects/PDFRawStream.js';
-import { PDFRef } from 'src/core/objects/PDFRef.js';
-import { PDFString } from 'src/core/objects/PDFString.js';
-import { PDFObjectParser } from 'src/core/parser/PDFObjectParser.js';
-import { PDFCatalog } from 'src/core/structures/PDFCatalog.js';
-import { PDFPageTree } from 'src/core/structures/PDFPageTree.js';
-import { mergeIntoTypedArray, typedArrayFor } from 'src/utils/arrays.js';
-import { numberToString } from 'src/utils/numbers.js';
+import { PDFPageLeaf } from '../../../src/core/structures/PDFPageLeaf.js';
+import { PDFContext } from '../../../src/core/PDFContext.js';
+import { PDFArray } from '../../../src/core/objects/PDFArray.js';
+import { PDFBool } from '../../../src/core/objects/PDFBool.js';
+import { PDFDict } from '../../../src/core/objects/PDFDict.js';
+import { PDFHexString } from '../../../src/core/objects/PDFHexString.js';
+import { PDFName } from '../../../src/core/objects/PDFName.js';
+import { PDFNull } from '../../../src/core/objects/PDFNull.js';
+import { PDFNumber } from '../../../src/core/objects/PDFNumber.js';
+import { PDFRawStream } from '../../../src/core/objects/PDFRawStream.js';
+import { PDFRef } from '../../../src/core/objects/PDFRef.js';
+import { PDFString } from '../../../src/core/objects/PDFString.js';
+import { PDFObjectParser } from '../../../src/core/parser/PDFObjectParser.js';
+import { PDFCatalog } from '../../../src/core/structures/PDFCatalog.js';
+import { PDFPageTree } from '../../../src/core/structures/PDFPageTree.js';
+import {
+  mergeIntoTypedArray,
+  typedArrayFor,
+} from '../../../src/utils/arrays.js';
+import { numberToString } from '../../../src/utils/numbers.js';
 
 type ParseOptions = { capNumbers?: boolean };
 

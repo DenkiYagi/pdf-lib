@@ -1,7 +1,7 @@
 import {
   InvalidByteOrderError,
   InvalidUnicodeCodePointError,
-} from 'src/core/errors.js';
+} from '../core/errors.js';
 
 /**
  * Encodes a string to UTF-8.

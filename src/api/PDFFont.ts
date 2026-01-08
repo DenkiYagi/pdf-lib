@@ -1,14 +1,14 @@
 import type { LayoutAdvancedParams, TTFFont } from '@denkiyagi/fontkit';
 import type { Font as RawStandardFont } from '@pdf-lib/standard-fonts';
-import type { Embeddable } from 'src/api/Embeddable.js';
-import { PDFDocument } from 'src/api/PDFDocument.js';
-import { AbstractCustomFontEmbedder } from 'src/core/embedders/AbstractCustomFontEmbedder.js';
-import { StandardFontEmbedder } from 'src/core/embedders/StandardFontEmbedder.js';
-import { PDFHexString } from 'src/core/objects/PDFHexString.js';
-import { PDFRef } from 'src/core/objects/PDFRef.js';
-import { mapFontkitError } from 'src/core/embedders/fontkit-helpers.js';
-import type { SingleLineTextOrGlyphs } from 'src/types/text.js';
-import { assertIs, assertOrUndefined } from 'src/utils/validators.js';
+import type { Embeddable } from './Embeddable.js';
+import { PDFDocument } from './PDFDocument.js';
+import { AbstractCustomFontEmbedder } from '../core/embedders/AbstractCustomFontEmbedder.js';
+import { StandardFontEmbedder } from '../core/embedders/StandardFontEmbedder.js';
+import { PDFHexString } from '../core/objects/PDFHexString.js';
+import { PDFRef } from '../core/objects/PDFRef.js';
+import { mapFontkitError } from '../core/embedders/fontkit-helpers.js';
+import type { SingleLineTextOrGlyphs } from '../types/text.js';
+import { assertIs, assertOrUndefined } from '../utils/validators.js';
 
 export type FontEmbedder = AbstractCustomFontEmbedder | StandardFontEmbedder;
 

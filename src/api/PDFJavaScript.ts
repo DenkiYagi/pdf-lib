@@ -1,11 +1,11 @@
-import type { Embeddable } from 'src/api/Embeddable.js';
-import type { PDFDocument } from 'src/api/PDFDocument.js';
-import type { JavaScriptEmbedder } from 'src/core/embedders/JavaScriptEmbedder.js';
-import { PDFArray } from 'src/core/objects/PDFArray.js';
-import { PDFDict } from 'src/core/objects/PDFDict.js';
-import { PDFHexString } from 'src/core/objects/PDFHexString.js';
-import { PDFName } from 'src/core/objects/PDFName.js';
-import { PDFRef } from 'src/core/objects/PDFRef.js';
+import type { Embeddable } from './Embeddable.js';
+import type { PDFDocument } from './PDFDocument.js';
+import type { JavaScriptEmbedder } from '../core/embedders/JavaScriptEmbedder.js';
+import { PDFArray } from '../core/objects/PDFArray.js';
+import { PDFDict } from '../core/objects/PDFDict.js';
+import { PDFHexString } from '../core/objects/PDFHexString.js';
+import { PDFName } from '../core/objects/PDFName.js';
+import { PDFRef } from '../core/objects/PDFRef.js';
 
 /**
  * Represents JavaScript that has been embedded in a [[PDFDocument]].
