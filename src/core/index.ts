@@ -1,3 +1,5 @@
+// Build-only barrel for the UMD bundle; do not import from this in source code.
+
 export * from 'src/core/error-base.js';
 export * from 'src/core/errors.js';
 export { CharCodes } from 'src/core/syntax/CharCodes.js';

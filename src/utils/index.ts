@@ -1,3 +1,5 @@
+// Build-only barrel for the UMD bundle; do not import from this in source code.
+
 export * from 'src/utils/errors.js';
 export * from 'src/utils/arrays.js';
 export * from 'src/utils/async.js';

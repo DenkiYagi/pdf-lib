@@ -1,3 +1,5 @@
+// Build-only barrel for the UMD bundle; do not import from this in source code.
+
 export * from 'src/api/form/appearances.js';
 export { PDFButton } from 'src/api/form/PDFButton.js';
 export { PDFCheckBox } from 'src/api/form/PDFCheckBox.js';

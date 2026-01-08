@@ -1,3 +1,5 @@
+// Build-only barrel for the UMD bundle; do not import from this in source code.
+
 export * from 'src/api/form/index.js';
 export * from 'src/api/text/index.js';
 export * from 'src/api/colors.js';

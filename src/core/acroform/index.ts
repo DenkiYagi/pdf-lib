@@ -1,3 +1,5 @@
+// Build-only barrel for the UMD bundle; do not import from this in source code.
+
 export { PDFAcroButton } from 'src/core/acroform/PDFAcroButton.js';
 export { PDFAcroCheckBox } from 'src/core/acroform/PDFAcroCheckBox.js';
 export { PDFAcroChoice } from 'src/core/acroform/PDFAcroChoice.js';
