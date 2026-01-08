@@ -2,11 +2,13 @@
 
 ## [Unreleased]
 
-### Build System Change
+### Build System Changes
 
 - Root and barrel exports have been removed
     - consumers must import modules via subpath entry points (e.g. `@denkiyagi/pdf-lib/api/PDFDocument.js`)
     - `main/module/types` in `package.json` are no longer published; only `exports` map is used
+- Remove legacy dependencies
+    - `tslib`, `ts-patch`, and `typescript-transform-paths`
 
 ## [1.17.1-mod.2026.3]
 
