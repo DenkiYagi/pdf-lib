@@ -1,5 +1,13 @@
 # Modifications
 
+## [Unreleased]
+
+### Build System Change
+
+- Root and barrel exports have been removed
+    - consumers must import modules via subpath entry points (e.g. `@denkiyagi/pdf-lib/api/PDFDocument.js`)
+    - `main/module/types` in `package.json` are no longer published; only `exports` map is used
+
 ## [1.17.1-mod.2026.3]
 
 ### Build System Changes

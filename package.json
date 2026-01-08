@@ -57,21 +57,10 @@
     "apps:typecheck": "tsc --noEmit -p apps/tsconfig.json"
   },
   "type": "module",
-  "main": "dist/es/index.js",
-  "module": "dist/es/index.js",
-  "types": "dist/es/index.d.ts",
   "exports": {
-    ".": {
-      "import": "./dist/es/index.js",
-      "types": "./dist/es/index.d.ts"
-    },
-    "./all": {
-      "import": "./dist/es/all.js",
-      "types": "./dist/es/all.d.ts"
-    },
-    "./core": {
-      "import": "./dist/es/core/index.js",
-      "types": "./dist/es/core/index.d.ts"
+    "./*.js": {
+      "import": "./dist/es/*.js",
+      "types": "./dist/es/*.d.ts"
     },
     "./package.json": "./package.json"
   },
