@@ -4,7 +4,7 @@ import {
   ParseSpeeds,
   PDFDocument,
   StandardFonts,
-} from '../../../dist/es/index.js';
+} from '../../../dist/es/all.js';
 
 const createDonorPdf = async () => {
   const pdfDoc = await PDFDocument.create();

@@ -8,8 +8,8 @@ import {
   drawText,
   PDFFont,
   drawEllipse,
-} from '../../../dist/es/index.js';
-import { PDFWidgetAnnotation } from '../../../dist/es/core/index.js';
+  PDFWidgetAnnotation,
+} from '../../../dist/es/all.js';
 
 export default async (assets: Assets) => {
   const pdfDoc = await PDFDocument.load(assets.pdfs.fancy_fields);

@@ -4,7 +4,7 @@ import {
   PDFDocument,
   PDFPage,
   rgb,
-} from '../../../dist/es/index.js';
+} from '../../../dist/es/all.js';
 
 export default async (assets: Assets) => {
   const { pdfs, fonts, images } = assets;
