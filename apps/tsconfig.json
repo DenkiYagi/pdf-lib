@@ -1,10 +1,6 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "src/*": ["../src/*"]
-    },
     "noEmit": true,
     "incremental": false
   },
