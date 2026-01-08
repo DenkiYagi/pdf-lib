@@ -1,15 +1,13 @@
-import {
-  CharCodes,
-  PDFDict,
-  PDFHeader,
-  PDFInvalidObject,
-  PDFPageLeaf,
-  PDFParser,
-  PDFRef,
-  PDFString,
-  ReparseError,
-} from 'src/core/index.js';
-import { mergeIntoTypedArray, typedArrayFor } from 'src/utils/index.js';
+import { ReparseError } from 'src/core/errors.js';
+import { PDFDict } from 'src/core/objects/PDFDict.js';
+import { PDFInvalidObject } from 'src/core/objects/PDFInvalidObject.js';
+import { PDFRef } from 'src/core/objects/PDFRef.js';
+import { PDFString } from 'src/core/objects/PDFString.js';
+import { PDFParser } from 'src/core/parser/PDFParser.js';
+import { PDFPageLeaf } from 'src/core/structures/PDFPageLeaf.js';
+import { PDFHeader } from 'src/core/document/PDFHeader.js';
+import { CharCodes } from 'src/core/syntax/CharCodes.js';
+import { mergeIntoTypedArray, typedArrayFor } from 'src/utils/arrays.js';
 import { readBinaryFileSync } from '../../test-utils.js';
 
 describe(`PDFParser`, () => {

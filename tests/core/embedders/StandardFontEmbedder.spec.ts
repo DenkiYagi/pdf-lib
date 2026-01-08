@@ -1,11 +1,9 @@
 import { FontNames } from '@pdf-lib/standard-fonts';
-import {
-  PDFContext,
-  PDFDict,
-  PDFHexString,
-  PDFRef,
-  StandardFontEmbedder,
-} from 'src/core/index.js';
+import { PDFContext } from 'src/core/PDFContext.js';
+import { StandardFontEmbedder } from 'src/core/embedders/StandardFontEmbedder.js';
+import { PDFDict } from 'src/core/objects/PDFDict.js';
+import { PDFHexString } from 'src/core/objects/PDFHexString.js';
+import { PDFRef } from 'src/core/objects/PDFRef.js';
 
 describe(`StandardFontEmbedder`, () => {
   it(`can be constructed with StandardFontEmbedder.for(...)`, () => {

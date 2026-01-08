@@ -1,20 +1,18 @@
-import {
-  PDFArray,
-  PDFBool,
-  PDFContentStream,
-  PDFContext,
-  PDFDict,
-  PDFHexString,
-  PDFName,
-  PDFNull,
-  PDFNumber,
-  PDFObjectCopier,
-  PDFPageLeaf,
-  PDFPageTree,
-  PDFRawStream,
-  PDFRef,
-  PDFString,
-} from 'src/core/index.js';
+import { PDFContext } from 'src/core/PDFContext.js';
+import { PDFObjectCopier } from 'src/core/PDFObjectCopier.js';
+import { PDFArray } from 'src/core/objects/PDFArray.js';
+import { PDFBool } from 'src/core/objects/PDFBool.js';
+import { PDFDict } from 'src/core/objects/PDFDict.js';
+import { PDFHexString } from 'src/core/objects/PDFHexString.js';
+import { PDFName } from 'src/core/objects/PDFName.js';
+import { PDFNull } from 'src/core/objects/PDFNull.js';
+import { PDFNumber } from 'src/core/objects/PDFNumber.js';
+import { PDFRawStream } from 'src/core/objects/PDFRawStream.js';
+import { PDFRef } from 'src/core/objects/PDFRef.js';
+import { PDFString } from 'src/core/objects/PDFString.js';
+import { PDFContentStream } from 'src/core/structures/PDFContentStream.js';
+import { PDFPageLeaf } from 'src/core/structures/PDFPageLeaf.js';
+import { PDFPageTree } from 'src/core/structures/PDFPageTree.js';
 
 describe(`PDFObjectCopier`, () => {
   it(`copies PDFDicts, including their indirect references`, () => {

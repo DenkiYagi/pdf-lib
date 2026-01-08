@@ -1,21 +1,16 @@
 import pako from 'pako';
 
-import {
-  PDFContext,
-  PDFDict,
-  PDFHexString,
-  PDFInvalidObject,
-  PDFObject,
-  PDFObjectStream,
-  PDFRawStream,
-  PDFRef,
-  PDFString,
-} from 'src/core/index.js';
-import {
-  mergeIntoTypedArray,
-  toCharCode,
-  typedArrayFor,
-} from 'src/utils/index.js';
+import { PDFContext } from 'src/core/PDFContext.js';
+import { PDFDict } from 'src/core/objects/PDFDict.js';
+import { PDFHexString } from 'src/core/objects/PDFHexString.js';
+import { PDFInvalidObject } from 'src/core/objects/PDFInvalidObject.js';
+import { PDFObject } from 'src/core/objects/PDFObject.js';
+import { PDFRawStream } from 'src/core/objects/PDFRawStream.js';
+import { PDFRef } from 'src/core/objects/PDFRef.js';
+import { PDFString } from 'src/core/objects/PDFString.js';
+import { PDFObjectStream } from 'src/core/structures/PDFObjectStream.js';
+import { mergeIntoTypedArray, typedArrayFor } from 'src/utils/arrays.js';
+import { toCharCode } from 'src/utils/strings.js';
 import { security } from '../objects/shared.js';
 
 describe(`PDFObjectStream`, () => {

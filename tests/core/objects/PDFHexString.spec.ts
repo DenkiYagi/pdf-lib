@@ -1,12 +1,11 @@
-import { PDFDocument } from 'src/api/index.js';
-import {
-  PDFArray,
-  PDFDict,
-  PDFHexString,
-  PDFObject,
-  PDFRef,
-} from 'src/core/index.js';
-import { toCharCode, typedArrayFor } from 'src/utils/index.js';
+import { PDFDocument } from 'src/api/PDFDocument.js';
+import { PDFArray } from 'src/core/objects/PDFArray.js';
+import { PDFDict } from 'src/core/objects/PDFDict.js';
+import { PDFHexString } from 'src/core/objects/PDFHexString.js';
+import { PDFObject } from 'src/core/objects/PDFObject.js';
+import { PDFRef } from 'src/core/objects/PDFRef.js';
+import { typedArrayFor } from 'src/utils/arrays.js';
+import { toCharCode } from 'src/utils/strings.js';
 import { mockRandom, resetMock } from '../security/mock.js';
 import { security } from './shared.js';
 

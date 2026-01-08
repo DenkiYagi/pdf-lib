@@ -1,9 +1,7 @@
-import {
-  PDFContext,
-  PDFRawStream,
-  PDFRef,
-  PngEmbedder,
-} from 'src/core/index.js';
+import { PDFContext } from 'src/core/PDFContext.js';
+import { PngEmbedder } from 'src/core/embedders/PngEmbedder.js';
+import { PDFRawStream } from 'src/core/objects/PDFRawStream.js';
+import { PDFRef } from 'src/core/objects/PDFRef.js';
 import { readBinaryFileSync } from '../../test-utils.js';
 
 const greyscalePng = readBinaryFileSync('./assets/images/greyscale_bird.png');

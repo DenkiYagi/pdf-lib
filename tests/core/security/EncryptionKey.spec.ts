@@ -1,6 +1,9 @@
-import { PDFBool, PDFHexString, PDFObject, PDFRef } from 'src/core/index.js';
+import { PDFBool } from 'src/core/objects/PDFBool.js';
+import { PDFHexString } from 'src/core/objects/PDFHexString.js';
+import { PDFObject } from 'src/core/objects/PDFObject.js';
+import { PDFRef } from 'src/core/objects/PDFRef.js';
 import { PDFSecurity } from 'src/core/security/PDFSecurity.js';
-import { typedArrayFor } from 'src/utils/index.js';
+import { typedArrayFor } from 'src/utils/arrays.js';
 import { mockRandom, resetMock } from './mock.js';
 
 describe(`EncryptionKey`, () => {

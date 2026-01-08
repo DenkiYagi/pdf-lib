@@ -1,9 +1,5 @@
-import {
-  mergeIntoTypedArray,
-  utf16Encode,
-  utf8Encode,
-  utf16Decode,
-} from 'src/utils/index.js';
+import { mergeIntoTypedArray } from 'src/utils/arrays.js';
+import { utf16Decode, utf16Encode, utf8Encode } from 'src/utils/unicode.js';
 
 const utf8BOM = new Uint8Array([0xef, 0xbb, 0xbf]);
 const utf16BOM = new Uint16Array([0xfeff]);

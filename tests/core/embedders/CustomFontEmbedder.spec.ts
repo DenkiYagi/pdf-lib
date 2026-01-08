@@ -1,10 +1,8 @@
-import {
-  CustomFontEmbedder,
-  PDFContext,
-  PDFDict,
-  PDFHexString,
-  PDFRef,
-} from 'src/core/index.js';
+import { PDFContext } from 'src/core/PDFContext.js';
+import { CustomFontEmbedder } from 'src/core/embedders/CustomFontEmbedder.js';
+import { PDFDict } from 'src/core/objects/PDFDict.js';
+import { PDFHexString } from 'src/core/objects/PDFHexString.js';
+import { PDFRef } from 'src/core/objects/PDFRef.js';
 import { readBinaryFileSync } from '../../test-utils.js';
 
 const ubuntuFont = readBinaryFileSync('./assets/fonts/ubuntu/Ubuntu-R.ttf');

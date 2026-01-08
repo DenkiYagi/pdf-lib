@@ -1,10 +1,8 @@
-import {
-  AnnotationFlags,
-  PDFArray,
-  PDFHexString,
-  PDFName,
-} from 'src/core/index.js';
-import { PDFDocument } from 'src/api/index.js';
+import { AnnotationFlags } from 'src/core/annotation/flags.js';
+import { PDFArray } from 'src/core/objects/PDFArray.js';
+import { PDFHexString } from 'src/core/objects/PDFHexString.js';
+import { PDFName } from 'src/core/objects/PDFName.js';
+import { PDFDocument } from 'src/api/PDFDocument.js';
 import { readBinaryFileSync } from '../../test-utils.js';
 
 const fancyFieldsPdfBytes = readBinaryFileSync('assets/pdfs/fancy_fields.pdf');

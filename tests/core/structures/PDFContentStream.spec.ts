@@ -3,25 +3,20 @@ import {
   moveText,
   popGraphicsState,
   pushGraphicsState,
-} from 'src/api/index.js';
+} from 'src/api/operators.js';
 
-import {
-  PDFContentStream,
-  PDFContext,
-  PDFDict,
-  PDFName,
-  PDFNumber,
-  PDFObject,
-  PDFOperator,
-  PDFOperatorNames as Ops,
-  PDFRef,
-  PDFString,
-} from 'src/core/index.js';
-import {
-  mergeIntoTypedArray,
-  toCharCode,
-  typedArrayFor,
-} from 'src/utils/index.js';
+import { PDFContext } from 'src/core/PDFContext.js';
+import { PDFDict } from 'src/core/objects/PDFDict.js';
+import { PDFName } from 'src/core/objects/PDFName.js';
+import { PDFNumber } from 'src/core/objects/PDFNumber.js';
+import { PDFObject } from 'src/core/objects/PDFObject.js';
+import { PDFRef } from 'src/core/objects/PDFRef.js';
+import { PDFString } from 'src/core/objects/PDFString.js';
+import { PDFOperator } from 'src/core/operators/PDFOperator.js';
+import { PDFOperatorNames as Ops } from 'src/core/operators/PDFOperatorNames.js';
+import { PDFContentStream } from 'src/core/structures/PDFContentStream.js';
+import { mergeIntoTypedArray, typedArrayFor } from 'src/utils/arrays.js';
+import { toCharCode } from 'src/utils/strings.js';
 import { security } from '../objects/shared.js';
 
 describe(`PDFContentStream`, () => {

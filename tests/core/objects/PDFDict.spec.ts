@@ -1,17 +1,16 @@
-import {
-  PDFArray,
-  PDFBool,
-  PDFContext,
-  PDFDict,
-  PDFHexString,
-  PDFName,
-  PDFNull,
-  PDFNumber,
-  PDFRef,
-  PDFString,
-  PDFObject,
-} from 'src/core/index.js';
-import { toCharCode, typedArrayFor } from 'src/utils/index.js';
+import { PDFContext } from 'src/core/PDFContext.js';
+import { PDFArray } from 'src/core/objects/PDFArray.js';
+import { PDFBool } from 'src/core/objects/PDFBool.js';
+import { PDFDict } from 'src/core/objects/PDFDict.js';
+import { PDFHexString } from 'src/core/objects/PDFHexString.js';
+import { PDFName } from 'src/core/objects/PDFName.js';
+import { PDFNull } from 'src/core/objects/PDFNull.js';
+import { PDFNumber } from 'src/core/objects/PDFNumber.js';
+import { PDFObject } from 'src/core/objects/PDFObject.js';
+import { PDFRef } from 'src/core/objects/PDFRef.js';
+import { PDFString } from 'src/core/objects/PDFString.js';
+import { typedArrayFor } from 'src/utils/arrays.js';
+import { toCharCode } from 'src/utils/strings.js';
 import { mockRandom, resetMock } from '../security/mock.js';
 import { security } from './shared.js';
 

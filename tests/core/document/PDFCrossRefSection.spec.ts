@@ -1,5 +1,7 @@
-import { PDFCrossRefSection, PDFRef } from 'src/core/index.js';
-import { toCharCode, typedArrayFor } from 'src/utils/index.js';
+import { PDFCrossRefSection } from 'src/core/document/PDFCrossRefSection.js';
+import { PDFRef } from 'src/core/objects/PDFRef.js';
+import { typedArrayFor } from 'src/utils/arrays.js';
+import { toCharCode } from 'src/utils/strings.js';
 
 describe(`PDFCrossRefSection`, () => {
   it(`can be constructed from PDFCrossRefSection.create()`, () => {
