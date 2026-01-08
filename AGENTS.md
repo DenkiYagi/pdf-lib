@@ -2,7 +2,12 @@
 
 ## Mission & Purpose
 - `@denkiyagi/pdf-lib` extends the upstream `pdf-lib` to power PDF generation for `yagisan-reports`, a PDF report generation engine.
-- Current focus areas: richer custom font handling via `@denkiyagi/fontkit`, improved error handling, adding PDF encryption support, native ESM support, and fixing upstream bugs.
+- Current focus areas:
+    - richer custom font handling via `@denkiyagi/fontkit`
+    - adding PDF encryption support
+    - improved error handling
+    - modern build system supporting Node.js native ESM
+    - fixing upstream bugs
 - Keep the fork aligned with upstream quality while preserving `yagisan-reports`-specific behaviors; prefer additive changes and call out intentional divergences in `MODIFICATIONS.md` or `MODIFICATION-DEVELOPMENT.md`.
 
 ## Project Orientation
