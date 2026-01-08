@@ -8,7 +8,8 @@ import type { PDFContext } from 'src/core/PDFContext.js';
 import { PDFCrossRefStream } from 'src/core/structures/PDFCrossRefStream.js';
 import { PDFObjectStream } from 'src/core/structures/PDFObjectStream.js';
 import { PDFWriter } from 'src/core/writers/PDFWriter.js';
-import { last, waitForTick } from 'src/utils/index.js';
+import { last } from 'src/utils/arrays.js';
+import { waitForTick } from 'src/utils/async.js';
 
 export class PDFStreamWriter extends PDFWriter {
   static forContext = (

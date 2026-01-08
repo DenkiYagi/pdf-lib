@@ -33,16 +33,14 @@ import {
 } from 'src/api/PDFPageOptions.js';
 import { degrees, Rotation, toDegrees } from 'src/api/rotations.js';
 import { StandardFonts } from 'src/api/StandardFonts.js';
-import {
-  PDFContentStream,
-  PDFHexString,
-  PDFName,
-  PDFOperator,
-  PDFPageLeaf,
-  PDFRef,
-  PDFDict,
-  PDFArray,
-} from 'src/core/index.js';
+import { PDFContentStream } from 'src/core/structures/PDFContentStream.js';
+import { PDFPageLeaf } from 'src/core/structures/PDFPageLeaf.js';
+import { PDFArray } from 'src/core/objects/PDFArray.js';
+import { PDFDict } from 'src/core/objects/PDFDict.js';
+import { PDFHexString } from 'src/core/objects/PDFHexString.js';
+import { PDFName } from 'src/core/objects/PDFName.js';
+import { PDFRef } from 'src/core/objects/PDFRef.js';
+import { PDFOperator } from 'src/core/operators/PDFOperator.js';
 import type {
   MultiLineTextOrGlyphs,
   SingleLineTextOrGlyphs,
@@ -50,15 +48,13 @@ import type {
 import {
   assertEachIs,
   assertIs,
+  assertIsOneOfOrUndefined,
   assertMultiple,
   assertOrUndefined,
-  breakTextIntoLines,
-  cleanText,
-  rectanglesAreEqual,
-  lineSplit,
   assertRangeOrUndefined,
-  assertIsOneOfOrUndefined,
-} from 'src/utils/index.js';
+} from 'src/utils/validators.js';
+import { rectanglesAreEqual } from 'src/utils/objects.js';
+import { breakTextIntoLines, cleanText, lineSplit } from 'src/utils/strings.js';
 
 /**
  * Represents a single page of a [[PDFDocument]].

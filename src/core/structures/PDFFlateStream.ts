@@ -4,7 +4,7 @@ import type { PDFDict } from 'src/core/objects/PDFDict.js';
 import { PDFName } from 'src/core/objects/PDFName.js';
 import { PDFStream } from 'src/core/objects/PDFStream.js';
 import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter.js';
-import { Cache } from 'src/utils/index.js';
+import { Cache } from 'src/utils/Cache.js';
 import type { PDFRef } from '../objects/PDFRef.js';
 
 export type PDFFlateStreamEncryptionParams = {

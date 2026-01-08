@@ -2,7 +2,7 @@ import type { Glyph } from '@denkiyagi/fontkit';
 
 import { InvalidUnicodeCodePointError } from 'src/core/errors.js';
 import { PDFLibErrorTypes } from 'src/core/error-base.js';
-import { toHexStringOfMinLength } from 'src/utils/index.js';
+import { toHexStringOfMinLength } from 'src/utils/strings.js';
 import {
   hasSurrogates,
   highSurrogate,

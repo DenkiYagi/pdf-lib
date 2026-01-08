@@ -7,7 +7,7 @@ import {
   setStrokingRgbColor,
 } from 'src/api/operators.js';
 import { InvalidColorError } from 'src/api/errors.js';
-import { assertRange } from 'src/utils/index.js';
+import { assertRange } from 'src/utils/validators.js';
 
 export enum ColorTypes {
   Grayscale = 'Grayscale',

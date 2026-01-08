@@ -10,7 +10,7 @@ import {
   lineTo,
   moveTo,
 } from 'src/api/operators.js';
-import type { PDFOperator } from 'src/core/index.js';
+import type { PDFOperator } from 'src/core/operators/PDFOperator.js';
 
 let cx: number = 0;
 let cy: number = 0;

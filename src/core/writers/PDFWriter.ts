@@ -8,7 +8,8 @@ import type { PDFDict } from 'src/core/objects/PDFDict.js';
 import type { PDFRef } from 'src/core/objects/PDFRef.js';
 import { PDFObjectStream } from 'src/core/structures/PDFObjectStream.js';
 import { CharCodes } from 'src/core/syntax/CharCodes.js';
-import { copyStringIntoBuffer, waitForTick } from 'src/utils/index.js';
+import { waitForTick } from 'src/utils/async.js';
+import { copyStringIntoBuffer } from 'src/utils/strings.js';
 
 export interface SerializationInfo {
   size: number;

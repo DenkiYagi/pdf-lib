@@ -2,14 +2,14 @@ import type { PDFFont } from 'src/api/PDFFont.js';
 import { CombedTextLayoutError } from 'src/api/errors.js';
 import { TextAlignment } from 'src/api/text/alignment.js';
 
-import type { PDFHexString } from 'src/core/index.js';
+import type { PDFHexString } from 'src/core/objects/PDFHexString.js';
 import {
   cleanText,
   lineSplit,
   mergeLines,
   charAtIndex,
   charSplit,
-} from 'src/utils/index.js';
+} from 'src/utils/strings.js';
 
 export interface TextPosition {
   text: string;

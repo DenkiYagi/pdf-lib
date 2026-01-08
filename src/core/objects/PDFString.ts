@@ -3,16 +3,15 @@ import { PDFHexString } from 'src/core/objects/PDFHexString.js';
 import { PDFObject } from 'src/core/objects/PDFObject.js';
 import type { PDFRef } from 'src/core/objects/PDFRef.js';
 import { CharCodes } from 'src/core/syntax/CharCodes.js';
+import { typedArrayFor } from 'src/utils/arrays.js';
+import { pdfDocEncodingDecode } from 'src/utils/pdfDocEncoding.js';
 import {
   copyStringIntoBuffer,
   padStart,
-  utf16Decode,
-  pdfDocEncodingDecode,
-  toCharCode,
   parseDate,
-  hasUtf16BOM,
-  typedArrayFor,
-} from 'src/utils/index.js';
+  toCharCode,
+} from 'src/utils/strings.js';
+import { hasUtf16BOM, utf16Decode } from 'src/utils/unicode.js';
 import { InvalidPDFDateStringError } from 'src/core/errors.js';
 
 export class PDFString extends PDFObject {

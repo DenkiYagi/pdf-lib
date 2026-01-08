@@ -7,7 +7,7 @@ import type { PDFString } from 'src/core/objects/PDFString.js';
 import type { PDFOperatorNames } from 'src/core/operators/PDFOperatorNames.js';
 import type { PDFContext } from 'src/core/PDFContext.js';
 import { CharCodes } from 'src/core/syntax/CharCodes.js';
-import { copyStringIntoBuffer } from 'src/utils/index.js';
+import { copyStringIntoBuffer } from 'src/utils/strings.js';
 
 export type PDFOperatorArg =
   | string

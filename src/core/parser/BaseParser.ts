@@ -3,7 +3,7 @@ import type { ByteStream } from 'src/core/parser/ByteStream.js';
 import { CharCodes } from 'src/core/syntax/CharCodes.js';
 import { IsDigit, IsNumeric } from 'src/core/syntax/Numeric.js';
 import { IsWhitespace } from 'src/core/syntax/Whitespace.js';
-import { charFromCode } from 'src/utils/index.js';
+import { charFromCode } from 'src/utils/strings.js';
 
 const { Newline, CarriageReturn } = CharCodes;
 

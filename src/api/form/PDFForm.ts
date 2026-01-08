@@ -26,25 +26,24 @@ import {
   pushGraphicsState,
   translate,
 } from 'src/api/operators.js';
-import {
-  PDFAcroForm,
-  PDFAcroField,
-  PDFAcroCheckBox,
-  PDFAcroComboBox,
-  PDFAcroListBox,
-  PDFAcroRadioButton,
-  PDFAcroSignature,
-  PDFAcroText,
-  PDFAcroPushButton,
-  PDFAcroNonTerminal,
-  PDFDict,
-  PDFOperator,
-  PDFRef,
-  createPDFAcroFields,
-  PDFName,
-  PDFWidgetAnnotation,
-} from 'src/core/index.js';
-import { assertIs, Cache, assertOrUndefined } from 'src/utils/index.js';
+import { PDFAcroCheckBox } from 'src/core/acroform/PDFAcroCheckBox.js';
+import { PDFAcroComboBox } from 'src/core/acroform/PDFAcroComboBox.js';
+import { PDFAcroField } from 'src/core/acroform/PDFAcroField.js';
+import { PDFAcroForm } from 'src/core/acroform/PDFAcroForm.js';
+import { PDFAcroListBox } from 'src/core/acroform/PDFAcroListBox.js';
+import { PDFAcroNonTerminal } from 'src/core/acroform/PDFAcroNonTerminal.js';
+import { PDFAcroPushButton } from 'src/core/acroform/PDFAcroPushButton.js';
+import { PDFAcroRadioButton } from 'src/core/acroform/PDFAcroRadioButton.js';
+import { PDFAcroSignature } from 'src/core/acroform/PDFAcroSignature.js';
+import { PDFAcroText } from 'src/core/acroform/PDFAcroText.js';
+import { createPDFAcroFields } from 'src/core/acroform/utils.js';
+import { PDFWidgetAnnotation } from 'src/core/annotation/PDFWidgetAnnotation.js';
+import { PDFDict } from 'src/core/objects/PDFDict.js';
+import { PDFName } from 'src/core/objects/PDFName.js';
+import { PDFRef } from 'src/core/objects/PDFRef.js';
+import { PDFOperator } from 'src/core/operators/PDFOperator.js';
+import { Cache } from 'src/utils/Cache.js';
+import { assertIs, assertOrUndefined } from 'src/utils/validators.js';
 
 export interface FlattenOptions {
   updateFieldAppearances: boolean;

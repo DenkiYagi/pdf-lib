@@ -18,7 +18,7 @@ import { PDFOperator } from 'src/core/operators/PDFOperator.js';
 import { PDFOperatorNames as Ops } from 'src/core/operators/PDFOperatorNames.js';
 import type { PDFSecurity } from 'src/core/security/PDFSecurity.js';
 import { PDFContentStream } from 'src/core/structures/PDFContentStream.js';
-import { typedArrayFor } from 'src/utils/index.js';
+import { typedArrayFor } from 'src/utils/arrays.js';
 import { SimpleRNG } from 'src/utils/rng.js';
 
 type LookupKey = PDFRef | PDFObject | undefined;

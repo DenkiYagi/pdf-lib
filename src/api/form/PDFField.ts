@@ -11,23 +11,21 @@ import {
   degrees,
 } from 'src/api/rotations.js';
 
-import {
-  PDFRef,
-  PDFWidgetAnnotation,
-  PDFOperator,
-  PDFName,
-  PDFDict,
-  MethodNotImplementedError,
-  AcroFieldFlags,
-  PDFAcroTerminal,
-  AnnotationFlags,
-} from 'src/core/index.js';
+import { PDFAcroTerminal } from 'src/core/acroform/PDFAcroTerminal.js';
+import { AcroFieldFlags } from 'src/core/acroform/flags.js';
+import { PDFWidgetAnnotation } from 'src/core/annotation/PDFWidgetAnnotation.js';
+import { AnnotationFlags } from 'src/core/annotation/flags.js';
+import { MethodNotImplementedError } from 'src/core/errors.js';
+import { PDFDict } from 'src/core/objects/PDFDict.js';
+import { PDFName } from 'src/core/objects/PDFName.js';
+import { PDFRef } from 'src/core/objects/PDFRef.js';
+import { PDFOperator } from 'src/core/operators/PDFOperator.js';
 import {
   assertIs,
   assertMultiple,
   assertOrUndefined,
-} from 'src/utils/index.js';
-import { ImageAlignment } from '../image/index.js';
+} from 'src/utils/validators.js';
+import { ImageAlignment } from '../image/alignment.js';
 import type { PDFImage } from '../PDFImage.js';
 import { drawImage, rotateInPlace } from '../operations.js';
 

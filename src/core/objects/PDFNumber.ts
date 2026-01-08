@@ -1,4 +1,5 @@
-import { copyStringIntoBuffer, numberToString } from 'src/utils/index.js';
+import { numberToString } from 'src/utils/numbers.js';
+import { copyStringIntoBuffer } from 'src/utils/strings.js';
 import { PDFObject } from 'src/core/objects/PDFObject.js';
 
 export class PDFNumber extends PDFObject {

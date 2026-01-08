@@ -22,21 +22,19 @@ import {
 import { ImageAlignment } from 'src/api/image/alignment.js';
 import { TextAlignment } from 'src/api/text/alignment.js';
 
-import {
-  PDFHexString,
-  PDFRef,
-  PDFStream,
-  PDFAcroText,
-  AcroTextFlags,
-  PDFWidgetAnnotation,
-} from 'src/core/index.js';
+import { PDFAcroText } from 'src/core/acroform/PDFAcroText.js';
+import { AcroTextFlags } from 'src/core/acroform/flags.js';
+import { PDFWidgetAnnotation } from 'src/core/annotation/PDFWidgetAnnotation.js';
+import { PDFHexString } from 'src/core/objects/PDFHexString.js';
+import { PDFRef } from 'src/core/objects/PDFRef.js';
+import { PDFStream } from 'src/core/objects/PDFStream.js';
 import {
   assertIs,
   assertIsOneOf,
   assertOrUndefined,
   assertPositive,
   assertRangeOrUndefined,
-} from 'src/utils/index.js';
+} from 'src/utils/validators.js';
 
 /**
  * Represents a text field of a [[PDFForm]].

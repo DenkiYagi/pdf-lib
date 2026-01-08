@@ -34,12 +34,10 @@ import {
 } from 'src/api/operators.js';
 import { Rotation, degrees, toRadians } from 'src/api/rotations.js';
 import { svgPathToOperators } from 'src/api/svgPath.js';
-import type {
-  PDFHexString,
-  PDFName,
-  PDFNumber,
-  PDFOperator,
-} from 'src/core/index.js';
+import type { PDFHexString } from 'src/core/objects/PDFHexString.js';
+import type { PDFName } from 'src/core/objects/PDFName.js';
+import type { PDFNumber } from 'src/core/objects/PDFNumber.js';
+import type { PDFOperator } from 'src/core/operators/PDFOperator.js';
 import { asNumber } from 'src/api/objects.js';
 
 export interface DrawTextOptions {

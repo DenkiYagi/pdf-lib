@@ -14,21 +14,19 @@ import {
 import { rgb } from 'src/api/colors.js';
 import { degrees } from 'src/api/rotations.js';
 
-import {
-  PDFRef,
-  PDFHexString,
-  PDFString,
-  PDFStream,
-  PDFAcroListBox,
-  AcroChoiceFlags,
-  PDFWidgetAnnotation,
-} from 'src/core/index.js';
+import { PDFAcroListBox } from 'src/core/acroform/PDFAcroListBox.js';
+import { AcroChoiceFlags } from 'src/core/acroform/flags.js';
+import { PDFWidgetAnnotation } from 'src/core/annotation/PDFWidgetAnnotation.js';
+import { PDFHexString } from 'src/core/objects/PDFHexString.js';
+import { PDFRef } from 'src/core/objects/PDFRef.js';
+import { PDFStream } from 'src/core/objects/PDFStream.js';
+import { PDFString } from 'src/core/objects/PDFString.js';
 import {
   assertIs,
   assertIsSubset,
   assertOrUndefined,
   assertPositive,
-} from 'src/utils/index.js';
+} from 'src/utils/validators.js';
 
 /**
  * Represents an option list field of a [[PDFForm]].

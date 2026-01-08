@@ -4,7 +4,7 @@ import type { PDFObject } from 'src/core/objects/PDFObject.js';
 import type { PDFRef } from 'src/core/objects/PDFRef.js';
 import { PDFStream } from 'src/core/objects/PDFStream.js';
 import type { PDFContext } from 'src/core/PDFContext.js';
-import { arrayAsString } from 'src/utils/index.js';
+import { arrayAsString } from 'src/utils/arrays.js';
 
 export class PDFRawStream extends PDFStream {
   static of = (dict: PDFDict, contents: Uint8Array) =>

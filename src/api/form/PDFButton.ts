@@ -16,17 +16,15 @@ import {
 import { rgb } from 'src/api/colors.js';
 import { degrees } from 'src/api/rotations.js';
 
-import {
-  PDFRef,
-  PDFStream,
-  PDFAcroPushButton,
-  PDFWidgetAnnotation,
-} from 'src/core/index.js';
+import { PDFAcroPushButton } from 'src/core/acroform/PDFAcroPushButton.js';
+import { PDFWidgetAnnotation } from 'src/core/annotation/PDFWidgetAnnotation.js';
+import { PDFRef } from 'src/core/objects/PDFRef.js';
+import { PDFStream } from 'src/core/objects/PDFStream.js';
 import {
   assertIs,
   assertOrUndefined,
   assertPositive,
-} from 'src/utils/index.js';
+} from 'src/utils/validators.js';
 
 /**
  * Represents a button field of a [[PDFForm]].

@@ -7,13 +7,10 @@ import { PDFHexString } from 'src/core/objects/PDFHexString.js';
 import type { PDFRef } from 'src/core/objects/PDFRef.js';
 import { PDFString } from 'src/core/objects/PDFString.js';
 import type { PDFContext } from 'src/core/PDFContext.js';
-import {
-  byAscendingId,
-  Cache,
-  sortedUniq,
-  toHexStringOfMinLength,
-} from 'src/utils/index.js';
-import type { EmbedFontAdvancedOptions } from 'src/api/index.js';
+import { Cache } from 'src/utils/Cache.js';
+import { byAscendingId, sortedUniq } from 'src/utils/arrays.js';
+import { toHexStringOfMinLength } from 'src/utils/strings.js';
+import type { EmbedFontAdvancedOptions } from 'src/api/PDFDocumentOptions.js';
 import type { SingleLineTextOrGlyphs } from 'src/types/text.js';
 
 const emptyObject = {};

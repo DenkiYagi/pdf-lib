@@ -7,7 +7,7 @@ import {
   copyStringIntoBuffer,
   toCharCode,
   toHexString,
-} from 'src/utils/index.js';
+} from 'src/utils/strings.js';
 
 const decodeName = (name: string) =>
   name.replace(/#([\dABCDEF]{2})/g, (_, hex) => charFromHexCode(hex));

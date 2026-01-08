@@ -23,7 +23,7 @@ import { PDFContext } from 'src/core/PDFContext.js';
 import { CharCodes } from 'src/core/syntax/CharCodes.js';
 import { Keywords } from 'src/core/syntax/Keywords.js';
 import { IsDigit } from 'src/core/syntax/Numeric.js';
-import { waitForTick } from 'src/utils/index.js';
+import { waitForTick } from 'src/utils/async.js';
 
 export class PDFParser extends PDFObjectParser {
   static forBytesWithOptions = (

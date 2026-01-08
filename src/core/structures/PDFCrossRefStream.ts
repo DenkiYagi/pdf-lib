@@ -8,13 +8,9 @@ import {
   PDFFlateStreamEncryptionParams,
   PDFFlateStream,
 } from 'src/core/structures/PDFFlateStream.js';
-import {
-  bytesFor,
-  Cache,
-  reverseArray,
-  sizeInBytes,
-  sum,
-} from 'src/utils/index.js';
+import { Cache } from 'src/utils/Cache.js';
+import { reverseArray, sum } from 'src/utils/arrays.js';
+import { bytesFor, sizeInBytes } from 'src/utils/numbers.js';
 
 export enum EntryType {
   Deleted = 0,

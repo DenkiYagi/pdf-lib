@@ -13,7 +13,7 @@ import { PDFContentStream } from 'src/core/structures/PDFContentStream.js';
 import type { PDFPageLeaf } from 'src/core/structures/PDFPageLeaf.js';
 import { CharCodes } from 'src/core/syntax/CharCodes.js';
 import type { TransformationMatrix } from 'src/types/matrix.js';
-import { mergeIntoTypedArray } from 'src/utils/index.js';
+import { mergeIntoTypedArray } from 'src/utils/arrays.js';
 
 /**
  * Represents a page bounding box.

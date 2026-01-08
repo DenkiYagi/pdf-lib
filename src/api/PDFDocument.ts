@@ -13,31 +13,31 @@ import { PDFPage } from 'src/api/PDFPage.js';
 import { PDFForm } from 'src/api/form/PDFForm.js';
 import { PageSizes } from 'src/api/sizes.js';
 import { StandardFonts } from 'src/api/StandardFonts.js';
+import { PDFContext } from 'src/core/PDFContext.js';
+import { PDFObjectCopier } from 'src/core/PDFObjectCopier.js';
+import { AbstractCustomFontEmbedder } from 'src/core/embedders/AbstractCustomFontEmbedder.js';
+import { CustomFontEmbedder } from 'src/core/embedders/CustomFontEmbedder.js';
+import { CustomFontSubsetEmbedder } from 'src/core/embedders/CustomFontSubsetEmbedder.js';
+import { JpegEmbedder } from 'src/core/embedders/JpegEmbedder.js';
+import { PDFPageEmbedder } from 'src/core/embedders/PDFPageEmbedder.js';
+import type { PageBoundingBox } from 'src/core/embedders/PDFPageEmbedder.js';
+import { PngEmbedder } from 'src/core/embedders/PngEmbedder.js';
+import { StandardFontEmbedder } from 'src/core/embedders/StandardFontEmbedder.js';
 import {
-  AbstractCustomFontEmbedder,
-  CustomFontEmbedder,
-  CustomFontSubsetEmbedder,
-  JpegEmbedder,
-  PageBoundingBox,
   PageEmbeddingMismatchedContextError,
-  PDFArray,
-  PDFCatalog,
-  PDFContext,
-  PDFDict,
-  PDFHexString,
-  PDFName,
-  PDFObjectCopier,
-  PDFPageEmbedder,
-  PDFPageLeaf,
-  PDFPageTree,
-  PDFParser,
-  PDFStreamWriter,
-  PDFString,
-  PDFWriter,
-  PngEmbedder,
-  StandardFontEmbedder,
   UnexpectedObjectTypeError,
-} from 'src/core/index.js';
+} from 'src/core/errors.js';
+import { PDFArray } from 'src/core/objects/PDFArray.js';
+import { PDFDict } from 'src/core/objects/PDFDict.js';
+import { PDFHexString } from 'src/core/objects/PDFHexString.js';
+import { PDFName } from 'src/core/objects/PDFName.js';
+import { PDFString } from 'src/core/objects/PDFString.js';
+import { PDFParser } from 'src/core/parser/PDFParser.js';
+import { PDFCatalog } from 'src/core/structures/PDFCatalog.js';
+import { PDFPageLeaf } from 'src/core/structures/PDFPageLeaf.js';
+import { PDFPageTree } from 'src/core/structures/PDFPageTree.js';
+import { PDFStreamWriter } from 'src/core/writers/PDFStreamWriter.js';
+import { PDFWriter } from 'src/core/writers/PDFWriter.js';
 import { mapFontkitError } from 'src/core/embedders/fontkit-helpers.js';
 import {
   ParseSpeeds,
@@ -54,18 +54,21 @@ import type { TransformationMatrix } from 'src/types/matrix.js';
 import {
   InvalidOptionPassedError,
   InvalidTypePassedError,
+} from 'src/utils/errors.js';
+import {
+  canBeConvertedToUint8Array,
+  pluckIndices,
+  range,
+  toUint8Array,
+} from 'src/utils/arrays.js';
+import { Cache } from 'src/utils/Cache.js';
+import { isStandardFont, values } from 'src/utils/objects.js';
+import {
   assertIs,
   assertIsOneOfOrUndefined,
   assertOrUndefined,
   assertRange,
-  Cache,
-  canBeConvertedToUint8Array,
-  isStandardFont,
-  pluckIndices,
-  range,
-  toUint8Array,
-  values,
-} from 'src/utils/index.js';
+} from 'src/utils/validators.js';
 import {
   FileEmbedder,
   AFRelationship,

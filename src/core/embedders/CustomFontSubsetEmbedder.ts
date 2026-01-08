@@ -5,8 +5,9 @@ import { AbstractCustomFontEmbedder } from 'src/core/embedders/AbstractCustomFon
 import { InvalidFontTypeError } from 'src/core/errors.js';
 import { PDFLibErrorTypes } from 'src/core/error-base.js';
 import { PDFHexString } from 'src/core/objects/PDFHexString.js';
-import { Cache, toHexStringOfMinLength } from 'src/utils/index.js';
-import type { EmbedFontAdvancedOptions } from 'src/api/index.js';
+import { Cache } from 'src/utils/Cache.js';
+import { toHexStringOfMinLength } from 'src/utils/strings.js';
+import type { EmbedFontAdvancedOptions } from 'src/api/PDFDocumentOptions.js';
 import type { SingleLineTextOrGlyphs } from 'src/types/text.js';
 
 /**

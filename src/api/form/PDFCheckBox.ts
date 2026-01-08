@@ -13,14 +13,12 @@ import {
   assertFieldAppearanceOptions,
 } from 'src/api/form/PDFField.js';
 
-import {
-  PDFName,
-  PDFRef,
-  PDFDict,
-  PDFAcroCheckBox,
-  PDFWidgetAnnotation,
-} from 'src/core/index.js';
-import { assertIs, assertOrUndefined } from 'src/utils/index.js';
+import { PDFAcroCheckBox } from 'src/core/acroform/PDFAcroCheckBox.js';
+import { PDFWidgetAnnotation } from 'src/core/annotation/PDFWidgetAnnotation.js';
+import { PDFDict } from 'src/core/objects/PDFDict.js';
+import { PDFName } from 'src/core/objects/PDFName.js';
+import { PDFRef } from 'src/core/objects/PDFRef.js';
+import { assertIs, assertOrUndefined } from 'src/utils/validators.js';
 
 /**
  * Represents a check box field of a [[PDFForm]].

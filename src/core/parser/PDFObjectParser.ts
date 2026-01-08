@@ -27,7 +27,7 @@ import { IsDelimiter } from 'src/core/syntax/Delimiters.js';
 import { Keywords } from 'src/core/syntax/Keywords.js';
 import { IsDigit, IsNumeric } from 'src/core/syntax/Numeric.js';
 import { IsWhitespace } from 'src/core/syntax/Whitespace.js';
-import { charFromCode } from 'src/utils/index.js';
+import { charFromCode } from 'src/utils/strings.js';
 
 // TODO: Throw error if eof is reached before finishing object parse...
 export class PDFObjectParser extends BaseParser {

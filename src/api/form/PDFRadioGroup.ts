@@ -13,16 +13,18 @@ import {
 import { rgb } from 'src/api/colors.js';
 import { degrees } from 'src/api/rotations.js';
 
+import { PDFAcroRadioButton } from 'src/core/acroform/PDFAcroRadioButton.js';
+import { AcroButtonFlags } from 'src/core/acroform/flags.js';
+import { PDFWidgetAnnotation } from 'src/core/annotation/PDFWidgetAnnotation.js';
+import { PDFDict } from 'src/core/objects/PDFDict.js';
+import { PDFHexString } from 'src/core/objects/PDFHexString.js';
+import { PDFName } from 'src/core/objects/PDFName.js';
+import { PDFRef } from 'src/core/objects/PDFRef.js';
 import {
-  PDFName,
-  PDFRef,
-  PDFHexString,
-  PDFDict,
-  PDFWidgetAnnotation,
-  PDFAcroRadioButton,
-  AcroButtonFlags,
-} from 'src/core/index.js';
-import { assertIs, assertOrUndefined, assertIsOneOf } from 'src/utils/index.js';
+  assertIs,
+  assertIsOneOf,
+  assertOrUndefined,
+} from 'src/utils/validators.js';
 
 /**
  * Represents a radio group field of a [[PDFForm]].

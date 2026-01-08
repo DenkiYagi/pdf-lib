@@ -9,7 +9,7 @@ import {
   assertInteger,
   assertIsOneOf,
   assertRange,
-} from 'src/utils/index.js';
+} from 'src/utils/validators.js';
 
 const asEnum = <T extends string | number, U extends { [key: string]: T }>(
   rawValue: T | undefined,

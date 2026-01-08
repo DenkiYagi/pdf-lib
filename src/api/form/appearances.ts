@@ -1,4 +1,5 @@
-import type { PDFOperator, PDFWidgetAnnotation } from 'src/core/index.js';
+import type { PDFWidgetAnnotation } from 'src/core/annotation/PDFWidgetAnnotation.js';
+import type { PDFOperator } from 'src/core/operators/PDFOperator.js';
 import type { PDFFont } from 'src/api/PDFFont.js';
 import type { PDFButton } from 'src/api/form/PDFButton.js';
 import type { PDFCheckBox } from 'src/api/form/PDFCheckBox.js';
@@ -33,7 +34,7 @@ import {
 } from 'src/api/text/layout.js';
 import { TextAlignment } from 'src/api/text/alignment.js';
 import { setFontAndSize } from 'src/api/operators.js';
-import { findLastMatch } from 'src/utils/index.js';
+import { findLastMatch } from 'src/utils/strings.js';
 
 /*********************** Appearance Provider Types ****************************/
 

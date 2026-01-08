@@ -2,16 +2,14 @@ import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter.js';
 import { PDFObject } from 'src/core/objects/PDFObject.js';
 import type { PDFRef } from 'src/core/objects/PDFRef.js';
 import { CharCodes } from 'src/core/syntax/CharCodes.js';
+import { uint8ArrayToHex } from 'src/utils/arrays.js';
+import { pdfDocEncodingDecode } from 'src/utils/pdfDocEncoding.js';
 import {
   copyStringIntoBuffer,
-  toHexStringOfMinLength,
-  utf16Decode,
-  utf16Encode,
-  pdfDocEncodingDecode,
   parseDate,
-  hasUtf16BOM,
-  uint8ArrayToHex,
-} from 'src/utils/index.js';
+  toHexStringOfMinLength,
+} from 'src/utils/strings.js';
+import { hasUtf16BOM, utf16Decode, utf16Encode } from 'src/utils/unicode.js';
 import { InvalidPDFDateStringError } from 'src/core/errors.js';
 
 export class PDFHexString extends PDFObject {

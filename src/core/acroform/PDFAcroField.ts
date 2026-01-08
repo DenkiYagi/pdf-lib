@@ -6,7 +6,7 @@ import type { PDFObject } from 'src/core/objects/PDFObject.js';
 import { PDFNumber } from 'src/core/objects/PDFNumber.js';
 import { PDFArray } from 'src/core/objects/PDFArray.js';
 import { PDFRef } from 'src/core/objects/PDFRef.js';
-import { findLastMatch } from 'src/utils/index.js';
+import { findLastMatch } from 'src/utils/strings.js';
 import {
   MissingDAEntryError,
   MissingTfOperatorError,

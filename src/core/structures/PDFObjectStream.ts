@@ -11,7 +11,8 @@ import {
   PDFFlateStreamEncryptionParams,
 } from 'src/core/structures/PDFFlateStream.js';
 import { CharCodes } from 'src/core/syntax/CharCodes.js';
-import { copyStringIntoBuffer, last } from 'src/utils/index.js';
+import { last } from 'src/utils/arrays.js';
+import { copyStringIntoBuffer } from 'src/utils/strings.js';
 
 export type IndirectObject = [PDFRef, PDFObject];
 
