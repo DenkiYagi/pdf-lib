@@ -1,4 +1,5 @@
-import { PDFInvalidObject, PDFRef } from 'src/core/index.js';
+import { PDFInvalidObject } from '../../../src/core/objects/PDFInvalidObject.js';
+import { PDFRef } from '../../../src/core/objects/PDFRef.js';
 import { security } from './shared.js';
 
 describe(`PDFInvalidObject`, () => {

@@ -5,9 +5,9 @@ import {
   setStrokingCmykColor,
   setStrokingGrayscaleColor,
   setStrokingRgbColor,
-} from 'src/api/operators.js';
-import { InvalidColorError } from 'src/api/errors.js';
-import { assertRange } from 'src/utils/index.js';
+} from './operators.js';
+import { InvalidColorError } from './errors.js';
+import { assertRange } from '../utils/validators.js';
 
 export enum ColorTypes {
   Grayscale = 'Grayscale',

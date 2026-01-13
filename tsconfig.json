@@ -7,7 +7,6 @@
     "composite": false,
     "incremental": false,
     "removeComments": false,
-    "importHelpers": true,
     "downlevelIteration": false,
     "isolatedModules": false,
     "newLine": "LF",
@@ -20,20 +19,10 @@
     "noFallthroughCasesInSwitch": true,
 
     /* Module Resolution Options */
-    "baseUrl": "./src",
-    "paths": {
-      "src/*": ["./*"]
-    },
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "preserveSymlinks": true,
-    "moduleResolution": "nodenext",
-
-    /* Plugins */
-    "plugins": [
-      { "transform": "typescript-transform-paths" },
-      { "transform": "typescript-transform-paths", "afterDeclarations": true }
-    ]
+    "moduleResolution": "nodenext"
   },
   "include": ["src/**/*"]
 }

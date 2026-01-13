@@ -3,31 +3,31 @@ import {
   PDFStreamParsingError,
   Position,
   UnbalancedParenthesisError,
-} from 'src/core/errors.js';
-import { PDFArray } from 'src/core/objects/PDFArray.js';
-import { PDFBool } from 'src/core/objects/PDFBool.js';
-import { PDFDict, DictMap } from 'src/core/objects/PDFDict.js';
-import { PDFHexString } from 'src/core/objects/PDFHexString.js';
-import { PDFName } from 'src/core/objects/PDFName.js';
-import { PDFNull } from 'src/core/objects/PDFNull.js';
-import { PDFNumber } from 'src/core/objects/PDFNumber.js';
-import type { PDFObject } from 'src/core/objects/PDFObject.js';
-import { PDFRawStream } from 'src/core/objects/PDFRawStream.js';
-import { PDFRef } from 'src/core/objects/PDFRef.js';
-import type { PDFStream } from 'src/core/objects/PDFStream.js';
-import { PDFString } from 'src/core/objects/PDFString.js';
-import { BaseParser } from 'src/core/parser/BaseParser.js';
-import { ByteStream } from 'src/core/parser/ByteStream.js';
-import type { PDFContext } from 'src/core/PDFContext.js';
-import { PDFCatalog } from 'src/core/structures/PDFCatalog.js';
-import { PDFPageLeaf } from 'src/core/structures/PDFPageLeaf.js';
-import { PDFPageTree } from 'src/core/structures/PDFPageTree.js';
-import { CharCodes } from 'src/core/syntax/CharCodes.js';
-import { IsDelimiter } from 'src/core/syntax/Delimiters.js';
-import { Keywords } from 'src/core/syntax/Keywords.js';
-import { IsDigit, IsNumeric } from 'src/core/syntax/Numeric.js';
-import { IsWhitespace } from 'src/core/syntax/Whitespace.js';
-import { charFromCode } from 'src/utils/index.js';
+} from '../errors.js';
+import { PDFArray } from '../objects/PDFArray.js';
+import { PDFBool } from '../objects/PDFBool.js';
+import { PDFDict, DictMap } from '../objects/PDFDict.js';
+import { PDFHexString } from '../objects/PDFHexString.js';
+import { PDFName } from '../objects/PDFName.js';
+import { PDFNull } from '../objects/PDFNull.js';
+import { PDFNumber } from '../objects/PDFNumber.js';
+import type { PDFObject } from '../objects/PDFObject.js';
+import { PDFRawStream } from '../objects/PDFRawStream.js';
+import { PDFRef } from '../objects/PDFRef.js';
+import type { PDFStream } from '../objects/PDFStream.js';
+import { PDFString } from '../objects/PDFString.js';
+import { BaseParser } from './BaseParser.js';
+import { ByteStream } from './ByteStream.js';
+import type { PDFContext } from '../PDFContext.js';
+import { PDFCatalog } from '../structures/PDFCatalog.js';
+import { PDFPageLeaf } from '../structures/PDFPageLeaf.js';
+import { PDFPageTree } from '../structures/PDFPageTree.js';
+import { CharCodes } from '../syntax/CharCodes.js';
+import { IsDelimiter } from '../syntax/Delimiters.js';
+import { Keywords } from '../syntax/Keywords.js';
+import { IsDigit, IsNumeric } from '../syntax/Numeric.js';
+import { IsWhitespace } from '../syntax/Whitespace.js';
+import { charFromCode } from '../../utils/strings.js';
 
 // TODO: Throw error if eof is reached before finishing object parse...
 export class PDFObjectParser extends BaseParser {

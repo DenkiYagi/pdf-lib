@@ -1,11 +1,11 @@
-import type { PDFObject } from 'src/core/objects/PDFObject.js';
-import { PDFString } from 'src/core/objects/PDFString.js';
-import { PDFHexString } from 'src/core/objects/PDFHexString.js';
-import { PDFArray } from 'src/core/objects/PDFArray.js';
-import { PDFName } from 'src/core/objects/PDFName.js';
-import type { PDFRef } from 'src/core/objects/PDFRef.js';
-import { PDFAcroTerminal } from 'src/core/acroform/PDFAcroTerminal.js';
-import { IndexOutOfBoundsError } from 'src/core/errors.js';
+import type { PDFObject } from '../objects/PDFObject.js';
+import { PDFString } from '../objects/PDFString.js';
+import { PDFHexString } from '../objects/PDFHexString.js';
+import { PDFArray } from '../objects/PDFArray.js';
+import { PDFName } from '../objects/PDFName.js';
+import type { PDFRef } from '../objects/PDFRef.js';
+import { PDFAcroTerminal } from './PDFAcroTerminal.js';
+import { IndexOutOfBoundsError } from '../errors.js';
 
 export class PDFAcroButton extends PDFAcroTerminal {
   Opt(): PDFString | PDFHexString | PDFArray | undefined {

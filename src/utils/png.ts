@@ -1,6 +1,6 @@
 import { decode } from 'fast-png';
-import { toRgba8 } from 'src/utils/fast-png-helper.js';
-import { InvalidPngError } from 'src/utils/errors.js';
+import { toRgba8 } from './fast-png-helper.js';
+import { InvalidPngError } from './errors.js';
 
 const mapPngError = (error: unknown, msgPrefix: string): InvalidPngError => {
   const message =

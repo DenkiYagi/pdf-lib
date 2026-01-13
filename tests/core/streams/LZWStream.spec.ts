@@ -1,5 +1,5 @@
-import { LZWStream } from 'src/core/streams/LZWStream.js';
-import { Stream } from 'src/core/streams/Stream.js';
+import { LZWStream } from '../../../src/core/streams/LZWStream.js';
+import { Stream } from '../../../src/core/streams/Stream.js';
 import { readBinaryFileSync } from '../../test-utils.js';
 
 const DIR = `tests/core/streams/data/lzw`;

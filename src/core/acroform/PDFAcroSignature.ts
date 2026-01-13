@@ -1,6 +1,6 @@
-import type { PDFDict } from 'src/core/objects/PDFDict.js';
-import type { PDFRef } from 'src/core/objects/PDFRef.js';
-import { PDFAcroTerminal } from 'src/core/acroform/PDFAcroTerminal.js';
+import type { PDFDict } from '../objects/PDFDict.js';
+import type { PDFRef } from '../objects/PDFRef.js';
+import { PDFAcroTerminal } from './PDFAcroTerminal.js';
 
 export class PDFAcroSignature extends PDFAcroTerminal {
   static fromDict = (dict: PDFDict, ref: PDFRef) =>

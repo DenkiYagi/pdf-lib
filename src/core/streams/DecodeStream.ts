@@ -1,5 +1,5 @@
-import { MethodNotImplementedError } from 'src/core/errors.js';
-import { Stream, StreamType } from 'src/core/streams/Stream.js';
+import { MethodNotImplementedError } from '../errors.js';
+import { Stream, StreamType } from './Stream.js';
 
 /*
  * Copyright 2012 Mozilla Foundation

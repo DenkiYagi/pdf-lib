@@ -1,12 +1,10 @@
 import { create as createFont } from '@denkiyagi/fontkit';
 import type { TTFFont } from '@denkiyagi/fontkit';
 
-import {
-  CustomFontSubsetEmbedder,
-  PDFContext,
-  PDFDict,
-  PDFHexString,
-} from 'src/core/index.js';
+import { PDFContext } from '../../../src/core/PDFContext.js';
+import { CustomFontSubsetEmbedder } from '../../../src/core/embedders/CustomFontSubsetEmbedder.js';
+import { PDFDict } from '../../../src/core/objects/PDFDict.js';
+import { PDFHexString } from '../../../src/core/objects/PDFHexString.js';
 import { readBinaryFileSync } from '../../test-utils.js';
 
 const ubuntuFont = readBinaryFileSync('./assets/fonts/ubuntu/Ubuntu-R.ttf');

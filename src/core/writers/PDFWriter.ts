@@ -1,14 +1,15 @@
-import type { PDFContext } from 'src/core/PDFContext.js';
-import { PDFCrossRefSection } from 'src/core/document/PDFCrossRefSection.js';
-import type { PDFHeader } from 'src/core/document/PDFHeader.js';
-import { PDFTrailer } from 'src/core/document/PDFTrailer.js';
-import { PDFTrailerDict } from 'src/core/document/PDFTrailerDict.js';
-import type { PDFObject } from 'src/core/objects/PDFObject.js';
-import type { PDFDict } from 'src/core/objects/PDFDict.js';
-import type { PDFRef } from 'src/core/objects/PDFRef.js';
-import { PDFObjectStream } from 'src/core/structures/PDFObjectStream.js';
-import { CharCodes } from 'src/core/syntax/CharCodes.js';
-import { copyStringIntoBuffer, waitForTick } from 'src/utils/index.js';
+import type { PDFContext } from '../PDFContext.js';
+import { PDFCrossRefSection } from '../document/PDFCrossRefSection.js';
+import type { PDFHeader } from '../document/PDFHeader.js';
+import { PDFTrailer } from '../document/PDFTrailer.js';
+import { PDFTrailerDict } from '../document/PDFTrailerDict.js';
+import type { PDFObject } from '../objects/PDFObject.js';
+import type { PDFDict } from '../objects/PDFDict.js';
+import type { PDFRef } from '../objects/PDFRef.js';
+import { PDFObjectStream } from '../structures/PDFObjectStream.js';
+import { CharCodes } from '../syntax/CharCodes.js';
+import { waitForTick } from '../../utils/async.js';
+import { copyStringIntoBuffer } from '../../utils/strings.js';
 
 export interface SerializationInfo {
   size: number;

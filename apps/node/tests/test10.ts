@@ -1,5 +1,5 @@
 import { Assets } from '../index.js';
-import { PDFDocument, StandardFonts, PDFFont } from '../../../dist/es/index.js';
+import { PDFDocument, StandardFonts, PDFFont } from '../../../dist/es/all.js';
 
 // prettier-ignore
 const winAnsiCodePoints = [

@@ -1,13 +1,5 @@
 # `@denkiyagi/pdf-lib` development notes
 
-## Setup
-
-After cloning the repository and running `yarn install`, you must run the following command manually:
-
-```bash
-yarn dev:prep
-```
-
 ## Editor setup
 
 If you use VS Code:

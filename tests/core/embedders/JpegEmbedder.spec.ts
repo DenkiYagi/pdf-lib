@@ -1,9 +1,7 @@
-import {
-  JpegEmbedder,
-  PDFContext,
-  PDFRawStream,
-  PDFRef,
-} from 'src/core/index.js';
+import { PDFContext } from '../../../src/core/PDFContext.js';
+import { JpegEmbedder } from '../../../src/core/embedders/JpegEmbedder.js';
+import { PDFRawStream } from '../../../src/core/objects/PDFRawStream.js';
+import { PDFRef } from '../../../src/core/objects/PDFRef.js';
 import { readBinaryFileSync } from '../../test-utils.js';
 
 const catUnicornJpg = readBinaryFileSync(

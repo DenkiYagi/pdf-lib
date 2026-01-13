@@ -1,15 +1,17 @@
-export { PDFAcroButton } from 'src/core/acroform/PDFAcroButton.js';
-export { PDFAcroCheckBox } from 'src/core/acroform/PDFAcroCheckBox.js';
-export { PDFAcroChoice } from 'src/core/acroform/PDFAcroChoice.js';
-export { PDFAcroComboBox } from 'src/core/acroform/PDFAcroComboBox.js';
-export { PDFAcroField } from 'src/core/acroform/PDFAcroField.js';
-export { PDFAcroForm } from 'src/core/acroform/PDFAcroForm.js';
-export { PDFAcroListBox } from 'src/core/acroform/PDFAcroListBox.js';
-export { PDFAcroNonTerminal } from 'src/core/acroform/PDFAcroNonTerminal.js';
-export { PDFAcroPushButton } from 'src/core/acroform/PDFAcroPushButton.js';
-export { PDFAcroRadioButton } from 'src/core/acroform/PDFAcroRadioButton.js';
-export { PDFAcroSignature } from 'src/core/acroform/PDFAcroSignature.js';
-export { PDFAcroTerminal } from 'src/core/acroform/PDFAcroTerminal.js';
-export { PDFAcroText } from 'src/core/acroform/PDFAcroText.js';
-export * from 'src/core/acroform/flags.js';
-export * from 'src/core/acroform/utils.js';
+// Build-only barrel for the UMD bundle; do not import from this in source code.
+
+export { PDFAcroButton } from './PDFAcroButton.js';
+export { PDFAcroCheckBox } from './PDFAcroCheckBox.js';
+export { PDFAcroChoice } from './PDFAcroChoice.js';
+export { PDFAcroComboBox } from './PDFAcroComboBox.js';
+export { PDFAcroField } from './PDFAcroField.js';
+export { PDFAcroForm } from './PDFAcroForm.js';
+export { PDFAcroListBox } from './PDFAcroListBox.js';
+export { PDFAcroNonTerminal } from './PDFAcroNonTerminal.js';
+export { PDFAcroPushButton } from './PDFAcroPushButton.js';
+export { PDFAcroRadioButton } from './PDFAcroRadioButton.js';
+export { PDFAcroSignature } from './PDFAcroSignature.js';
+export { PDFAcroTerminal } from './PDFAcroTerminal.js';
+export { PDFAcroText } from './PDFAcroText.js';
+export * from './flags.js';
+export * from './utils.js';

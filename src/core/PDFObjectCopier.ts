@@ -1,11 +1,11 @@
-import { PDFArray } from 'src/core/objects/PDFArray.js';
-import { PDFDict } from 'src/core/objects/PDFDict.js';
-import { PDFName } from 'src/core/objects/PDFName.js';
-import type { PDFObject } from 'src/core/objects/PDFObject.js';
-import { PDFRef } from 'src/core/objects/PDFRef.js';
-import { PDFStream } from 'src/core/objects/PDFStream.js';
-import type { PDFContext } from 'src/core/PDFContext.js';
-import { PDFPageLeaf } from 'src/core/structures/PDFPageLeaf.js';
+import { PDFArray } from './objects/PDFArray.js';
+import { PDFDict } from './objects/PDFDict.js';
+import { PDFName } from './objects/PDFName.js';
+import type { PDFObject } from './objects/PDFObject.js';
+import { PDFRef } from './objects/PDFRef.js';
+import { PDFStream } from './objects/PDFStream.js';
+import type { PDFContext } from './PDFContext.js';
+import { PDFPageLeaf } from './structures/PDFPageLeaf.js';
 
 /**
  * PDFObjectCopier copies PDFObjects from a src context to a dest context.

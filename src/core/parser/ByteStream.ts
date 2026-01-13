@@ -1,7 +1,7 @@
-import { NextByteAssertionError } from 'src/core/errors.js';
-import type { PDFRawStream } from 'src/core/objects/PDFRawStream.js';
-import { decodePDFRawStream } from 'src/core/streams/decode.js';
-import { CharCodes } from 'src/core/syntax/CharCodes.js';
+import { NextByteAssertionError } from '../errors.js';
+import type { PDFRawStream } from '../objects/PDFRawStream.js';
+import { decodePDFRawStream } from '../streams/decode.js';
+import { CharCodes } from '../syntax/CharCodes.js';
 
 // TODO: See how line/col tracking affects performance
 export class ByteStream {

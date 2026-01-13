@@ -1,7 +1,7 @@
-import { PDFString } from 'src/core/objects/PDFString.js';
-import { PDFHexString } from 'src/core/objects/PDFHexString.js';
-import type { PDFContext } from 'src/core/PDFContext.js';
-import type { PDFRef } from 'src/core/objects/PDFRef.js';
+import { PDFString } from '../objects/PDFString.js';
+import { PDFHexString } from '../objects/PDFHexString.js';
+import type { PDFContext } from '../PDFContext.js';
+import type { PDFRef } from '../objects/PDFRef.js';
 
 /**
  * From the PDF-A3 specification, section **3.1. Requirements - General**.

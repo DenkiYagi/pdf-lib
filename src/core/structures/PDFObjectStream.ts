@@ -1,17 +1,18 @@
-import { PDFInvalidObject } from 'src/core/objects/PDFInvalidObject.js';
-import { PDFName } from 'src/core/objects/PDFName.js';
-import { PDFNumber } from 'src/core/objects/PDFNumber.js';
-import type { PDFObject } from 'src/core/objects/PDFObject.js';
-import type { PDFRef } from 'src/core/objects/PDFRef.js';
-import { PDFStream } from 'src/core/objects/PDFStream.js';
-import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter.js';
-import type { PDFContext } from 'src/core/PDFContext.js';
+import { PDFInvalidObject } from '../objects/PDFInvalidObject.js';
+import { PDFName } from '../objects/PDFName.js';
+import { PDFNumber } from '../objects/PDFNumber.js';
+import type { PDFObject } from '../objects/PDFObject.js';
+import type { PDFRef } from '../objects/PDFRef.js';
+import { PDFStream } from '../objects/PDFStream.js';
+import type { ObjectEncrypter } from '../objects/ObjectEncrypter.js';
+import type { PDFContext } from '../PDFContext.js';
 import {
   PDFFlateStream,
   PDFFlateStreamEncryptionParams,
-} from 'src/core/structures/PDFFlateStream.js';
-import { CharCodes } from 'src/core/syntax/CharCodes.js';
-import { copyStringIntoBuffer, last } from 'src/utils/index.js';
+} from './PDFFlateStream.js';
+import { CharCodes } from '../syntax/CharCodes.js';
+import { last } from '../../utils/arrays.js';
+import { copyStringIntoBuffer } from '../../utils/strings.js';
 
 export type IndirectObject = [PDFRef, PDFObject];
 

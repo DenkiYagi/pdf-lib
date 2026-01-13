@@ -1,7 +1,7 @@
-import { PDFDocument } from 'src/api/PDFDocument.js';
-import type { PDFFont } from 'src/api/PDFFont.js';
-import type { AppearanceMapping } from 'src/api/form/appearances.js';
-import { Color, colorToComponents, setFillingColor } from 'src/api/colors.js';
+import { PDFDocument } from '../PDFDocument.js';
+import type { PDFFont } from '../PDFFont.js';
+import type { AppearanceMapping } from './appearances.js';
+import { Color, colorToComponents, setFillingColor } from '../colors.js';
 import {
   Rotation,
   toDegrees,
@@ -9,25 +9,23 @@ import {
   reduceRotation,
   adjustDimsForRotation,
   degrees,
-} from 'src/api/rotations.js';
+} from '../rotations.js';
 
-import {
-  PDFRef,
-  PDFWidgetAnnotation,
-  PDFOperator,
-  PDFName,
-  PDFDict,
-  MethodNotImplementedError,
-  AcroFieldFlags,
-  PDFAcroTerminal,
-  AnnotationFlags,
-} from 'src/core/index.js';
+import { PDFAcroTerminal } from '../../core/acroform/PDFAcroTerminal.js';
+import { AcroFieldFlags } from '../../core/acroform/flags.js';
+import { PDFWidgetAnnotation } from '../../core/annotation/PDFWidgetAnnotation.js';
+import { AnnotationFlags } from '../../core/annotation/flags.js';
+import { MethodNotImplementedError } from '../../core/errors.js';
+import { PDFDict } from '../../core/objects/PDFDict.js';
+import { PDFName } from '../../core/objects/PDFName.js';
+import { PDFRef } from '../../core/objects/PDFRef.js';
+import { PDFOperator } from '../../core/operators/PDFOperator.js';
 import {
   assertIs,
   assertMultiple,
   assertOrUndefined,
-} from 'src/utils/index.js';
-import { ImageAlignment } from '../image/index.js';
+} from '../../utils/validators.js';
+import { ImageAlignment } from '../image/alignment.js';
 import type { PDFImage } from '../PDFImage.js';
 import { drawImage, rotateInPlace } from '../operations.js';
 

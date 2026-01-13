@@ -1,9 +1,9 @@
-import { PDFDict } from 'src/core/objects/PDFDict.js';
-import { PDFName } from 'src/core/objects/PDFName.js';
-import type { PDFRef } from 'src/core/objects/PDFRef.js';
-import { PDFAcroField } from 'src/core/acroform/PDFAcroField.js';
-import { PDFWidgetAnnotation } from 'src/core/annotation/PDFWidgetAnnotation.js';
-import { IndexOutOfBoundsError } from 'src/core/errors.js';
+import { PDFDict } from '../objects/PDFDict.js';
+import { PDFName } from '../objects/PDFName.js';
+import type { PDFRef } from '../objects/PDFRef.js';
+import { PDFAcroField } from './PDFAcroField.js';
+import { PDFWidgetAnnotation } from '../annotation/PDFWidgetAnnotation.js';
+import { IndexOutOfBoundsError } from '../errors.js';
 
 export class PDFAcroTerminal extends PDFAcroField {
   static fromDict = (dict: PDFDict, ref: PDFRef) =>

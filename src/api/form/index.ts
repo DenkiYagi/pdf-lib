@@ -1,10 +1,12 @@
-export * from 'src/api/form/appearances.js';
-export { PDFButton } from 'src/api/form/PDFButton.js';
-export { PDFCheckBox } from 'src/api/form/PDFCheckBox.js';
-export { PDFDropdown } from 'src/api/form/PDFDropdown.js';
-export { PDFField } from 'src/api/form/PDFField.js';
-export { PDFForm } from 'src/api/form/PDFForm.js';
-export { PDFOptionList } from 'src/api/form/PDFOptionList.js';
-export { PDFRadioGroup } from 'src/api/form/PDFRadioGroup.js';
-export { PDFSignature } from 'src/api/form/PDFSignature.js';
-export { PDFTextField } from 'src/api/form/PDFTextField.js';
+// Build-only barrel for the UMD bundle; do not import from this in source code.
+
+export * from './appearances.js';
+export { PDFButton } from './PDFButton.js';
+export { PDFCheckBox } from './PDFCheckBox.js';
+export { PDFDropdown } from './PDFDropdown.js';
+export { PDFField } from './PDFField.js';
+export { PDFForm } from './PDFForm.js';
+export { PDFOptionList } from './PDFOptionList.js';
+export { PDFRadioGroup } from './PDFRadioGroup.js';
+export { PDFSignature } from './PDFSignature.js';
+export { PDFTextField } from './PDFTextField.js';

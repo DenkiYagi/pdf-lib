@@ -1,5 +1,5 @@
-import { AsciiHexStream } from 'src/core/streams/AsciiHexStream.js';
-import { Stream } from 'src/core/streams/Stream.js';
+import { AsciiHexStream } from '../../../src/core/streams/AsciiHexStream.js';
+import { Stream } from '../../../src/core/streams/Stream.js';
 import { readBinaryFileSync } from '../../test-utils.js';
 
 const DIR = `tests/core/streams/data/asciihex`;

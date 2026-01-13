@@ -1,4 +1,4 @@
-import { PDFSecurity } from 'src/core/security/PDFSecurity.js';
+import { PDFSecurity } from '../../../src/core/security/PDFSecurity.js';
 
 describe(`PDFSecurity`, () => {
   describe(`from() method`, () => {

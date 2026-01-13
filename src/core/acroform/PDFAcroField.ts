@@ -1,16 +1,13 @@
-import { PDFDict } from 'src/core/objects/PDFDict.js';
-import { PDFString } from 'src/core/objects/PDFString.js';
-import { PDFHexString } from 'src/core/objects/PDFHexString.js';
-import { PDFName } from 'src/core/objects/PDFName.js';
-import type { PDFObject } from 'src/core/objects/PDFObject.js';
-import { PDFNumber } from 'src/core/objects/PDFNumber.js';
-import { PDFArray } from 'src/core/objects/PDFArray.js';
-import { PDFRef } from 'src/core/objects/PDFRef.js';
-import { findLastMatch } from 'src/utils/index.js';
-import {
-  MissingDAEntryError,
-  MissingTfOperatorError,
-} from 'src/core/errors.js';
+import { PDFDict } from '../objects/PDFDict.js';
+import { PDFString } from '../objects/PDFString.js';
+import { PDFHexString } from '../objects/PDFHexString.js';
+import { PDFName } from '../objects/PDFName.js';
+import type { PDFObject } from '../objects/PDFObject.js';
+import { PDFNumber } from '../objects/PDFNumber.js';
+import { PDFArray } from '../objects/PDFArray.js';
+import { PDFRef } from '../objects/PDFRef.js';
+import { findLastMatch } from '../../utils/strings.js';
+import { MissingDAEntryError, MissingTfOperatorError } from '../errors.js';
 
 // Examples:
 //   `/Helv 12 Tf` -> ['Helv', '12']

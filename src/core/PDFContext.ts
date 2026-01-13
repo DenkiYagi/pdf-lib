@@ -1,25 +1,25 @@
 import pako from 'pako';
 
-import { PDFHeader } from 'src/core/document/PDFHeader.js';
-import { UnexpectedObjectTypeError } from 'src/core/errors.js';
-import { PDFArray } from 'src/core/objects/PDFArray.js';
-import { PDFBool } from 'src/core/objects/PDFBool.js';
-import { PDFDict } from 'src/core/objects/PDFDict.js';
-import { PDFHexString } from 'src/core/objects/PDFHexString.js';
-import { PDFName } from 'src/core/objects/PDFName.js';
-import { PDFNull } from 'src/core/objects/PDFNull.js';
-import { PDFNumber } from 'src/core/objects/PDFNumber.js';
-import { PDFObject } from 'src/core/objects/PDFObject.js';
-import { PDFRawStream } from 'src/core/objects/PDFRawStream.js';
-import { PDFRef } from 'src/core/objects/PDFRef.js';
-import type { PDFStream } from 'src/core/objects/PDFStream.js';
-import type { PDFString } from 'src/core/objects/PDFString.js';
-import { PDFOperator } from 'src/core/operators/PDFOperator.js';
-import { PDFOperatorNames as Ops } from 'src/core/operators/PDFOperatorNames.js';
-import type { PDFSecurity } from 'src/core/security/PDFSecurity.js';
-import { PDFContentStream } from 'src/core/structures/PDFContentStream.js';
-import { typedArrayFor } from 'src/utils/index.js';
-import { SimpleRNG } from 'src/utils/rng.js';
+import { PDFHeader } from './document/PDFHeader.js';
+import { UnexpectedObjectTypeError } from './errors.js';
+import { PDFArray } from './objects/PDFArray.js';
+import { PDFBool } from './objects/PDFBool.js';
+import { PDFDict } from './objects/PDFDict.js';
+import { PDFHexString } from './objects/PDFHexString.js';
+import { PDFName } from './objects/PDFName.js';
+import { PDFNull } from './objects/PDFNull.js';
+import { PDFNumber } from './objects/PDFNumber.js';
+import { PDFObject } from './objects/PDFObject.js';
+import { PDFRawStream } from './objects/PDFRawStream.js';
+import { PDFRef } from './objects/PDFRef.js';
+import type { PDFStream } from './objects/PDFStream.js';
+import type { PDFString } from './objects/PDFString.js';
+import { PDFOperator } from './operators/PDFOperator.js';
+import { PDFOperatorNames as Ops } from './operators/PDFOperatorNames.js';
+import type { PDFSecurity } from './security/PDFSecurity.js';
+import { PDFContentStream } from './structures/PDFContentStream.js';
+import { typedArrayFor } from '../utils/arrays.js';
+import { SimpleRNG } from '../utils/rng.js';
 
 type LookupKey = PDFRef | PDFObject | undefined;
 

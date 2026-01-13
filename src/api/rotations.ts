@@ -1,5 +1,5 @@
-import { InvalidRotationError } from 'src/api/errors.js';
-import { assertIs } from 'src/utils/index.js';
+import { InvalidRotationError } from './errors.js';
+import { assertIs } from '../utils/validators.js';
 
 export enum RotationTypes {
   Degrees = 'degrees',

@@ -1,5 +1,5 @@
 import { encode } from 'fast-png';
-import { PNG, PngType } from 'src/utils/png.js';
+import { PNG, PngType } from '../../src/utils/png.js';
 
 describe(`PNG`, () => {
   describe(`color type detection`, () => {

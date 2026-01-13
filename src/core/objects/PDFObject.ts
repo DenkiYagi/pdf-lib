@@ -1,6 +1,6 @@
-import type { PDFContext } from 'src/core/PDFContext.js';
-import type { ObjectEncrypter } from 'src/core/objects/ObjectEncrypter.js';
-import type { PDFRef } from 'src/core/objects/PDFRef.js';
+import type { PDFContext } from '../PDFContext.js';
+import type { ObjectEncrypter } from './ObjectEncrypter.js';
+import type { PDFRef } from './PDFRef.js';
 
 export abstract class PDFObject {
   abstract clone(context?: PDFContext): PDFObject;

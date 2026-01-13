@@ -1,5 +1,6 @@
-import { copyStringIntoBuffer, numberToString } from 'src/utils/index.js';
-import { PDFObject } from 'src/core/objects/PDFObject.js';
+import { numberToString } from '../../utils/numbers.js';
+import { copyStringIntoBuffer } from '../../utils/strings.js';
+import { PDFObject } from './PDFObject.js';
 
 export class PDFNumber extends PDFObject {
   static of = (value: number) => new PDFNumber(value);

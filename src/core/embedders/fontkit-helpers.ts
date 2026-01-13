@@ -10,8 +10,8 @@ import {
   InvalidFontDataError,
   UnsupportedFontDataError,
   UnsupportedFontFileFormatError,
-} from 'src/core/errors.js';
-import type { PDFLibError } from 'src/core/error-base.js';
+} from '../errors.js';
+import type { PDFLibError } from '../error-base.js';
 
 /**
  * Map known fontkit errors into the pdf-lib error family

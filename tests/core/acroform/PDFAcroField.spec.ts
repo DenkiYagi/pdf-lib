@@ -1,9 +1,7 @@
-import {
-  PDFAcroTerminal,
-  PDFContext,
-  PDFString,
-  PDFHexString,
-} from 'src/core/index.js';
+import { PDFContext } from '../../../src/core/PDFContext.js';
+import { PDFAcroTerminal } from '../../../src/core/acroform/PDFAcroTerminal.js';
+import { PDFHexString } from '../../../src/core/objects/PDFHexString.js';
+import { PDFString } from '../../../src/core/objects/PDFString.js';
 
 describe(`PDFAcroField`, () => {
   it(`returns undefined for missing (DAs)`, () => {

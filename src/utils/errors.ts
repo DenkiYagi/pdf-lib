@@ -1,11 +1,8 @@
 // tslint:disable: max-classes-per-file
 
-import type {
-  Primitive,
-  TypeDescriptor,
-} from 'src/utils/validators-helpers.js';
-import { getType } from 'src/utils/validators-helpers.js';
-import { PDFLibError, PDFLibErrorTypes } from 'src/core/error-base.js';
+import type { Primitive, TypeDescriptor } from './validators-helpers.js';
+import { getType } from './validators-helpers.js';
+import { PDFLibError, PDFLibErrorTypes } from '../core/error-base.js';
 
 export class PDFLibUtilsError extends PDFLibError {}
 

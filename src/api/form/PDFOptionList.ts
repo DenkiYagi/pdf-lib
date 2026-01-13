@@ -1,34 +1,32 @@
-import type { PDFDocument } from 'src/api/PDFDocument.js';
-import { PDFPage } from 'src/api/PDFPage.js';
-import { PDFFont } from 'src/api/PDFFont.js';
+import type { PDFDocument } from '../PDFDocument.js';
+import { PDFPage } from '../PDFPage.js';
+import { PDFFont } from '../PDFFont.js';
 import {
   PDFField,
   FieldAppearanceOptions,
   assertFieldAppearanceOptions,
-} from 'src/api/form/PDFField.js';
+} from './PDFField.js';
 import {
   AppearanceProviderFor,
   normalizeAppearance,
   defaultOptionListAppearanceProvider,
-} from 'src/api/form/appearances.js';
-import { rgb } from 'src/api/colors.js';
-import { degrees } from 'src/api/rotations.js';
+} from './appearances.js';
+import { rgb } from '../colors.js';
+import { degrees } from '../rotations.js';
 
-import {
-  PDFRef,
-  PDFHexString,
-  PDFString,
-  PDFStream,
-  PDFAcroListBox,
-  AcroChoiceFlags,
-  PDFWidgetAnnotation,
-} from 'src/core/index.js';
+import { PDFAcroListBox } from '../../core/acroform/PDFAcroListBox.js';
+import { AcroChoiceFlags } from '../../core/acroform/flags.js';
+import { PDFWidgetAnnotation } from '../../core/annotation/PDFWidgetAnnotation.js';
+import { PDFHexString } from '../../core/objects/PDFHexString.js';
+import { PDFRef } from '../../core/objects/PDFRef.js';
+import { PDFStream } from '../../core/objects/PDFStream.js';
+import { PDFString } from '../../core/objects/PDFString.js';
 import {
   assertIs,
   assertIsSubset,
   assertOrUndefined,
   assertPositive,
-} from 'src/utils/index.js';
+} from '../../utils/validators.js';
 
 /**
  * Represents an option list field of a [[PDFForm]].

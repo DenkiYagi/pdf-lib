@@ -1,5 +1,5 @@
 import CryptoJS from 'crypto-js';
-import { wordArrayFromBytes } from 'src/utils/crypt.js';
+import { wordArrayFromBytes } from '../../../src/utils/crypt.js';
 
 const randomBk = CryptoJS.lib.WordArray.random.bind(undefined);
 
