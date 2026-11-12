@@ -7,7 +7,6 @@ node_modules/
 
 tsBuildInfo.json
 flamegraph.html
-yarn-error.log
 isolate*.log
 .DS_Store
 out.pdf
