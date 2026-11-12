@@ -21,7 +21,6 @@
     /* Module Resolution Options */
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "preserveSymlinks": true,
     "moduleResolution": "nodenext"
   },
   "include": ["src/**/*"]

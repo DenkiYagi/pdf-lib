@@ -21,18 +21,18 @@
 - `scratchpad/` – Throwaway experiments; do not rely on contents for production logic.
 
 ## Tech Stack
-- Node.js 20+ runtime, Yarn package manager.
+- Node.js 20+ runtime, pnpm package manager (version pinned via `packageManager` in `package.json`).
 - TypeScript 5.x across source and typings.
 - Native ES modules both for source and build outputs.
 - vitest for unit testing.
 - Critical dependency: `@denkiyagi/fontkit` (our fork) powers font parsing, embedding, and subsetting.
 
 ## Common Commands
-- `yarn typecheck` – Checks TypeScript types across `src/` and `tests/`.
-- `yarn lint` – Runs and fixes the lint rules expected by CI.
-- `yarn test` – Runs the full test suite once.
-- `yarn build` – Builds the library into `dist/` (uses `tsconfig.build.json`).
-- `yarn apps:typecheck` – Checks TypeScript types across `apps/` (requires a prior build).
+- `pnpm run typecheck` – Checks TypeScript types across `src/` and `tests/`.
+- `pnpm run lint` – Runs and fixes the lint rules expected by CI.
+- `pnpm run test` – Runs the full test suite once.
+- `pnpm run build` – Builds the library into `dist/` (uses `tsconfig.build.json`).
+- `pnpm run apps:typecheck` – Checks TypeScript types across `apps/` (requires a prior build).
 
 ## Helpful References
 - Change log: `MODIFICATIONS.md` (what differs from upstream).

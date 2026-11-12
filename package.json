@@ -32,27 +32,27 @@
     "Ching Chang (https://github.com/ChingChang9)"
   ],
   "scripts": {
-    "release:prep": "yarn clean && yarn typecheck && yarn lint && yarn test && yarn build && yarn apps:typecheck",
+    "release:prep": "pnpm run clean && pnpm run typecheck && pnpm run lint && pnpm run test && pnpm run build && pnpm run apps:typecheck",
     "get:version": "node --eval 'console.log(require(`./package.json`).version)'",
     "clean": "rimraf dist scratchpad/build coverage tsBuildInfo.json apps/node-build apps/node/tsBuildInfo.json isolate*.log flamegraph.html out.pdf",
-    "typecheck": "yarn typecheck:src && yarn typecheck:tests",
+    "typecheck": "pnpm run typecheck:src && pnpm run typecheck:tests",
     "typecheck:src": "tsc --noEmit -p tsconfig.json",
     "typecheck:tests": "tsc --noEmit -p tests/tsconfig.json",
     "test": "vitest run",
     "testw": "vitest watch",
     "testc": "vitest run --coverage && open coverage/index.html",
-    "lint": "yarn lint:prettier && yarn lint:tslint:src && yarn lint:tslint:tests",
+    "lint": "pnpm run lint:prettier && pnpm run lint:tslint:src && pnpm run lint:tslint:tests",
     "lint:tslint:src": "tslint --project tsconfig.json --fix",
     "lint:tslint:tests": "tslint --project tests/tsconfig.json --fix",
     "lint:prettier": "prettier --write \"./{src,tests,apps}/**/*.{ts,js,json,html,css}\" --log-level error",
-    "build": "yarn build:es && yarn build:umd",
+    "build": "pnpm run build:es && pnpm run build:umd",
     "build:es": "tsc -p tsconfig.build.json",
-    "build:umd": "yarn rollup --config rollup.config.mjs",
+    "build:umd": "rollup --config rollup.config.mjs",
     "scratchpad:start": "tsc --build scratchpad/tsconfig.json --watch",
     "scratchpad:run": "node scratchpad/build/scratchpad/index.js",
     "scratchpad:flame": "rimraf isolate*.log && node --prof scratchpad/build/scratchpad/index.js && node --prof-process --preprocess -j isolate*.log | flamebearer",
-    "apps:node": "yarn build:es && tsc --build apps/node/tsconfig.json && node apps/node-build/index.js",
-    "apps:web": "yarn build:umd && http-server -c-1 .",
+    "apps:node": "pnpm run build:es && tsc --build apps/node/tsconfig.json && node apps/node-build/index.js",
+    "apps:web": "pnpm run build:umd && http-server -c-1 .",
     "apps:typecheck": "tsc --noEmit -p apps/tsconfig.json"
   },
   "type": "module",
@@ -71,6 +71,7 @@
     "README.md",
     "MODIFICATIONS.md"
   ],
+  "packageManager": "pnpm@12.18.0",
   "engines": {
     "node": ">=20"
   },

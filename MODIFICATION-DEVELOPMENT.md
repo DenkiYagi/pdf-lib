@@ -6,17 +6,24 @@ If you use VS Code:
 
 `TypeScript: Select TypeScript Version...` -> `Use Workspace Version`
 
+## Package manager
+
+This project uses [pnpm](https://pnpm.io/). The version is pinned by the `packageManager` field in `package.json`.
+Make sure the `pnpm` command is available, e.g. by running `corepack enable pnpm` or installing pnpm globally.
+
+- Install dependencies: `pnpm install`
+
 ## Before submitting pull request
 
 - Lint and typecheck
-    - `yarn lint`
-    - `yarn typecheck`
+    - `pnpm run lint`
+    - `pnpm run typecheck`
 - Automated tests
-    - `yarn test`
+    - `pnpm run test`
 - Manual integration tests
-    - `yarn apps:node 'Preview'`
-    - `yarn apps:node 'Adobe Acrobat'` (on Windows, passing app name does not work for now)
-    - `yarn apps:web` and open <http://localhost:8080/apps/web/test1.html> with any browser to be tested
+    - `pnpm run apps:node 'Preview'`
+    - `pnpm run apps:node 'Adobe Acrobat'` (on Windows, passing app name does not work for now)
+    - `pnpm run apps:web` and open <http://localhost:8080/apps/web/test1.html> with any browser to be tested
 
 ## Release
 
