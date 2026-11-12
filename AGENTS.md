@@ -21,7 +21,7 @@
 - `scratchpad/` – Throwaway experiments; do not rely on contents for production logic.
 
 ## Tech Stack
-- Node.js 20+ runtime, pnpm package manager (version pinned via `packageManager` in `package.json`).
+- Node.js 22+ runtime, pnpm package manager (version pinned via `packageManager` in `package.json`).
 - TypeScript 5.x across source and typings.
 - Native ES modules both for source and build outputs.
 - vitest for unit testing.
